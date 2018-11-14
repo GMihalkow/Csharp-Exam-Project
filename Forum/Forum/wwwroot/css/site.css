@@ -1,37 +1,224 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
+﻿html {
+    height: 100%;
+    background-color:red;
+}
+
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ededed;
+    line-height: 1.6em;
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    position: relative;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.error{
+    text-align:center;
+    color:red;
+    font-size: 22px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+#header{
+    height:100%;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+a:hover {
+    color: rgb(82, 69, 53);
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+.text-danger{
+    color:red;
+    text-align:center;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+a {
+    text-decoration: none;
+}
+
+#main-nav {
+    background-color: #1a1a1a;
+}
+
+#my-footer {
+    background-color: #1a1a1a;
+}
+
+.gender-select select {
+    display: none;
+}
+
+.gender-select {
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    width: 20%;
+    border: 2px solid black;
+    border-radius: 10px;
+    background: black;
+    color: white;
+    position: relative;
+}
+
+    .gender-select option:hover {
+        box-shadow: #ffab62;
     }
+
+    .gender-select:hover {
+        border-color: burlywood;
+        background-color: burlywood;
+        color: black;
+    }
+
+.gender-select-hide {
+    display: none;
+}
+
+.gender-select:after {
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+#title-container {
+    background-color: burlywood;
+    padding: 15px;
+}
+
+#register {
+    position: relative;
+}
+
+#title-container h1 {
+    margin-left: 20px;
+    display: inline;
+    color: white;
+    padding: 40px;
+}
+
+.container {
+    background-position: center;
+    min-height: inherit;
+    font-size: 18px;
+    padding: 20px;
+}
+
+    .container h1 {
+        text-align: center;
+        color: #1a1a1a;
+    }
+
+    .container p {
+        text-align: center;
+        color: #1a1a1a;
+    }
+
+.hr-1 {
+    height: 4px;
+    width: 50%;
+    border-radius: 10px;
+    background-color: #1a1a1a;
+}
+
+.my-form {
+    margin: auto;
+}
+
+    .my-form label {
+        font-weight: bold;
+        margin: 10px 0px;
+        text-align: center;
+        display: block;
+        color: #1a1a1a;
+        font-size: 20px;
+    }
+
+.block input[type="text"], input[type="password"], input[type="email"] {
+    font-size: 20px;
+    text-align: center;
+}
+
+input {
+    background-color: white;
+}
+
+.block input {
+    height: 30px;
+    width: 30%;
+    border: #1a1a1a solid 1px;
+    border-radius: 5px;
+}
+
+.block {
+    text-align: center;
+    padding: 10px;
+}
+
+.submit-button {
+    background-color: #1a1a1a;
+    padding: 10px 40px;
+    color: white;
+    border: none;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+    .submit-button:hover {
+        background-color: burlywood;
+        color: black;
+    }
+
+.center-button {
+    margin: 20px 0px;
+    text-align: center;
+}
+
+.my-list {
+    margin: 0;
+    list-style: none;
+    padding: 20px 60px;
+}
+
+    .my-list li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+.button:hover {
+    color: slategrey;
+}
+
+.button {
+    text-decoration: none;
+    color: white;
+    display: inline;
+}
+
+/*      ---------          */
+#wrapper {
+    /*min-height: 70vh;*/
+    background-color: yellow;
+    position: relative;
+}
+
+#header {
+    padding: 0px;
+}
+
+#content {
+    padding-bottom: 0px;
+    /*min-height:20vh;*/
+    position:relative;
+    /* Height of the footer element */
+}
+
+#footer {
+    background: #ffab62;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    left: 0;
 }

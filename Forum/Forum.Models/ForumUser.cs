@@ -14,6 +14,8 @@
         
         public string Location { get; set; }
 
+        public string Gender { get; set; }
+
         public DateTime LastActiveOn { get; set; }
 
         public DateTime RegisteredOn { get; set; }

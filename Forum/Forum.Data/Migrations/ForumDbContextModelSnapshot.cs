@@ -48,6 +48,8 @@ namespace Forum.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("Gender");
+
                     b.Property<DateTime>("LastActiveOn");
 
                     b.Property<string>("Location");

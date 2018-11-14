@@ -13,6 +13,11 @@ using Forum.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Forum.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Forum.Web;
+using Forum.Web.Services.Contracts;
+using Forum.Web.Services;
+using Forum.Web.Middlewares;
 
 namespace Forum
 {
@@ -41,14 +46,40 @@ namespace Forum
                    .UseSqlServer(
                      Configuration.GetConnectionString("DefaultConnection")));
             services
-                .AddIdentity<ForumUser, IdentityRole>()
+                .AddIdentity<ForumUser, IdentityRole>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredUniqueChars = 0;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
                 .AddEntityFrameworkStores<ForumDbContext>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            .AddRazorPagesOptions(options =>
+            {
+                options.AllowAreas = true;
+                options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Account/Login";
+                options.LogoutPath = $"/Account/Logout";
+                options.AccessDeniedPath = $"/Account/AccessDenied";
+            });
+
+            //Registrating services
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -66,6 +97,8 @@ namespace Forum
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseMiddleware(typeof(SeedRolesMiddleware));
 
             app.UseMvc(routes =>
             {
