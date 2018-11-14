@@ -1,9 +1,0 @@
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\bin\Debug\netcoreapp2.1\Forum.Models.deps.json
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\bin\Debug\netcoreapp2.1\Forum.Models.dll
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\bin\Debug\netcoreapp2.1\Forum.Models.pdb
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\obj\Debug\netcoreapp2.1\Forum.Models.csproj.CoreCompileInputs.cache
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\obj\Debug\netcoreapp2.1\Forum.Models.AssemblyInfoInputs.cache
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\obj\Debug\netcoreapp2.1\Forum.Models.AssemblyInfo.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\obj\Debug\netcoreapp2.1\Forum.Models.dll
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\obj\Debug\netcoreapp2.1\Forum.Models.pdb
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Models\obj\Debug\netcoreapp2.1\Forum.Models.csprojAssemblyReference.cache
