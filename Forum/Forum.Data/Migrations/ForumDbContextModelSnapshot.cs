@@ -153,8 +153,6 @@ namespace Forum.Data.Migrations
 
                     b.Property<string>("PostId");
 
-                    b.Property<string>("RecieverId");
-
                     b.Property<DateTime>("RepliedOn");
 
                     b.HasKey("Id");
@@ -162,8 +160,6 @@ namespace Forum.Data.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("RecieverId");
 
                     b.ToTable("Replies");
                 });
@@ -347,16 +343,12 @@ namespace Forum.Data.Migrations
             modelBuilder.Entity("Forum.Models.Reply", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
-                        .WithMany("AuthoredReplies")
+                        .WithMany("Replies")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Forum.Models.Post", "Post")
                         .WithMany("Replies")
                         .HasForeignKey("PostId");
-
-                    b.HasOne("Forum.Models.ForumUser", "Reciever")
-                        .WithMany("RecievedReplies")
-                        .HasForeignKey("RecieverId");
                 });
 
             modelBuilder.Entity("Forum.Models.Report", b =>

@@ -6,9 +6,7 @@
 
     public class ForumUser : IdentityUser
     {
-        public ICollection<Reply> AuthoredReplies { get; set; }
-
-        public ICollection<Reply> RecievedReplies { get; set; }
+        public ICollection<Reply> Replies { get; set; }
 
         public ICollection<Post> Posts { get; set; }
         

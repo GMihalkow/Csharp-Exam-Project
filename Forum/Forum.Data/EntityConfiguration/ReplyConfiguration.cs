@@ -13,13 +13,8 @@
 
             builder
                 .HasOne(r => r.Author)
-                .WithMany(u => u.AuthoredReplies)
+                .WithMany(u => u.Replies)
                 .HasForeignKey(r => r.AuthorId);
-
-            builder
-                .HasOne(r => r.Reciever)
-                .WithMany(u => u.RecievedReplies)
-                .HasForeignKey(r => r.RecieverId);
         }
     }
 }
