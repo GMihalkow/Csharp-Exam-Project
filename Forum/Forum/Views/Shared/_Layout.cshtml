@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
-<html class="x" lang="en">
+<html class="bg-forum" lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @*<link href="~/css/reset-css.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>@ViewData["Title"] - Forum</title>
@@ -14,15 +15,14 @@
         @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
     </environment>
 </head>
-<body>
+<body class="bg-forum">
     <div id="header">
         <header>
             <div id="title-container">
                 <h1>My Forum</h1>
             </div>
-            <nav id="main-nav">
+            <nav class="main-nav menu-bg-forum">
                 <ul class="my-list">
-                    <li><i id="icon" class="fab fa-forumbee fa-3x"></i></li>
                     <li><a class="button" href="/">Home</a></li>
                     <li><a class="button" href="#">About</a></li>
                     <li id="login"><a class="button" href="/Account/Login">Login</a></li>
@@ -60,7 +60,7 @@
 
         @RenderSection("Scripts", required: false)
         <div id="footer">
-            <footer id="my-footer">Copyright &copy; 2018 test</footer>
+            <footer class="menu-bg-forum">Copyright &copy; 2018 test</footer>
         </div>
     </div>
 </body>

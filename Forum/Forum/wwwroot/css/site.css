@@ -1,11 +1,9 @@
 ﻿html {
     height: 100%;
-    background-color:red;
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #ededed;
     line-height: 1.6em;
     color: white;
     margin: 0;
@@ -14,63 +12,77 @@ body {
     position: relative;
 }
 
-.error{
-    text-align:center;
-    color:red;
+.text-forum {
+    color: #1a1a1a;
+}
+
+.header-text{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.menu-bg-forum {
+    background-color: #1a1a1a;
+}
+
+.bg-forum {
+    background-color: #ededed;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.one-third-width {
+    width: 30%;
+}
+
+.two-thirds-width {
+    width: 70%;
+}
+
+.error {
+    margin:50px auto;
+    text-align: center;
+    color: red;
     font-size: 22px;
 }
 
-#header{
-    height:100%;
+#header {
+    height: 100%;
 }
 
 a:hover {
     color: rgb(82, 69, 53);
 }
 
-.text-danger{
-    color:red;
-    text-align:center;
+.text-danger {
+    color: red;
+    text-align: center;
 }
 
 a {
     text-decoration: none;
 }
 
-#main-nav {
-    background-color: #1a1a1a;
-}
-
-#my-footer {
-    background-color: #1a1a1a;
-}
-
-.gender-select select {
-    display: none;
-}
-
-.gender-select {
+.radio-div {
     text-align: center;
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    width: 20%;
-    border: 2px solid black;
-    border-radius: 10px;
-    background: black;
-    color: white;
-    position: relative;
+    /* margin:50px; */
 }
 
-    .gender-select option:hover {
-        box-shadow: #ffab62;
-    }
+.test {
+    display: inline;
+}
 
-    .gender-select:hover {
-        border-color: burlywood;
-        background-color: burlywood;
-        color: black;
-    }
+.register-container {
+    margin: 0px auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
 
 .gender-select-hide {
     display: none;
@@ -82,8 +94,8 @@ a {
 }
 
 #title-container {
-    background-color: burlywood;
-    padding: 15px;
+    background-color: #262626;
+    padding: 30px;
 }
 
 #register {
@@ -91,11 +103,51 @@ a {
 }
 
 #title-container h1 {
-    margin-left: 20px;
+    margin: 0;
     display: inline;
     color: white;
     padding: 40px;
 }
+
+.forum-container h2 {
+    margin-left: 10%;
+}
+
+.forum-container h3 {
+    font-size: 26px;
+}
+
+.forum-container {
+    background-color: burlywood;
+    margin: 90px auto;
+    width: 50%;
+    border-radius: 15px 15px 0px 0px;
+    border: #1a1a1a solid 1px;
+    color: #1a1a1a;
+}
+
+.forum-information-container {
+    background-color: #1a1a1a;
+}
+
+    .forum-information-container > p {
+        color: white;
+        padding-top: 0;
+        margin: 0px 0px 0px 20%;
+    }
+
+.forum-content > div {
+    border-bottom: black solid 1px;
+}
+
+.forum-content {
+    color: #1a1a1a;
+    background: white;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    grid-template-rows: minmax(100px auto);
+}
+
 
 .container {
     background-position: center;
@@ -118,20 +170,33 @@ a {
     height: 4px;
     width: 50%;
     border-radius: 10px;
-    background-color: #1a1a1a;
+    /* background-color: #1a1a1a; */
 }
 
 .my-form {
     margin: auto;
 }
 
-    .my-form label {
+    .my-form > .register-container > .block > label {
         font-weight: bold;
         margin: 10px 0px;
         text-align: center;
         display: block;
-        color: #1a1a1a;
         font-size: 20px;
+    }
+
+    .my-form > .block > label {
+        font-weight: bold;
+        margin: 10px 0px;
+        text-align: center;
+        display: block;
+        font-size: 20px;
+    }
+
+    .my-form > .radio-div > label {
+        margin: 10px 0px;
+        text-align: center;
+        font-size: 16px;
     }
 
 .block input[type="text"], input[type="password"], input[type="email"] {
@@ -143,9 +208,12 @@ input {
     background-color: white;
 }
 
+.forum-icon {
+    padding: 10px
+}
+
 .block input {
     height: 30px;
-    width: 30%;
     border: #1a1a1a solid 1px;
     border-radius: 5px;
 }
@@ -155,15 +223,14 @@ input {
     padding: 10px;
 }
 
-.submit-button{
-    font-size:20px;
+.submit-button {
+    font-size: 20px;
     font-weight: bold;
-    background-color:#1a1a1a;
-    padding:10px 70px;
-    color:white;
-    border:none;
-    margin:auto;
-    cursor:pointer;
+    padding: 10px 70px;
+    color: white;
+    border: none;
+    margin: auto;
+    cursor: pointer;
     border-radius: 10px;
 }
 
@@ -177,13 +244,21 @@ input {
     text-align: center;
 }
 
+.post-image {
+    padding: 0.3em;
+    font-size: 2vw;
+}
 
-.my-list{
+.post-title {
+    text-align: start;
+}
+
+.my-list {
     font-size: 20px;
     font-weight: bold;
-    margin:0;
+    margin: 0;
     list-style: none;
-    padding:20px 60px;
+    padding: 10px 60px;
 }
 
     .my-list li {
@@ -203,8 +278,6 @@ input {
 
 /*      ---------          */
 #wrapper {
-    /*min-height: 70vh;*/
-    background-color: yellow;
     position: relative;
 }
 
@@ -214,13 +287,16 @@ input {
 
 #content {
     padding-bottom: 0px;
-    /*min-height:20vh;*/
-    position:relative;
+    position: relative;
     /* Height of the footer element */
 }
 
+    #content > h1 {
+        color: #1a1a1a;
+        text-align: center;
+    }
+
 #footer {
-    background: #ffab62;
     width: 100%;
     position: fixed;
     bottom: 0;
