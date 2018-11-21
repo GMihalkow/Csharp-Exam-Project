@@ -13,6 +13,8 @@ using Forum.Web;
 using Forum.Web.Services.Contracts;
 using Forum.Web.Services;
 using Forum.Web.Middlewares;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Forum
 {
@@ -48,7 +50,10 @@ namespace Forum
                     options.Password.RequiredLength = 6;
                     options.Password.RequiredUniqueChars = 0;
                     options.Password.RequireNonAlphanumeric = false;
+
+                    options.User.RequireUniqueEmail = true;
                 })
+                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<ForumDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -70,9 +75,19 @@ namespace Forum
 
             //Registrating services
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<DbService>();
+            services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin",
+                    authBuilder =>
+                    {
+                        authBuilder.RequireRole("Admin");
+                    });
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

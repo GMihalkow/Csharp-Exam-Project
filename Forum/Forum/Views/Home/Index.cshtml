@@ -1,6 +1,124 @@
-﻿<div id="content">
-    <div class="container">
-        <h1>Home</h1>
+﻿@using Forum.Models;
+@model Category[];
 
+<div class="content">
+    <div id="shoutbox" class="menu-bg-forum text-center">
+        <h1><a id="main-heading-text" href="#">Powered by MPF-Team</a> </h1>
+    </div>
+    <div class="content-container">
+        <div>
+            @foreach (var category in Model)
+            {
+            <div class="forum-container ">
+                <h2>@category.Name</h2>
+                <div class="forum-information-container">
+                    <div class="forum-content">
+
+                        @foreach (var forum in category.Forums)
+                        {
+                        <div class="post-image">
+                            <i class="fas fa-clone fa-lg forum-icon"></i>
+                        </div>
+                        <div class="post-title">
+
+                            <div class="post-title">
+                                <div class="content-container">
+                                    <div>
+                                        <h3>@forum.Name</h3>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <h4 style="margin:8px 0px;">Total views: 232</h4>
+                                        </div>
+                                        <div style="margin:0">
+                                            <h4 style="margin:0">Started on: 01/01/2018 </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div>
+            <div class="forum-container">
+                <h2>Latest Topics</h2>
+                <div class="forum-information-container menu-bg-forum">
+
+                    <div class="forum-content">
+                        <div class="post-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="post-title">
+                            <h4>Csharp Tutorials</h4>
+                            <p style="display: inline; font-size: 14px; margin:0">by pesho</p>
+                        </div>
+                        <div class="post-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="post-title">
+                            <h4>Java Tutorials</h4>
+                            <p style="display: inline; font-size: 14px; margin:0">by ivan</p>
+                        </div>
+                        <div class="post-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="post-title">
+                            <h4>Php Tutorials</h4>
+                            <p style="display: inline; font-size: 14px; margin:0">by ivan</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="forum-container">
+                <h2>Popular Topics</h2>
+                <div class="forum-information-container menu-bg-forum">
+
+                    <div class="forum-content">
+                        <div class="post-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="post-title">
+                            <h4>Csharp Tutorials</h4>
+                            <p style="display: inline; font-size: 14px; margin:0">Total views: 232</p>
+                        </div>
+                        <div class="post-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="post-title">
+                            <h4>Java Tutorials</h4>
+                            <p style="display: inline; font-size: 14px; margin:0">Total views: 232</p>
+                        </div>
+                        <div class="post-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="post-title">
+                            <h4>Php Tutorials</h4>
+                            <p style="display: inline; font-size: 14px; margin:0">Total views: 232</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="info">
+        <div class="info-block">
+            <h4 class="text-forum">Newest Member: Pesho</h4>
+        </div>
+        <div class="info-block">
+            <h4 class="text-forum">Total Posts: 123</h4>
+        </div>
+        <div class="info-block">
+            <h4 class="text-forum">Total users: 5</h4>
+        </div>
     </div>
 </div>

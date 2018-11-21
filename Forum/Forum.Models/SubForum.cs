@@ -13,9 +13,9 @@ namespace Forum.Models
 
         public string Description { get; set; }
 
-        public Categorie Categorie { get; set; }
+        public Category Category { get; set; }
 
-        public string CategorieId { get; set; }
+        public string CategoryId { get; set; }
 
         public DateTime CreatedOn { get; set; }
     }

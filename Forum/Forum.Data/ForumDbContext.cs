@@ -11,7 +11,7 @@ namespace Forum.Data
         {
         }
 
-        public DbSet<Categorie> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public DbSet<SubForum> Forums { get; set; }
 
@@ -36,7 +36,7 @@ namespace Forum.Data
             builder.ApplyConfiguration<Quote>(new QuoteConfiguration());
             builder.ApplyConfiguration<Post>(new PostConfiguration());
             builder.ApplyConfiguration<Reply>(new ReplyConfiguration());
-            builder.ApplyConfiguration<Categorie>(new CategorieConfiguration());
+            builder.ApplyConfiguration<Category>(new CategoryConfiguration());
         }
     }
 }

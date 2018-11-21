@@ -9,7 +9,9 @@
         public ICollection<Reply> Replies { get; set; }
 
         public ICollection<Post> Posts { get; set; }
-        
+
+        public ICollection<Category> Categories { get; set; }
+
         public string Location { get; set; }
 
         public string Gender { get; set; }

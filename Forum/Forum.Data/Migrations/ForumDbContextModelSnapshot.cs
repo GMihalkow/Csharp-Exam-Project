@@ -19,7 +19,7 @@ namespace Forum.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Forum.Models.Categorie", b =>
+            modelBuilder.Entity("Forum.Models.Category", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -28,7 +28,13 @@ namespace Forum.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("Type");
+
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -189,7 +195,7 @@ namespace Forum.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CategorieId");
+                    b.Property<string>("CategoryId");
 
                     b.Property<DateTime>("CreatedOn");
 
@@ -199,7 +205,7 @@ namespace Forum.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategorieId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Forums");
                 });
@@ -314,6 +320,13 @@ namespace Forum.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Forum.Models.Category", b =>
+                {
+                    b.HasOne("Forum.Models.ForumUser", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Forum.Models.Post", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
@@ -364,9 +377,9 @@ namespace Forum.Data.Migrations
 
             modelBuilder.Entity("Forum.Models.SubForum", b =>
                 {
-                    b.HasOne("Forum.Models.Categorie", "Categorie")
+                    b.HasOne("Forum.Models.Category", "Category")
                         .WithMany("Forums")
-                        .HasForeignKey("CategorieId");
+                        .HasForeignKey("CategoryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
