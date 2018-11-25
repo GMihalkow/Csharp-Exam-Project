@@ -115,6 +115,8 @@ namespace Forum.Data.Migrations
 
                     b.Property<DateTime>("StartedOn");
 
+                    b.Property<int>("Views");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -175,17 +177,23 @@ namespace Forum.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AuthorId");
+
+                    b.Property<string>("Description");
+
                     b.Property<DateTime>("OpenedOn");
 
                     b.Property<string>("PostId");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("RecieverId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("PostId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("RecieverId");
 
                     b.ToTable("Reports");
                 });
@@ -341,11 +349,11 @@ namespace Forum.Data.Migrations
             modelBuilder.Entity("Forum.Models.Quote", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
-                        .WithMany("AuthoredQuotes")
+                        .WithMany("Quotes")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Forum.Models.ForumUser", "Reciever")
-                        .WithMany("RecievedQuotes")
+                        .WithMany()
                         .HasForeignKey("RecieverId");
 
                     b.HasOne("Forum.Models.Reply", "Reply")
@@ -366,13 +374,17 @@ namespace Forum.Data.Migrations
 
             modelBuilder.Entity("Forum.Models.Report", b =>
                 {
+                    b.HasOne("Forum.Models.ForumUser", "Author")
+                        .WithMany("Reports")
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("Forum.Models.Post", "Post")
                         .WithMany("Reports")
                         .HasForeignKey("PostId");
 
-                    b.HasOne("Forum.Models.ForumUser", "User")
-                        .WithMany("Reports")
-                        .HasForeignKey("UserId");
+                    b.HasOne("Forum.Models.ForumUser", "Reciever")
+                        .WithMany()
+                        .HasForeignKey("RecieverId");
                 });
 
             modelBuilder.Entity("Forum.Models.SubForum", b =>

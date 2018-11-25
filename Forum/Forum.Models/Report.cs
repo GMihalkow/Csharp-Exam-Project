@@ -6,9 +6,15 @@
     {
         public string Id { get; set; }
 
-        public ForumUser User { get; set; }
+        public ForumUser Author { get; set; }
 
-        public string UserId { get; set; }
+        public string AuthorId { get; set; }
+
+        public string Description { get; set; }
+
+        public ForumUser Reciever { get; set; }
+
+        public string RecieverId { get; set; }
 
         public Post Post { get; set; }
 

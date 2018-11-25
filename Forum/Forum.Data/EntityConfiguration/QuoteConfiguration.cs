@@ -15,15 +15,10 @@
                 .HasOne(q => q.Reply)
                 .WithMany(r => r.Quotes)
                 .HasForeignKey(q => q.ReplyId);
-
-            builder
-                .HasOne(q => q.Reciever)
-                .WithMany(u => u.RecievedQuotes)
-                .HasForeignKey(q => q.RecieverId);
-
+            
             builder
                 .HasOne(q => q.Author)
-                .WithMany(u => u.AuthoredQuotes)
+                .WithMany(u => u.Quotes)
                 .HasForeignKey(q => q.AuthorId);
         }
     }

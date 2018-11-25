@@ -12,14 +12,14 @@
                 .HasKey(r => r.Id);
 
             builder
+                .HasOne(r => r.Author)
+                .WithMany(u => u.Reports)
+                .HasForeignKey(r => r.AuthorId);
+
+            builder
                 .HasOne(r => r.Post)
                 .WithMany(p => p.Reports)
                 .HasForeignKey(r => r.PostId);
-
-            builder
-                .HasOne(r => r.User)
-                .WithMany(u => u.Reports)
-                .HasForeignKey(r => r.UserId);
         }
     }
 }

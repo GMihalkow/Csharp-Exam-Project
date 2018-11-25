@@ -12253,6 +12253,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Forum.Data >= 1.0.0",
+      "Forum.Models >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
       "Microsoft.NETCore.App >= 2.1.0",
@@ -12291,6 +12292,9 @@
           "projectReferences": {
             "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Data\\Forum.Data.csproj": {
               "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Data\\Forum.Data.csproj"
+            },
+            "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj": {
+              "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj"
             }
           }
         }
