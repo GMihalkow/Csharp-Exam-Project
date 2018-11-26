@@ -15,11 +15,24 @@
 </head>
 <body class="bg-forum">
 
+    <div id="header" class="border-5">
+        <header>
+            <nav class="main-nav menu-bg-forum border-5">
+                <ul class="my-list">
+                    <li><a class="button" href="/"><i class="fas fa-home fa-lg"></i></a></li>
+                    @await Html.PartialAsync("_MenuOptionsPartial")
+                    @await Html.PartialAsync("_LoginPartial")
+                    <li><a class="button" href="/"><i class="fas fa-question-circle fa-lg"></i></a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
     <div id="title-container">
         <h1>My Forum</h1>
     </div>
     <main>
         <div class="content border-5">
+
             <div id="header" class="border-5">
                 <header>
                     <nav class="main-nav menu-bg-forum border-5">
@@ -59,7 +72,7 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    <script src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

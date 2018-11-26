@@ -79,6 +79,10 @@ namespace Forum
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
 
             services.AddAuthorization(options =>
             {
@@ -107,9 +111,9 @@ namespace Forum
             }
 
             app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
 
             app.UseMiddleware(typeof(SeedRolesMiddleware));
