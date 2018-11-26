@@ -1,8 +1,10 @@
 ﻿namespace Forum.Web.ViewModels.Home
 {
+    using global::Forum.Models;
+
     public class IndexInfoViewModel
     {
-        public Forum.Models.Category[] Categories { get; set; }
+        public Category[] Categories { get; set; }
 
         public int TotalUsersCount { get; set; }
 

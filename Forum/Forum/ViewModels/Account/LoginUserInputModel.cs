@@ -1,6 +1,6 @@
 ﻿namespace Forum.Web.ViewModels.Account
 {
-    using Forum.Web.Attributes;
+    using global::Forum.Web.Attributes;
     using System.ComponentModel.DataAnnotations;
 
     [UserExists("Invalid login attempt.")]

@@ -1,7 +1,7 @@
 ﻿namespace Forum.Web.Controllers.Post
 {
-    using Forum.Web.Services.Contracts;
-    using Forum.Web.ViewModels.Post;
+    using global::Forum.Web.Services.Contracts;
+    using global::Forum.Web.ViewModels.Post;
     using Microsoft.AspNetCore.Mvc;
 
     public class PostController : BaseController

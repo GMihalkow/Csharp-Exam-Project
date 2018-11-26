@@ -77,8 +77,10 @@ namespace Forum
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IForumService, ForumService>();
             services.AddScoped<DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
+
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;

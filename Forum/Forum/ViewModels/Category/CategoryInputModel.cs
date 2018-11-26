@@ -1,6 +1,6 @@
 ﻿namespace Forum.Web.ViewModels.Category
 {
-    using Forum.Models;
+    using global::Forum.Models;
     using System.ComponentModel.DataAnnotations;
 
     public class CategoryInputModel

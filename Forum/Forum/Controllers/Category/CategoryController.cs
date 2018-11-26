@@ -1,8 +1,8 @@
 ﻿namespace Forum.Web.Controllers.Category
 {
-    using Forum.Models;
-    using Forum.Web.Services.Contracts;
-    using Forum.Web.ViewModels.Category;
+    using global::Forum.Models;
+    using global::Forum.Web.Services.Contracts;
+    using global::Forum.Web.ViewModels.Category;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +27,7 @@
         {
             if(ModelState.IsValid)
             {
-                ForumUser user = this.accountService.GetUser(this.User);
+                ForumUser user = accountService.GetUser(this.User);
 
                 this.categoryService.AddCategory(model, user);
 

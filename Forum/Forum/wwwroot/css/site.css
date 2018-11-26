@@ -2,15 +2,67 @@
     height: 100%;
 }
 
-ul {
-    list-style:none;
+button, input :hover {
+    cursor: pointer;
 }
 
-.center-block{
-    margin:20% auto;
-    text-align: center;
-    font-size: 20px
+button {
+    outline: none;
 }
+
+input {
+    outline: none;
+}
+
+#post-topic-button{
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding: 0px 20px;
+}
+
+ul {
+    list-style: none;
+}
+
+.p-10{
+    padding:10px;
+}
+
+#create-post-div{
+    margin:20px 10%;
+}
+
+.bottom-black-border{
+    border-bottom:black solid 1px;
+}
+
+.posts-table {  
+    border-spacing: 0;
+    background-color: burlywood;
+    border-radius: 10px 10px 0px 0px;
+    border: black solid 1px;
+}
+
+    .posts-table-head{
+        padding:20px;
+    }
+
+
+.posts-table-body{
+    padding: 20px;
+    background-color: white;
+}
+
+table tr:nth-child(even) {
+    background: #ccc;
+}
+
+    .center-block {
+        margin: 20% auto;
+        text-align: center;
+        font-size: 20px
+    }
 
 input[type="radio"] {
     display: inline;
@@ -19,14 +71,14 @@ input[type="radio"] {
     margin-bottom: 12px;
     cursor: pointer;
     font-size: 22px;
-    text-align:center;
+    text-align: center;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 
-    /* Hide the browser's default radio button */
+/* Hide the browser's default radio button */
 .input[type="radio"] input {
     position: absolute;
     opacity: 0;
@@ -35,6 +87,32 @@ input[type="radio"] {
     width: 0;
 }
 
+.display-inline {
+    display: inline;
+}
+
+.forum-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.forum-navigation-button {
+    padding: 10px;
+    font-size: 24px;
+    border: none;
+    -webkit-box-shadow: inset 0px 0px 5px black;
+    -webkit-box-reflect: above 10px black;
+    color: white;
+}
+
+    .forum-navigation-button:hover {
+        cursor: pointer;
+    }
+
+    .forum-navigation-button:focus {
+        background-color: black;
+        color: white;
+    }
 
 /* Create a custom radio button */
 .checkmark {
@@ -70,10 +148,10 @@ input[type="radio"] input:checked ~ .checkmark:after {
     display: block;
 }
 
-.post-textarea{
-    border-radius:5px;
+.post-textarea {
+    border-radius: 5px;
     font-family: Arial;
-    font-size:16px;
+    font-size: 16px;
 }
 
 /* Style the indicator (dot/circle) */
@@ -88,8 +166,8 @@ input[type="radio"] .checkmark:after {
 
 /*------*/
 
-.text-white{
-    color:white;
+.text-white {
+    color: white;
 }
 
 
@@ -98,16 +176,16 @@ input[type="radio"] .checkmark:after {
 }
 
 
-.float-right{
-    float:right;
+.float-right {
+    float: right;
 }
 
-.mt-25{
-    margin-top:25px;
+.mt-25 {
+    margin-top: 25px;
 }
 
-.rounded{
-    border-radius:5px;
+.rounded {
+    border-radius: 5px;
 }
 
 .styled-select select {
@@ -126,6 +204,7 @@ body {
     min-height: 100%;
     position: relative;
 }
+
 .dropbtn {
     color: white;
     font-weight: bold;
@@ -149,31 +228,31 @@ body {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     /*border-radius: 5px;*/
-
-
 }
 
-.border-5{
+.border-5 {
     border-radius: 5px;
 }
 
-    /* Links inside the dropdown */
-    .admin-dropdown-content a {
+/* Links inside the dropdown */
+.admin-dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
-        /* Change color of dropdown links on hover */
-        .admin-dropdown-content a:hover {
-            background-color: #d9d9d9;
-            border-radius: 5px;
-        }
+    /* Change color of dropdown links on hover */
+    .admin-dropdown-content a:hover {
+        background-color: #d9d9d9;
+        border-radius: 5px;
+    }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .admin-dropdown-content {
     display: block;
+    width:100%;
+    font-size:20px; 
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -187,26 +266,28 @@ body {
 }
 
     /* Links inside the dropdown */
-.profile-dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+    .profile-dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
         /* Change color of dropdown links on hover */
-    .profile-dropdown-content a:hover {
-        background-color: #d9d9d9;
-        border-radius: 5px;
-    }
+        .profile-dropdown-content a:hover {
+            background-color: #d9d9d9;
+            border-radius: 5px;
+        }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .profile-dropdown-content {
     display: block;
-}   
+    width: 100%;
+    font-size: 20px;
+}
 
-.m-10{
-    margin:10%;
+.m-10 {
+    margin: 10%;
 }
 
 .text-forum {
@@ -283,10 +364,11 @@ a {
     .register-container {
         margin: 0px auto;
         display: block;
-        width:100%;
+        width: 100%;
     }
 }
-    .gender-select-hide {
+
+.gender-select-hide {
     display: none;
 }
 
@@ -321,7 +403,7 @@ a {
 
 .forum-container h2 {
     margin: 1.2% 10% 1.2% 10%;
-    font-size:16px;
+    font-size: 16px;
 }
 
 .forum-container h3 {
@@ -359,11 +441,11 @@ a {
     grid-template-rows: minmax(100px auto);
 }
 
-.mx-auto{
+.mx-auto {
     margin: 0px auto;
 }
 
-.mx-5-auto{
+.mx-5-auto {
     margin: 5% auto;
 }
 
@@ -429,9 +511,10 @@ a {
         font-size: 20px;
         text-align: center;
         height: 40px;
-        display:block;
-        width:100%;
+        display: block;
+        width: 100%;
     }
+
     input[type="text"], input[type="password"], input[type="email"] {
         font-size: 20px;
         text-align: center;
@@ -440,150 +523,156 @@ a {
         width: 100%;
     }
 }
-    input {
-        background-color: white;
-    }
 
-    .forum-icon {
-        padding: 10px
-    }
+input {
+    background-color: white;
+}
 
-    .block input {
-        border: rgb(169, 169, 169) solid 1px;
-        border-radius: 5px;
-    }
+.forum-icon {
+    padding: 10px
+}
 
-    .block {
-        text-align: center;
-        padding: 10px;
-    }
+.block input {
+    border: rgb(169, 169, 169) solid 1px;
+    border-radius: 5px;
+}
 
-    .submit-button {
-        font-size: 20px;
-        font-weight: bold;
-        padding: 10px 70px;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 10px;
-    }
+.block {
+    text-align: center;
+    padding: 10px;
+}
 
-    .center-button {
-        margin: 20px 0px;
-        text-align: center;
-    }
+.button{
+    font-size:25px;
+  
+}
 
-    .post-image {
-        padding: 0.3em;
-        font-size: 2vw;
-    }
+.submit-button {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 70px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
 
-    .post-title {
-        text-align: start;
-    }
+.center-button {
+    margin: 20px 0px;
+    text-align: center;
+}
 
-    .my-list {
-        font-size: 20px;
-        font-weight: bold;
-        margin: 0;
-        list-style: none;
-        padding: 10px 60px;
-    }
+.post-image {
+    padding: 0.3em;
+    font-size: 2vw;
+}
 
-        .my-list li {
-            display: inline;
-            margin-right: 20px;
-        }
+.post-title {
+    text-align: start;
+}
 
-    .button:hover {
-        color: slategrey;
-    }
+.my-list {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    list-style: none;
+    padding: 10px 60px;
+}
 
-    .button {
-        text-decoration: none;
-        color: white;
+    .my-list li {
         display: inline;
+        margin-right: 20px;
     }
 
-    /*      ---------          */
+.button:hover {
+    color: slategrey;
+}
+
+.button {
+    text-decoration: none;
+    color: white;
+    display: inline;
+}
+
+/*      ---------          */
 #wrapper {
     position: relative;
 }
 
-    .content-container {
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-    }
+.content-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
 
 @media screen and (max-width: 1000px) {
     .content-container {
-        width:100%;
-        display:block;
+        width: 100%;
+        display: block;
     }
-
 }
-    #header {
-        padding: 0px;
-        border:none;
+
+#header {
+    padding: 0px;
+    border: none;
+}
+
+#info {
+    text-align: center;
+    background-color: #e6e6e6;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.info-block {
+    border: black;
+    border-radius: 20px;
+}
+
+#shoutbox {
+    margin: 20px;
+}
+
+    #shoutbox > h1 {
+        padding: 3%;
     }
 
-    #info {
-        text-align:center;
-        background-color: #e6e6e6;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
+.content {
+    min-height: 100%;
+    width: 70%;
+    padding-bottom: 0px;
+    margin: 0px auto;
+    background-color: #e6e6e6;
+    border: transparent solid 1px;
+    position: relative;
+    /* Height of the footer element */
+}
 
-    .info-block {   
-        border: black;
-        border-radius: 20px;
-    }
-
-    #shoutbox {
-        margin: 20px;
-    }
-
-        #shoutbox > h1 {
-            padding: 3%;
-        }
-
+@media screen and (max-width: 1000px) {
     .content {
-        min-height: 100%;
-        width: 70%;
+        width: 100%;
         padding-bottom: 0px;
         margin: 0px auto;
         background-color: #e6e6e6;
-        border: transparent solid 1px;
+        border: #262626 solid 1px;
         position: relative;
         /* Height of the footer element */
     }
+}
 
-    @media screen and (max-width: 1000px) {
-        .content {
-            width: 100%;
-            padding-bottom: 0px;
-            margin: 0px auto;
-            background-color: #e6e6e6;
-            border: #262626 solid 1px;
-            position: relative;
-            /* Height of the footer element */
-        }
-    }
+.content > h1 {
+    color: #1a1a1a;
+    text-align: center;
+}
 
-    .content > h1 {
-        color: #1a1a1a;
-        text-align: center;
-    }
+.post-title > h4 {
+    margin: 5%;
+}
 
-    .post-title > h4 {
-        margin: 5%;
-    }
-
-    #footer {
-        width: 100%;
-        position: relative;
-        bottom: 0;
-        text-align: center;
-        left: 0;
-        border-bottom: #1a1a1a solid 2px;
-    }
+#footer {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    text-align: center;
+    left: 0;
+    border-bottom: #1a1a1a solid 2px;
+}

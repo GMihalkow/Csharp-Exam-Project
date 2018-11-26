@@ -43,6 +43,28 @@
             return categories;
         }
 
+        public string[] GetCategoriesNames()
+        {
+            string[] categoriesNames =
+                this.dbService
+                .DbContext
+                .Categories
+                .Select(x => x.Name)
+                .ToArray();
+
+            return categoriesNames;
+        }
+
+        public Category GetCategory(string name)
+        {
+            Category category = 
+                this.dbService
+                .DbContext
+                .Categories
+                .FirstOrDefault(c => c.Name == name);
+
+            return category;
+        }
 
         public Category[] GetUsersCategories()
         {

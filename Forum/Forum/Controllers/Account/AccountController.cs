@@ -1,7 +1,7 @@
 ﻿namespace Forum.Web.Controllers.Account
 {
-    using Forum.Web.Services.Contracts;
-    using Forum.Web.ViewModels.Account;
+    using global::Forum.Web.Services.Contracts;
+    using global::Forum.Web.ViewModels.Account;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 

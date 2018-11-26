@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Forum.Models
+﻿namespace Forum.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class SubForum
     {
         public string Id { get; set; }
