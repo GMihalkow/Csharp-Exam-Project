@@ -1,0 +1,36 @@
+﻿@using Forum.Web.ViewModels.Category;
+@using Forum.Models;
+@model CategoryInputModel;
+
+        <div class="container mx-5-auto">
+            <h1>Create Category</h1>
+            <form class="my-form" asp-controller="Category" asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <hr class="full-width">
+                <div class="block">
+                    <label asp-for="Name" class="text-forum"></label>
+                    <input asp-for="Name" class="half-width" placeholder="Enter category name...">
+                    <div>
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                </div>
+                <div class="block">
+                    <label asp-for="Type" class="text-forum"></label>
+                    <div class="styled-select">
+                        <select asp-for="Type" class="menu-bg-forum half-width text-white" asp-items="Html.GetEnumSelectList(typeof(CategoryType))">
+                            <option class="test1" disabled selected="selected">Select type</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="center-button">
+                    <input onclick="window.history.back()" class="mt-25 submit-button menu-bg-forum" type="button" value="Cancel">
+
+                    <input class="mt-25 submit-button menu-bg-forum" type="submit" value="Create">
+                </div>
+            </form>
+        </div>
+
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

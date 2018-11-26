@@ -1,0 +1,38 @@
+﻿@using Forum.Web.ViewModels.Post;
+@using Forum.Models;
+@model PostInputModel;
+
+<div class="content mt-5 ">
+    <div class="container full-width mx-5-auto">
+        <form class="my-form" asp-controller="Post" asp-action="Create">
+            <input type="text" hidden="hidden" name="forumName" value="General" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="block">
+                <label asp-for="Title" class="text-forum">Title</label>
+                <input asp-for="Title" class="full-width" type="text" placeholder="Enter post name...">
+                <div>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+            <hr class=" full-width">
+            <div class="block">
+                <button type="button" class="emote">😀</button>
+                <label asp-for="Description" class="text-forum">Description</label>
+                <textarea asp-for="Description" class="full-width post-textarea" rows="12" cols="10">Enter post Description...</textarea>
+                <div>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <hr class="full-width">
+            <div class="center-button">
+                <input onclick="window.history.back()" class="mt-25 submit-button menu-bg-forum" type="button" value="Cancel">
+                <input class="mt-25 submit-button menu-bg-forum" type="submit" value="Post">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

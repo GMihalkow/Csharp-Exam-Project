@@ -1,0 +1,34 @@
+﻿@using Forum.Web.ViewModels.Account
+@model LoginUserInputModel;
+
+<div class="container mx-5-auto">
+    <h1>Login</h1>
+    <form class="my-form" asp-controller="Account" asp-action="Login">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <hr class="full-width">
+        <div class="block">
+            <label asp-for="Username" class="text-forum">Username</label>
+            <input asp-for="Username" class="half-width" placeholder="Enter username...">
+            <div>
+                <span class="text-danger" asp-validation-for="Username"></span>
+            </div>
+        </div>
+        <div class="block">
+            <label class="text-forum" asp-for="Password">Password</label>
+            <input class="half-width" asp-for="Password" placeholder="Enter password...">
+            <div>
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+        </div>
+        <div class="center-button">
+            <input class="submit-button menu-bg-forum" type="submit" value="Login">
+        </div>
+    </form>
+
+    <p><em> Dont have an account? You can register <a href="/account/register">here</a>!</em></p>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
