@@ -8,6 +8,8 @@
     {
         void Add(ForumFormInputModel model);
 
-        ICollection<Post> GetPostsByForum(string id);
+        ForumPostsInputModel GetPostsByForum(string id);
+
+        SubForum GetForum(string id);
     }
 }

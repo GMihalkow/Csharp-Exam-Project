@@ -78,6 +78,7 @@ namespace Forum
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IForumService, ForumService>();
+            services.AddScoped<IPostService, PostService>();
             services.AddScoped<DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 

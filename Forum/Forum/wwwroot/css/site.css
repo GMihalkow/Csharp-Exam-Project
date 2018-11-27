@@ -21,6 +21,10 @@ input {
     padding: 0px 20px;
 }
 
+.m-0{
+    margin:0px;
+}
+
 ul {
     list-style: none;
 }
@@ -44,10 +48,10 @@ ul {
     border: black solid 1px;
 }
 
-    .posts-table-head{
-        padding:20px;
-    }
-
+.posts-table-head {
+    padding: 20px;
+    font-size: 20px;
+}
 
 .posts-table-body{
     padding: 20px;
@@ -446,15 +450,13 @@ a {
 }
 
 .mx-5-auto {
-    margin: 5% auto;
+    margin: 0% auto 5% auto;
 }
 
 .container {
     background-position: center;
     min-height: inherit;
-    /*margin:5%;*/
     font-size: 18px;
-    padding: 20px;
 }
 
     .container h1 {
@@ -630,6 +632,7 @@ input {
 
 #shoutbox {
     margin: 20px;
+    padding: 10px;
 }
 
     #shoutbox > h1 {

@@ -1,47 +1,34 @@
-﻿<div id="create-post-div" >
-    <button id="post-topic-button" class="menu-bg-forum"><h3><i class="fas fa-plus"></i> Post a Topic</h3></button>
+﻿@using Forum.Web.ViewModels.Forum;
+@model ForumPostsInputModel;
+
+<div id="shoutbox" class="menu-bg-forum text-center">
+    <h1 class="m-0"><a id="main-heading-text" href="#">Category: @Model.Forum.Category.Name</a></h1>
+    <h2 class="m-0"><a id="main-heading-text" href="#">Forum: @Model.Forum.Name</a></h2>
 </div>
-
-
+<div id="create-post-div">
+    <button onclick="location.href='/Post/Create?id=@Model.Forum.Id'" id="post-topic-button" class="menu-bg-forum"><h3><i class="fas fa-plus"></i> Post a Topic</h3></button>
+</div>
 <table class="two-thirds-width posts-table mx-5-auto">
-    <thead class="posts-table-head">
+    <thead class="posts-table-head text-forum">
         <tr>
             <th class="p-10 bottom-black-border"><h2>#</h2></th>
-            <th class="p-10 bottom-black-border"><h2>Test</h2></th>
-            <th class="p-10 bottom-black-border"><h2>Test</h2></th>
-            <th class="p-10 bottom-black-border"><h2>Test</h2></th>
+            <th class="p-10 bottom-black-border"><h2>Title</h2></th>
+            <th class="p-10 bottom-black-border"><h2>Statistics</h2></th>
         </tr>
     </thead>
     <tbody class="posts-table-body text-center">
-        <tr>
-            <td class="p-10 text-forum "><i class="far fa-list-alt fa-lg"></i></td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-        </tr>
-        <tr>
-            <td class="p-10 text-forum "><i class="far fa-list-alt fa-lg"></i></td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-        </tr>
-        <tr>
-            <td class="p-10 text-forum "><i class="far fa-list-alt fa-lg"></i></td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-        </tr>
-        <tr>
-            <td class="p-10 text-forum "><i class="far fa-list-alt fa-lg"></i></td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-        </tr>
-        <tr>
-            <td class="p-10 text-forum "><i class="far fa-list-alt fa-lg"></i></td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-            <td class="p-10 text-forum">test</td>
-        </tr>
+        @foreach (var post in Model.Posts)
+        {
+            <tr>
+                <td class="p-10 text-forum"><i class="fab fa-forumbee fa-3x"></i></td>
+                <td class="p-10 text-forum"><h2 class="m-0">@post.Name</h2></td>
+                <td class="p-10 text-forum">
+                    <div>
+                        <p class="m-0">Views: @post.Views</p>
+                        <p class="m-0">Started by: @post.Author.UserName</p>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

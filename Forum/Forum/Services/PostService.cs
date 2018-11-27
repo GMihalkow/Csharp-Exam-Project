@@ -4,7 +4,6 @@
     using Forum.Web.Services.Contracts;
     using Forum.Web.ViewModels.Post;
     using System;
-    using System.Security.Claims;
 
     public class PostService : IPostService
     {
@@ -25,10 +24,11 @@
                 Views = 0,
                 Author = user,
                 AuthorId = user.Id,
-              
+                ForumId = model.ForumId
             };
-            //TODO: Finish POST Topics
-            throw new System.NotImplementedException();
+
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.SaveChanges();
         }
     }
 }
