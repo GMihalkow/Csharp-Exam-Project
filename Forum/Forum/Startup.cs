@@ -10,11 +10,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Forum.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Forum.Web;
-using Forum.Web.Services.Contracts;
-using Forum.Web.Services;
 using Forum.Web.Middlewares;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Forum.Services.Account;
+using AutoMapper;
+using Forum.Services.Forum;
+using Forum.Services.Post.Contracts;
+using Forum.Web.Services.Contracts;
+using Forum.Services.Category.Contracts;
+using Forum.Services.Category;
+using Forum.Services.Forum.Contracts;
+using Forum.Services.Db;
 
 namespace Forum
 {
@@ -56,7 +61,9 @@ namespace Forum
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<ForumDbContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
             .AddRazorPagesOptions(options =>
             {
                 options.AllowAreas = true;
@@ -71,6 +78,7 @@ namespace Forum
                 options.AccessDeniedPath = $"/Account/AccessDenied";
             });
 
+            //AntiforgeryToken 
             services.AddAntiforgery();
 
             //Registrating services
@@ -81,6 +89,7 @@ namespace Forum
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
+            services.AddAutoMapper();
 
             services.AddResponseCompression(options =>
             {

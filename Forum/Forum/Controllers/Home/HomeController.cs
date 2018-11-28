@@ -6,6 +6,7 @@
     using Forum.Web.ViewModels.Home;
     using Forum.Models;
     using System.Linq;
+    using Forum.Services.Category.Contracts;
 
     public class HomeController : BaseController
     {

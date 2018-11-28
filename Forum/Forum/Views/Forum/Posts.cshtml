@@ -6,14 +6,18 @@
     <h2 class="m-0"><a id="main-heading-text" href="#">Forum: @Model.Forum.Name</a></h2>
 </div>
 <div id="create-post-div">
-    <button onclick="location.href='/Post/Create?id=@Model.Forum.Id'" id="post-topic-button" class="menu-bg-forum"><h3><i class="fas fa-plus"></i> Post a Topic</h3></button>
+    <button onclick="location.href='/Post/Create?id=@Model.Forum.Id'" id="post-topic-button" class="menu-bg-forum"><h3 class="m-10px"><i class="fas fa-plus"></i> Post a Topic</h3></button>
+    @if (this.User.IsInRole("Admin"))
+    {
+        @await Html.PartialAsync("_AdminOptionsPartial");
+    }
 </div>
 <table class="two-thirds-width posts-table mx-5-auto">
     <thead class="posts-table-head text-forum">
         <tr>
-            <th class="p-10 bottom-black-border"><h2>#</h2></th>
-            <th class="p-10 bottom-black-border"><h2>Title</h2></th>
-            <th class="p-10 bottom-black-border"><h2>Statistics</h2></th>
+            <th class="p-10 bottom-black-border"><h2 class="m-10px">#</h2></th>
+            <th class="p-10 bottom-black-border"><h2 class="m-10px">Title</h2></th>
+            <th class="p-10 bottom-black-border"><h2 class="m-10px">Statistics</h2></th>
         </tr>
     </thead>
     <tbody class="posts-table-body text-center">

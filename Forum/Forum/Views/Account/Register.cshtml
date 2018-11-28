@@ -1,8 +1,10 @@
 ﻿@using Forum.Web.ViewModels.Account
 @model RegisterUserViewModel
 
+<div id="shoutbox" class="menu-bg-forum text-center">
+    <h1 class="m-0"><a id="main-heading-text" href="#">Register</a></h1>
+</div>
 <div class="container mx-5-auto">
-    <h1>Register</h1>
     <form class="my-form" asp-controller="Account" asp-action="Register">
         <div asp-validation-summary="All" class="text-danger"></div>
         <hr class="full-width">
@@ -31,10 +33,10 @@
 
         </div>
         <div class="block">
-            <label asp-for="Country" class="text-forum"></label>
-            <input asp-for="Country" class="half-width" placeholder="Enter country name...">
+            <label asp-for="Location" class="text-forum"></label>
+            <input asp-for="Location" class="half-width" placeholder="Enter country name...">
             <div>
-                <span class="text-danger" asp-validation-for="Country"></span>
+                <span class="text-danger" asp-validation-for="Location"></span>
             </div>
         </div>
 

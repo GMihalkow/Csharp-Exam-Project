@@ -1,14 +1,13 @@
-﻿namespace Forum.Web.Services
+﻿namespace Forum.Services.Account
 {
     using System;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Forum.Models;
-    using Forum.Web.Services.Contracts;
-    using Forum.Web.ViewModels.Account;
+    using global::Forum.Models;
+    using global::Forum.Services.Db;
+    using global::Forum.Web.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
 
     public class AccountService : IAccountService
     {
@@ -23,28 +22,25 @@
             this.dbService = dbService;
         }
 
-        public IActionResult LoginUser(LoginUserInputModel model)
+        public async void LoginUser(ForumUser model, string password)
         {
-            return this.OnPostLoginAsync(model).Result;
+            await this.OnPostLoginAsync(model, password);
         }
 
-        public IActionResult RegisterUser(RegisterUserViewModel model)
+        public void RegisterUser(ForumUser model, string password)
         {
-            return this.OnPostRegisterAsync(model).Result;
+            this.OnPostRegisterAsync(model, password);
         }
 
-        public IActionResult LogoutUser()
+        public async void LogoutUser()
         {
-            return this.OnGetLogout().Result;
+            await this.OnGetLogout();
         }
 
-        public async Task<IActionResult> OnGetLogout()
+        public async Task OnGetLogout()
         {
             await signInManager.SignOutAsync();
 
-            var result = new RedirectResult("/");
-
-            return result;
         }
 
         public async Task<bool> EmailExists(string email)
@@ -61,39 +57,33 @@
             }
         }
 
-        public async Task<IActionResult> OnPostRegisterAsync(RegisterUserViewModel model)
+        public IdentityResult OnPostRegisterAsync(ForumUser model, string password)
         {
-            var user = new ForumUser { UserName = model.Username, Gender = model.Gender, Location = model.Country, Email = model.Email, RegisteredOn = DateTime.UtcNow, LastActiveOn = DateTime.UtcNow };
-
-            var result = await userManager.CreateAsync(user, model.Password);
+            var result = userManager.CreateAsync(model, password).GetAwaiter().GetResult();
             if (result.Succeeded)
             {
                 if (this.dbService.DbContext.Users.Count() == 1)
                 {
-                    await this.userManager.AddToRoleAsync(user, "Admin");
+                    this.userManager.AddToRoleAsync(model, "Admin").GetAwaiter().GetResult();
                 }
                 else
                 {
-                    await this.userManager.AddToRoleAsync(user, "User");
+                    this.userManager.AddToRoleAsync(model, "User").GetAwaiter().GetResult();
                 }
 
-                await signInManager.SignInAsync(user, isPersistent: false);
+                signInManager.SignInAsync(model, isPersistent: false).GetAwaiter().GetResult();
             }
 
-            var actionResult = new RedirectResult("/");
-
-            return actionResult;
+            return result;
         }
 
-        public async Task<IActionResult> OnPostLoginAsync(LoginUserInputModel model)
+        public async Task<SignInResult> OnPostLoginAsync(ForumUser model, string password)
         {
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: true);
+            var result = await signInManager.PasswordSignInAsync(model.UserName, password, false, lockoutOnFailure: true);
 
-            var actionResult = new RedirectResult("/");
-
-            return actionResult;
+            return result;
         }
 
         public bool UserExists(string username)
@@ -147,8 +137,8 @@
                 .FirstOrDefault();
 
             string username = string.Empty;
-            if(user != null)
-            { 
+            if (user != null)
+            {
                 username = user.UserName;
             }
 

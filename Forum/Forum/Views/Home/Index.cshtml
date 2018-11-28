@@ -9,6 +9,7 @@
             @foreach (var category in Model.Categories)
             {
             <div class="forum-container">
+                <i class="fas fa-pen fa-lg float-right m-10px"></i> 
                 <h2>@category.Name</h2>
                 <div class="forum-information-container">
                     <div class="forum-content">
@@ -38,7 +39,7 @@
                                     <div class="post-title">
                                         <div class="content-container">
                                             <div>
-                                                <a href="/Forum/Posts?Id=@forum.Id"><h3>@forum.Name</h3></a>
+                                                <a href="/Forum/Posts?Id=@forum.Id"><h3 class="text-forum">@forum.Name</h3></a>
                                             </div>
                                             <div>
                                                 <div>

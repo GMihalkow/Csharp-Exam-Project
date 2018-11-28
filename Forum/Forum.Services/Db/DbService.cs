@@ -1,6 +1,6 @@
-﻿namespace Forum.Web.Services
+﻿namespace Forum.Services.Db
 {
-    using Forum.Data;
+    using global::Forum.Data;
 
     public class DbService 
     {

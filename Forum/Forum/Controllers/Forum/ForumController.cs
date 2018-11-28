@@ -1,5 +1,9 @@
 ﻿namespace Forum.Web.Controllers.Forum
 {
+    using AutoMapper;
+    using global::Forum.Models;
+    using global::Forum.Services.Category.Contracts;
+    using global::Forum.Services.Forum.Contracts;
     using global::Forum.Web.Services.Contracts;
     using global::Forum.Web.ViewModels.Forum;
     using Microsoft.AspNetCore.Authorization;
@@ -8,12 +12,14 @@
     [Authorize("Admin")]
     public class ForumController : BaseController
     {
+        private readonly IMapper mapper;
         private readonly ICategoryService categoryService;
         private readonly IForumService forumService;
 
-        public ForumController(IAccountService accountService, ICategoryService categoryService, IForumService forumService)
+        public ForumController(IMapper mapper, IAccountService accountService, ICategoryService categoryService, IForumService forumService)
             : base(accountService)
         {
+            this.mapper = mapper;
             this.categoryService = categoryService;
             this.forumService = forumService;
         }
@@ -35,7 +41,11 @@
         {
             if(ModelState.IsValid)
             {
-                this.forumService.Add(model);
+                var forum =
+                    this.mapper
+                    .Map<SubForum>(model);
+
+                this.forumService.Add(forum, model.ForumModel.Category);
 
                 return this.Redirect("/");
             }
@@ -48,8 +58,14 @@
         [AllowAnonymous]
         public IActionResult Posts(string id)
         {
-            var model = this.forumService.GetPostsByForum(id);
+            var forum = this.forumService.GetPostsByForum(id);
 
+            var model = new ForumPostsInputModel
+            {
+                Forum = forum,
+                Posts = forum.Posts
+            };
+            
             return this.View(model);
         }
     }

@@ -1,10 +1,25 @@
-﻿
-<div class="content-container m-10">
-    <div>
-        <h1 class="text-forum">Profile picture</h1>
-        <img src="~/images/showcase.jpg" height="250" width="250" alt="image" />
-    </div>
-    <div>
-        <h1 class="text-forum">TEST</h1>
+﻿<div>
+    <div class="profile-container m-5">
+        <div>
+            <i class="fas fa-user-alt fa-10x text-forum"></i>
+        </div>
+        <div>
+            <nav class="main-nav menu-bg-forum border-5">
+                <div class="forum-navigation text-center">
+                    <div class="display-inline forum-navigation.button">
+                        <button onclick="location.href='/'" class="forum-navigation-button menu-bg-forum full-width">My Info</button>
+                    </div>
+                    <div class="display-inline forum-navigation.button">
+                        <button onclick="location.href='/'" class="forum-navigation-button menu-bg-forum full-width">Statistics</button>
+                    </div>
+                    <div class="display-inline forum-navigation.button">
+                        <button class="forum-navigation-button menu-bg-forum full-width">Settings</button>
+                    </div>
+                    <div class="display-inline">
+                        <button class="forum-navigation-button menu-bg-forum full-width" onclick="location.href='/Account/Logout'">Logout</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
     </div>
 </div>

@@ -9,7 +9,6 @@
 
         public BaseController(IAccountService accountService)
         {
-            //TODO: get insparation from other sites for design, specially for forms
             this.accountService = accountService;
         }
     }

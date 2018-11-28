@@ -1,0 +1,14 @@
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\bin\Debug\netcoreapp2.1\Forum.Services.deps.json
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\bin\Debug\netcoreapp2.1\Forum.Services.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\obj\Debug\netcoreapp2.1\Forum.Services.csprojAssemblyReference.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\obj\Debug\netcoreapp2.1\Forum.Services.csproj.CoreCompileInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\obj\Debug\netcoreapp2.1\Forum.Services.AssemblyInfoInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\obj\Debug\netcoreapp2.1\Forum.Services.AssemblyInfo.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\bin\Debug\netcoreapp2.1\Forum.Services.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\bin\Debug\netcoreapp2.1\Forum.Data.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\bin\Debug\netcoreapp2.1\Forum.Models.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\bin\Debug\netcoreapp2.1\Forum.Data.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\bin\Debug\netcoreapp2.1\Forum.Models.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\obj\Debug\netcoreapp2.1\Forum.Services.csproj.CopyComplete
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\obj\Debug\netcoreapp2.1\Forum.Services.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services\obj\Debug\netcoreapp2.1\Forum.Services.pdb

@@ -1,6 +1,8 @@
 ﻿namespace Forum.Web.Controllers.Category
 {
+    using AutoMapper;
     using global::Forum.Models;
+    using global::Forum.Services.Category.Contracts;
     using global::Forum.Web.Services.Contracts;
     using global::Forum.Web.ViewModels.Category;
     using Microsoft.AspNetCore.Authorization;
@@ -9,11 +11,13 @@
     [Authorize("Admin")]
     public class CategoryController : BaseController
     {
+        private readonly IMapper mapper;
         private readonly ICategoryService categoryService;
 
-        public CategoryController(IAccountService accountService, ICategoryService categoryService) 
+        public CategoryController(IMapper mapper, IAccountService accountService, ICategoryService categoryService) 
             : base(accountService)
         {
+            this.mapper = mapper;
             this.categoryService = categoryService;
         }
 
@@ -27,9 +31,11 @@
         {
             if(ModelState.IsValid)
             {
-                ForumUser user = accountService.GetUser(this.User);
+                var user = this.accountService.GetUser(this.User);
 
-                this.categoryService.AddCategory(model, user);
+                var category = this.mapper.Map<Category>(model);
+
+                this.categoryService.AddCategory(category, user);
 
                 return this.Redirect("/");
             }

@@ -5,6 +5,7 @@
         textarea.val(textarea.val() + e.target.innerText);
     });
 
+//TODO: Finish input index implementing
 $('.text')
     .off('click')
     .click(function (e) {

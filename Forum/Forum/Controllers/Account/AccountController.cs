@@ -1,5 +1,7 @@
 ﻿namespace Forum.Web.Controllers.Account
 {
+    using AutoMapper;
+    using global::Forum.Models;
     using global::Forum.Web.Services.Contracts;
     using global::Forum.Web.ViewModels.Account;
     using Microsoft.AspNetCore.Authorization;
@@ -7,8 +9,11 @@
 
     public class AccountController : BaseController
     {
-        public AccountController(IAccountService accountService) : base(accountService)
+        private readonly IMapper mapper;
+
+        public AccountController(IMapper mapper,IAccountService accountService) : base(accountService)
         {
+            this.mapper = mapper;
         }
 
         public IActionResult Login()
@@ -19,10 +24,14 @@
         [HttpPost]
         public IActionResult Login(LoginUserInputModel model)
         {
+            ForumUser user =
+                this.mapper
+                .Map<ForumUser>(model);
+
             if (ModelState.IsValid)
             {
-                var result = this.accountService.LoginUser(model);
-                return result;
+                this.accountService.LoginUser(user, model.Password);
+                return this.Redirect("/");
             }
             else
             {
@@ -38,11 +47,15 @@
         [HttpPost]
         public IActionResult Register(RegisterUserViewModel model)
         {
+            var user =
+                this.mapper
+                .Map<ForumUser>(model);
+
             if (ModelState.IsValid)
             {
-                var result = this.accountService.RegisterUser(model);
+                this.accountService.RegisterUser(user, model.Password);
 
-                return result;
+                return this.Redirect("/");
             }
             else
             {
@@ -59,7 +72,7 @@
 
         public IActionResult Dismiss()
         {
-            var result = this.accountService.LogoutUser();
+            this.accountService.LogoutUser();
 
             return this.Redirect("/Account/Logout");
         }

@@ -1,8 +1,6 @@
 ﻿namespace Forum.Web.Services.Contracts
 {
     using Forum.Models;
-    using Forum.Web.ViewModels.Account;
-    using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -12,9 +10,9 @@
 
         ForumUser GetUser(ClaimsPrincipal principal);
 
-        IActionResult LoginUser(LoginUserInputModel model);
+        void LoginUser(ForumUser model, string password);
 
-        IActionResult LogoutUser();
+        void LogoutUser();
 
         string GetNewestUser();
 
@@ -24,6 +22,6 @@
 
         Task<bool> UserWithPasswordExists(string username, string password);
 
-        IActionResult RegisterUser(RegisterUserViewModel model);
+        void RegisterUser(ForumUser model, string password);
     }
 }

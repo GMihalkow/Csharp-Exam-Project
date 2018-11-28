@@ -1,8 +1,8 @@
-﻿namespace Forum.Web.Services
+﻿namespace Forum.Services.Category
 {
-    using Forum.Models;
-    using Forum.Web.Services.Contracts;
-    using Forum.Web.ViewModels.Category;
+    using global::Forum.Models;
+    using global::Forum.Services.Category.Contracts;
+    using global::Forum.Services.Db;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
@@ -16,18 +16,13 @@
             this.dbService = dbService;
         }
 
-        public void AddCategory(CategoryInputModel model, ForumUser user)
+        public void AddCategory(Category model, ForumUser user)
         {
-            Category category = new Category
-            {
-                Name = model.Name,
-                CreatedOn = DateTime.UtcNow,
-                Type = model.Type,
-                User = user,
-                UserId = user.Id
-            };
+            model.CreatedOn = DateTime.UtcNow;
+            model.User = user;
+            model.UserId = user.Id;
 
-            this.dbService.DbContext.Categories.Add(category);
+            this.dbService.DbContext.Categories.Add(model);
             this.dbService.DbContext.SaveChanges();
         }
 

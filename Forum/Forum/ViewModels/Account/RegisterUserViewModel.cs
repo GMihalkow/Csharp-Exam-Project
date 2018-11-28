@@ -17,7 +17,7 @@
 
         [Required(ErrorMessage = "You must enter a country name.")]
         [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 2)]
-        public string Country { get; set; }
+        public string Location { get; set; }
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "You must enter a password.")]

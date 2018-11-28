@@ -1,7 +1,6 @@
-﻿namespace Forum.Web.Services.Contracts
+﻿namespace Forum.Services.Category.Contracts
 {
-    using Forum.Models;
-    using Forum.Web.ViewModels.Category;
+    using global::Forum.Models;
 
     public interface ICategoryService
     {
@@ -9,7 +8,7 @@
 
         string[] GetCategoriesNames();
 
-        void AddCategory(CategoryInputModel model, ForumUser user);
+        void AddCategory(Category model, ForumUser user);
 
         Category[] GetAllCategories();
 
