@@ -10,7 +10,7 @@
         public string Title { get; set; }
 
         [Required]
-        [StringLength(50, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
+        [StringLength(500, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
         public string Description { get; set; }
 
         public string ForumId { get; set; }

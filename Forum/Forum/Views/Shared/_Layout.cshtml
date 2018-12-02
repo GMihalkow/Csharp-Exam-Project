@@ -14,41 +14,52 @@
     </environment>
 </head>
 <body class="bg-forum">
-
     <div id="header" class="border-5">
         <header>
             <nav class="main-nav menu-bg-forum border-5">
                 <ul class="my-list">
-                    <li>@await Html.PartialAsync("_LoginPartial")</li>
+                    <li class="float-left">
+                        <a class="button" href="/"><i class="fas fa-home fa-lg"></i></a>
+                    </li>
+                    <li class="float-left">
+                        <a class="button" href="/"><i class="fas fa-question-circle fa-lg"></i></a>
+                    </li>
+                    <li class="float-left">
+                        @await Html.PartialAsync("_MenuOptionsPartial")
+                    </li>
+                    <li>
+                        @await Html.PartialAsync("_LoginPartial")
+                    </li>
                 </ul>
             </nav>
         </header>
     </div>
-    <div id="title-container">
-        <h1>My Forum</h1>
-    </div>
+    @*<div id="title-container">
+            <h1>My Forum</h1>
+        </div>*@
     <main>
-        <div class="content border-5">
-            <div id="header" class="border-5">
-                <header>
-                    <nav class="main-nav menu-bg-forum border-5">
-                        <div class="forum-navigation text-center">
-                            <div class="display-inline forum-navigation.button">
-                                <button onclick="location.href='/'" class="forum-navigation-button menu-bg-forum full-width"><i class="fas fa-home fa-lg"></i></button>
+        <div class="content">
+
+            @*<div id="header" class="border-5">
+                    <header>
+                        <nav class="main-nav menu-bg-forum border-5">
+                            <div class="forum-navigation text-center">
+                                <div class="display-inline forum-navigation.button">
+                                    <button onclick="location.href='/'" class="forum-navigation-button menu-bg-forum full-width"><i class="fas fa-home fa-lg"></i></button>
+                                </div>
+                                <div class="display-inline forum-navigation.button dropdown">
+                                    @await Html.PartialAsync("_MenuOptionsPartial")
+                                </div>
+                                <div class="display-inline forum-navigation.button">
+                                    <button class="forum-navigation-button menu-bg-forum full-width"><i class="fas fa-question-circle"></i></button>
+                                </div>
+                                <div class="display-inline">
+                                    <button class="forum-navigation-button menu-bg-forum full-width"><i class="fas fa-clipboard-list"></i></button>
+                                </div>
                             </div>
-                            <div class="display-inline forum-navigation.button dropdown">
-                                @await Html.PartialAsync("_MenuOptionsPartial")
-                            </div>
-                            <div class="display-inline forum-navigation.button">
-                                <button class="forum-navigation-button menu-bg-forum full-width"><i class="fas fa-question-circle"></i></button>
-                            </div>
-                            <div class="display-inline">
-                                <button class="forum-navigation-button menu-bg-forum full-width"><i class="fas fa-clipboard-list"></i></button>
-                            </div>
-                        </div>
-                    </nav>
-                </header>
-            </div>
+                        </nav>
+                    </header>
+                </div>*@
             @RenderBody()
 
             <div id="footer" class="border-5">

@@ -1,6 +1,6 @@
 ﻿namespace Forum.Web.ViewModels.Account
 {
-    using global::Forum.Web.Attributes;
+    using global::Forum.Attributes;
     using System.ComponentModel.DataAnnotations;
 
     public class RegisterUserViewModel

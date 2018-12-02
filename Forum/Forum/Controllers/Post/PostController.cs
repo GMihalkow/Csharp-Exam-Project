@@ -2,9 +2,9 @@
 {
     using AutoMapper;
     using global::Forum.Models;
+    using global::Forum.Services.Account.Contracts;
     using global::Forum.Services.Forum.Contracts;
     using global::Forum.Services.Post.Contracts;
-    using global::Forum.Web.Services.Contracts;
     using global::Forum.Web.ViewModels.Post;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

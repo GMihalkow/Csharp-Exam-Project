@@ -2,11 +2,11 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Forum.Web.Controllers;
-    using Forum.Web.Services.Contracts;
     using Forum.Web.ViewModels.Home;
     using Forum.Models;
     using System.Linq;
     using Forum.Services.Category.Contracts;
+    using Forum.Services.Account.Contracts;
 
     public class HomeController : BaseController
     {
@@ -35,7 +35,7 @@
                 Categories = categories,
                 TotalUsersCount = this.accountService.GetUsersCount(),
                 NewestUser = this.accountService.GetNewestUser(),
-                TotalPostsCount = 0
+                TotalPostsCount = this.accountService.GetTotalPostsCount()
             };
 
             return View(viewModel);

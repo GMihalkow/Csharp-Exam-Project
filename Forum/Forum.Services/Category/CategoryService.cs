@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class CategoryService : ICategoryService
     {
@@ -16,14 +17,14 @@
             this.dbService = dbService;
         }
 
-        public void AddCategory(Category model, ForumUser user)
+        public async Task<int> AddCategory(Category model, ForumUser user)
         {
             model.CreatedOn = DateTime.UtcNow;
             model.User = user;
             model.UserId = user.Id;
 
-            this.dbService.DbContext.Categories.Add(model);
-            this.dbService.DbContext.SaveChanges();
+            await this.dbService.DbContext.Categories.AddAsync(model);
+            return await this.dbService.DbContext.SaveChangesAsync();
         }
 
         public Category[] GetAllCategories()
@@ -38,14 +39,14 @@
             return categories;
         }
 
-        public string[] GetCategoriesNames()
+        public async Task<string[]> GetCategoriesNames()
         {
             string[] categoriesNames =
-                this.dbService
+                await this.dbService
                 .DbContext
                 .Categories
                 .Select(x => x.Name)
-                .ToArray();
+                .ToArrayAsync();
 
             return categoriesNames;
         }

@@ -15,11 +15,11 @@ using Forum.Services.Account;
 using AutoMapper;
 using Forum.Services.Forum;
 using Forum.Services.Post.Contracts;
-using Forum.Web.Services.Contracts;
 using Forum.Services.Category.Contracts;
 using Forum.Services.Category;
 using Forum.Services.Forum.Contracts;
 using Forum.Services.Db;
+using Forum.Services.Account.Contracts;
 
 namespace Forum
 {

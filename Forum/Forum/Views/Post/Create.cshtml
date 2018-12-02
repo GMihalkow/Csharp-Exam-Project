@@ -10,7 +10,7 @@
     <div class="container full-width mx-5-auto">
         <form class="my-form" asp-controller="Post" asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="text" hidden="hidden" name="forumId" value="@Model.ForumId" />
+            <input type="hidden" hidden="hidden" name="forumId" value="@Model.ForumId" />
             <div class="block">
                 <label asp-for="Title" class="text-forum">Title</label>
                 <input asp-for="Title" class="full-width" type="text" placeholder="Enter post name...">

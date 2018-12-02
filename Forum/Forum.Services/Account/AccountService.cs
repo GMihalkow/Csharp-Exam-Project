@@ -5,8 +5,8 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using global::Forum.Models;
+    using global::Forum.Services.Account.Contracts;
     using global::Forum.Services.Db;
-    using global::Forum.Web.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
 
     public class AccountService : IAccountService
@@ -17,6 +17,7 @@
 
         public AccountService(UserManager<ForumUser> userManager, SignInManager<ForumUser> signInManager, DbService dbService)
         {
+            //TODO: Clear dll refferences and use only Nuget packages. its the right way
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.dbService = dbService;
@@ -59,6 +60,7 @@
 
         public IdentityResult OnPostRegisterAsync(ForumUser model, string password)
         {
+            model.RegisteredOn = DateTime.UtcNow;
             var result = userManager.CreateAsync(model, password).GetAwaiter().GetResult();
             if (result.Succeeded)
             {
@@ -143,6 +145,16 @@
             }
 
             return username;
+        }
+
+        public int GetTotalPostsCount()
+        {
+            int totalPostsCount =
+                this.dbService
+                .DbContext
+                .Posts.Count();
+
+            return totalPostsCount;
         }
     }
 }

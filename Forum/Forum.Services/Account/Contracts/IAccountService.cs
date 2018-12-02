@@ -1,12 +1,14 @@
-﻿namespace Forum.Web.Services.Contracts
+﻿namespace Forum.Services.Account.Contracts
 {
-    using Forum.Models;
+    using global::Forum.Models;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     public interface IAccountService
     {
         int GetUsersCount();
+
+        int GetTotalPostsCount();
 
         ForumUser GetUser(ClaimsPrincipal principal);
 

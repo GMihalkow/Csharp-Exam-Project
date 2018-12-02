@@ -1,14 +1,15 @@
 ﻿namespace Forum.Services.Category.Contracts
 {
     using global::Forum.Models;
+    using System.Threading.Tasks;
 
     public interface ICategoryService
     {
         Category GetCategory(string name);
 
-        string[] GetCategoriesNames();
+        Task<string[]> GetCategoriesNames();
 
-        void AddCategory(Category model, ForumUser user);
+        Task<int> AddCategory(Category model, ForumUser user);
 
         Category[] GetAllCategories();
 

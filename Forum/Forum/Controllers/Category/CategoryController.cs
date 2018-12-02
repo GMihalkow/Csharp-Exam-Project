@@ -2,8 +2,8 @@
 {
     using AutoMapper;
     using global::Forum.Models;
+    using global::Forum.Services.Account.Contracts;
     using global::Forum.Services.Category.Contracts;
-    using global::Forum.Web.Services.Contracts;
     using global::Forum.Web.ViewModels.Category;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -29,13 +29,15 @@
         [HttpPost]
         public IActionResult Create(CategoryInputModel model)
         {
+            /*TODO: Creata a separete library for the view models 
+            and make controllers to know only about them, not the Forum.Models*/
             if(ModelState.IsValid)
             {
                 var user = this.accountService.GetUser(this.User);
 
                 var category = this.mapper.Map<Category>(model);
 
-                this.categoryService.AddCategory(category, user);
+                var result = this.categoryService.AddCategory(category, user).GetAwaiter().GetResult();
 
                 return this.Redirect("/");
             }

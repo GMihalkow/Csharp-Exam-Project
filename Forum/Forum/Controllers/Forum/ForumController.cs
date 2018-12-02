@@ -2,9 +2,9 @@
 {
     using AutoMapper;
     using global::Forum.Models;
+    using global::Forum.Services.Account.Contracts;
     using global::Forum.Services.Category.Contracts;
     using global::Forum.Services.Forum.Contracts;
-    using global::Forum.Web.Services.Contracts;
     using global::Forum.Web.ViewModels.Forum;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -26,11 +26,11 @@
 
         public IActionResult Create()
         {
-            var names = this.categoryService.GetCategoriesNames();
+            var names =  this.categoryService.GetCategoriesNames();
 
             ForumFormInputModel model = new ForumFormInputModel
             {
-                Categories = names
+                Categories = names.GetAwaiter().GetResult()
             };
             
             return this.View(model);

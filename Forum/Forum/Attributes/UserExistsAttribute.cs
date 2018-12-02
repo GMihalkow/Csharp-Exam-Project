@@ -1,6 +1,6 @@
-﻿namespace Forum.Web.Attributes
+﻿namespace Forum.Attributes
 {
-    using Forum.Web.Services.Contracts;
+    using Forum.Services.Account.Contracts;
     using Forum.Web.ViewModels.Account;
     using System;
     using System.ComponentModel.DataAnnotations;
