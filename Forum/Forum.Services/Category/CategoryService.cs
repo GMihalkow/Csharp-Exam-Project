@@ -1,8 +1,12 @@
 ﻿namespace Forum.Services.Category
 {
+    using AutoMapper;
     using global::Forum.Models;
-    using global::Forum.Services.Category.Contracts;
     using global::Forum.Services.Db;
+    using global::Forum.Services.Interfaces.Category;
+    using global::Forum.Services.Interfaces.Db;
+    using global::Forum.ViewModels.Category;
+    using global::Forum.ViewModels.Interfaces.Category;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
@@ -10,33 +14,39 @@
 
     public class CategoryService : ICategoryService
     {
-        private readonly DbService dbService;
+        private readonly IMapper mapper;
+        private readonly IDbService dbService;
 
-        public CategoryService(DbService dbService)
+        public CategoryService(IMapper mapper,  IDbService dbService)
         {
+            this.mapper = mapper;
             this.dbService = dbService;
         }
-
-        public async Task<int> AddCategory(Category model, ForumUser user)
+        
+        public async Task<int> AddCategory(ICategoryInputModel model, ForumUser user)
         {
-            model.CreatedOn = DateTime.UtcNow;
-            model.User = user;
-            model.UserId = user.Id;
+            var category =
+                this.mapper
+                .Map<CategoryInputModel, Category>(model as CategoryInputModel);
 
-            await this.dbService.DbContext.Categories.AddAsync(model);
+            category.CreatedOn = DateTime.UtcNow;
+            category.User = user;
+            category.UserId = user.Id;
+
+            await this.dbService.DbContext.Categories.AddAsync(category);
             return await this.dbService.DbContext.SaveChangesAsync();
         }
 
-        public Category[] GetAllCategories()
+        public async Task<Category[]> GetAllCategories()
         {
-            var categories = 
+            var categories =
                 this.dbService
                 .DbContext
                 .Categories
                 .Include(c => c.Forums)
-                .ToArray();
+                .ToArrayAsync();
 
-            return categories;
+            return categories.GetAwaiter().GetResult();
         }
 
         public Category GetCategoryById(string Id)

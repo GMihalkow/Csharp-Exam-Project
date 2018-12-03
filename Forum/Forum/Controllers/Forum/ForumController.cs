@@ -1,44 +1,40 @@
-﻿using Forum.Models;
-using Forum.Services.Account.Contracts;
-using Forum.Services.Category.Contracts;
-using Forum.Services.Forum.Contracts;
-using Forum.Web.ViewModels.Forum;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using Forum.Web.Services.Account.Contracts;
+using Forum.Services.Interfaces.Category;
+using Forum.Services.Interfaces.Forum;
+using Forum.ViewModels.Forum;
 
 namespace Forum.Web.Controllers.Forum
 {
     [Authorize("Admin")]
     public class ForumController : BaseController
     {
-        private readonly IMapper mapper;
         private readonly ICategoryService categoryService;
         private readonly IForumService forumService;
 
-        public ForumController(IMapper mapper, IAccountService accountService, ICategoryService categoryService, IForumService forumService)
+        public ForumController(IAccountService accountService, ICategoryService categoryService, IForumService forumService)
             : base(accountService)
         {
-            this.mapper = mapper;
             this.categoryService = categoryService;
             this.forumService = forumService;
         }
 
         public IActionResult Create()
         {
-            var names = this.categoryService.GetAllCategories();
+            var names = this.categoryService.GetAllCategories().GetAwaiter().GetResult();
 
-            var namesList = 
+            var namesList =
                 names
-                //.GetAwaiter().GetResult()
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id,
                     Text = $"{x.Name} ({x.ForumsCount})"
                 })
                 .ToArray();
+                
 
             ForumFormInputModel model = new ForumFormInputModel
             {
@@ -53,21 +49,16 @@ namespace Forum.Web.Controllers.Forum
         {
             if(ModelState.IsValid)
             {
-                var forum =
-                    this.mapper
-                    .Map<SubForum>(model);
-
-                this.forumService.Add(forum, model.ForumModel.Category);
+                this.forumService.Add(model, model.ForumModel.Category);
 
                 return this.Redirect("/");
             }
             else
             {
-                var names = this.categoryService.GetAllCategories();
-                
+                var names = this.categoryService.GetAllCategories().GetAwaiter().GetResult();
+
                 var namesList =
                     names
-                    //.GetAwaiter().GetResult()
                     .Select(x => new SelectListItem
                     {
                         Value = x.Id,

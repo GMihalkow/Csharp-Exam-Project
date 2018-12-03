@@ -15,9 +15,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Forum.Data\Forum.Data.csproj" />
-    <ProjectReference Include="..\Forum.MapConfiguration\Forum.MapConfiguration.csproj" />
     <ProjectReference Include="..\Forum.Models\Forum.Models.csproj" />
     <ProjectReference Include="..\Forum.Services\Forum.Services.csproj" />
+    <ProjectReference Include="..\Forum.ViewModels\Forum.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

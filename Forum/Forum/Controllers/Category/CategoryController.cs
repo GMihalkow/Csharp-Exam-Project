@@ -1,23 +1,19 @@
 ﻿namespace Forum.Web.Controllers.Category
 {
-    using AutoMapper;
-    using global::Forum.Models;
-    using global::Forum.Services.Account.Contracts;
-    using global::Forum.Services.Category.Contracts;
-    using global::Forum.Web.ViewModels.Category;
+    using global::Forum.Services.Interfaces.Category;
+    using global::Forum.ViewModels.Category;
+    using global::Forum.Web.Services.Account.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize("Admin")]
     public class CategoryController : BaseController
     {
-        private readonly IMapper mapper;
         private readonly ICategoryService categoryService;
 
-        public CategoryController(IMapper mapper, IAccountService accountService, ICategoryService categoryService) 
+        public CategoryController(IAccountService accountService, ICategoryService categoryService) 
             : base(accountService)
         {
-            this.mapper = mapper;
             this.categoryService = categoryService;
         }
 
@@ -34,10 +30,8 @@
             if(ModelState.IsValid)
             {
                 var user = this.accountService.GetUser(this.User);
-
-                var category = this.mapper.Map<Category>(model);
-
-                var result = this.categoryService.AddCategory(category, user).GetAwaiter().GetResult();
+                
+                var result = this.categoryService.AddCategory(model, user).GetAwaiter().GetResult();
 
                 return this.Redirect("/");
             }

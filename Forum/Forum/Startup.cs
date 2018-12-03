@@ -11,19 +11,21 @@ using Forum.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Forum.Web;
 using Forum.Web.Middlewares;
-using Forum.Services.Account;
 using Forum.Services.Forum;
 using Forum.Services.Post.Contracts;
-using Forum.Services.Category.Contracts;
 using Forum.Services.Category;
-using Forum.Services.Forum.Contracts;
 using Forum.Services.Db;
-using Forum.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
-using Forum.Web.ViewModels.Category;
-using Forum.Web.ViewModels.Post;
-using Forum.Web.ViewModels.Forum;
 using Forum.MapConfiguration;
+using Forum.Web.Services.Account.Contracts;
+using Forum.Web.Services.Account;
+using Forum.ViewModels.Forum;
+using Forum.ViewModels.Post;
+using Forum.Services.Interfaces.Category;
+using Forum.Services.Interfaces.Forum;
+using Forum.Services.Interfaces.Post;
+using Forum.Services.Interfaces.Db;
+using Forum.ViewModels.Category;
 
 namespace Forum
 {
@@ -102,7 +104,7 @@ namespace Forum
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IPostService, PostService>();
-            services.AddScoped<DbService>();
+            services.AddScoped<IDbService, DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 
             services.AddSingleton(mapper);

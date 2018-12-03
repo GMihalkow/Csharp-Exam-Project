@@ -1,11 +1,9 @@
 ﻿namespace Forum.Attributes
 {
-    using Forum.Services.Account;
-    using Forum.Services.Account.Contracts;
     using Forum.Services.Db;
+    using Forum.Web.Services.Account.Contracts;
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
 
     [AttributeUsage(AttributeTargets.Property)]
     public class UsernameExistsAttribute : ValidationAttribute

@@ -57,3 +57,9 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.pdb
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.ViewModels.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.ViewModels.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.Interfaces.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.Interfaces.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.pdb

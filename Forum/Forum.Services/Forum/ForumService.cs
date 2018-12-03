@@ -1,21 +1,27 @@
 ﻿namespace Forum.Services.Forum
 {
+    using AutoMapper;
     using global::Forum.Models;
-    using global::Forum.Services.Category.Contracts;
+    using global::Forum.Services.Category;
     using global::Forum.Services.Db;
-    using global::Forum.Services.Forum.Contracts;
+    using global::Forum.Services.Interfaces.Category;
+    using global::Forum.Services.Interfaces.Db;
+    using global::Forum.Services.Interfaces.Forum;
+    using global::Forum.ViewModels.Forum;
+    using global::Forum.ViewModels.Interfaces.Forum;
     using Microsoft.EntityFrameworkCore;
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public class ForumService : IForumService
     {
-        private readonly DbService dbService;
+        private readonly IMapper mapper;
+        private readonly IDbService dbService;
         private readonly ICategoryService categoryService;
 
-        public ForumService(DbService dbService, ICategoryService categoryService)
+        public ForumService(IMapper mapper, IDbService dbService, ICategoryService categoryService)
         {
+            this.mapper = mapper;
             this.dbService = dbService;
             this.categoryService = categoryService;
         }
@@ -34,24 +40,28 @@
 
             return forum;
         }
-
-        public void Add(SubForum model, string categoryId)
-        {
-            Category category = this.categoryService.GetCategoryById(categoryId);
-
-            model.CreatedOn = DateTime.UtcNow;
-            model.CategoryId = category.Id;
-            model.Category = category;
-
-            this.dbService.DbContext.Forums.Add(model);
-            this.dbService.DbContext.SaveChanges();
-        }
-
+        
         public async Task<SubForum> GetPostsByForum(string id)
         {
             SubForum forum = await this.GetForum(id);
 
             return forum;
+        }
+
+        public void Add(IForumFormInputModel model, string categoryId)
+        {
+            var forum =
+                  this.mapper
+                  .Map<SubForum>(model);
+
+            Category category = this.categoryService.GetCategoryById(categoryId);
+
+            forum.CreatedOn = DateTime.UtcNow;
+            forum.CategoryId = categoryId;
+            forum.Category = category;
+
+            this.dbService.DbContext.Forums.Add(forum);
+            this.dbService.DbContext.SaveChanges();
         }
     }
 }

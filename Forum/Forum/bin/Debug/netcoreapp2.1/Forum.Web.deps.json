@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "0292f91f5ced3296b3e849a8e0a855d5c967e43a"
+    "signature": "f1b223fee374976eb305554ef64e9f2c4a7c6e19"
   },
   "compilationOptions": {
     "defines": [
@@ -27,9 +27,9 @@
           "AutoMapper": "8.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "6.0.0",
           "Forum.Data": "1.0.0",
-          "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
           "Forum.Services": "1.0.0",
+          "Forum.ViewModels": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
@@ -105,6 +105,100 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Mvc.Abstractions/2.1.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Routing.Abstractions": "2.1.1",
+          "Microsoft.Net.Http.Headers": "2.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Abstractions.dll": {
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Core/2.1.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Core": "2.1.1",
+          "Microsoft.AspNetCore.Authorization.Policy": "2.1.1",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.1.1",
+          "Microsoft.AspNetCore.Http": "2.1.1",
+          "Microsoft.AspNetCore.Http.Extensions": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.3",
+          "Microsoft.AspNetCore.ResponseCaching.Abstractions": "2.1.1",
+          "Microsoft.AspNetCore.Routing": "2.1.1",
+          "Microsoft.Extensions.DependencyInjection": "2.1.1",
+          "Microsoft.Extensions.DependencyModel": "2.1.0",
+          "Microsoft.Extensions.FileProviders.Abstractions": "2.1.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
+          "System.Diagnostics.DiagnosticSource": "4.5.1",
+          "System.Threading.Tasks.Extensions": "4.5.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Core.dll": {
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Core.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.DataAnnotations/2.1.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "2.1.3",
+          "Microsoft.Extensions.Localization": "2.1.1",
+          "System.ComponentModel.Annotations": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.DataAnnotations.dll": {
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.DataAnnotations.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Formatters.Json/2.1.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.JsonPatch": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.Core": "2.1.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Formatters.Json.dll": {
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Formatters.Json.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.ViewFeatures/2.1.3": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Antiforgery": "2.1.1",
+          "Microsoft.AspNetCore.Diagnostics.Abstractions": "2.1.1",
+          "Microsoft.AspNetCore.Html.Abstractions": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.Core": "2.1.3",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "2.1.3",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.1.3",
+          "Microsoft.Extensions.WebEncoders": "2.1.1",
+          "Newtonsoft.Json.Bson": "1.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {
+            "assemblyVersion": "2.1.3.0",
+            "fileVersion": "2.1.3.18263"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
       "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
         "dependencies": {
@@ -139,6 +233,27 @@
         },
         "compile": {
           "lib/netstandard1.3/Microsoft.CodeAnalysis.Workspaces.dll": {}
+        }
+      },
+      "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
+        "dependencies": {
+          "System.AppContext": "4.3.0",
+          "System.Collections": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.IO.FileSystem": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll": {}
         }
       },
       "Microsoft.EntityFrameworkCore/2.1.4": {
@@ -203,6 +318,24 @@
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
+        }
+      },
+      "Microsoft.Extensions.DependencyModel/2.1.0": {
+        "dependencies": {
+          "Microsoft.DotNet.PlatformAbstractions": "2.1.0",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Dynamic.Runtime": "4.3.0",
+          "System.Linq": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.dll": {}
         }
       },
       "Microsoft.Extensions.Identity.Core/2.1.6": {
@@ -567,6 +700,7 @@
         }
       },
       "System.Collections.Immutable/1.5.0": {},
+      "System.ComponentModel.Annotations/4.5.0": {},
       "System.Composition/1.0.31": {
         "dependencies": {
           "System.Composition.AttributedModel": "1.0.31",
@@ -784,6 +918,9 @@
           "Forum.Data": "1.0.0",
           "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
+          "Forum.Services.Interfaces": "1.0.0",
+          "Forum.ViewModels": "1.0.0",
+          "Forum.ViewModels.Interfaces": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.1.6"
         },
         "runtime": {
@@ -791,6 +928,47 @@
         },
         "compile": {
           "Forum.Services.dll": {}
+        }
+      },
+      "Forum.Services.Interfaces/1.0.0": {
+        "dependencies": {
+          "Forum.Data": "1.0.0",
+          "Forum.Models": "1.0.0",
+          "Forum.ViewModels.Interfaces": "1.0.0"
+        },
+        "runtime": {
+          "Forum.Services.Interfaces.dll": {}
+        },
+        "compile": {
+          "Forum.Services.Interfaces.dll": {}
+        }
+      },
+      "Forum.ViewModels/1.0.0": {
+        "dependencies": {
+          "Forum.MapConfiguration": "1.0.0",
+          "Forum.Models": "1.0.0",
+          "Forum.Services.Interfaces": "1.0.0",
+          "Forum.ViewModels.Interfaces": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3"
+        },
+        "runtime": {
+          "Forum.ViewModels.dll": {}
+        },
+        "compile": {
+          "Forum.ViewModels.dll": {}
+        }
+      },
+      "Forum.ViewModels.Interfaces/1.0.0": {
+        "dependencies": {
+          "Forum.MapConfiguration": "1.0.0",
+          "Forum.Models": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3"
+        },
+        "runtime": {
+          "Forum.ViewModels.Interfaces.dll": {}
+        },
+        "compile": {
+          "Forum.ViewModels.Interfaces.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -891,13 +1069,13 @@
           "Microsoft.AspNetCore.Localization.Routing": "2.1.1",
           "Microsoft.AspNetCore.MiddlewareAnalysis": "2.1.1",
           "Microsoft.AspNetCore.Mvc": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.3",
           "Microsoft.AspNetCore.Mvc.Analyzers": "2.1.1",
           "Microsoft.AspNetCore.Mvc.ApiExplorer": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Core": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.Core": "2.1.3",
           "Microsoft.AspNetCore.Mvc.Cors": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.DataAnnotations": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "2.1.3",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.1.3",
           "Microsoft.AspNetCore.Mvc.Formatters.Xml": "2.1.1",
           "Microsoft.AspNetCore.Mvc.Localization": "2.1.1",
           "Microsoft.AspNetCore.Mvc.Razor": "2.1.1",
@@ -905,7 +1083,7 @@
           "Microsoft.AspNetCore.Mvc.Razor.ViewCompilation": "2.1.1",
           "Microsoft.AspNetCore.Mvc.RazorPages": "2.1.1",
           "Microsoft.AspNetCore.Mvc.TagHelpers": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3",
           "Microsoft.AspNetCore.NodeServices": "2.1.1",
           "Microsoft.AspNetCore.Owin": "2.1.1",
           "Microsoft.AspNetCore.Razor": "2.1.1",
@@ -1465,13 +1643,13 @@
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ApiExplorer": "2.1.1",
           "Microsoft.AspNetCore.Mvc.Cors": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.DataAnnotations": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "2.1.3",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.1.3",
           "Microsoft.AspNetCore.Mvc.Localization": "2.1.1",
           "Microsoft.AspNetCore.Mvc.Razor.Extensions": "2.1.1",
           "Microsoft.AspNetCore.Mvc.RazorPages": "2.1.1",
           "Microsoft.AspNetCore.Mvc.TagHelpers": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3",
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.Extensions.Caching.Memory": "2.1.1",
           "Microsoft.Extensions.DependencyInjection": "2.1.1"
@@ -1481,84 +1659,31 @@
         },
         "compileOnly": true
       },
-      "Microsoft.AspNetCore.Mvc.Abstractions/2.1.1": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Routing.Abstractions": "2.1.1",
-          "Microsoft.Net.Http.Headers": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Abstractions.dll": {}
-        },
-        "compileOnly": true
-      },
       "Microsoft.AspNetCore.Mvc.Analyzers/2.1.1": {
         "compileOnly": true
       },
       "Microsoft.AspNetCore.Mvc.ApiExplorer/2.1.1": {
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "2.1.1"
+          "Microsoft.AspNetCore.Mvc.Core": "2.1.3"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.ApiExplorer.dll": {}
         },
         "compileOnly": true
       },
-      "Microsoft.AspNetCore.Mvc.Core/2.1.1": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Authentication.Core": "2.1.1",
-          "Microsoft.AspNetCore.Authorization.Policy": "2.1.1",
-          "Microsoft.AspNetCore.Hosting.Abstractions": "2.1.1",
-          "Microsoft.AspNetCore.Http": "2.1.1",
-          "Microsoft.AspNetCore.Http.Extensions": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Abstractions": "2.1.1",
-          "Microsoft.AspNetCore.ResponseCaching.Abstractions": "2.1.1",
-          "Microsoft.AspNetCore.Routing": "2.1.1",
-          "Microsoft.Extensions.DependencyInjection": "2.1.1",
-          "Microsoft.Extensions.DependencyModel": "2.1.0",
-          "Microsoft.Extensions.FileProviders.Abstractions": "2.1.1",
-          "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
-          "System.Diagnostics.DiagnosticSource": "4.5.1",
-          "System.Threading.Tasks.Extensions": "4.5.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Core.dll": {}
-        },
-        "compileOnly": true
-      },
       "Microsoft.AspNetCore.Mvc.Cors/2.1.1": {
         "dependencies": {
           "Microsoft.AspNetCore.Cors": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Core": "2.1.1"
+          "Microsoft.AspNetCore.Mvc.Core": "2.1.3"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Cors.dll": {}
         },
         "compileOnly": true
       },
-      "Microsoft.AspNetCore.Mvc.DataAnnotations/2.1.1": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "2.1.1",
-          "Microsoft.Extensions.Localization": "2.1.1",
-          "System.ComponentModel.Annotations": "4.5.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.DataAnnotations.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.AspNetCore.Mvc.Formatters.Json/2.1.1": {
-        "dependencies": {
-          "Microsoft.AspNetCore.JsonPatch": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Core": "2.1.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Formatters.Json.dll": {}
-        },
-        "compileOnly": true
-      },
       "Microsoft.AspNetCore.Mvc.Formatters.Xml/2.1.1": {
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "2.1.1"
+          "Microsoft.AspNetCore.Mvc.Core": "2.1.3"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Formatters.Xml.dll": {}
@@ -1580,7 +1705,7 @@
       "Microsoft.AspNetCore.Mvc.Razor/2.1.1": {
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Razor.Extensions": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3",
           "Microsoft.AspNetCore.Razor.Runtime": "2.1.1",
           "Microsoft.CodeAnalysis.CSharp": "2.8.0",
           "Microsoft.CodeAnalysis.Razor": "2.1.1",
@@ -1629,22 +1754,6 @@
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.TagHelpers.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.AspNetCore.Mvc.ViewFeatures/2.1.1": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Antiforgery": "2.1.1",
-          "Microsoft.AspNetCore.Diagnostics.Abstractions": "2.1.1",
-          "Microsoft.AspNetCore.Html.Abstractions": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Core": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.DataAnnotations": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.1.1",
-          "Microsoft.Extensions.WebEncoders": "2.1.1",
-          "Newtonsoft.Json.Bson": "1.0.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {}
         },
         "compileOnly": true
       },
@@ -1920,7 +2029,7 @@
       "Microsoft.AspNetCore.SpaServices/2.1.1": {
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.TagHelpers": "2.1.1",
-          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.1",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3",
           "Microsoft.AspNetCore.NodeServices": "2.1.1"
         },
         "compile": {
@@ -2045,22 +2154,6 @@
         "compileOnly": true
       },
       "Microsoft.CSharp/4.5.0": {
-        "compileOnly": true
-      },
-      "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
-        "dependencies": {
-          "System.AppContext": "4.3.0",
-          "System.Collections": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.IO.FileSystem": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0"
-        },
-        "compile": {
-          "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll": {}
-        },
         "compileOnly": true
       },
       "Microsoft.EntityFrameworkCore.Design/2.1.1": {
@@ -2237,19 +2330,6 @@
       "Microsoft.Extensions.DependencyInjection.Abstractions/2.1.1": {
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.Extensions.DependencyModel/2.1.0": {
-        "dependencies": {
-          "Microsoft.DotNet.PlatformAbstractions": "2.1.0",
-          "Newtonsoft.Json": "11.0.2",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Dynamic.Runtime": "4.3.0",
-          "System.Linq": "4.3.0"
-        },
-        "compile": {
-          "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.dll": {}
         },
         "compileOnly": true
       },
@@ -2753,9 +2833,6 @@
           "System.Runtime.Extensions": "4.3.0",
           "System.Threading": "4.3.0"
         },
-        "compileOnly": true
-      },
-      "System.ComponentModel.Annotations/4.5.0": {
         "compileOnly": true
       },
       "System.Console/4.3.0": {
@@ -3630,6 +3707,41 @@
       "path": "microsoft.aspnetcore.identity.entityframeworkcore/2.1.6",
       "hashPath": "microsoft.aspnetcore.identity.entityframeworkcore.2.1.6.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.Mvc.Abstractions/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8qk3cLiuBikGJ6BhgL74tWfHthcH96Z28vl7bPK575ZimpP7SmiaX/ymGGcjCSEnonD9ydqUfeb/p6Nj9OeY3g==",
+      "path": "microsoft.aspnetcore.mvc.abstractions/2.1.3",
+      "hashPath": "microsoft.aspnetcore.mvc.abstractions.2.1.3.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Mvc.Core/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LVFyEypS0cn3lAV+k5tIb6wnrMZmOfhw40xOuKAuDnhA6sKjugKzyfA5cLG1HThlorZCnUE8PG/Yn3nBLjuhSQ==",
+      "path": "microsoft.aspnetcore.mvc.core/2.1.3",
+      "hashPath": "microsoft.aspnetcore.mvc.core.2.1.3.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Mvc.DataAnnotations/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XW2ic774O3MZQFHT8WPCocoUUaoldF9WDy2k3pCWGmEQ8G7yI7c2M7ZjqK9q69eUNU4Stw+iUAbuzVvTwgtPYw==",
+      "path": "microsoft.aspnetcore.mvc.dataannotations/2.1.3",
+      "hashPath": "microsoft.aspnetcore.mvc.dataannotations.2.1.3.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Mvc.Formatters.Json/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mZQM0xdwLM6Ze3hNs0pj7WCyD/tBGf6qrCcafPPCGmf7niH7w257cmtO8rgrI4xa0P6H2qM5+c3OnoJ7l/LZkA==",
+      "path": "microsoft.aspnetcore.mvc.formatters.json/2.1.3",
+      "hashPath": "microsoft.aspnetcore.mvc.formatters.json.2.1.3.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Mvc.ViewFeatures/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PnO1njnZPgsSsCRsE4VAQS5fGi3vF7p06kHkDX+i4NFAku8h5CJ9QtIEh3Sy2h8pI4fjWr43ccyxxq5uaNvPxQ==",
+      "path": "microsoft.aspnetcore.mvc.viewfeatures/2.1.3",
+      "hashPath": "microsoft.aspnetcore.mvc.viewfeatures.2.1.3.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",
       "serviceable": true,
@@ -3650,6 +3762,13 @@
       "sha512": "sha512-xt6VmGncJW14z3O0/k7+0cO8w9tB3O6CUL6sM6LesgGmD6zZPbWKY9KpRgV7RewA1flLuXBaUknRjwj0kLA6/g==",
       "path": "microsoft.codeanalysis.workspaces.common/2.8.0",
       "hashPath": "microsoft.codeanalysis.workspaces.common.2.8.0.nupkg.sha512"
+    },
+    "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wkCXkBS0q+5hsbeikjfsHCGP3nNe1L1MrDEBPCBKm+4UH8nXqHLxDZuBrTYaVY85CGIx2y1qW90nO6b+ORAfrA==",
+      "path": "microsoft.dotnet.platformabstractions/2.1.0",
+      "hashPath": "microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/2.1.4": {
       "type": "package",
@@ -3685,6 +3804,13 @@
       "sha512": "sha512-pVQpP3bOv26GLn6Ff5ocS1ibP+kqkjh6Wz14xdxLIVIQBVp+eb/3jaHqkvBJS+fXMfLyyAnHCNALyaTvp9bRZA==",
       "path": "microsoft.entityframeworkcore.sqlserver/2.1.4",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.2.1.4.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyModel/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3KPT6CLH0VEGr2um9aG1rYTmqfMVlkRuueFpN6AxeIKpcMA4OVHf4aNpgYXZ6oF+x4uh9VhK/66FgPCd1mMlnQ==",
+      "path": "microsoft.extensions.dependencymodel/2.1.0",
+      "hashPath": "microsoft.extensions.dependencymodel.2.1.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Identity.Core/2.1.6": {
       "type": "package",
@@ -3826,6 +3952,13 @@
       "path": "system.collections.immutable/1.5.0",
       "hashPath": "system.collections.immutable.1.5.0.nupkg.sha512"
     },
+    "System.ComponentModel.Annotations/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IjDa643EO77A4CL9dhxfZ6zzGu+pM8Ar0NYPRMN3TvDiga4uGDzFHOj/ArpyNxxKyO5IFT2LZ0rK3kUog7g3jA==",
+      "path": "system.componentmodel.annotations/4.5.0",
+      "hashPath": "system.componentmodel.annotations.4.5.0.nupkg.sha512"
+    },
     "System.Composition/1.0.31": {
       "type": "package",
       "serviceable": true,
@@ -3912,6 +4045,21 @@
       "sha512": ""
     },
     "Forum.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Forum.Services.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Forum.ViewModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Forum.ViewModels.Interfaces/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -4252,13 +4400,6 @@
       "path": "microsoft.aspnetcore.mvc/2.1.1",
       "hashPath": "microsoft.aspnetcore.mvc.2.1.1.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Mvc.Abstractions/2.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-/XgeeXi0LrykMlMCNMQftj2XyEua4JT5AFAt3D3xE6KChx0PydXTFiwQtDvbGpNvarPQWWdyEfq1rKlgyVGlXA==",
-      "path": "microsoft.aspnetcore.mvc.abstractions/2.1.1",
-      "hashPath": "microsoft.aspnetcore.mvc.abstractions.2.1.1.nupkg.sha512"
-    },
     "Microsoft.AspNetCore.Mvc.Analyzers/2.1.1": {
       "type": "package",
       "serviceable": true,
@@ -4273,33 +4414,12 @@
       "path": "microsoft.aspnetcore.mvc.apiexplorer/2.1.1",
       "hashPath": "microsoft.aspnetcore.mvc.apiexplorer.2.1.1.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Mvc.Core/2.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-QoYLsJHrN7LNnL1LWzSGzQm3v/1ERI5csb4LSzNYm71EcCG8SWckw76GgXNx6mjsJXfxsvoqRAovnLQKCCBtvA==",
-      "path": "microsoft.aspnetcore.mvc.core/2.1.1",
-      "hashPath": "microsoft.aspnetcore.mvc.core.2.1.1.nupkg.sha512"
-    },
     "Microsoft.AspNetCore.Mvc.Cors/2.1.1": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-a04jcvPbG6IfaugJe3CS59ZhSRAVLmwVEGDLp4wGuR4/9yW3T4mCZgqcSQz+5921j/hRGn1Jwu/b05bWkg+wBg==",
       "path": "microsoft.aspnetcore.mvc.cors/2.1.1",
       "hashPath": "microsoft.aspnetcore.mvc.cors.2.1.1.nupkg.sha512"
-    },
-    "Microsoft.AspNetCore.Mvc.DataAnnotations/2.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3/LdPk7u3VitfUxVu+forzb+YFa/G4tqFDQKG20mMHrAnE7ranDUhqURD7qoy8JFLRWdhvvdBhUJaATfvvmTVg==",
-      "path": "microsoft.aspnetcore.mvc.dataannotations/2.1.1",
-      "hashPath": "microsoft.aspnetcore.mvc.dataannotations.2.1.1.nupkg.sha512"
-    },
-    "Microsoft.AspNetCore.Mvc.Formatters.Json/2.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-nBzpBR0Ei/4L63+ylGS6P4gP+u+/S1cIvUU4+G+4Rk+vtzNT5KsoFP9TfCvW8hGQ6ShehjT7wXMuci/D2SbCQQ==",
-      "path": "microsoft.aspnetcore.mvc.formatters.json/2.1.1",
-      "hashPath": "microsoft.aspnetcore.mvc.formatters.json.2.1.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Mvc.Formatters.Xml/2.1.1": {
       "type": "package",
@@ -4349,13 +4469,6 @@
       "sha512": "sha512-wLHZ9TUdD9Gl2rVihrNGmRJ1LGTjiRzPM4d78efClOpFJwhMaHCnr9ktfQhnJX4XQj0w22XvPPCV0GxSrVp4Lg==",
       "path": "microsoft.aspnetcore.mvc.taghelpers/2.1.1",
       "hashPath": "microsoft.aspnetcore.mvc.taghelpers.2.1.1.nupkg.sha512"
-    },
-    "Microsoft.AspNetCore.Mvc.ViewFeatures/2.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-4F4uu3Hh5pgQ/2XkKgG2XEfPIvzUUjpOrSPIdOpMzxloTfYM/jK6xEW6kM9DE5vYhyW9EE02sngRBh8cmU0vng==",
-      "path": "microsoft.aspnetcore.mvc.viewfeatures/2.1.1",
-      "hashPath": "microsoft.aspnetcore.mvc.viewfeatures.2.1.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore.NodeServices/2.1.1": {
       "type": "package",
@@ -4588,13 +4701,6 @@
       "path": "microsoft.csharp/4.5.0",
       "hashPath": "microsoft.csharp.4.5.0.nupkg.sha512"
     },
-    "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-wkCXkBS0q+5hsbeikjfsHCGP3nNe1L1MrDEBPCBKm+4UH8nXqHLxDZuBrTYaVY85CGIx2y1qW90nO6b+ORAfrA==",
-      "path": "microsoft.dotnet.platformabstractions/2.1.0",
-      "hashPath": "microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512"
-    },
     "Microsoft.EntityFrameworkCore.Design/2.1.1": {
       "type": "package",
       "serviceable": true,
@@ -4727,13 +4833,6 @@
       "sha512": "sha512-PW1596sF97gpIc1JuUuYvTmeLfeqC5whbWPsWgJhN0fdwz683him3b/HB0dqhFesVssOjnnA0fEz4+S0gUeBqA==",
       "path": "microsoft.extensions.dependencyinjection.abstractions/2.1.1",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.2.1.1.nupkg.sha512"
-    },
-    "Microsoft.Extensions.DependencyModel/2.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3KPT6CLH0VEGr2um9aG1rYTmqfMVlkRuueFpN6AxeIKpcMA4OVHf4aNpgYXZ6oF+x4uh9VhK/66FgPCd1mMlnQ==",
-      "path": "microsoft.extensions.dependencymodel/2.1.0",
-      "hashPath": "microsoft.extensions.dependencymodel.2.1.0.nupkg.sha512"
     },
     "Microsoft.Extensions.DiagnosticAdapter/2.1.0": {
       "type": "package",
@@ -5154,13 +5253,6 @@
       "sha512": "sha512-Epx8PoVZR0iuOnJJDzp7pWvdfMMOAvpUo95pC4ScH2mJuXkKA2Y4aR3cG9qt2klHgSons1WFh4kcGW7cSXvrxg==",
       "path": "system.collections.specialized/4.3.0",
       "hashPath": "system.collections.specialized.4.3.0.nupkg.sha512"
-    },
-    "System.ComponentModel.Annotations/4.5.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-IjDa643EO77A4CL9dhxfZ6zzGu+pM8Ar0NYPRMN3TvDiga4uGDzFHOj/ArpyNxxKyO5IFT2LZ0rK3kUog7g3jA==",
-      "path": "system.componentmodel.annotations/4.5.0",
-      "hashPath": "system.componentmodel.annotations.4.5.0.nupkg.sha512"
     },
     "System.Console/4.3.0": {
       "type": "package",

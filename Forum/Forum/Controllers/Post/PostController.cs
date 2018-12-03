@@ -1,25 +1,22 @@
 ﻿namespace Forum.Web.Controllers.Post
 {
-    using AutoMapper;
     using global::Forum.Models;
-    using global::Forum.Services.Account.Contracts;
-    using global::Forum.Services.Forum.Contracts;
-    using global::Forum.Services.Post.Contracts;
-    using global::Forum.Web.ViewModels.Post;
+    using global::Forum.Services.Interfaces.Forum;
+    using global::Forum.Services.Interfaces.Post;
+    using global::Forum.ViewModels.Post;
+    using global::Forum.Web.Services.Account.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize]
     public class PostController : BaseController
     {
-        private readonly IMapper mapper;
         private readonly IForumService forumService;
         private readonly IPostService postService;
 
-        public PostController(IMapper mapper, IAccountService accountService, IForumService forumService, IPostService postService) 
+        public PostController(IAccountService accountService, IForumService forumService, IPostService postService) 
             : base(accountService)
         {
-            this.mapper = mapper;
             this.forumService = forumService;
             this.postService = postService;
         }
@@ -45,9 +42,7 @@
             {
                 ForumUser user = this.accountService.GetUser(this.User);
 
-                var post = this.mapper.Map<Post>(model);
-
-                this.postService.AddPost(post, user, model.ForumId);
+                this.postService.AddPost(model, user, model.ForumId);
 
                 return this.Redirect($"/Forum/Posts?Id={model.ForumId}");
             }
