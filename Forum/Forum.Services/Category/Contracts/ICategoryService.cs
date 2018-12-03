@@ -5,14 +5,17 @@
 
     public interface ICategoryService
     {
-        Category GetCategory(string name);
+        Category GetCategoryByName(string name);
 
-        Task<string[]> GetCategoriesNames();
+        Category GetCategoryById(string Id);
 
         Task<int> AddCategory(Category model, ForumUser user);
 
         Category[] GetAllCategories();
 
         Category[] GetUsersCategories();
+
+        bool IsCategoryValid(string name);
+
     }
 }

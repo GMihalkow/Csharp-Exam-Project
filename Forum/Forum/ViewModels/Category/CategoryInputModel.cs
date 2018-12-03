@@ -2,6 +2,7 @@
 {
     using global::Forum.MapConfiguration.Contracts;
     using global::Forum.Models;
+    using global::Forum.Web.Attributes;
     using System.ComponentModel.DataAnnotations;
 
     public class CategoryInputModel : IMapTo<Category>

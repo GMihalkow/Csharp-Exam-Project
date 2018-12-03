@@ -1,5 +1,7 @@
 ﻿namespace Forum.Attributes
 {
+    using Forum.Services.Account;
+    using Forum.Services.Account.Contracts;
     using Forum.Services.Db;
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -9,6 +11,8 @@
     public class UsernameExistsAttribute : ValidationAttribute
     {
         private DbService dbService;
+
+        private IAccountService accountService;
 
         public UsernameExistsAttribute()
         {
@@ -24,10 +28,12 @@
             this.dbService = (DbService)validationContext
                 .GetService(typeof(DbService));
 
-            //TODO: All bussiness logic must be in services. Extract it there.
-            //TODO: Change "Admin" to "Administrator"   
-            //TODO: Create validationa attributes for select tags
-            if (!(this.dbService.DbContext.Users.Any(u => u.UserName == value.ToString())))
+            this.accountService = (IAccountService)validationContext
+                .GetService(typeof(IAccountService));
+            
+            //TODO: Change "Admin" to "Administrator"
+            
+            if (!this.accountService.UsernameExists(value.ToString()))
             {
                 return ValidationResult.Success;
             }

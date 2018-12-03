@@ -17,7 +17,6 @@
 
         public AccountService(UserManager<ForumUser> userManager, SignInManager<ForumUser> signInManager, DbService dbService)
         {
-            //TODO: Clear dll refferences and use only Nuget packages. its the right way
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.dbService = dbService;
@@ -154,6 +153,17 @@
                 .Posts.Count();
 
             return totalPostsCount;
+        }
+
+        public bool UsernameExists(string username)
+        {
+            var result = 
+                this.dbService
+                .DbContext
+                .Users
+                .Any(u => u.UserName == username);
+
+            return result;
         }
     }
 }

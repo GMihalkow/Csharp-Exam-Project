@@ -35,9 +35,9 @@
             return forum;
         }
 
-        public void Add(SubForum model, string categoryName)
+        public void Add(SubForum model, string categoryId)
         {
-            Category category = this.categoryService.GetCategory(categoryName);
+            Category category = this.categoryService.GetCategoryById(categoryId);
 
             model.CreatedOn = DateTime.UtcNow;
             model.CategoryId = category.Id;

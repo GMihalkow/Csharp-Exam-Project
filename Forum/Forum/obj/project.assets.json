@@ -4647,6 +4647,7 @@
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
           "Forum.Models": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.1.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.4",
           "Microsoft.Extensions.Identity.Core": "2.1.6",
           "Microsoft.Extensions.Identity.Stores": "2.1.6"

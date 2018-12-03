@@ -1,16 +1,15 @@
 ﻿using Forum.MapConfiguration.Contracts;
+using AutoMapper;
+using Forum.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Forum.Web.ViewModels.Forum
 {
-    using AutoMapper;
-    using global::Forum.Models;
-
-    //TODO: Add validation
     public class ForumFormInputModel : IHaveCustomMappings
     {
         public ForumInputModel ForumModel { get; set; }
 
-        public string[] Categories { get; set; }
+        public SelectListItem[] Categories { get; set; }
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {

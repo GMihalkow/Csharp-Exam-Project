@@ -8,6 +8,8 @@
     {
         int GetUsersCount();
 
+        bool UsernameExists(string username);
+
         int GetTotalPostsCount();
 
         ForumUser GetUser(ClaimsPrincipal principal);

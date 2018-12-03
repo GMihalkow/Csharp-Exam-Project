@@ -39,19 +39,18 @@
             return categories;
         }
 
-        public async Task<string[]> GetCategoriesNames()
+        public Category GetCategoryById(string Id)
         {
-            string[] categoriesNames =
-                await this.dbService
+            var category =
+                this.dbService
                 .DbContext
                 .Categories
-                .Select(x => x.Name)
-                .ToArrayAsync();
+                .FirstOrDefault(c => c.Id == Id);
 
-            return categoriesNames;
+            return category;
         }
 
-        public Category GetCategory(string name)
+        public Category GetCategoryByName(string name)
         {
             Category category = 
                 this.dbService
@@ -73,6 +72,17 @@
                 .ToArray();
 
             return categories;
+        }
+        
+        public bool IsCategoryValid(string id)
+        {
+            var result =
+                this.dbService
+                .DbContext
+                .Categories
+                .Any(c => c.Id == id);
+
+            return result;
         }
     }
 }

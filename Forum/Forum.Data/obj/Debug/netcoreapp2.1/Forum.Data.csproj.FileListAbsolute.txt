@@ -3,9 +3,7 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\bin\De
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\bin\Debug\netcoreapp2.1\Forum.Data.runtimeconfig.dev.json
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\bin\Debug\netcoreapp2.1\Forum.Data.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\bin\Debug\netcoreapp2.1\Forum.Models.dll
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\bin\Debug\netcoreapp2.1\Forum.Models.pdb
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\obj\Debug\netcoreapp2.1\Forum.Data.csprojAssemblyReference.cache
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\obj\Debug\netcoreapp2.1\Forum.Data.csproj.CoreCompileInputs.cache
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Data\obj\Debug\netcoreapp2.1\Forum.Data.AssemblyInfoInputs.cache

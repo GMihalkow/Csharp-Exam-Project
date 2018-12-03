@@ -2,6 +2,7 @@
 {
     using global::Forum.MapConfiguration.Contracts;
     using global::Forum.Models;
+    using global::Forum.Web.Attributes;
     using System.ComponentModel.DataAnnotations;
 
     public class ForumInputModel : IMapFrom<SubForum>
@@ -15,8 +16,8 @@
         [RegularExpression(@"^[a-zA-Z _\/\-0-9!.?()&]*$", ErrorMessage = "{0} is allowed to contain only lowercase/uppercase characters, digits and '_', '-', '(', ')', '&', '.', '/', '?', '!'")]
         [StringLength(500, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
         public string Description { get; set; }
-        
-        //TODO: should have Id maybe
+
+        [CategoriesExist]
         public string Category { get; set; }
     }
 }

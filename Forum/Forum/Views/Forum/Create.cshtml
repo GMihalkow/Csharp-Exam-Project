@@ -24,12 +24,8 @@
         <div class="block">
             <label asp-for="ForumModel.Category" class="text-forum"></label>
             <div class="styled-select">
-                <select asp-for="ForumModel.Category" class="menu-bg-forum half-width text-white">
+                <select asp-for="ForumModel.Category" asp-items="Model.Categories" class="menu-bg-forum half-width text-white">
                     <option disabled selected="selected">Select Category</option>
-                    @foreach (var categoryName in Model.Categories)
-                    {//TODO: Use Niki's way with asp-items tag helper and cast the collection ot SelectListItems
-                        <option value="@categoryName">@categoryName</option>
-                    }
                 </select>
             </div>
         </div>

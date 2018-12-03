@@ -6,6 +6,8 @@ using Forum.Web.ViewModels.Forum;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace Forum.Web.Controllers.Forum
 {
@@ -26,11 +28,21 @@ namespace Forum.Web.Controllers.Forum
 
         public IActionResult Create()
         {
-            var names =  this.categoryService.GetCategoriesNames();
+            var names = this.categoryService.GetAllCategories();
+
+            var namesList = 
+                names
+                //.GetAwaiter().GetResult()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id,
+                    Text = $"{x.Name} ({x.ForumsCount})"
+                })
+                .ToArray();
 
             ForumFormInputModel model = new ForumFormInputModel
             {
-                Categories = names.GetAwaiter().GetResult()
+                Categories = namesList
             };
             
             return this.View(model);
@@ -51,7 +63,25 @@ namespace Forum.Web.Controllers.Forum
             }
             else
             {
-                return this.View(model);
+                var names = this.categoryService.GetAllCategories();
+                
+                var namesList =
+                    names
+                    //.GetAwaiter().GetResult()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Id,
+                        Text = $"{x.Name} ({x.ForumsCount})"
+                    })
+                    .ToArray();
+
+                ForumFormInputModel viewModel = new ForumFormInputModel
+                {
+                    ForumModel = model.ForumModel,
+                    Categories = namesList
+                };
+
+                return this.View(viewModel);
             }
         }
 
