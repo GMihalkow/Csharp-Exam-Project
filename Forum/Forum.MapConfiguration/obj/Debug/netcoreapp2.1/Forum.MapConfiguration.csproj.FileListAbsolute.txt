@@ -1,0 +1,9 @@
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.deps.json
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\obj\Debug\netcoreapp2.1\Forum.MapConfiguration.csprojAssemblyReference.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\obj\Debug\netcoreapp2.1\Forum.MapConfiguration.csproj.CoreCompileInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\obj\Debug\netcoreapp2.1\Forum.MapConfiguration.AssemblyInfoInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\obj\Debug\netcoreapp2.1\Forum.MapConfiguration.AssemblyInfo.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\obj\Debug\netcoreapp2.1\Forum.MapConfiguration.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.MapConfiguration\obj\Debug\netcoreapp2.1\Forum.MapConfiguration.pdb

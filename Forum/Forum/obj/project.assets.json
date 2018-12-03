@@ -4658,6 +4658,19 @@
           "bin/placeholder/Forum.Data.dll": {}
         }
       },
+      "Forum.MapConfiguration/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "6.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Forum.MapConfiguration.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Forum.MapConfiguration.dll": {}
+        }
+      },
       "Forum.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
@@ -4677,6 +4690,7 @@
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
           "Forum.Data": "1.0.0",
+          "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.1.6"
         },
@@ -12313,6 +12327,11 @@
       "path": "../Forum.Data/Forum.Data.csproj",
       "msbuildProject": "../Forum.Data/Forum.Data.csproj"
     },
+    "Forum.MapConfiguration/1.0.0": {
+      "type": "project",
+      "path": "../Forum.MapConfiguration/Forum.MapConfiguration.csproj",
+      "msbuildProject": "../Forum.MapConfiguration/Forum.MapConfiguration.csproj"
+    },
     "Forum.Models/1.0.0": {
       "type": "project",
       "path": "../Forum.Models/Forum.Models.csproj",
@@ -12329,6 +12348,7 @@
       "AutoMapper >= 8.0.0",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 6.0.0",
       "Forum.Data >= 1.0.0",
+      "Forum.MapConfiguration >= 1.0.0",
       "Forum.Models >= 1.0.0",
       "Forum.Services >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.1.1",
@@ -12369,6 +12389,9 @@
           "projectReferences": {
             "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Data\\Forum.Data.csproj": {
               "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Data\\Forum.Data.csproj"
+            },
+            "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.MapConfiguration\\Forum.MapConfiguration.csproj": {
+              "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.MapConfiguration\\Forum.MapConfiguration.csproj"
             },
             "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj": {
               "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj"

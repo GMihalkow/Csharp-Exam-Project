@@ -1,9 +1,10 @@
 ﻿namespace Forum.Web.ViewModels.Category
 {
+    using global::Forum.MapConfiguration.Contracts;
     using global::Forum.Models;
     using System.ComponentModel.DataAnnotations;
 
-    public class CategoryInputModel
+    public class CategoryInputModel : IMapTo<Category>
     {
         [Required]
         [StringLength(50, ErrorMessage = "{0} name must be between {1} and {2} characters long.", MinimumLength = 5)]

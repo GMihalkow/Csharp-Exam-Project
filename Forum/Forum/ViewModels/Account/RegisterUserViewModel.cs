@@ -1,9 +1,11 @@
 ﻿namespace Forum.Web.ViewModels.Account
 {
     using global::Forum.Attributes;
+    using global::Forum.MapConfiguration.Contracts;
+    using global::Forum.Models;
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterUserViewModel
+    public class RegisterUserViewModel: IMapTo<ForumUser>
     {
         [Required(ErrorMessage = "You must enter a username.")]
         [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]

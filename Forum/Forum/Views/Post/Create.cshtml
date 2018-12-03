@@ -12,10 +12,10 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" hidden="hidden" name="forumId" value="@Model.ForumId" />
             <div class="block">
-                <label asp-for="Title" class="text-forum">Title</label>
-                <input asp-for="Title" class="full-width" type="text" placeholder="Enter post name...">
+                <label asp-for="Name" class="text-forum">Title</label>
+                <input asp-for="Name" class="full-width" type="text" placeholder="Enter post name...">
                 <div>
-                    <span asp-validation-for="Title" class="text-danger"></span>
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
             <hr class=" full-width">

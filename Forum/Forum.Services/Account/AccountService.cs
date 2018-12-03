@@ -23,9 +23,9 @@
             this.dbService = dbService;
         }
 
-        public async void LoginUser(ForumUser model, string password)
+        public void LoginUser(ForumUser model, string password)
         {
-            await this.OnPostLoginAsync(model, password);
+            this.OnPostLoginAsync(model, password).GetAwaiter().GetResult();
         }
 
         public void RegisterUser(ForumUser model, string password)
@@ -33,15 +33,14 @@
             this.OnPostRegisterAsync(model, password);
         }
 
-        public async void LogoutUser()
+        public void LogoutUser()
         {
-            await this.OnGetLogout();
+            this.OnGetLogout().GetAwaiter().GetResult();
         }
 
         public async Task OnGetLogout()
         {
             await signInManager.SignOutAsync();
-
         }
 
         public async Task<bool> EmailExists(string email)

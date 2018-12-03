@@ -1,14 +1,14 @@
-﻿namespace Forum.Web.Controllers.Forum
-{
-    using AutoMapper;
-    using global::Forum.Models;
-    using global::Forum.Services.Account.Contracts;
-    using global::Forum.Services.Category.Contracts;
-    using global::Forum.Services.Forum.Contracts;
-    using global::Forum.Web.ViewModels.Forum;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
+﻿using Forum.Models;
+using Forum.Services.Account.Contracts;
+using Forum.Services.Category.Contracts;
+using Forum.Services.Forum.Contracts;
+using Forum.Web.ViewModels.Forum;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
+namespace Forum.Web.Controllers.Forum
+{
     [Authorize("Admin")]
     public class ForumController : BaseController
     {
@@ -58,7 +58,7 @@
         [AllowAnonymous]
         public IActionResult Posts(string id)
         {
-            var forum = this.forumService.GetPostsByForum(id);
+            var forum = this.forumService.GetPostsByForum(id).GetAwaiter().GetResult();
 
             var model = new ForumPostsInputModel
             {

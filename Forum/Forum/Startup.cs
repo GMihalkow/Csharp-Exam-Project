@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Forum.Web;
 using Forum.Web.Middlewares;
 using Forum.Services.Account;
-using AutoMapper;
 using Forum.Services.Forum;
 using Forum.Services.Post.Contracts;
 using Forum.Services.Category.Contracts;
@@ -20,6 +19,11 @@ using Forum.Services.Category;
 using Forum.Services.Forum.Contracts;
 using Forum.Services.Db;
 using Forum.Services.Account.Contracts;
+using Forum.Web.ViewModels.Account;
+using Forum.Web.ViewModels.Category;
+using Forum.Web.ViewModels.Post;
+using Forum.Web.ViewModels.Forum;
+using Forum.MapConfiguration;
 
 namespace Forum
 {
@@ -35,12 +39,23 @@ namespace Forum
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var config = AutoMapperConfig.RegisterMappings(
+                 typeof(LoginUserInputModel).Assembly,
+                 typeof(RegisterUserViewModel).Assembly,
+                 typeof(CategoryInputModel).Assembly,
+                 typeof(ForumFormInputModel).Assembly,
+                 typeof(ForumInputModel).Assembly,
+                 typeof(ForumPostsInputModel).Assembly,
+                 typeof(PostInputModel).Assembly);
+
+            var mapper = config.CreateMapper();
+
             services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+                {
+                    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                    options.CheckConsentNeeded = context => true;
+                    options.MinimumSameSitePolicy = SameSiteMode.None;
+                });
 
             services
                 .AddDbContext<ForumDbContext>(options =>
@@ -89,7 +104,10 @@ namespace Forum
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
-            services.AddAutoMapper();
+
+            services.AddSingleton(mapper);
+
+            //services.AddAutoMapper();
 
             services.AddResponseCompression(options =>
             {

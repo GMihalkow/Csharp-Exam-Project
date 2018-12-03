@@ -27,6 +27,7 @@
           "AutoMapper": "8.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "6.0.0",
           "Forum.Data": "1.0.0",
+          "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
           "Forum.Services": "1.0.0",
           "Microsoft.AspNetCore.App": "2.1.1",
@@ -754,6 +755,17 @@
           "Forum.Data.dll": {}
         }
       },
+      "Forum.MapConfiguration/1.0.0": {
+        "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "6.0.0"
+        },
+        "runtime": {
+          "Forum.MapConfiguration.dll": {}
+        },
+        "compile": {
+          "Forum.MapConfiguration.dll": {}
+        }
+      },
       "Forum.Models/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Identity.Core": "2.1.6",
@@ -769,6 +781,7 @@
       "Forum.Services/1.0.0": {
         "dependencies": {
           "Forum.Data": "1.0.0",
+          "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.1.6"
         },
@@ -3883,6 +3896,11 @@
       "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
     },
     "Forum.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Forum.MapConfiguration/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

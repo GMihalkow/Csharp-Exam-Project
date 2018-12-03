@@ -1,4 +1,5 @@
 ﻿using Forum.Models;
+using System.Threading.Tasks;
 
 namespace Forum.Services.Forum.Contracts
 {
@@ -6,8 +7,8 @@ namespace Forum.Services.Forum.Contracts
     {
         void Add(SubForum model, string category);
 
-        SubForum GetPostsByForum(string id);
+        Task<SubForum> GetPostsByForum(string id);
 
-        SubForum GetForum(string id);
+        Task<SubForum> GetForum(string id);
     }
 }

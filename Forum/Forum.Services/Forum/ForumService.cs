@@ -7,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class ForumService : IForumService
     {
@@ -19,15 +20,17 @@
             this.categoryService = categoryService;
         }
 
-        public SubForum GetForum(string id)
+        public async Task<SubForum> GetForum(string id)
         {
-            SubForum forum = this.dbService
+            SubForum forum =
+                await 
+                this.dbService
                 .DbContext
                 .Forums
                 .Include(f => f.Category)
                 .Include(f => f.Posts)
                 .ThenInclude(f => f.Author)
-                .FirstOrDefault(f => f.Id == id);
+                .FirstOrDefaultAsync(f => f.Id == id);
 
             return forum;
         }
@@ -39,14 +42,14 @@
             model.CreatedOn = DateTime.UtcNow;
             model.CategoryId = category.Id;
             model.Category = category;
-            
+
             this.dbService.DbContext.Forums.Add(model);
             this.dbService.DbContext.SaveChanges();
         }
 
-        public SubForum GetPostsByForum(string id)
+        public async Task<SubForum> GetPostsByForum(string id)
         {
-            SubForum forum = this.GetForum(id);
+            SubForum forum = await this.GetForum(id);
 
             return forum;
         }

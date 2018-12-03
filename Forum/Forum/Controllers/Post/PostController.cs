@@ -26,7 +26,7 @@
 
         public IActionResult Create(string id)
         {
-            SubForum Forum = this.forumService.GetForum(id);
+            SubForum Forum = this.forumService.GetForum(id).GetAwaiter().GetResult();
 
             PostInputModel model = new PostInputModel
             {

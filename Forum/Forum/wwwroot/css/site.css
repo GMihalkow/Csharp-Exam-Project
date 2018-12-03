@@ -392,8 +392,7 @@ a {
 }
 
 .forum-container h2 {
-    margin: 1.2% 10% 1.2% 10%;
-    font-size: 24px;
+    margin-left: 1.2%;  
 }
 
 .forum-container h3 {

@@ -6,12 +6,13 @@
     using global::Forum.Web.ViewModels.Account;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     public class AccountController : BaseController
     {
         private readonly IMapper mapper;
 
-        public AccountController(IMapper mapper,IAccountService accountService) : base(accountService)
+        public AccountController(IMapper mapper, IAccountService accountService) : base(accountService)
         {
             this.mapper = mapper;
         }
@@ -24,7 +25,7 @@
         [HttpPost]
         public IActionResult Login(LoginUserInputModel model)
         {
-            ForumUser user =
+            ForumUser user = 
                 this.mapper
                 .Map<ForumUser>(model);
 
@@ -62,7 +63,7 @@
                 return this.View(model);
             }
         }
-        
+
         [Authorize]
         public IActionResult Profile()
         {
