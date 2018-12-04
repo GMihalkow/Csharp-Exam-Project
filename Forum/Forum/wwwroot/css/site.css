@@ -10,16 +10,52 @@ button {
     outline: none;
 }
 
-.m-10px{
-    margin:10px;
+.text-start{
+    text-align:start;
+}
+
+.m-10px {
+    margin: 10px;
 }
 
 .mr-5{
     margin-right: 5px;
 }
 
+.bg-white{
+    background-color:white;
+}
+
+.bg-burly{
+    background-color:burlywood;
+}
+
 .profile-container{
     display:grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.border-black-right{
+    border-right: black solid 1px;
+}
+
+.content-wrapper{
+    background-color:#ccc;
+    padding:0px;
+    margin:0px 20px;
+    text-align: end;
+}
+
+.post-wrapper{
+    border:black solid 1px;
+    
+    border-radius: 5px 5px 0px 0px;
+}
+
+.post-container {
+    border:black solid 1px;
+    display: grid;
+    margin:5px;
     grid-template-columns: 1fr 3fr;
 }
 
@@ -292,6 +328,10 @@ body {
     background-color: #1a1a1a;
 }
 
+.bg-light {
+    background-color: #e6e6e6;
+}
+
 .bg-forum {
     background-image: url("../images/showcase.jpg");
 }
@@ -345,6 +385,12 @@ a {
 
 .register-container {
     margin: 0px auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.container-half {
+    padding:10px;
     display: grid;
     grid-template-columns: 50% 50%;
 }

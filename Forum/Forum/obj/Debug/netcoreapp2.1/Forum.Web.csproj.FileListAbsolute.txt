@@ -63,3 +63,4 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.Interfaces.pdb
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Post\Details.g.cshtml.cs

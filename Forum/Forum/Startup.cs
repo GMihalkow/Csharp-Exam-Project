@@ -48,7 +48,8 @@ namespace Forum
                  typeof(ForumFormInputModel).Assembly,
                  typeof(ForumInputModel).Assembly,
                  typeof(ForumPostsInputModel).Assembly,
-                 typeof(PostInputModel).Assembly);
+                 typeof(PostInputModel).Assembly,
+                 typeof(PostViewModel).Assembly);
 
             var mapper = config.CreateMapper();
 

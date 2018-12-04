@@ -1,13 +1,14 @@
-﻿namespace Forum.Web.Controllers.Post
-{
-    using global::Forum.Models;
-    using global::Forum.Services.Interfaces.Forum;
-    using global::Forum.Services.Interfaces.Post;
-    using global::Forum.ViewModels.Post;
-    using global::Forum.Web.Services.Account.Contracts;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
+﻿using Forum.Models;
+using Forum.Services.Interfaces.Forum;
+using Forum.Services.Interfaces.Post;
+using Forum.ViewModels.Post;
+using Forum.Web.Services.Account.Contracts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
+
+namespace Forum.Web.Controllers.Post
+{
     [Authorize]
     public class PostController : BaseController
     {
@@ -50,6 +51,13 @@
             {
                 return this.View(model);
             }
+        }
+
+        public IActionResult Details(string id)
+        {
+            var viewModel = this.postService.GetPost(id);
+            viewModel.Description = this.postService.ParseDescription(viewModel.Description);
+            return this.View(viewModel);
         }
     }
 }
