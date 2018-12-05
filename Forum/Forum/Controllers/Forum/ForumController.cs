@@ -9,7 +9,7 @@ using Forum.ViewModels.Forum;
 
 namespace Forum.Web.Controllers.Forum
 {
-    [Authorize("Admin")]
+    [Authorize("Administrator")]
     public class ForumController : BaseController
     {
         private readonly ICategoryService categoryService;

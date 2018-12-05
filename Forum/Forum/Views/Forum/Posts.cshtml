@@ -1,38 +1,40 @@
 ﻿@using Forum.ViewModels.Forum;
 @model ForumPostsInputModel;
 
-<div id="shoutbox" class="menu-bg-forum text-center">
-    <h1 class="m-0"><a id="main-heading-text" href="#">Category: @Model.Forum.Category.Name</a></h1>
-    <h2 class="m-0"><a id="main-heading-text" href="#">Forum: @Model.Forum.Name</a></h2>
-</div>
-<div id="create-post-div">
-    <button onclick="location.href='/Post/Create?id=@Model.Forum.Id'" id="post-topic-button" class="menu-bg-forum"><h3 class="m-10px"><i class="fas fa-plus"></i> Post a Topic</h3></button>
-    @if (this.User.IsInRole("Admin"))
-    {
-        @await Html.PartialAsync("_AdminOptionsPartial");
-    }
-</div>
-<table class="two-thirds-width posts-table mx-5-auto">
-    <thead class="posts-table-head text-forum">
-        <tr>
-            <th class="p-10 bottom-black-border"><h2 class="m-10px">#</h2></th>
-            <th class="p-10 bottom-black-border"><h2 class="m-10px">Title</h2></th>
-            <th class="p-10 bottom-black-border"><h2 class="m-10px">Statistics</h2></th>
-        </tr>
-    </thead>
-    <tbody class="posts-table-body text-center">
-        @foreach (var post in Model.Posts)
+<div >
+    <div id="shoutbox" class="menu-bg-forum text-center">
+        <h1 class="m-0"><a id="main-heading-text" href="#">Category: @Model.Forum.Category.Name</a></h1>
+        <h2 class="m-0"><a id="main-heading-text" href="#">Forum: @Model.Forum.Name</a></h2>
+    </div>
+    <div id="create-post-div">
+        <button onclick="location.href='/Post/Create?id=@Model.Forum.Id'" id="post-topic-button" class="menu-bg-forum"><h3 class="m-10px"><i class="fas fa-plus"></i> Post a Topic</h3></button>
+        @if (this.User.IsInRole("Administrator"))
         {
-            <tr>
-                <td class="p-10 text-forum"><i class="fab fa-forumbee fa-3x"></i></td>
-                <td class="p-10 text-forum"><a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="text-forum"><h2 class="m-0">@post.Name</h2></a></td>
-                <td class="p-10 text-forum">
-                    <div>
-                        <p class="m-0">Views: @post.Views</p>
-                        <p class="m-0">Started by: @post.Author.UserName</p>
-                    </div>
-                </td>
-            </tr>
+            @await Html.PartialAsync("_AdminOptionsPartial");
         }
-    </tbody>
-</table>
+    </div>
+    <table class="two-thirds-width posts-table mx-5-auto">
+        <thead class="posts-table-head text-forum">
+            <tr>
+                <th class="p-10 bottom-black-border"><h2 class="m-10px">#</h2></th>
+                <th class="p-10 bottom-black-border"><h2 class="m-10px">Title</h2></th>
+                <th class="p-10 bottom-black-border"><h2 class="m-10px">Statistics</h2></th>
+            </tr>
+        </thead>
+        <tbody class="posts-table-body text-center">
+            @foreach (var post in Model.Posts)
+            {
+                <tr>
+                    <td class="p-10 text-forum"><i class="fab fa-forumbee fa-3x"></i></td>
+                    <td class="p-10 text-forum"><a asp-controller="Post" asp-action="Details" asp-route-id="@post.Id" class="text-forum"><h2 class="m-0">@post.Name</h2></a></td>
+                    <td class="p-10 text-forum">
+                        <div>
+                            <p class="m-0">Views: @post.Views</p>
+                            <p class="m-0">Started by: @post.Author.UserName</p>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

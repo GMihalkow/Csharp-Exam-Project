@@ -5,7 +5,7 @@ using Forum.ViewModels.Post;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Threading.Tasks;
 
 namespace Forum.Web.Controllers.Post
 {
@@ -36,14 +36,14 @@ namespace Forum.Web.Controllers.Post
         }
 
         [HttpPost]
-        public IActionResult Create(PostInputModel model)
+        public async Task<IActionResult> Create(PostInputModel model)
         {
             //Finish create post convertion to tags.
             if (ModelState.IsValid)
             {
                 ForumUser user = this.accountService.GetUser(this.User);
 
-                this.postService.AddPost(model, user, model.ForumId);
+                await this.postService.AddPost(model, user, model.ForumId);
 
                 return this.Redirect($"/Forum/Posts?Id={model.ForumId}");
             }
@@ -57,6 +57,7 @@ namespace Forum.Web.Controllers.Post
         {
             var viewModel = this.postService.GetPost(id);
             viewModel.Description = this.postService.ParseDescription(viewModel.Description);
+            this.ViewData["PostId"] = id;
             return this.View(viewModel);
         }
     }

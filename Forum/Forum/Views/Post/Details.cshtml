@@ -1,40 +1,84 @@
 ﻿@using Forum.ViewModels.Post;
 @model PostViewModel;
-
-<div id="shoutbox" class="menu-bg-forum text-center">
-    <hr class="two-thirds-width border-5" />
-    <h1 class="m-0 "><a id="main-heading-text" href="#">Post: @Model.Name</a></h1>
-    <hr class="one-third-width border-5" />
-</div>
-<div class="content-wrapper border-5">
-    <div class="post-wrapper bg-burly m-0">
-        <div class="container-half text-forum bold">
-            <div>
-                <h3 class="m-0 float-left">#1</h3>
-            </div>
-            <div>
-                <h3 class="m-0 float-right">@Model.StartedOn.ToString("dd-MM-yyyy")</h3>
-            </div>
-        </div>
-        <div class="post-container text-forum m-10px">
-            <div class="bg-light text-center  border-black-right p-10">
-                <div class="m-10px bg-white border-5">
-                    @Model.Author.UserName
-                </div>
-                <div class="m-10">
-                    <i class="fas fa-user-alt fa-3x text-forum"></i>
-                </div>
-                <div class="m-10px bg-white border-5">
-                    <p class="m-0">Joined on: @Model.Author.RegisteredOn.ToString("dd-MM-yyyy")</p>
-                </div>
-                <div class="m-10px bg-white border-5">
-                    <p class="m-0">Posts: @Model.Author.Posts.Count</p>
-                </div>
-            </div>
-            <div class="bg-white text-start p-10">
-               @Html.Raw(Model.Description)
-            </div>
-        </div>
+<div>
+    <div id="shoutbox" class="menu-bg-forum text-center">
+        <hr class="two-thirds-width border-5" />
+        <h1 class="m-0 "><a id="main-heading-text" href="#">Post: @Model.Name</a></h1>
+        <hr class="one-third-width border-5" />
     </div>
-    <a href="#" class="text-forum m-10px"><i class="fas fa-reply"></i> Reply</a>
+    <div class="content-wrapper border-5">
+        <div class="post-wrapper bg-burly m-0">
+            <div class="container-half text-forum bold">
+                <div>
+                    <h3 class="m-0 float-left">Post</h3>
+                </div>
+                <div>
+                    <h3 class="m-0 float-right">@Model.StartedOn.ToString("dd-MM-yyyy")</h3>
+                </div>
+            </div>
+            <div class="post-container text-forum m-10px">
+                <div class="bg-light text-center  border-black-right p-10">
+                    <div class="m-10px bg-white border-5">
+                        @Model.Author.UserName
+                    </div>
+                    <div class="m-10">
+                        <i class="fas fa-user-alt fa-5x text-forum"></i>
+                    </div>
+                    <div class="m-10px bg-white border-5">
+                        <p class="m-0">Joined on: @Model.Author.RegisteredOn.ToString("dd-MM-yyyy")</p>
+                    </div>
+                    <div class="m-10px bg-white border-5">
+                        <p class="m-0">Posts: @Model.Author.Posts.Count</p>
+                    </div>
+                </div>
+                <div class="bg-white text-start p-10">
+                    <blockquote class="m-0">
+                        @Html.Raw(Model.Description)
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <a id="replyBtn" class="text-forum m-10px"><i class="fas fa-reply"></i> Reply</a>
+        <div id="myModal" class="modal">
+            <div class="modal-content border-5">
+                <span class="close">&times;</span>
+                <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData"/>
+            </div>
+        </div>
+        @foreach (var reply in Model.Replies)
+        {
+            <div class="post-wrapper bg-burly m-0">
+                <div class="container-half text-forum bold">
+                    <div>
+                        <h3 class="m-0 float-left">Reply</h3>
+                    </div>
+                    <div>
+                        <h3 class="m-0 float-right">@reply.RepliedOn.ToString("dd-MM-yyyy")</h3>
+                    </div>
+                </div>
+                <div class="post-container text-forum m-10px">
+                    <div class="bg-light text-center  border-black-right p-10">
+                        <div class="m-10px bg-white border-5">
+                            @reply.Author.UserName
+                        </div>
+                        <div class="m-10">
+                            <i class="fas fa-user-alt fa-5x text-forum"></i>
+                        </div>
+                        <div class="m-10px bg-white border-5">
+                            <p class="m-0">Joined on: @reply.Author.RegisteredOn.ToString("dd-MM-yyyy")</p>
+                        </div>
+                        <div class="m-10px bg-white border-5">
+                            <p class="m-0">Posts: @reply.Author.Posts.Count</p>
+                        </div>
+                    </div>
+                    <div class="bg-white text-start p-10">
+                        <blockquote class="m-0">
+                            @Html.Raw(reply.Description)
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="text-forum m-10px"><i class="fab fa-replyd"></i> Quote</a>
+        }
+    </div>
 </div>

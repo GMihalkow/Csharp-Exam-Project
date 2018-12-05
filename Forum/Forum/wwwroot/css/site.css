@@ -6,60 +6,81 @@ button, input :hover {
     cursor: pointer;
 }
 
+.rules-container {
+    padding: 50px;
+    background-color: white;
+}
+
+@media screen and (max-width: 700px) {
+
+    .rules-container {
+        padding: 50px;
+        background-color: white;
+        overflow: scroll;
+    }
+}
+
 button {
     outline: none;
 }
 
-.text-start{
-    text-align:start;
+#replyBtn:hover {
+    cursor: pointer;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.font-18 {
+    font-size: 18px;
 }
 
 .m-10px {
     margin: 10px;
 }
 
-.mr-5{
+.mr-5 {
     margin-right: 5px;
 }
 
-.bg-white{
-    background-color:white;
+.bg-white {
+    background-color: white;
 }
 
-.bg-burly{
-    background-color:burlywood;
+.bg-burly {
+    background-color: burlywood;
 }
 
-.profile-container{
-    display:grid;
+.profile-container {
+    display: grid;
     grid-template-columns: 1fr 3fr;
 }
 
-.border-black-right{
+.border-black-right {
     border-right: black solid 1px;
 }
 
-.content-wrapper{
-    background-color:#ccc;
-    padding:0px;
-    margin:0px 20px;
+.content-wrapper {
+    background-color: #ccc;
+    padding: 0px;
+    margin: 0px 20px;
     text-align: end;
 }
 
-.post-wrapper{
-    border:black solid 1px;
-    
+.post-wrapper {
+    border: black solid 1px;
     border-radius: 5px 5px 0px 0px;
 }
 
 .post-container {
-    border:black solid 1px;
+    border: black solid 1px;
     display: grid;
-    margin:5px;
+    margin: 5px;
     grid-template-columns: 1fr 3fr;
 }
 
-.bold{
+.bold {
     font-weight: bold;
 }
 
@@ -67,38 +88,38 @@ input {
     outline: none;
 }
 
-#post-topic-button{
-    color:white;
-    border:none;
-    border-radius:10px;
+#post-topic-button {
+    color: white;
+    border: none;
+    border-radius: 10px;
     padding: 0px 20px;
 }
 
-.m-5{
+.m-5 {
     margin: 5%;
 }
 
-.m-0{
-    margin:0px;
+.m-0 {
+    margin: 0px;
 }
 
 ul {
     list-style: none;
 }
 
-.p-10{
-    padding:10px;
+.p-10 {
+    padding: 10px;
 }
 
-#create-post-div{
-    margin:20px 10%;
+#create-post-div {
+    margin: 20px 10%;
 }
 
-.bottom-black-border{
-    border-bottom:black solid 1px;
+.bottom-black-border {
+    border-bottom: black solid 1px;
 }
 
-.posts-table {  
+.posts-table {
     border-spacing: 0;
     background-color: burlywood;
     border-radius: 10px 10px 0px 0px;
@@ -110,7 +131,7 @@ ul {
     font-size: 20px;
 }
 
-.posts-table-body{
+.posts-table-body {
     padding: 20px;
     background-color: white;
 }
@@ -119,11 +140,11 @@ table tr:nth-child(even) {
     background: #ccc;
 }
 
-    .center-block {
-        margin: 20% auto;
-        text-align: center;
-        font-size: 20px
-    }
+.center-block {
+    margin: 20% auto;
+    text-align: center;
+    font-size: 20px
+}
 
 input[type="radio"] {
     display: inline;
@@ -160,17 +181,17 @@ input[type="radio"] {
     font-size: 20px;
 }
 
-.show a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+    .show a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
-.show a:hover {
-    background-color: #d9d9d9;
-    border-radius: 5px;
-}
+        .show a:hover {
+            background-color: #d9d9d9;
+            border-radius: 5px;
+        }
 
 .display-inline {
     display: inline;
@@ -182,7 +203,6 @@ input[type="radio"] {
 }
 
 #forum-navigation-button {
-   
 }
 
 /* Create a custom radio button */
@@ -301,17 +321,18 @@ body {
     /*border-radius: 5px;*/
 }
 
-/* Links inside the dropdown */
-.admin-dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+    /* Links inside the dropdown */
+    .admin-dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
 .border-5 {
     border-radius: 5px;
 }
+
 .m-10 {
     margin: 10%;
 }
@@ -390,7 +411,7 @@ a {
 }
 
 .container-half {
-    padding:10px;
+    padding: 10px;
     display: grid;
     grid-template-columns: 50% 50%;
 }
@@ -438,7 +459,7 @@ a {
 }
 
 .forum-container h2 {
-    margin-left: 1.2%;  
+    margin-left: 1.2%;
 }
 
 .forum-container h3 {
@@ -555,6 +576,10 @@ a {
         display: block;
         width: 100%;
     }
+
+    #footer {
+        display: none;
+    }
 }
 
 input {
@@ -575,9 +600,8 @@ input {
     padding: 10px;
 }
 
-.button{
-    font-size:25px;
-  
+.button {
+    font-size: 25px;
 }
 
 .submit-button {
@@ -711,3 +735,114 @@ input {
     left: 0;
     border-bottom: #1a1a1a solid 2px;
 }
+
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 33px;
+}
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 25px;
+        width: 25px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider {
+    background-color: black;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px white;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+
+/*-MODAL-*/
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 3% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 50%;
+    border: 1px solid #888;
+}
+
+@media screen and (max-width: 850px) {
+    .modal-content {
+        width: 90%;
+    }
+}   
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }

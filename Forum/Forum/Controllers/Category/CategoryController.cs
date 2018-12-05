@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize("Admin")]
+    [Authorize("Administrator")]
     public class CategoryController : BaseController
     {
         private readonly ICategoryService categoryService;

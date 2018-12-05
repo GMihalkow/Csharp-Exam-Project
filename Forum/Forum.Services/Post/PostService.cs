@@ -11,6 +11,7 @@
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
 
     public class PostService : IPostService
     {
@@ -25,7 +26,7 @@
             this.forumService = forumService;
         }
 
-        public async void AddPost(IPostInputModel model, ForumUser user, string forumId)
+        public async Task AddPost(IPostInputModel model, ForumUser user, string forumId)
         {
             var post = this.mapper.Map<Post>(model);
 
@@ -38,8 +39,8 @@
             post.Author = user;
             post.AuthorId = user.Id;
 
-            this.dbService.DbContext.Posts.AddAsync(post).GetAwaiter().GetResult();
-            this.dbService.DbContext.SaveChangesAsync().GetAwaiter().GetResult();
+            await this.dbService.DbContext.Posts.AddAsync(post);
+            await this.dbService.DbContext.SaveChangesAsync();
         }
 
         public IPostViewModel GetPost(string id)
@@ -51,13 +52,15 @@
                 .Include(p => p.Author)
                 .ThenInclude(p => p.Posts)
                 .Include(p => p.Replies)
+                .ThenInclude(p => p.Author)
+                .ThenInclude(p => p.Posts)
                 .FirstOrDefault(p => p.Id == id);
 
             PostViewModel viewModel = this.mapper.Map<PostViewModel>(post);
 
             return viewModel;
         }
-
+        //Fix the parsing.
         public string ParseDescription(string description)
         {
             string[] inputArray =

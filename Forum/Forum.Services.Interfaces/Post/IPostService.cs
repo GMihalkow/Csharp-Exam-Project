@@ -1,11 +1,12 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Post;
+using System.Threading.Tasks;
 
 namespace Forum.Services.Interfaces.Post
 {
     public interface IPostService
     {
-        void AddPost(IPostInputModel model, ForumUser user, string forumId);
+        Task AddPost(IPostInputModel model, ForumUser user, string forumId);
 
         IPostViewModel GetPost(string id);
 

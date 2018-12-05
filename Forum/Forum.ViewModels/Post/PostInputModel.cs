@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Post
 {    
-    public class PostInputModel : IPostInputModel, IMapTo<global::Forum.Models.Post>
+    public class PostInputModel : IPostInputModel, IMapTo<Models.Post>
     {
         [Required]
         [RegularExpression(@"^[a-zA-Z_\-0-9]*$", ErrorMessage = "{0} is allowed to contain only lowercase/uppercase characters, digits and '_', '-'")]

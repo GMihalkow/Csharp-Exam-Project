@@ -26,6 +26,9 @@ using Forum.Services.Interfaces.Forum;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Db;
 using Forum.ViewModels.Category;
+using Forum.Services.Reply;
+using Forum.Services.Interfaces.Reply;
+using Forum.ViewModels.Reply;
 
 namespace Forum
 {
@@ -49,6 +52,7 @@ namespace Forum
                  typeof(ForumInputModel).Assembly,
                  typeof(ForumPostsInputModel).Assembly,
                  typeof(PostInputModel).Assembly,
+                 typeof(ReplyInputModel).Assembly,
                  typeof(PostViewModel).Assembly);
 
             var mapper = config.CreateMapper();
@@ -105,13 +109,13 @@ namespace Forum
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IReplyService, ReplyService>();
             services.AddScoped<IDbService, DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 
+            //Registrating the automapper
             services.AddSingleton(mapper);
-
-            //services.AddAutoMapper();
-
+            
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
@@ -119,10 +123,10 @@ namespace Forum
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin",
+                options.AddPolicy("Administrator",
                     authBuilder =>
                     {
-                        authBuilder.RequireRole("Admin");
+                        authBuilder.RequireRole("Administrator");
                     });
             });
 

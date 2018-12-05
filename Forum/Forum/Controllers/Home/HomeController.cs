@@ -27,12 +27,17 @@
                 TotalPostsCount = this.accountService.GetTotalPostsCount()
             };
             
-            if (this.User.IsInRole("Admin"))
+            if (this.User.IsInRole("Administrator"))
             {
                 viewModel.Categories.Concat(this.categoryService.GetAllCategories().GetAwaiter().GetResult().ToArray());
             }
             
             return View(viewModel);
+        }
+
+        public IActionResult About()
+        {
+            return this.View();
         }
     }
 }

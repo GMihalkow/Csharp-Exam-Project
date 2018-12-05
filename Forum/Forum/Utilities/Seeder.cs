@@ -7,10 +7,10 @@
     {
         public static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
         {
-            bool AdminRoleExists = await roleManager.RoleExistsAsync("Admin");
+            bool AdminRoleExists = await roleManager.RoleExistsAsync("Administrator");
             if (!AdminRoleExists)
             {
-                var adminRole = new IdentityRole() { Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = "0" };
+                var adminRole = new IdentityRole() { Name = "Administrator", NormalizedName = "ADMINISTRATOR", ConcurrencyStamp = "0" };
                 var result = await roleManager.CreateAsync(adminRole);
             }
 
