@@ -115,7 +115,7 @@ namespace Forum
 
             //Registrating the automapper
             services.AddSingleton(mapper);
-            
+
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
@@ -153,7 +153,9 @@ namespace Forum
             app.UseCookiePolicy();
             app.UseAuthentication();
 
+            //Custom middlewares
             app.UseMiddleware(typeof(SeedRolesMiddleware));
+            app.UseMiddleware(typeof(ThemesMiddleware));
 
             app.UseMvc(routes =>
             {

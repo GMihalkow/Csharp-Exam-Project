@@ -18,7 +18,7 @@
         {
             Seeder.SeedRoles(roleManager).Wait();
 
-            return next(httpContext);
+            return this.next(httpContext);
         }
     }
 }

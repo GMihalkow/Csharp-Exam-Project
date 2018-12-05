@@ -6,8 +6,8 @@
     <h1 class="m-0"><a id="main-heading-text" href="#">Create Topic</a></h1>
     <h2 class="m-0"><a id="main-heading-text" href="#">Forum: @Model.ForumName</a></h2>
 </div>
-<div class="content mt-5">
-    <div class="container full-width mx-5-auto">
+<div class="post-form mt-5">
+    <div class="container two-thirds-width mx-5-auto">
         <form class="my-form" asp-controller="Post" asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" hidden="hidden" name="forumId" value="@Model.ForumId" />

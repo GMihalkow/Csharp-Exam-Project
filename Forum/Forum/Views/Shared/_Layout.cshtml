@@ -4,7 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="~/css/site.css" />
+    @if (this.Context.Request.Cookies.ContainsKey("Theme"))
+    {
+        if (this.Context.Request.Cookies["Theme"] == "dark")
+        {
+            <link href="~/css/dark.css" rel="stylesheet" />
+        }
+        else if (this.Context.Request.Cookies["Theme"] == "light")
+        {
+            <link href="~/css/light.css" rel="stylesheet" />
+        }
+    }
+    else
+    {
+        <link href="~/css/dark.css" rel="stylesheet" />
+    }
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>My - Forum</title>
 
@@ -29,7 +43,22 @@
                     </li>
                     <li>
                         <label class="switch">
-                            <input type="checkbox">
+                            @if (this.Context.Request.Cookies.ContainsKey("Theme"))
+                            {
+                                var cookieValue = this.Context.Request.Cookies["Theme"];
+                                if (cookieValue == "dark")
+                                {
+                                    <input onclick="location.href='/Home/ChangeTheme?theme=light'" type="checkbox" checked="checked" value="">
+                                }
+                                else
+                                {
+                                    <input onclick="location.href='/Home/ChangeTheme?theme=dark'" type="checkbox"  value="">
+                                }
+                            }
+                            else
+                            {
+                                <input onclick="location.href='/Home/ChangeTheme?theme=light'" type="checkbox" checked="checked" value="">
+                            }
                             <span class="slider round"></span>
                         </label>
                         Theme

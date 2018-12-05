@@ -76,7 +76,8 @@ button {
 .post-container {
     border: black solid 1px;
     display: grid;
-    margin: 5px;
+    border:none;
+    border-top: black solid 1px;
     grid-template-columns: 1fr 3fr;
 }
 
@@ -127,6 +128,7 @@ ul {
 }
 
 .posts-table-head {
+    color: #1a1a1a;
     padding: 20px;
     font-size: 20px;
 }
@@ -706,8 +708,30 @@ input {
     /* Height of the footer element */
 }
 
+
+.post-forum {
+    min-height: 100%;
+    width: 70%;
+    padding-bottom: 0px;
+    margin: 0px auto;
+    background-color: #e6e6e6;
+    border: transparent solid 1px;
+    position: relative;
+    /* Height of the footer element */
+}
+
 @media screen and (max-width: 1000px) {
     .content {
+        width: 100%;
+        padding-bottom: 0px;
+        margin: 0px auto;
+        background-color: #e6e6e6;
+        border: #262626 solid 1px;
+        position: relative;
+        /* Height of the footer element */
+    }
+
+    .post-forum {
         width: 100%;
         padding-bottom: 0px;
         margin: 0px auto;
@@ -820,7 +844,7 @@ input:checked + .slider:before {
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
-    margin: 3% auto; /* 15% from the top and centered */
+    margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
     width: 50%;
     border: 1px solid #888;
