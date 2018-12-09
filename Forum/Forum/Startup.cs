@@ -44,6 +44,13 @@ namespace Forum
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO: Use Coverlet for code coverage.
+            //TODO: Add logging.
+            //TODO: Extract logout view to a modal.
+            //TODO: Add Cookie consent.
+            //TODO: Implement change password functionality.
+            //TODO: Look at the dota forum and change design.
+
             var config = AutoMapperConfig.RegisterMappings(
                  typeof(LoginUserInputModel).Assembly,
                  typeof(RegisterUserViewModel).Assembly,

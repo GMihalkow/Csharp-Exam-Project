@@ -38,7 +38,6 @@
                     httpContext.Response.Cookies.Delete("Theme");
                     httpContext.Response.Cookies.Append("Theme", "dark", new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
                     httpContext.Response.Redirect(httpContext.Request.Path);
-
                 }
             }
         }

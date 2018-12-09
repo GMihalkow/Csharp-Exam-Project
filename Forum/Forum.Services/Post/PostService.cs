@@ -10,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
+    using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
@@ -60,7 +61,7 @@
 
             return viewModel;
         }
-        //Fix the parsing.
+
         public string ParseDescription(string description)
         {
             string[] inputArray =
@@ -68,18 +69,60 @@
                 .Split(Environment.NewLine)
                 .ToArray();
 
+            var sb = new StringBuilder();
+
             string pattern = @"(\[(\w+)\])(.*?)(\[\/\2\])";
             Regex tagsRegex = new Regex(pattern);
 
             for (int index = 0; index < inputArray.Length; index++)
             {
-                inputArray[index] = inputArray[index].Replace(']', '>');
-                inputArray[index] = inputArray[index].Replace('[', '<');
+                var match = tagsRegex.Match(inputArray[index]);
+
+                if (match.Success)
+                {
+                    while (match.Success)
+                    {
+                        match = tagsRegex.Match(inputArray[index]);
+
+                        int lineLength = inputArray[index].Length;
+                        if (lineLength < 0)
+                        {
+                            lineLength = 0;
+                        }
+
+                        var stringBeggining = inputArray[index].Substring(0, match.Index);
+
+                        //opening tag
+                        var openingTag = match.Groups[1].Value;
+                        openingTag = openingTag.Replace(']', '>');
+                        openingTag = openingTag.Replace('[', '<');
+
+                        //middle text
+                        var text = match.Groups[3].Value;
+
+                        //closing tag
+                        var closingTag = match.Groups[4].Value;
+                        closingTag = closingTag.Replace(']', '>');
+                        closingTag = closingTag.Replace('[', '<');
+
+                        int lastMatchIndex = (match.Length + match.Index);
+                        if (lastMatchIndex < 0)
+                        {
+                            lastMatchIndex = 0;
+                        }
+                        var restOfString = inputArray[index].Substring(lastMatchIndex, lineLength - lastMatchIndex);
+
+                        inputArray[index] = stringBeggining + openingTag + text + closingTag + restOfString;
+                    }
+                    sb.AppendLine(inputArray[index]);
+                }
+                else
+                {
+                    sb.AppendLine(inputArray[index]);
+                }
             }
 
-            string result = string.Join(Environment.NewLine, inputArray);
-
-            return result;
+            return sb.ToString().TrimEnd();
         }
     }
 }
