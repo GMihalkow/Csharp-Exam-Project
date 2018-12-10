@@ -29,6 +29,9 @@ using Forum.ViewModels.Category;
 using Forum.Services.Reply;
 using Forum.Services.Interfaces.Reply;
 using Forum.ViewModels.Reply;
+using Forum.ViewModels.Quote;
+using Forum.Services.Interfaces.Quote;
+using Forum.Services.Quote;
 
 namespace Forum
 {
@@ -49,7 +52,7 @@ namespace Forum
             //TODO: Extract logout view to a modal.
             //TODO: Add Cookie consent.
             //TODO: Implement change password functionality.
-            //TODO: Look at the dota forum and change design.
+            //TODO: Look at the dota forum and change up the design.
 
             var config = AutoMapperConfig.RegisterMappings(
                  typeof(LoginUserInputModel).Assembly,
@@ -60,7 +63,8 @@ namespace Forum
                  typeof(ForumPostsInputModel).Assembly,
                  typeof(PostInputModel).Assembly,
                  typeof(ReplyInputModel).Assembly,
-                 typeof(PostViewModel).Assembly);
+                 typeof(PostViewModel).Assembly,
+                 typeof(QuoteInputModel).Assembly);
 
             var mapper = config.CreateMapper();
 
@@ -117,6 +121,7 @@ namespace Forum
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IReplyService, ReplyService>();
+            services.AddScoped<IQuoteService, QuoteService>();
             services.AddScoped<IDbService, DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 

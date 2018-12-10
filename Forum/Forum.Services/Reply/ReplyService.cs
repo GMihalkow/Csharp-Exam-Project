@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Forum.Models;
@@ -6,6 +7,7 @@ using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Reply;
 using Forum.ViewModels.Interfaces.Reply;
+using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Services.Reply
 {
@@ -33,6 +35,19 @@ namespace Forum.Services.Reply
 
             await this.dbService.DbContext.Replies.AddAsync(reply);
             return await this.dbService.DbContext.SaveChangesAsync();
+        }
+
+        public Models.Reply GetReply(string id)
+        {
+            var reply = 
+                this.dbService
+                .DbContext
+                .Replies
+                .Include(r => r.Author)
+                .Include(r => r.Post)
+                .FirstOrDefault(r => r.Id == id);
+
+            return reply;
         }
     }
 }

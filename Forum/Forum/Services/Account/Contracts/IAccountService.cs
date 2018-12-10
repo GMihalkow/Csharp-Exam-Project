@@ -10,6 +10,8 @@ namespace Forum.Web.Services.Account.Contracts
     {
         int GetUsersCount();
 
+        ForumUser GetUserById(string id);
+
         bool UsernameExists(string username);
 
         int GetTotalPostsCount();

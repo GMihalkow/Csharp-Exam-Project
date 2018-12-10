@@ -15,7 +15,7 @@ namespace Forum.Web.Controllers.Post
         private readonly IForumService forumService;
         private readonly IPostService postService;
 
-        public PostController(IAccountService accountService, IForumService forumService, IPostService postService) 
+        public PostController(IAccountService accountService, IForumService forumService, IPostService postService)
             : base(accountService)
         {
             this.forumService = forumService;
@@ -24,7 +24,7 @@ namespace Forum.Web.Controllers.Post
 
         public IActionResult Create(string id)
         {
-            SubForum Forum = this.forumService.GetForum(id).GetAwaiter().GetResult();
+            SubForum Forum = this.forumService.GetForum(id);
 
             PostInputModel model = new PostInputModel
             {
@@ -36,14 +36,13 @@ namespace Forum.Web.Controllers.Post
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(PostInputModel model)
+        public IActionResult Create(PostInputModel model)
         {
-            //Finish create post convertion to tags.
             if (ModelState.IsValid)
             {
                 ForumUser user = this.accountService.GetUser(this.User);
-
-                await this.postService.AddPost(model, user, model.ForumId);
+                model.Description = this.postService.ParseDescription(model.Description);
+                this.postService.AddPost(model, user, model.ForumId).GetAwaiter().GetResult();
 
                 return this.Redirect($"/Forum/Posts?Id={model.ForumId}");
             }
@@ -56,7 +55,6 @@ namespace Forum.Web.Controllers.Post
         public IActionResult Details(string id)
         {
             var viewModel = this.postService.GetPost(id);
-            viewModel.Description = this.postService.ParseDescription(viewModel.Description);
             this.ViewData["PostId"] = id;
             return this.View(viewModel);
         }

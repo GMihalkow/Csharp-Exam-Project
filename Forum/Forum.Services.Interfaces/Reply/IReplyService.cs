@@ -7,5 +7,7 @@ namespace Forum.Services.Interfaces.Reply
     public interface IReplyService
     {
         Task<int> Add(IReplyInputModel model, ForumUser user);
+
+        Models.Reply GetReply(string id);
     }
 }

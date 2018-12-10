@@ -30,9 +30,9 @@ function typeInTextarea(el, newText) {
 $(".text")
     .off('click')
     .on("click", function () {
-    typeInTextarea($("#Description"), $(this).val());
-    return false;
-});
+        typeInTextarea($("#Description"), $(this).val());
+        return false;
+    });
 
 function myFunction() {
     if (document.getElementById("myDropdown").classList.contains("admin-dropdown-content")) {
@@ -54,15 +54,15 @@ window.onclick = function (event) {
 
 // Get the modal
 var modal = document.getElementById('myModal');
-
 // Get the button that opens the modal
-var btn = document.getElementById("replyBtn");
+var replyBtn = document.getElementById("replyBtn");
+
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal 
-btn.onclick = function () {
+replyBtn.onclick = function () {
     modal.style.display = "block";
 }
 

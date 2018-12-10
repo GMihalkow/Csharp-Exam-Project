@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="post-container text-forum m-0">
-                <div class="bg-light text-center  border-black-right p-10">
+                <div class="bg-light text-center border-black-right p-10">
                     <div class="m-10px bg-white border-5">
                         @Model.Author.UserName
                     </div>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="bg-white text-start p-10">
-                    <blockquote class="m-0">
+                    <blockquote class="m-0 font-14">
                         @Html.Raw(Model.Description)
                     </blockquote>
                 </div>
@@ -42,7 +42,7 @@
         <div id="myModal" class="modal">
             <div class="modal-content border-5">
                 <span class="close">&times;</span>
-                <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData"/>
+                <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
             </div>
         </div>
         @foreach (var reply in Model.Replies)
@@ -72,13 +72,16 @@
                         </div>
                     </div>
                     <div class="bg-white text-start p-10">
-                        <blockquote class="m-0">
+                        <blockquote class="m-0 font-14">
                             @Html.Raw(reply.Description)
                         </blockquote>
                     </div>
                 </div>
             </div>
-            <a href="#" class="text-forum m-10px"><i class="fab fa-replyd"></i> Quote</a>
+            <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
         }
     </div>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,16 +1,25 @@
-﻿@using Forum.ViewModels.Reply;
-@model ReplyInputModel;
+﻿@using Forum.ViewModels.Quote;
+@model QuoteInputModel;
 
-<div>
-    <div class="full-width">
-        <form class="my-form" asp-controller="Reply" asp-action="Create" method="post">
+<div id="shoutbox" class="menu-bg-forum text-center">
+    <h1 class="m-0"><a id="main-heading-text" href="#">Reply to: @this.ViewData["ReplierName"]</a></h1>
+    <h2 class="m-0"><a id="main-heading-text" href="#">Post: @this.ViewData["PostName"]</a></h2>
+</div>
+<div class="post-form mt-5">
+    <div class="text-white menu-bg-forum border-5 p-10 text-start two-thirds-width mx-auto">
+        <h5 class="m-0">Pesho said:</h5>
+        <blockquote>
+            <i>"@Model.Quote"</i>
+        </blockquote>
+    </div>
+    <div class="container two-thirds-width mx-5-auto">
+        <form class="my-form" asp-controller="Quote" asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="hidden" hidden="hidden" asp-for="@Model.PostId" value="@this.ViewData["PostId"]" />
-            <span asp-validation-for="@Model.PostId"></span>
+            <input type="hidden" hidden="hidden" name="forumId" />
             <div class="text-center">
                 <div class="block">
                     <div>
-                        <h2><label class="text-forum bold">Reply</label></h2>
+                        <label class="text-forum bold">Reply</label>
                     </div>
                     <button title="italic" type="button" value="[i][/i]" class="text">italic</button>
                     <button title="bold text" type="button" value="[b][/b]" class="text">bold</button>
@@ -22,8 +31,10 @@
                     <button title="ordered list" type="button" value="[ol][li][/li][/ol]" class="text"><i class="fas fa-list-ol"></i></button>
                     <button title="unordered list" type="button" value="[ul][li][/li][/ul]" class="text"><i class="fas fa-list-ul"></i></button>
                     <button title="list item" type="button" value="[li][/li]" class="text">list item</button>
-                    <textarea asp-for="@Model.Description" class="full-width post-textarea" rows="12" cols="10">Enter reply...</textarea>
-                    <span asp-validation-for="@Model.Description"></span>
+                    <textarea asp-for="Description" class="full-width post-textarea" rows="12" cols="10"></textarea>
+                    <div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
                 </div>
                 <button type="button" class="emote">😀</button>
                 <button type="button" class="emote">😃</button>
@@ -56,10 +67,15 @@
                 <button type="button" class="emote">😈</button>
                 <button type="button" class="emote">💩</button>
                 <button type="button" class="emote">❤</button>
+
             </div>
-            <div class="m-0 text-center">
-                <input class="mt-25 submit-button menu-bg-forum" type="submit" value="Reply">
+            <div class="center-button">
+                <input onclick="window.history.back()" class="mt-25 submit-button menu-bg-forum" type="button" value="Cancel">
+                <input class="mt-25 submit-button menu-bg-forum" type="submit" value="Quote">
             </div>
         </form>
     </div>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

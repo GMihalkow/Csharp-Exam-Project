@@ -42,18 +42,20 @@
             return this.View();
         }
 
-        public IActionResult ChangeTheme(string theme)
+        public IActionResult ChangeTheme(string theme, string path)
         {
             if ((this.HttpContext.Request.Cookies.ContainsKey("Theme")))
             {
                 this.HttpContext.Response.Cookies.Delete("Theme");
-                this.HttpContext.Response.Cookies.Append("Theme", theme, new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/"});
+                this.HttpContext.Response.Cookies.Append("Theme", theme, new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
             }
             else
             {
                 this.HttpContext.Response.Cookies.Append("Theme", theme, new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
             }
-            return this.Redirect("/");
+            string result = path + "?id=" + this.Request.Query["?id"];
+
+            return this.Redirect(result);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Forum.Models;
-using Forum.Web.Services.Account.Contracts;
+﻿using Forum.Web.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

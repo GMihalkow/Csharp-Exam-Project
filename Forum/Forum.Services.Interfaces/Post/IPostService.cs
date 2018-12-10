@@ -11,5 +11,7 @@ namespace Forum.Services.Interfaces.Post
         IPostViewModel GetPost(string id);
 
         string ParseDescription(string description);
+
+        bool DoesPostExist(string Id);
     }
 }

@@ -44,6 +44,12 @@
             await this.dbService.DbContext.SaveChangesAsync();
         }
 
+        public bool DoesPostExist(string Id)
+        {
+            var result = this.dbService.DbContext.Posts.Any(p => p.Id == Id);
+            return result;
+        }
+
         public IPostViewModel GetPost(string id)
         {
             Post post =
@@ -90,8 +96,10 @@
                             lineLength = 0;
                         }
 
+                        //getting the text before the match
                         var stringBeggining = inputArray[index].Substring(0, match.Index);
 
+                        //the match
                         //opening tag
                         var openingTag = match.Groups[1].Value;
                         openingTag = openingTag.Replace(']', '>');
@@ -110,6 +118,7 @@
                         {
                             lastMatchIndex = 0;
                         }
+                        //getting the text after the match
                         var restOfString = inputArray[index].Substring(lastMatchIndex, lineLength - lastMatchIndex);
 
                         inputArray[index] = stringBeggining + openingTag + text + closingTag + restOfString;

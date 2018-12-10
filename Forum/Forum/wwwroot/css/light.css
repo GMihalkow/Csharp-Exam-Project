@@ -6,6 +6,14 @@ button, input :hover {
     cursor: pointer;
 }
 
+.font-14 {
+    font-size: 14px;
+}
+
+.bg-red{
+    background-color:red;
+}
+
 .rules-container {
     padding: 50px;
     background-color: white;

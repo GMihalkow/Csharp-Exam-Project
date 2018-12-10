@@ -10,6 +10,6 @@ namespace Forum.Services.Interfaces.Forum
 
         Task<SubForum> GetPostsByForum(string id);
 
-        Task<SubForum> GetForum(string id);
+        SubForum GetForum(string id);
     }
 }

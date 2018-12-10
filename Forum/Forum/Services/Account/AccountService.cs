@@ -9,7 +9,6 @@
     using Forum.Web.Services.Account.Contracts;
     using Forum.Web.ViewModels.Account;
     using global::Forum.Models;
-    using global::Forum.Services.Db;
     using Microsoft.AspNetCore.Identity;
 
     public class AccountService : IAccountService
@@ -177,6 +176,17 @@
                 .Any(u => u.UserName == username);
 
             return result;
+        }
+
+        public ForumUser GetUserById(string id)
+        {
+            var user =
+                this.dbService
+                .DbContext
+                .Users
+                .FirstOrDefault(u => u.Id == id);
+
+            return user;
         }
     }
 }

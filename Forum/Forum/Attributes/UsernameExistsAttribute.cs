@@ -29,8 +29,6 @@
             this.accountService = (IAccountService)validationContext
                 .GetService(typeof(IAccountService));
             
-            //TODO: Change "Admin" to "Administrator"
-            
             if (!this.accountService.UsernameExists(value.ToString()))
             {
                 return ValidationResult.Success;

@@ -11,6 +11,7 @@
     using global::Forum.ViewModels.Interfaces.Forum;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ForumService : IForumService
@@ -26,24 +27,24 @@
             this.categoryService = categoryService;
         }
 
-        public async Task<SubForum> GetForum(string id)
+        public SubForum GetForum(string id)
         {
             SubForum forum =
-                await 
                 this.dbService
                 .DbContext
                 .Forums
+                .Where(f => f.Id == id)
                 .Include(f => f.Category)
                 .Include(f => f.Posts)
                 .ThenInclude(f => f.Author)
-                .FirstOrDefaultAsync(f => f.Id == id);
+                .FirstOrDefault();
 
             return forum;
         }
         
         public async Task<SubForum> GetPostsByForum(string id)
         {
-            SubForum forum = await this.GetForum(id);
+            SubForum forum = this.GetForum(id);
 
             return forum;
         }

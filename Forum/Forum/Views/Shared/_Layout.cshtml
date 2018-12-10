@@ -48,16 +48,16 @@
                                 var cookieValue = this.Context.Request.Cookies["Theme"];
                                 if (cookieValue == "dark")
                                 {
-                                    <input onclick="location.href='/Home/ChangeTheme?theme=light'" type="checkbox" checked="checked" value="">
+                                    <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=light&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox" checked="checked" value="">
                                 }
                                 else
                                 {
-                                    <input onclick="location.href='/Home/ChangeTheme?theme=dark'" type="checkbox"  value="">
+                                    <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=dark&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox"  value="">
                                 }
                             }
                             else
                             {
-                                <input onclick="location.href='/Home/ChangeTheme?theme=light'" type="checkbox" checked="checked" value="">
+                                <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=light&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox" checked="checked" value="">
                             }
                             <span class="slider round"></span>
                         </label>

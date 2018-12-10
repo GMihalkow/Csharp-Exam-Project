@@ -6,9 +6,17 @@ button, input :hover {
     cursor: pointer;
 }
 
+.font-14 {
+    font-size: 14px;
+}
+
 .rules-container {
     padding: 50px;
     background-color: white;
+}
+
+.bg-red {
+    background-color: red;
 }
 
 @media screen and (max-width: 700px) {
@@ -25,6 +33,10 @@ button {
 }
 
 #replyBtn:hover {
+    cursor: pointer;
+}
+
+.quoteBtn:hover {
     cursor: pointer;
 }
 
@@ -871,3 +883,4 @@ input:checked + .slider:before {
         text-decoration: none;
         cursor: pointer;
     }
+
