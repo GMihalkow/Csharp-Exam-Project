@@ -1,6 +1,4 @@
-﻿using Forum.MapConfiguration.Contracts;
-
-namespace Forum.ViewModels.Interfaces.Quote
+﻿namespace Forum.ViewModels.Interfaces.Quote
 {
     public interface IQuoteInputModel
     {
@@ -10,7 +8,7 @@ namespace Forum.ViewModels.Interfaces.Quote
 
         string Quote { get; }
 
-        string Description { get; }
+        string Descrption { get; }
 
         string RecieverId { get; }
     }

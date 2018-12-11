@@ -45,7 +45,7 @@
                 <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
             </div>
         </div>
-        @foreach (var reply in Model.Replies)
+        @foreach (var reply in Model.Replies.OrderBy(p => p.RepliedOn))
         {
             <div class="post-wrapper bg-burly m-0">
                 <div class="container-half text-forum bold">
@@ -79,6 +79,10 @@
                 </div>
             </div>
             <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
+        }
+        @foreach (var quote in Model.PostQuotes)
+        {
+        <partial name="../Quote/_QuoteViewPartial" model="quote" />
         }
     </div>
 </div>

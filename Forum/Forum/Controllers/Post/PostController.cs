@@ -1,10 +1,12 @@
 ﻿using Forum.Models;
 using Forum.Services.Interfaces.Forum;
 using Forum.Services.Interfaces.Post;
+using Forum.Services.Interfaces.Quote;
 using Forum.ViewModels.Post;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Forum.Web.Controllers.Post
@@ -12,12 +14,14 @@ namespace Forum.Web.Controllers.Post
     [Authorize]
     public class PostController : BaseController
     {
+        private readonly IQuoteService quoteService;
         private readonly IForumService forumService;
         private readonly IPostService postService;
 
-        public PostController(IAccountService accountService, IForumService forumService, IPostService postService)
+        public PostController(IAccountService accountService, IQuoteService quoteService, IForumService forumService, IPostService postService)
             : base(accountService)
         {
+            this.quoteService = quoteService;
             this.forumService = forumService;
             this.postService = postService;
         }
@@ -55,6 +59,9 @@ namespace Forum.Web.Controllers.Post
         public IActionResult Details(string id)
         {
             var viewModel = this.postService.GetPost(id);
+
+            viewModel.PostQuotes = this.quoteService.GetQuotesByPost(id).ToList();
+
             this.ViewData["PostId"] = id;
             return this.View(viewModel);
         }

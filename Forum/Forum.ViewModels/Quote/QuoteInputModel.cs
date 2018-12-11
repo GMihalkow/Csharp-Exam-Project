@@ -1,5 +1,6 @@
 ﻿using Forum.MapConfiguration.Contracts;
 using Forum.ViewModels.Interfaces.Quote;
+using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Quote
 {
@@ -11,7 +12,9 @@ namespace Forum.ViewModels.Quote
 
         public string Quote { get; set; }
 
-        public string Description { get; set; }
+        [Required]
+        [StringLength(500, MinimumLength = 5)]
+        public string Descrption { get; set; }
 
         public string RecieverId { get; set; }
     }
