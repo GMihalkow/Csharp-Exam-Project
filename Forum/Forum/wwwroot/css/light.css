@@ -14,12 +14,27 @@ button, input :hover {
     color: red;
 }
 
+.custom-text-area {
+    text-align:start;
+    overflow: auto;
+    background-color: white;
+    height: 150px;
+}
+
+.profile-link {
+    text-decoration: underline
+}
+
+.profile-link:hover{
+    color:blue;
+}
+
 .font-14 {
     font-size: 14px;
 }
 
-.bg-red{
-    background-color:red;
+.bg-red {
+    background-color: red;
 }
 
 .rules-container {
@@ -66,7 +81,7 @@ button {
 
 .bg-burly {
     background-color: #145252;
-    color:white;
+    color: white;
 }
 
 .profile-container {
@@ -93,7 +108,7 @@ button {
 .post-container {
     border: black solid 1px;
     display: grid;
-    border:none;
+    border: none;
     border-top: black solid 1px;
     grid-template-columns: 1fr 3fr;
 }
@@ -145,7 +160,7 @@ ul {
 }
 
 .posts-table-head {
-    color:white;
+    color: white;
     padding: 20px;
     font-size: 20px;
 }
@@ -432,7 +447,7 @@ a {
 .container-half {
     padding: 10px;
     display: grid;
-    color:white;
+    color: white;
     grid-template-columns: 50% 50%;
 }
 
@@ -747,7 +762,7 @@ input {
         /* Height of the footer element */
     }
 
-    .post-form{
+    .post-form {
         width: 100%;
         padding-bottom: 0px;
         margin: 0px auto;
@@ -756,8 +771,6 @@ input {
         position: relative;
         /* Height of the footer element */
     }
-
-
 }
 
 .content > h1 {
@@ -872,7 +885,7 @@ input:checked + .slider:before {
     .modal-content {
         width: 90%;
     }
-}   
+}
 
 /* The Close Button */
 .close {

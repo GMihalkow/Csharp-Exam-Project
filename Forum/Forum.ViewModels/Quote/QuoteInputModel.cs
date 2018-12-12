@@ -15,6 +15,6 @@ namespace Forum.ViewModels.Quote
 
         public string RecieverId { get; set; }
 
-        public string RecieverName { get; set; }
+        public string QuoteRecieverId { get; set; }
     }
 }

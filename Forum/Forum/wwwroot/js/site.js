@@ -12,7 +12,7 @@
 $(".emote")
     .off('click')
     .on("click", function (e) {
-        typeEmoticonInTextarea($("textarea"), e.target.innerText);
+        typeEmoticonInTextarea($("#Description"), e.target.innerText);
         return false;
     });
 

@@ -6,13 +6,28 @@ button, input :hover {
     cursor: pointer;
 }
 
-.text-end{
+.text-end {
     text-align: end;
 }
 
-.text-red{
-    color:red;
+.text-red {
+    color: red;
 }
+
+.custom-text-area {
+    overflow: auto;
+    background-color: white;
+    height: 150px;
+    text-align: start;
+}
+
+.profile-link {
+    text-decoration: underline
+}
+
+    .profile-link:hover {
+        color: blue;
+    }
 
 .font-14 {
     font-size: 14px;
@@ -96,7 +111,7 @@ button {
 .post-container {
     border: black solid 1px;
     display: grid;
-    border:none;
+    border: none;
     border-top: black solid 1px;
     grid-template-columns: 1fr 3fr;
 }
@@ -875,7 +890,7 @@ input:checked + .slider:before {
     .modal-content {
         width: 90%;
     }
-}   
+}
 
 /* The Close Button */
 .close {
@@ -891,4 +906,3 @@ input:checked + .slider:before {
         text-decoration: none;
         cursor: pointer;
     }
-

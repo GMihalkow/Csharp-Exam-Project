@@ -13,10 +13,11 @@
         </blockquote>
     </div>
     <div class="container two-thirds-width mx-5-auto">
-        <form class="my-form" asp-controller="Quote" asp-action="Create">
+        <form class="my-form" asp-controller="Quote" asp-action="QuoteCreate">
             <input type="hidden" hidden="hidden" asp-for="Quote" value="@Model.Quote" />
             <input type="hidden" hidden="hidden" asp-for="RecieverId" value="@Model.RecieverId" />
             <input type="hidden" hidden="hidden" asp-for="ReplyId" value="@Model.ReplyId" />
+            <input type="hidden" hidden="hidden" asp-for="QuoteRecieverId" value="@this.ViewData["QuoteRecieverId"]" />
             <div class="text-center">
                 <div class="block">
                     <div>
@@ -32,7 +33,7 @@
                     <button title="ordered list" type="button" value="[ol][li][/li][/ol]" class="text"><i class="fas fa-list-ol"></i></button>
                     <button title="unordered list" type="button" value="[ul][li][/li][/ul]" class="text"><i class="fas fa-list-ul"></i></button>
                     <button title="list item" type="button" value="[li][/li]" class="text">list item</button>
-                    <textarea id="Description" name="Description" class="full-width post-textarea" rows="12" cols="10">[h3][b][i] @@@Model.RecieverName [/i][/b][/h3]</textarea>
+                    <textarea asp-for="Description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>

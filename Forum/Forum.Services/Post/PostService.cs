@@ -69,6 +69,10 @@
                 .ThenInclude(p => p.Posts)
                 .Include(p => p.Replies)
                 .ThenInclude(p => p.Quotes)
+                .Include(p => p.Replies)
+                .ThenInclude(p => p.Quotes)
+                .ThenInclude(p => p.Author)
+                .ThenInclude(p => p.Posts)
                 .FirstOrDefault(p => p.Id == id);
 
             var replies =

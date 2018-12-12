@@ -12,6 +12,6 @@
 
         string RecieverId { get; }
 
-        string RecieverName { get; }
+        string QuoteRecieverId { get; }
     }
 }
