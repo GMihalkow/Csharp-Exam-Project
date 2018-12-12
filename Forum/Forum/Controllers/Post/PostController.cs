@@ -59,9 +59,7 @@ namespace Forum.Web.Controllers.Post
         public IActionResult Details(string id)
         {
             var viewModel = this.postService.GetPost(id);
-
-            viewModel.PostQuotes = this.quoteService.GetQuotesByPost(id).ToList();
-
+            
             this.ViewData["PostId"] = id;
             return this.View(viewModel);
         }

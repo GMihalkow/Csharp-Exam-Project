@@ -79,10 +79,12 @@
                 </div>
             </div>
             <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
-        }
-        @foreach (var quote in Model.PostQuotes)
-        {
-        <partial name="../Quote/_QuoteViewPartial" model="quote" />
+            <div class="m-10px">
+                @foreach (var quote in reply.Quotes.OrderBy(q => q.QuotedOn))
+                {
+                <partial name="../Quote/_QuoteViewPartial" model="quote" />
+                }
+            </div>
         }
     </div>
 </div>

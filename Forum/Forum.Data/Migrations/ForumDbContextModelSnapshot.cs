@@ -133,7 +133,9 @@ namespace Forum.Data.Migrations
 
                     b.Property<string>("AuthorId");
 
-                    b.Property<string>("Descrption");
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("QuotedOn");
 
                     b.Property<string>("RecieverId");
 

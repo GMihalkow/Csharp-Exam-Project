@@ -10,6 +10,10 @@ button, input :hover {
     text-align: end;
 }
 
+.text-red{
+    color:red;
+}
+
 .font-14 {
     font-size: 14px;
 }

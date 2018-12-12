@@ -5,10 +5,14 @@
     using global::Forum.Services.Interfaces.Db;
     using global::Forum.Services.Interfaces.Forum;
     using global::Forum.Services.Interfaces.Post;
+    using global::Forum.Services.Interfaces.Quote;
     using global::Forum.ViewModels.Interfaces.Post;
     using global::Forum.ViewModels.Post;
+    using global::Forum.ViewModels.Quote;
+    using global::Forum.ViewModels.Reply;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -17,12 +21,14 @@
     public class PostService : IPostService
     {
         private readonly IMapper mapper;
+        private readonly IQuoteService quoteService;
         private readonly IDbService dbService;
         private readonly IForumService forumService;
 
-        public PostService(IMapper mapper, IDbService dbService, IForumService forumService)
+        public PostService(IMapper mapper, IQuoteService quoteService, IDbService dbService, IForumService forumService)
         {
             this.mapper = mapper;
+            this.quoteService = quoteService;
             this.dbService = dbService;
             this.forumService = forumService;
         }
@@ -61,7 +67,14 @@
                 .Include(p => p.Replies)
                 .ThenInclude(p => p.Author)
                 .ThenInclude(p => p.Posts)
+                .Include(p => p.Replies)
+                .ThenInclude(p => p.Quotes)
                 .FirstOrDefault(p => p.Id == id);
+
+            var replies =
+                post
+                .Replies
+                .Select(r => this.mapper.Map<ReplyViewModel>(r));
 
             PostViewModel viewModel = this.mapper.Map<PostViewModel>(post);
 

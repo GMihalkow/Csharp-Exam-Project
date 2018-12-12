@@ -12,7 +12,7 @@ namespace Forum.ViewModels.Post
         public string Name { get; set; }
 
         [Required]
-        [StringLength(500, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
+        [MinLength(5)]
         public string Description { get; set; }
 
         public string ForumId { get; set; }

@@ -6,10 +6,12 @@
 
         string ReplyId { get; }
 
+        string Description { get; }
+
         string Quote { get; }
 
-        string Descrption { get; }
-
         string RecieverId { get; }
+
+        string RecieverName { get; }
     }
 }

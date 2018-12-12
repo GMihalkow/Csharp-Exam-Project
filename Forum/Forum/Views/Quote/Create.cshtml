@@ -7,9 +7,9 @@
 </div>
 <div class="post-form mt-5">
     <div class="text-white menu-bg-forum border-5 p-10 text-start two-thirds-width mx-auto">
-        <h5 class="m-0">@this.ViewData["ReplierName"] said:</h5>
+        <h4 class="m-0">@this.ViewData["ReplierName"] said:</h4>
         <blockquote>
-            <i>@Html.Raw(@Model.Quote)</i>
+            <i>@Html.Raw(Model.Quote)</i>
         </blockquote>
     </div>
     <div class="container two-thirds-width mx-5-auto">
@@ -28,13 +28,12 @@
                     <button title="heading 1" type="button" value="[h1][/h1]" class="text">heading 1</button>
                     <button title="heading 2" type="button" value="[h2][/h2]" class="text">heading 2</button>
                     <button title="heading 3" type="button" value="[h3][/h3]" class="text">heading 3</button>
-                    <button title="horizontal line" type="button" value="[hr][/hr]" class="text">horizontal line</button>
+                    <button title="horizontal line" type="button" value="[hr /]" class="text">horizontal line</button>
                     <button title="ordered list" type="button" value="[ol][li][/li][/ol]" class="text"><i class="fas fa-list-ol"></i></button>
                     <button title="unordered list" type="button" value="[ul][li][/li][/ul]" class="text"><i class="fas fa-list-ul"></i></button>
                     <button title="list item" type="button" value="[li][/li]" class="text">list item</button>
-                    <textarea asp-for="Descrption" class="full-width post-textarea" rows="12" cols="10">
-                    </textarea>
-                    <span asp-validation-for="Descrption" class="text-danger"></span>
+                    <textarea id="Description" name="Description" class="full-width post-textarea" rows="12" cols="10">[h3][b][i] @@@Model.RecieverName [/i][/b][/h3]</textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
             <button type="button" class="emote">😀</button>
@@ -75,7 +74,6 @@
         </form>
     </div>
 </div>
-@*</div>*@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

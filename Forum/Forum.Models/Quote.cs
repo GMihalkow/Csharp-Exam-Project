@@ -1,4 +1,6 @@
-﻿namespace Forum.Models
+﻿using System;
+
+namespace Forum.Models
 {
     public class Quote
     {
@@ -8,11 +10,13 @@
 
         public string ReplyId { get; set; }
 
+        public DateTime QuotedOn { get; set; }
+
         public ForumUser Author { get; set; }
 
         public string AuthorId { get; set; }
 
-        public string Descrption { get; set; }
+        public string Description { get; set; }
 
         public ForumUser Reciever { get; set; }
 

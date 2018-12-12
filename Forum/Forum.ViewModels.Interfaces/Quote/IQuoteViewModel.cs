@@ -4,10 +4,12 @@ namespace Forum.ViewModels.Interfaces.Quote
 {
     public interface IQuoteViewModel
     {
+        string Id { get; }
+
         ForumUser Author { get; }
 
         Models.Reply Reply { get; }
 
-        string Descrption { get; }
+        string Description { get; }
     }
 }

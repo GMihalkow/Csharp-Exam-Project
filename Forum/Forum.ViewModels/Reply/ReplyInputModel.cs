@@ -15,7 +15,7 @@ namespace Forum.ViewModels.Reply
         public ForumUser Author { get; set; }
 
         [Required]
-        [StringLength(500, MinimumLength = 5)]
+        [MinLength(5)]
         public string Description { get; set; }
 
         [Required]

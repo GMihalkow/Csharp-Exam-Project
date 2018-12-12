@@ -34,7 +34,8 @@ namespace Forum.Services.Reply
             reply.RepliedOn = DateTime.UtcNow;
 
             await this.dbService.DbContext.Replies.AddAsync(reply);
-            return await this.dbService.DbContext.SaveChangesAsync();
+            var test = await this.dbService.DbContext.SaveChangesAsync();
+            return test;
         }
 
         public Models.Reply GetReply(string id)

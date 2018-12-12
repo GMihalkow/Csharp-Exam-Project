@@ -9,5 +9,7 @@ namespace Forum.Services.Interfaces.Quote
         int Add(IQuoteInputModel model, ForumUser user);
 
         IEnumerable<IQuoteViewModel> GetQuotesByPost(string id);
+
+        Models.Quote GetQuote(string id);
     }
 }

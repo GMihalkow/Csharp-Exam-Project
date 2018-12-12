@@ -6,10 +6,12 @@ namespace Forum.ViewModels.Quote
 {
     public class QuoteViewModel : IQuoteViewModel, IMapFrom<Models.Quote>
     {
+        public string Id { get; set; }
+
         public ForumUser Author { get; set; }
 
         public Models.Reply Reply { get; set; }
 
-        public string Descrption { get; set; }
+        public string Description { get; set; }
     }
 }

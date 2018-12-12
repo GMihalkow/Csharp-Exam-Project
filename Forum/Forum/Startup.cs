@@ -64,6 +64,7 @@ namespace Forum
                  typeof(PostInputModel).Assembly,
                  typeof(ReplyInputModel).Assembly,
                  typeof(PostViewModel).Assembly,
+                 typeof(ReplyViewModel).Assembly,
                  typeof(QuoteInputModel).Assembly);
 
             var mapper = config.CreateMapper();
