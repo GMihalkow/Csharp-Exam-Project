@@ -2,7 +2,7 @@
 @model RegisterUserViewModel
 
 <div id="shoutbox" class="menu-bg-forum text-center">
-    <h1 ><a id="main-heading-text" href="#">Register</a></h1>
+    <h1><a id="main-heading-text" href="#">Register</a></h1>
 </div>
 <div class="container mx-5-auto">
     <form class="my-form" asp-controller="Account" asp-action="Register">
@@ -41,7 +41,7 @@
         <div class="block">
             <label class="text-forum" for="">Gender</label>
         </div>
-        <div class="radio-div">
+        <div class="radio-div text-center">
             <label asp-for="Gender" class="text-forum" for="male">Male</label>
             <input asp-for="Gender" type="radio" class="checkmark" name="gender" id="male" value="Male">
             <span class="text-danger" asp-validation-for="Gender"></span>
@@ -51,6 +51,9 @@
             <label asp-for="Gender" class="text-forum " for="other">Other</label>
             <input asp-for="Gender" type="radio" class="checkmark" name="gender" id="other" value="Other">
             <span class="text-danger" asp-validation-for="Gender"></span>
+        </div>
+        <div >
+            <input type="file" name="myfile" />
         </div>
         <div class="center-button">
             <input class="submit-button menu-bg-forum" type="submit" value="Register">

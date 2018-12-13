@@ -82,7 +82,7 @@
             <div class="m-10px">
                 @foreach (var quote in reply.Quotes.OrderBy(q => q.QuotedOn))
                 {
-                <partial name="../Quote/_QuoteViewPartial" model="quote" />
+                    <partial name="../Quote/_QuoteViewPartial" model="quote" />
                 }
             </div>
         }

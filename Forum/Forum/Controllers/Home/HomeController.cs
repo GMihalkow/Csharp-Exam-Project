@@ -20,7 +20,6 @@
 
         public IActionResult Index()
         {
-
             IndexInfoViewModel viewModel = new IndexInfoViewModel
             {
                 Categories = this.categoryService.GetUsersCategories().ToArray(),
@@ -31,7 +30,7 @@
 
             if (this.User.IsInRole("Administrator"))
             {
-                viewModel.Categories.Concat(this.categoryService.GetAllCategories().GetAwaiter().GetResult().ToArray());
+                viewModel.Categories = this.categoryService.GetAllCategories().GetAwaiter().GetResult().ToArray();
             }
 
             return View(viewModel);
@@ -53,7 +52,11 @@
             {
                 this.HttpContext.Response.Cookies.Append("Theme", theme, new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
             }
-            string result = path + "?id=" + this.Request.Query["?id"];
+            string result = path;
+            if (this.Request.Query.ContainsKey("?id"))
+            {
+                result = result +"?id=" + this.Request.Query["?id"];
+            }
 
             return this.Redirect(result);
         }

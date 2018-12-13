@@ -49,10 +49,19 @@ namespace Forum
         {
             //TODO: Use Coverlet for code coverage.
             //TODO: Add logging.
+            //TODO: Extract views to a razor view class library.
             //TODO: Extract logout view to a modal.
+            //TODO: Create method in service should return the model so you can test it
             //TODO: Add Cookie consent.
+            //TODO: Break down site.js file and use it only when neccessary
             //TODO: Implement change password functionality.
             //TODO: Look at the dota forum and change up the design.
+            //TODO: Look at the presentation for Advanced topics and follow the GDPR slide for the GDPR
+            //TODO: Extract model binding validation magic strings
+            //TODO: Create areas
+            //TODO: Use Cloudinary for pictures and save the link to the image in the db
+            //TODO: Extract magic strings in private consts where needed, 
+            //and extract to a global constants class if they are used in more places
 
             var config = AutoMapperConfig.RegisterMappings(
                  typeof(LoginUserInputModel).Assembly,

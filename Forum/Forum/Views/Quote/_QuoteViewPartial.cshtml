@@ -1,0 +1,46 @@
+﻿@using Forum.Models;
+@model Quote;
+
+<div class="post-wrapper bg-burly m-0">
+    <div class="container-half text-forum bold">
+        <div>
+            <h3 class="m-0 float-left">Quote</h3>
+        </div>
+        <div>
+            <h3 class="m-0 float-right">@Model.QuotedOn.ToString("dd-MM-yyyy")</h3>
+        </div>
+    </div>
+    <div class="post-container text-forum m-0">
+        <div class="bg-light text-center  border-black-right p-10">
+            <div class="m-10px bg-white border-5">
+                @Model.Author.UserName
+            </div>
+            <div class="m-10">
+                <i class="fas fa-user-alt fa-5x text-forum"></i>
+            </div>
+            <div class="m-10px bg-white border-5">
+                <p class="m-0">Joined on: @Model.Author.RegisteredOn.ToString("dd-MM-yyyy")</p>
+            </div>
+            <div class="m-10px bg-white border-5">
+                <p class="m-0">Posts: @Model.Author.Posts.Count</p>
+            </div>
+        </div>
+        <div class="bg-white text-start p-10">
+            <blockquote class="bg-light border-5 p-10">
+                <div>
+                    <b>@Model.Reply.Author.UserName</b> said:
+                </div>
+                <hr />
+                <div class="text-center">
+                    @Html.Raw(Model.Reply.Description)
+                </div>
+                <hr />
+                <div class="text-end"> on <b>@Model.Reply.RepliedOn.ToString("dd-MM-yyyy")</b></div>
+            </blockquote>
+            <blockquote class="m-0 font-14">
+                @Html.Raw(Model.Description)
+            </blockquote>
+        </div>
+    </div>
+</div>
+<a asp-controller="Quote" asp-action="Quote" asp-route-id="@Model.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
