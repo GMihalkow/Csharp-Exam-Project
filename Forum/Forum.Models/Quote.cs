@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Forum.Models
 {
@@ -21,5 +22,7 @@ namespace Forum.Models
         public ForumUser Reciever { get; set; }
 
         public string RecieverId { get; set; }
+
+        public ICollection<QuoteReport> Reports { get; set; }
     }
 }

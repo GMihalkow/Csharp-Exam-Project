@@ -1,5 +1,6 @@
 ﻿using Forum.MapConfiguration.Contracts;
 using Forum.Models;
+using Forum.Models.Enums;
 using Forum.ViewModels.Interfaces;
 
 namespace Forum.ViewModels.Interfaces.Category

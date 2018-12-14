@@ -24,6 +24,10 @@
 
         public ICollection<Quote> Quotes { get; set; }
 
-        public ICollection<Report> Reports { get; set; }
+        public ICollection<PostReport> ReportedPosts { get; set; }
+
+        public ICollection<ReplyReport> ReportedReplies { get; set; }
+
+        public ICollection<QuoteReport> ReportedQuotes { get; set; }
     }
 }

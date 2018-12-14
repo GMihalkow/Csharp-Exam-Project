@@ -5,6 +5,7 @@
     using global::Forum.Models;
     using global::Forum.ViewModels.Interfaces;
     using global::Forum.ViewModels.Interfaces.Category;
+    using global::Forum.Models.Enums;
 
     public class CategoryInputModel : ICategoryInputModel, IMapTo<Category>
     {

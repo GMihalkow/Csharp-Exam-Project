@@ -25,6 +25,6 @@
 
         public ICollection<Reply> Replies { get; set; }
 
-        public ICollection<Report> Reports { get; set; }
+        public ICollection<PostReport> Reports { get; set; }
     }
 }

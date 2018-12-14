@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forum.Models.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Forum.Models

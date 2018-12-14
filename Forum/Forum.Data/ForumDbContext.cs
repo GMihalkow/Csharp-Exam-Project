@@ -21,17 +21,23 @@ namespace Forum.Data
 
         public DbSet<Reply> Replies { get; set; }
 
-        public DbSet<Report> Reports { get; set; }
+        public DbSet<PostReport> PostReports { get; set; }
+
+        public DbSet<ReplyReport> ReplyReports { get; set; }
+
+        public DbSet<QuoteReport> QuoteReports { get; set; }    
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.ApplyConfiguration<Report>(new ReportConfiguration());
+            
             builder.ApplyConfiguration<Quote>(new QuoteConfiguration());
             builder.ApplyConfiguration<Post>(new PostConfiguration());
             builder.ApplyConfiguration<Reply>(new ReplyConfiguration());
             builder.ApplyConfiguration<Category>(new CategoryConfiguration());
+            builder.ApplyConfiguration<PostReport>(new PostReportConfiguration());
+            builder.ApplyConfiguration<ReplyReport>(new ReplyReportConfiguration());
+            builder.ApplyConfiguration<QuoteReport>(new QuoteReportConfiguration());
         }
     }
 }

@@ -20,5 +20,7 @@ namespace Forum.Models
         public ICollection<Quote> Quotes { get; set; }
 
         public DateTime RepliedOn { get; set; }
+
+        public ICollection<ReplyReport> Reports { get; set; }
     }
 }

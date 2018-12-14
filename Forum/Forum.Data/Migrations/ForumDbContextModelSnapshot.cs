@@ -126,6 +126,28 @@ namespace Forum.Data.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("Forum.Models.PostReport", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AuthorId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("PostId");
+
+                    b.Property<DateTime>("ReportedOn");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostReports");
+                });
+
             modelBuilder.Entity("Forum.Models.Quote", b =>
                 {
                     b.Property<string>("Id")
@@ -152,6 +174,28 @@ namespace Forum.Data.Migrations
                     b.ToTable("Quotes");
                 });
 
+            modelBuilder.Entity("Forum.Models.QuoteReport", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AuthorId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("QuoteId");
+
+                    b.Property<DateTime>("ReportedOn");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("QuoteId");
+
+                    b.ToTable("QuoteReports");
+                });
+
             modelBuilder.Entity("Forum.Models.Reply", b =>
                 {
                     b.Property<string>("Id")
@@ -174,7 +218,7 @@ namespace Forum.Data.Migrations
                     b.ToTable("Replies");
                 });
 
-            modelBuilder.Entity("Forum.Models.Report", b =>
+            modelBuilder.Entity("Forum.Models.ReplyReport", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -183,21 +227,17 @@ namespace Forum.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<DateTime>("OpenedOn");
+                    b.Property<string>("ReplyId");
 
-                    b.Property<string>("PostId");
-
-                    b.Property<string>("RecieverId");
+                    b.Property<DateTime>("ReportedOn");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("ReplyId");
 
-                    b.HasIndex("RecieverId");
-
-                    b.ToTable("Reports");
+                    b.ToTable("ReplyReports");
                 });
 
             modelBuilder.Entity("Forum.Models.SubForum", b =>
@@ -348,6 +388,17 @@ namespace Forum.Data.Migrations
                         .HasForeignKey("ForumId");
                 });
 
+            modelBuilder.Entity("Forum.Models.PostReport", b =>
+                {
+                    b.HasOne("Forum.Models.ForumUser", "Author")
+                        .WithMany("ReportedPosts")
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("Forum.Models.Post", "Post")
+                        .WithMany("Reports")
+                        .HasForeignKey("PostId");
+                });
+
             modelBuilder.Entity("Forum.Models.Quote", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
@@ -363,6 +414,17 @@ namespace Forum.Data.Migrations
                         .HasForeignKey("ReplyId");
                 });
 
+            modelBuilder.Entity("Forum.Models.QuoteReport", b =>
+                {
+                    b.HasOne("Forum.Models.ForumUser", "Author")
+                        .WithMany("ReportedQuotes")
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("Forum.Models.Quote", "Quote")
+                        .WithMany("Reports")
+                        .HasForeignKey("QuoteId");
+                });
+
             modelBuilder.Entity("Forum.Models.Reply", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
@@ -374,19 +436,15 @@ namespace Forum.Data.Migrations
                         .HasForeignKey("PostId");
                 });
 
-            modelBuilder.Entity("Forum.Models.Report", b =>
+            modelBuilder.Entity("Forum.Models.ReplyReport", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
-                        .WithMany("Reports")
+                        .WithMany("ReportedReplies")
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("Forum.Models.Post", "Post")
+                    b.HasOne("Forum.Models.Reply", "Reply")
                         .WithMany("Reports")
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("Forum.Models.ForumUser", "Reciever")
-                        .WithMany()
-                        .HasForeignKey("RecieverId");
+                        .HasForeignKey("ReplyId");
                 });
 
             modelBuilder.Entity("Forum.Models.SubForum", b =>

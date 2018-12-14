@@ -20,7 +20,7 @@
                 .HasOne(p => p.Forum)
                 .WithMany(f => f.Posts)
                 .HasForeignKey(p => p.ForumId);
-            
+
         }
     }
 }
