@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class Post
+    public class Post : BaseEntity<string>
     {
         public string Id { get; set; }
 

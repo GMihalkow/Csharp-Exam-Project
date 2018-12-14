@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace Forum.Models
 {
-    public class Quote
+    public class Quote : BaseEntity<string>
     {
-        public string Id { get; set; }
-
         public Reply Reply { get; set; }
 
         public string ReplyId { get; set; }

@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace Forum.Models
 {
-    public class Category
+    public class Category : BaseEntity<string>
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
 
         public ForumUser User { get; set; }
