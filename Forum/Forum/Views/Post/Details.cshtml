@@ -38,9 +38,16 @@
                 </div>
             </div>
         </div>
+        <a id="reportBtn" class="m-10px dark-red"><i class="fas fa-thumbs-down"></i> Report</a>
+        <div id="reportModal" class="modal">
+            <div class="modal-content border-5 bg-dark-red">
+                <span class="close">&times;</span>
+                <partial name="../Report/_ReportReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
+            </div>
+        </div>
         <a id="replyBtn" class="text-forum m-10px"><i class="fas fa-reply"></i> Reply</a>
-        <div id="myModal" class="modal">
-            <div class="modal-content border-5">
+        <div id="replyModal" class="modal">
+            <div class="modal-content border-5 bg-white">
                 <span class="close">&times;</span>
                 <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
             </div>

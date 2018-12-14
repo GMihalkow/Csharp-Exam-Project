@@ -14,6 +14,14 @@ button, input :hover {
     color: red;
 }
 
+.dark-red {
+    color: #b30000;
+}
+
+.bg-dark-red {
+    background-color: #b30000;
+}
+
 .custom-text-area {
     text-align:start;
     overflow: auto;
@@ -57,6 +65,10 @@ button {
 
 #replyBtn:hover {
     cursor: pointer;
+}
+
+#reportBtn:hover{
+    cursor:pointer;
 }
 
 .text-start {
@@ -643,7 +655,6 @@ input {
     font-size: 20px;
     font-weight: bold;
     padding: 10px 70px;
-    color: white;
     border: none;
     cursor: pointer;
     border-radius: 10px;
@@ -874,7 +885,7 @@ input:checked + .slider:before {
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
+    /*background-color: #fefefe;*/
     margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
     width: 50%;
