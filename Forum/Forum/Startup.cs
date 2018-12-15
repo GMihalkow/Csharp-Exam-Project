@@ -32,6 +32,9 @@ using Forum.ViewModels.Reply;
 using Forum.ViewModels.Quote;
 using Forum.Services.Interfaces.Quote;
 using Forum.Services.Quote;
+using Forum.ViewModels.Report;
+using Forum.Services.Report;
+using Forum.Services.Interfaces.Report;
 
 namespace Forum
 {
@@ -74,7 +77,9 @@ namespace Forum
                  typeof(ReplyInputModel).Assembly,
                  typeof(PostViewModel).Assembly,
                  typeof(ReplyViewModel).Assembly,
-                 typeof(QuoteInputModel).Assembly);
+                 typeof(QuoteInputModel).Assembly,
+                 typeof(ReplyReportInputModel).Assembly,
+                 typeof(PostReportInputModel).Assembly);
 
             var mapper = config.CreateMapper();
 
@@ -130,6 +135,7 @@ namespace Forum
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReplyService, ReplyService>();
             services.AddScoped<IQuoteService, QuoteService>();
             services.AddScoped<IDbService, DbService>();

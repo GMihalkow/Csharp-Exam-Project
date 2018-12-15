@@ -1,0 +1,25 @@
+﻿@using Forum.ViewModels.Report;
+@model ReplyReportInputModel;
+
+<div>
+    <div class="full-width">
+        <form class="my-form" asp-controller="Report" asp-action="ReportReply" method="post">
+            <input type="hidden" hidden="hidden" asp-for="@Model.PostId" value="@this.ViewData["PostId"]" />
+            <span asp-validation-for="@Model.PostId"></span>
+            <input type="hidden" hidden="hidden" asp-for="@Model.ReplyId" value="@Model.ReplyId" />
+            <div class="text-center">
+                <div class="block">
+                    <div>
+                        <h2><label class="text-white bold">Something wrong?</label></h2>
+                    </div>
+                    <textarea asp-for="@Model.Description" id="myDescription" class="full-width post-textarea" rows="12" cols="10">Enter report...</textarea>
+                    <span class="text-white" asp-validation-for="@Model.Description"></span>
+                </div>
+                <p class="text-white m-0">Caution! Reports are considered only if there is a violation of the forum rules!</p>
+            </div>
+            <div class="m-0 text-center">
+                <input class="mt-25 dark-red submit-button bg-white" type="submit" value="Report">
+            </div>
+        </form>
+    </div>
+</div>

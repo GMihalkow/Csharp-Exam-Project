@@ -4,7 +4,6 @@
 <div>
     <div class="full-width">
         <form class="my-form" asp-controller="Reply" asp-action="Create" method="post">
-            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <input type="hidden" hidden="hidden" asp-for="@Model.PostId" value="@this.ViewData["PostId"]" />
             <span asp-validation-for="@Model.PostId"></span>
             <div class="text-center"> 

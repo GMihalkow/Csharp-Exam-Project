@@ -1,4 +1,5 @@
 ﻿@using Forum.ViewModels.Post;
+@using Forum.ViewModels.Report;
 @model PostViewModel;
 <div>
     <div id="shoutbox" class="menu-bg-forum text-center">
@@ -38,13 +39,16 @@
                 </div>
             </div>
         </div>
-        <a id="reportBtn" class="m-10px dark-red"><i class="fas fa-thumbs-down"></i> Report</a>
-        <div id="reportModal" class="modal">
-            <div class="modal-content border-5 bg-dark-red">
-                <span class="close">&times;</span>
-                <partial name="../Report/_ReportReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
+        @if (Model.Author.UserName != this.User.Identity.Name)
+        {
+            <a class="m-10px dark-red reportBtn"><i class="fas fa-thumbs-down"></i> Report</a>
+            <div class="modal reportModal">
+                <div class="modal-content border-5 bg-dark-red">
+                    <span class="close">&times;</span>
+                    <partial name="../Report/_ReportPostPartial.cshtml"  model="Model.ReplyModel" view-data="this.ViewData" />
+                </div>
             </div>
-        </div>
+        }
         <a id="replyBtn" class="text-forum m-10px"><i class="fas fa-reply"></i> Reply</a>
         <div id="replyModal" class="modal">
             <div class="modal-content border-5 bg-white">
@@ -83,6 +87,13 @@
                             @Html.Raw(reply.Description)
                         </blockquote>
                     </div>
+                </div>
+            </div>
+            <a class="m-10px dark-red reportBtn"><i class="fas fa-thumbs-down"></i> Report</a>
+            <div class="modal reportModal">
+                <div class="modal-content border-5 bg-dark-red">
+                    <span class="close">&times;</span>
+                    <partial name="../Report/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id}" view-data="this.ViewData"/>
                 </div>
             </div>
             <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>

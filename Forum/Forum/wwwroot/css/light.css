@@ -10,6 +10,14 @@ button, input :hover {
     text-align: end;
 }
 
+.emote {
+    background: none;
+    outline: none;
+    border: none;
+    font-size:24px;
+    padding:0px;
+}
+
 .text-red {
     color: red;
 }
@@ -67,7 +75,7 @@ button {
     cursor: pointer;
 }
 
-#reportBtn:hover{
+.reportBtn:hover{
     cursor:pointer;
 }
 
