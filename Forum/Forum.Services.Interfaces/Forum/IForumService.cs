@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Forum;
+using System;
 using System.Threading.Tasks;
 
 namespace Forum.Services.Interfaces.Forum
@@ -8,8 +9,12 @@ namespace Forum.Services.Interfaces.Forum
     {
         void Add(IForumFormInputModel model, string category);
 
-        Task<SubForum> GetPostsByForum(string id);
+        Task<SubForum> GetPostsByForum(string Id);
 
-        SubForum GetForum(string id);
+        SubForum GetForum(string Id);
+
+        void Edit(IForumInputModel model, string forumId);
+
+        IForumFormInputModel GetMappedForumModel(SubForum forum);
     }
 }

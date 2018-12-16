@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Interfaces.Forum
 {
-    public interface IForumInputModel : IMapFrom<SubForum>, IValidatableObject
+    public interface IForumInputModel : IValidatableObject
     {
         string Name { get; set; }
 

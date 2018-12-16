@@ -56,6 +56,7 @@ namespace Forum
             //TODO: Extract logout view to a modal.
             //TODO: Create method in service should return the model so you can test it
             //TODO: Add Cookie consent.
+            //TODO: Validate that names of entities are unique
             //TODO: Break down site.js file and use it only when neccessary
             //TODO: Implement change password functionality.
             //TODO: Look at the dota forum and change up the design.

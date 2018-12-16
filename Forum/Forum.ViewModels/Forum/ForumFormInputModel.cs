@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Forum.ViewModels.Interfaces.Forum;
 using Forum.Models;
+using System.Collections.Generic;
 
 namespace Forum.ViewModels.Forum
 {
@@ -14,7 +15,7 @@ namespace Forum.ViewModels.Forum
 
         public IForumInputModel ForumModel { get; set; }
 
-        public SelectListItem[] Categories { get; set; }
+        public IEnumerable<SelectListItem> Categories { get; set; }
 
         public void CreateMappings(IMapperConfigurationExpression configuration)
         {

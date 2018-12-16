@@ -71,3 +71,4 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Report\_ReportPostPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Report\_ReportReplyPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Report\_QuoteReportPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Forum\Edit.g.cshtml.cs

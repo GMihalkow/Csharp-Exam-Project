@@ -6,6 +6,7 @@ using Forum.Web.Services.Account.Contracts;
 using Forum.Services.Interfaces.Category;
 using Forum.Services.Interfaces.Forum;
 using Forum.ViewModels.Forum;
+using System;
 
 namespace Forum.Web.Controllers.Forum
 {
@@ -31,23 +32,23 @@ namespace Forum.Web.Controllers.Forum
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id,
-                    Text = $"{x.Name} ({x.ForumsCount})"
+                    Text = x.Name
                 })
-                .ToArray();
-                
+                .ToList();
+
 
             ForumFormInputModel model = new ForumFormInputModel
             {
                 Categories = namesList
             };
-            
+
             return this.View(model);
         }
 
         [HttpPost]
         public IActionResult Create(ForumFormInputModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 this.forumService.Add(model, model.ForumModel.Category);
 
@@ -62,9 +63,9 @@ namespace Forum.Web.Controllers.Forum
                     .Select(x => new SelectListItem
                     {
                         Value = x.Id,
-                        Text = $"{x.Name} ({x.ForumsCount})"
+                        Text = x.Name
                     })
-                    .ToArray();
+                    .ToList();
 
                 ForumFormInputModel viewModel = new ForumFormInputModel
                 {
@@ -86,8 +87,29 @@ namespace Forum.Web.Controllers.Forum
                 Forum = forum,
                 Posts = forum.Posts
             };
-            
+
             return this.View(model);
+        }
+
+        public IActionResult Edit(string id)
+        {
+            var forum = this.forumService.GetForum(id);
+
+            var model = (ForumFormInputModel)this.forumService.GetMappedForumModel(forum);
+            
+            this.ViewData["ForumId"] = forum.Id;
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ForumFormInputModel model, string forumId)
+        {
+            var forum = this.forumService.GetForum(forumId);
+
+            this.forumService.Edit(model.ForumModel, forumId);
+
+            return this.Redirect("/");
         }
     }
 }

@@ -1,18 +1,15 @@
-﻿using Forum.MapConfiguration.Contracts;
+﻿using AutoMapper;
+using Forum.MapConfiguration.Contracts;
 using Forum.Models;
 using Forum.Services.Interfaces.Category;
-using Forum.Services.Interfaces.Db;
 using Forum.ViewModels.Interfaces.Forum;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Forum
 {
-    public class ForumInputModel : IForumInputModel, IMapFrom<SubForum>
+    public class ForumInputModel : IForumInputModel, IValidatableObject,  IHaveCustomMappings, IMapTo<SubForum>
     {
-        private IDbService dbService;
-        private ICategoryService categoryService;
-
         [Required]
         [RegularExpression(@"^[a-zA-Z_\-0-9]*$", ErrorMessage = "{0} is allowed to contain only lowercase/uppercase characters, digits and '_', '-'")]
         [StringLength(50, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
@@ -25,15 +22,12 @@ namespace Forum.ViewModels.Forum
         
         public string Category { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
         {
-            this.dbService = (IDbService)validationContext
-                     .GetService(typeof(IDbService));
-
-            this.categoryService = (ICategoryService)validationContext
+            var categoryService = (ICategoryService)validationContext
                    .GetService(typeof(ICategoryService));
 
-            if (this.categoryService.IsCategoryValid(this.Category))
+            if (categoryService.IsCategoryValid(this.Category))
             {
                 yield return ValidationResult.Success;
             }
@@ -41,6 +35,23 @@ namespace Forum.ViewModels.Forum
             {
                 yield return new ValidationResult("Invalid category.");
             }
+        }
+        
+        public void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+            configuration.CreateMap<SubForum, ForumInputModel>()
+                .ForMember(fm => fm.Category,
+                x => x.MapFrom(src => src.Category.Name))
+                .ForMember(fm => fm.Name,
+                x => x.MapFrom(src => src.Name))
+                .ForMember(fm => fm.Description,
+                x => x.MapFrom(src => src.Description));
+
+            //configuration.CreateMap<ForumInputModel, SubForum>()
+            //    .ForMember(sf => sf.Description,
+            //    x => x.MapFrom(src => src.Description))
+            //    .ForMember(sf => sf.Name,
+            //    x => x.MapFrom(src => src.Name));
         }
     }
 }
