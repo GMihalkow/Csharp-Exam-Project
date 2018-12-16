@@ -1,4 +1,5 @@
 ﻿@using Forum.Models;
+@using Forum.ViewModels.Report;
 @model Quote;
 
 <div class="post-wrapper bg-burly m-0">
@@ -43,4 +44,14 @@
         </div>
     </div>
 </div>
+@if (this.User.Identity.Name != Model.Author.UserName)
+{
+<a class="m-10px dark-red reportBtn"><i class="fas fa-thumbs-down"></i> Report</a>
+<div class="modal reportModal">
+    <div class="modal-content border-5 bg-dark-red">
+        <span class="close">&times;</span>
+        <partial name="../Report/_QuoteReportPartial.cshtml" model="new QuoteReportInputModel { QuoteId = Model.Id }" view-data="this.ViewData" />
+    </div>
+</div>
+}
 <a asp-controller="Quote" asp-action="Quote" asp-route-id="@Model.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>

@@ -8,5 +8,7 @@ namespace Forum.Services.Interfaces.Report
         IPostReportInputModel AddPostReport(IPostReportInputModel model, string authorId);
 
         IReplyReportInputModel AddReplyReport(IReplyReportInputModel model, string authorId);
+
+        IQuoteReportInputModel AddQuoteReport(IQuoteReportInputModel model, string authorId);
     }
 }

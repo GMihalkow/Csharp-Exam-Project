@@ -89,13 +89,16 @@
                     </div>
                 </div>
             </div>
+            @if (this.User.Identity.Name != reply.Author.UserName)
+            {
             <a class="m-10px dark-red reportBtn"><i class="fas fa-thumbs-down"></i> Report</a>
             <div class="modal reportModal">
                 <div class="modal-content border-5 bg-dark-red">
                     <span class="close">&times;</span>
-                    <partial name="../Report/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id}" view-data="this.ViewData"/>
+                    <partial name="../Report/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id }" view-data="this.ViewData"/>
                 </div>
             </div>
+            }
             <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
             <div class="m-10px">
                 @foreach (var quote in reply.Quotes.OrderBy(q => q.QuotedOn))

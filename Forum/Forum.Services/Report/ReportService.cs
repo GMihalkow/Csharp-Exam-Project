@@ -31,12 +31,24 @@ namespace Forum.Services.Report
             return model;
         }
 
+        public IQuoteReportInputModel AddQuoteReport(IQuoteReportInputModel model, string authorId)
+        {
+            var report = this.mapper.Map<QuoteReport>(model);
+            report.ReportedOn = DateTime.UtcNow;
+            report.AuthorId = authorId;
+
+            this.dbService.DbContext.QuoteReports.Add(report);
+            this.dbService.DbContext.SaveChanges();
+
+            return model;
+        }
+
         public IReplyReportInputModel AddReplyReport(IReplyReportInputModel model, string authorId)
         {
             var report = this.mapper.Map<ReplyReport>(model);
             report.ReportedOn = DateTime.UtcNow;
             report.AuthorId = authorId;
-            
+
             this.dbService.DbContext.ReplyReports.Add(report);
             this.dbService.DbContext.SaveChanges();
 
