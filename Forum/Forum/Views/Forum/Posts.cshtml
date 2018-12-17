@@ -1,7 +1,7 @@
 ﻿@using Forum.ViewModels.Forum;
 @model ForumPostsInputModel;
 
-<div >
+<div>
     <div id="shoutbox" class="menu-bg-forum text-center">
         <h1 class="m-0"><a id="main-heading-text" href="#">Category: @Model.Forum.Category.Name</a></h1>
         <h2 class="m-0"><a id="main-heading-text" href="#">Forum: @Model.Forum.Name</a></h2>
@@ -38,3 +38,7 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/reportModal.js"></script>
+}

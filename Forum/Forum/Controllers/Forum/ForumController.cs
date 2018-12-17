@@ -111,5 +111,15 @@ namespace Forum.Web.Controllers.Forum
 
             return this.Redirect("/");
         }
+
+        public IActionResult Delete(string id)
+        {
+            var forum = this.forumService.GetForum(id);
+            //TODO: Validate
+
+            this.forumService.Delete(forum);
+
+            return this.Redirect("/");
+        }
     }
 }

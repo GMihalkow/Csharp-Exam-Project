@@ -101,5 +101,11 @@
 
             return forumForumModel;
         }
+
+        public void Delete(SubForum forum)
+        {
+            this.dbService.DbContext.Remove(forum);
+            this.dbService.DbContext.SaveChanges();
+        }
     }
 }

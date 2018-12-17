@@ -14,8 +14,9 @@
             builder
                 .HasOne(q => q.Reply)
                 .WithMany(r => r.Quotes)
-                .HasForeignKey(q => q.ReplyId);
-            
+                .HasForeignKey(q => q.ReplyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(q => q.Author)
                 .WithMany(u => u.Quotes)

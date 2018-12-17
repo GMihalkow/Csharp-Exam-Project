@@ -19,7 +19,8 @@ namespace Forum.Data.EntityConfiguration
             builder
                 .HasOne(qr => qr.Quote)
                 .WithMany(p => p.Reports)
-                .HasForeignKey(qr => qr.QuoteId);
+                .HasForeignKey(qr => qr.QuoteId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -54,14 +54,13 @@ window.onclick = function (event) {
 
 // Get the modal
 var replyModal = document.getElementById('replyModal');
-var reportModals = document.getElementsByClassName('reportModal');
 
 // Get the button that opens the modal
 var replyBtn = document.getElementById("replyBtn");
-var reportBtns = document.getElementsByClassName("reportBtn");
 
 // Get the <span> element that closes the modal
 var closeButtons = document.getElementsByClassName("close");
+var noButtons = document.getElementsByClassName("closeBtn");
 
 var firstCloseButton = document.getElementsByClassName("close")[0];
 
@@ -70,34 +69,31 @@ var secondCloseButton = document.getElementsByClassName("close")[1];
 // When the user clicks on the button, open the modal 
 replyBtn.onclick = function () {
     replyModal.style.display = "block";
-}
+};
 
-function testFunction(index) {
-    reportBtns[i].onclick = function () {
-        reportModals[index].style.display = "block";
-    }
-}
-
-for (var i = 0; i < reportBtns.length; i++) {
-    testFunction(i);
-}
 
 // When the user clicks on <span> (x), close the modal
 for (var closeIndex = 0; closeIndex < closeButtons.length; closeIndex++) {
     closeButtons[closeIndex].onclick = function () {
         for (var index = 0; index < reportModals.length; index++) {
-            reportModals[index].style.display = "none";
             replyModal.style.display = "none";
         }
-    }
+    };
+}
+for (var noIndex = 0; noIndex < noButtons.length; noIndex++) {
+    noButtons[noIndex].onclick = function () {
+        for (var index = 0; index < reportModals.length; index++) {
+            replyModal.style.display = "none";
+        }
+    };
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
     for (var i = 0; i < reportModals.length; i++) {
-    if (event.target == replyModal || event.target == reportModals[i]) {
-        replyModal.style.display = "none";
+        if (event.target == replyModal || event.target == reportModals[i]) {
+            replyModal.style.display = "none";
             reportModals[i].style.display = "none";
         }
     }
-}
+};

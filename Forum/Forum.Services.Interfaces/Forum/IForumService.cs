@@ -16,5 +16,7 @@ namespace Forum.Services.Interfaces.Forum
         void Edit(IForumInputModel model, string forumId);
 
         IForumFormInputModel GetMappedForumModel(SubForum forum);
+
+        void Delete(SubForum forum);
     }
 }

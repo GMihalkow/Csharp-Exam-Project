@@ -19,8 +19,14 @@
             builder
                 .HasOne(p => p.Forum)
                 .WithMany(f => f.Posts)
-                .HasForeignKey(p => p.ForumId);
-
+                .HasForeignKey(p => p.ForumId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder
+                .HasMany(p => p.Replies)
+                .WithOne(f => f.Post)
+                .HasForeignKey(p => p.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

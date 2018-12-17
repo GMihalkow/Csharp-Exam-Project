@@ -19,7 +19,8 @@ namespace Forum.Data.EntityConfiguration
             builder
                 .HasOne(rr => rr.Reply)
                 .WithMany(p => p.Reports)
-                .HasForeignKey(rr => rr.ReplyId);
+                .HasForeignKey(rr => rr.ReplyId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -19,7 +19,8 @@ namespace Forum.Data.EntityConfiguration
             builder
                 .HasOne(pr => pr.Post)
                 .WithMany(p => p.Reports)
-                .HasForeignKey(pr => pr.PostId);                
+                .HasForeignKey(pr => pr.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

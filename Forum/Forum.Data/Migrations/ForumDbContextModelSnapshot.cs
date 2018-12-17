@@ -385,7 +385,8 @@ namespace Forum.Data.Migrations
 
                     b.HasOne("Forum.Models.SubForum", "Forum")
                         .WithMany("Posts")
-                        .HasForeignKey("ForumId");
+                        .HasForeignKey("ForumId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Forum.Models.PostReport", b =>
@@ -396,7 +397,8 @@ namespace Forum.Data.Migrations
 
                     b.HasOne("Forum.Models.Post", "Post")
                         .WithMany("Reports")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Forum.Models.Quote", b =>
@@ -411,7 +413,8 @@ namespace Forum.Data.Migrations
 
                     b.HasOne("Forum.Models.Reply", "Reply")
                         .WithMany("Quotes")
-                        .HasForeignKey("ReplyId");
+                        .HasForeignKey("ReplyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Forum.Models.QuoteReport", b =>
@@ -422,7 +425,8 @@ namespace Forum.Data.Migrations
 
                     b.HasOne("Forum.Models.Quote", "Quote")
                         .WithMany("Reports")
-                        .HasForeignKey("QuoteId");
+                        .HasForeignKey("QuoteId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Forum.Models.Reply", b =>
@@ -433,7 +437,8 @@ namespace Forum.Data.Migrations
 
                     b.HasOne("Forum.Models.Post", "Post")
                         .WithMany("Replies")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Forum.Models.ReplyReport", b =>
@@ -444,7 +449,8 @@ namespace Forum.Data.Migrations
 
                     b.HasOne("Forum.Models.Reply", "Reply")
                         .WithMany("Reports")
-                        .HasForeignKey("ReplyId");
+                        .HasForeignKey("ReplyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Forum.Models.SubForum", b =>
