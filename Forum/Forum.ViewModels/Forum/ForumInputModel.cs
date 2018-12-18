@@ -46,12 +46,6 @@ namespace Forum.ViewModels.Forum
                 x => x.MapFrom(src => src.Name))
                 .ForMember(fm => fm.Description,
                 x => x.MapFrom(src => src.Description));
-
-            //configuration.CreateMap<ForumInputModel, SubForum>()
-            //    .ForMember(sf => sf.Description,
-            //    x => x.MapFrom(src => src.Description))
-            //    .ForMember(sf => sf.Name,
-            //    x => x.MapFrom(src => src.Name));
         }
     }
 }

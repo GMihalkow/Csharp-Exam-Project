@@ -8,10 +8,15 @@
             <span asp-validation-for="@Model.PostId"></span>
             <input type="hidden" hidden="hidden" asp-for="@Model.ReplyId" value="@Model.ReplyId" />
             <div class="text-center">
+                <div>
+                    <h2><label class="text-white bold">Something wrong?</label></h2>
+                </div>
                 <div class="block">
-                    <div>
-                        <h2><label class="text-white bold">Something wrong?</label></h2>
-                    </div>
+                    <h3 class="m-0"><label asp-for="@Model.Title"></label></h3>
+                    <input class="full-width" type="text" asp-for="@Model.Title" />
+                </div>
+                <div class="block">
+                    <h3 class="m-0"><label asp-for="@Model.Description"></label></h3>
                     <textarea asp-for="@Model.Description" id="myDescription" class="full-width post-textarea" rows="12" cols="10">Enter report...</textarea>
                     <span class="text-white" asp-validation-for="@Model.Description"></span>
                 </div>

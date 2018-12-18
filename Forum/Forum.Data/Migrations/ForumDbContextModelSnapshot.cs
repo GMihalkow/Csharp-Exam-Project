@@ -139,6 +139,8 @@ namespace Forum.Data.Migrations
 
                     b.Property<DateTime>("ReportedOn");
 
+                    b.Property<string>("Title");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -187,6 +189,8 @@ namespace Forum.Data.Migrations
 
                     b.Property<DateTime>("ReportedOn");
 
+                    b.Property<string>("Title");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -230,6 +234,8 @@ namespace Forum.Data.Migrations
                     b.Property<string>("ReplyId");
 
                     b.Property<DateTime>("ReportedOn");
+
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 

@@ -6,6 +6,10 @@ button, input :hover {
     cursor: pointer;
 }
 
+.border-none{
+    border:none;
+}
+
 .emote {
     background: none;
     outline: none;
@@ -16,6 +20,11 @@ button, input :hover {
 
 .text-end {
     text-align: end;
+}
+
+.active{
+    background-color:white;
+    color:black;
 }
 
 .text-red {
@@ -111,6 +120,11 @@ button {
 .profile-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
+}
+
+.report-buttons-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .border-black-right {
@@ -341,6 +355,7 @@ input[type="radio"] .checkmark:after {
     justify-content: center;
     border: none;
     font-size: 19px;
+    outline:none;
     padding: 10px; /* If you add too much padding here, the options won't show in IE */
 }
 

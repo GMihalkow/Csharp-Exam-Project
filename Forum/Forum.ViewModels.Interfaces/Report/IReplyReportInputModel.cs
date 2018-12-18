@@ -2,6 +2,8 @@
 {
     public interface IReplyReportInputModel
     {
+        string Title { get; }
+
         string ReplyId { get; }
 
         string Description { get; }

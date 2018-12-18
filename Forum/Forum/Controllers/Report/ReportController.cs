@@ -67,5 +67,15 @@ namespace Forum.Web.Controllers.Report
                 return this.Redirect("/");
             }
         }
+
+        public IActionResult All()
+        {
+            return this.View();
+        }
+
+        public PartialViewResult GetAllReports()
+        {
+            return PartialView("_PostReportsPartial");
+        }
     }
 }

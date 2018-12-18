@@ -62,10 +62,6 @@ var replyBtn = document.getElementById("replyBtn");
 var closeButtons = document.getElementsByClassName("close");
 var noButtons = document.getElementsByClassName("closeBtn");
 
-var firstCloseButton = document.getElementsByClassName("close")[0];
-
-var secondCloseButton = document.getElementsByClassName("close")[1];
-
 // When the user clicks on the button, open the modal 
 replyBtn.onclick = function () {
     replyModal.style.display = "block";

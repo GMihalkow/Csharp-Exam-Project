@@ -6,6 +6,20 @@ button, input :hover {
     cursor: pointer;
 }
 
+.report-buttons-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.border-none {
+    border: none;
+}
+
+.active {
+    background-color: white;
+    color: black;
+}
+
 .text-end {
     text-align: end;
 }
@@ -336,6 +350,7 @@ input[type="radio"] .checkmark:after {
 .styled-select select {
     justify-content: center;
     border: none;
+    outline: none;
     font-size: 19px;
     padding: 10px; /* If you add too much padding here, the options won't show in IE */
 }
