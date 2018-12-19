@@ -25,6 +25,7 @@
                 <td class="text-forum"><h3>@index</h3></td>
                 <td class="text-forum"><h3>Reply</h3></td>
                 <td class="text-forum">
+                    <input type="hidden" hidden="hidden" class="entityId" value="@report.Id" />
                     <div class="container-half">
                         <div>
                             <a class="report-action-buttons text-white menu-bg-forum reportBtn">Review</a>
@@ -38,15 +39,7 @@
                             </div>
                         </div>
                         <div>
-                            <a class="report-action-buttons text-white menu-bg-forum reportBtn">Dismiss</a>
-                            <div class="modal reportModal">
-                                <div class="modal-content border-5 menu-bg-forum">
-                                    <div>
-                                        <span class="close">&times;</span>
-                                    </div>
-                                    <partial name="~/Views/Report/Reply/_ReviewReplyReportPartial.cshtml" model="@report" />
-                                </div>
-                            </div>
+                            <a class="report-action-buttons text-white menu-bg-forum dismissButton">Dismiss</a>
                         </div>
                     </div>
                 </td>
@@ -56,3 +49,7 @@
         }
     </tbody>
 </table>
+
+@section Scripts{
+    <script src="~/js/dismissReplyReports.js"></script>
+}

@@ -1,13 +1,11 @@
 ﻿var elements = document.getElementsByClassName("dismissButton");
 
 var Ids = $(".entityId");
-console.log(Ids);
 
 for (var i = 0; i < elements.length; i++) {
-    var test = Ids[i];  
-    console.log(test.value);
+    var test = Ids[i];
+
     elements[i].onclick = function () {
-        console.log("CLICKED");
         $.ajax(
             {
                 type: "GET",
@@ -15,7 +13,7 @@ for (var i = 0; i < elements.length; i++) {
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/reportModal.js");
-                    $.getScript("../js/dismissReports.js");
+                    $.getScript("../js/dismissPostReports.js");
                 },
                 data: {
                     "id": test.value

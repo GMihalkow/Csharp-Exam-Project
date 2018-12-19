@@ -107,5 +107,25 @@ namespace Forum.Web.Controllers.Report
 
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
+
+        [Authorize("Administrator")]
+        public PartialViewResult DismissReplyReport(string id)
+        {
+            this.reportService.DismissReplyReport(id);
+
+            var reports = this.reportService.GetReplyReports();
+
+            return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
+        }
+
+        [Authorize("Administrator")]
+        public PartialViewResult DismissQuoteReport(string id)
+        {
+            this.reportService.DismissQuoteReport(id);
+
+            var reports = this.reportService.GetQuoteReports();
+
+            return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
+        }
     }
 }

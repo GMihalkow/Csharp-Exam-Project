@@ -7,7 +7,7 @@
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/reportModal.js");
-                    $.getScript("../js/dismissReports.js");
+                    $.getScript("../js/dismissPostReports.js");
                 }
             });
         $("#postReportsBtn").removeClass("text-white");
@@ -38,6 +38,7 @@ $('#replyReportsBtn')
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/reportModal.js");
+                    $.getScript("../js/dismissReplyReports.js");
                 }
             });
         
@@ -69,6 +70,7 @@ $('#quoteReportsBtn')
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/reportModal.js");
+                    $.getScript("../js/dismissQuoteReports.js");
                 }
             });
 
