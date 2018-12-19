@@ -11,7 +11,7 @@ namespace Forum.Web.Controllers.Report
     {
         private readonly IReportService reportService;
 
-        public ReportController(IAccountService accountService, IReportService reportService) 
+        public ReportController(IAccountService accountService, IReportService reportService)
             : base(accountService)
         {
             this.reportService = reportService;
@@ -68,14 +68,44 @@ namespace Forum.Web.Controllers.Report
             }
         }
 
+        [Authorize("Administrator")]
         public IActionResult All()
         {
             return this.View();
         }
 
-        public PartialViewResult GetAllReports()
+        [Authorize("Administrator")]
+        public PartialViewResult GetPostReports()
         {
-            return PartialView("_PostReportsPartial");
+            var reports = this.reportService.GetPostReports();
+
+            return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
+        }
+
+        [Authorize("Administrator")]
+        public PartialViewResult GetReplyReports()
+        {
+            var reports = this.reportService.GetReplyReports();
+
+            return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
+        }
+
+        [Authorize("Administrator")]
+        public PartialViewResult GetQuoteReports()
+        {
+            var reports = this.reportService.GetQuoteReports();
+
+            return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
+        }
+
+        [Authorize("Administrator")]
+        public PartialViewResult DismissPostReport(string id)
+        {
+            this.reportService.DismissPostReport(id);
+
+            var reports = this.reportService.GetPostReports();
+
+            return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
     }
 }

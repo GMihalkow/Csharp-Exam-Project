@@ -1,0 +1,56 @@
+﻿@using Forum.ViewModels.Report;
+@model IEnumerable<QuoteReportViewModel>
+
+<div id="shoutbox" class="menu-bg-forum text-center">
+    <h1 class="m-10px"><a id="main-heading-text" href="#">Quote Reports</a></h1>
+    <h2 class="m-0"><a id="main-heading-text" href="#">Count: @Model.Count()</a></h2>
+</div>
+
+<table class="posts-table mx-5-auto">
+    <thead class="posts-table-head">
+        <tr>
+            <th class="bottom-black-border"><h4>#</h4></th>
+            <th class="bottom-black-border"><h4>Type</h4></th>
+            <th class="bottom-black-border"><h4>Actions</h4></th>
+            <th class="bottom-black-border"><h4>ReportedOn</h4></th>
+        </tr>
+    </thead>
+    <tbody class="posts-table-body text-center">
+        @{
+            int index = 1;
+        }
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td class="text-forum"><h3>@index</h3></td>
+                <td class="text-forum"><h3>Quote</h3></td>
+                <td class="text-forum">
+                    <div class="container-half">
+                        <div>
+                            <a class="report-action-buttons text-white menu-bg-forum reportBtn">Review</a>
+                            <div class="modal reportModal">
+                                <div class="modal-content border-5 menu-bg-forum">
+                                    <div>
+                                        <span class="close">&times;</span>
+                                    </div>
+                                    <partial name="~/Views/Report/Quote/_ReviewQuoteReportPartial.cshtml" model="@report" />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <a class="report-action-buttons text-white menu-bg-forum reportBtn">Dismiss</a>
+                            <div class="modal reportModal">
+                                <div class="modal-content border-5 bg-dark-red">
+                                    <span class="close">&times;</span>
+                                    <partial name="~/Views/Report/Quote/_ReviewQuoteReportPartial.cshtml" model="@report" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-forum"><h3>@report.ReportedOn.ToString("dd-MM-yyyy")</h3></td>
+            </tr>
+            index++;
+        }
+    </tbody>
+</table>

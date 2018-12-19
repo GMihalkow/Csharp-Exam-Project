@@ -6,8 +6,8 @@ button, input :hover {
     cursor: pointer;
 }
 
-.border-none{
-    border:none;
+.border-none {
+    border: none;
 }
 
 .emote {
@@ -22,15 +22,19 @@ button, input :hover {
     text-align: end;
 }
 
-.active{
-    background-color:white;
-    color:black;
+.active {
+    background-color: white;
+    color: black;
 }
 
 .text-red {
     color: red;
 }
 
+.report-description-container{
+    height:300px;
+    overflow:auto;
+}
 
 .reportBtn:hover {
     cursor: pointer;
@@ -127,6 +131,13 @@ button {
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+@media screen and (max-width: 900px) {
+
+    .report-buttons-container {
+        width: 100%
+    }
+}
+
 .border-black-right {
     border-right: black solid 1px;
 }
@@ -195,6 +206,7 @@ ul {
     background-color: burlywood;
     border-radius: 10px 10px 0px 0px;
     border: black solid 1px;
+    width: 70% !important;
 }
 
 .posts-table-head {
@@ -355,7 +367,7 @@ input[type="radio"] .checkmark:after {
     justify-content: center;
     border: none;
     font-size: 19px;
-    outline:none;
+    outline: none;
     padding: 10px; /* If you add too much padding here, the options won't show in IE */
 }
 
@@ -652,7 +664,7 @@ a {
     }
 
     /*#footer {*/
-        /*display: none;
+    /*display: none;
     }*/
 }
 
@@ -676,6 +688,14 @@ input {
 
 .button {
     font-size: 25px;
+}
+
+.report-action-buttons {
+    padding: 10px 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 .submit-button {
@@ -916,7 +936,7 @@ input:checked + .slider:before {
 .modal-content {
     /*background-color: #fefefe;*/
     margin: 10% auto; /* 15% from the top and centered */
-    padding: 20px;
+    /*padding: 20px;*/
     width: 50%;
     border: 1px solid #888;
 }

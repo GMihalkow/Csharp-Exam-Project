@@ -11,6 +11,14 @@ button, input :hover {
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.report-action-buttons {
+    padding: 10px 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 .border-none {
     border: none;
 }

@@ -52,44 +52,44 @@ window.onclick = function (event) {
     }
 };
 
-// Get the modal
-var replyModal = document.getElementById('replyModal');
+//// Get the modal
+//var replyModal = document.getElementById('replyModal');
 
-// Get the button that opens the modal
-var replyBtn = document.getElementById("replyBtn");
+//// Get the button that opens the modal
+//var replyBtn = document.getElementById("replyBtn");
 
-// Get the <span> element that closes the modal
-var closeButtons = document.getElementsByClassName("close");
-var noButtons = document.getElementsByClassName("closeBtn");
+//// Get the <span> element that closes the modal
+//var closeButtons = document.getElementsByClassName("close");
+//var noButtons = document.getElementsByClassName("closeBtn");
 
-// When the user clicks on the button, open the modal 
-replyBtn.onclick = function () {
-    replyModal.style.display = "block";
-};
+//// When the user clicks on the button, open the modal 
+////replyBtn.onclick = function () {
+////    replyModal.style.display = "block";
+////};
 
+////closeButtons[0].onclick = function () {
+////    replyModal.style.display = "none";
+////};
 
-// When the user clicks on <span> (x), close the modal
-for (var closeIndex = 0; closeIndex < closeButtons.length; closeIndex++) {
-    closeButtons[closeIndex].onclick = function () {
-        for (var index = 0; index < reportModals.length; index++) {
-            replyModal.style.display = "none";
-        }
-    };
-}
-for (var noIndex = 0; noIndex < noButtons.length; noIndex++) {
-    noButtons[noIndex].onclick = function () {
-        for (var index = 0; index < reportModals.length; index++) {
-            replyModal.style.display = "none";
-        }
-    };
-}
+//// When the user clicks on <span> (x), close the modal
+//for (var closeIndex = 0; closeIndex < closeButtons.length; closeIndex++) {
+//    closeButtons[closeIndex].onclick = function () {
+//        replyModal.style.display = "none";
+//    };
+//}
+//for (var noIndex = 0; noIndex < noButtons.length; noIndex++) {
+//    noButtons[noIndex].onclick = function () {
+//        for (var index = 0; index < reportModals.length; index++) {
+//            replyModal.style.display = "none";
+//        }
+//    };
+//}
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    for (var i = 0; i < reportModals.length; i++) {
-        if (event.target == replyModal || event.target == reportModals[i]) {
-            replyModal.style.display = "none";
-            reportModals[i].style.display = "none";
-        }
-    }
-};
+//// When the user clicks anywhere outside of the modal, close it
+//window.onclick = function (event) {
+//    for (var i = 0; i < reportModals.length; i++) {
+//        if (event.target == replyModal || event.target == reportModals[i]) {
+//            replyModal.style.display = "none";
+//        }
+//    }
+//};

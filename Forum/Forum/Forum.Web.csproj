@@ -28,13 +28,25 @@
     <Content Update="Views\Quote\QuoteAQuoteCreate.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Report\_QuoteReportPartial.cshtml">
+    <Content Update="Views\Report\Quote\_QuoteReportsPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Report\_ReportReplyPartial.cshtml">
+    <Content Update="Views\Report\Reply\_ReplyReportsPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Report\_ReportPostPartial.cshtml">
+    <Content Update="Views\Report\Quote\_QuoteReportPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Report\Reply\_ReportReplyPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Report\Post\_ReportPostPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Report\Post\_ReviewPostReportPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Report\Reply\_ReviewReplyReportPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

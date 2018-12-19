@@ -27,6 +27,7 @@ for (var closeIndex = 0; closeIndex < closeButtons.length; closeIndex++) {
         }
     };
 }
+
 for (var noIndex = 0; noIndex < noButtons.length; noIndex++) {
     noButtons[noIndex].onclick = function () {
         for (var index = 0; index < reportModals.length; index++) {

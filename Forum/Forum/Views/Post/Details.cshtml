@@ -45,7 +45,7 @@
             <div class="modal reportModal">
                 <div class="modal-content border-5 bg-dark-red">
                     <span class="close">&times;</span>
-                    <partial name="../Report/_ReportPostPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
+                    <partial name="~/Views/Report/Post/_ReportPostPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
                 </div>
             </div>
         }
@@ -95,7 +95,7 @@
                 <div class="modal reportModal">
                     <div class="modal-content border-5 bg-dark-red">
                         <span class="close">&times;</span>
-                        <partial name="../Report/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id }" view-data="this.ViewData" />
+                        <partial name="~/Views/Report/Post/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id }" view-data="this.ViewData" />
                     </div>
                 </div>
             }
