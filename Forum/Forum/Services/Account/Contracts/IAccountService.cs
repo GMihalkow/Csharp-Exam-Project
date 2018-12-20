@@ -8,6 +8,8 @@ namespace Forum.Web.Services.Account.Contracts
 
     public interface IAccountService
     {
+        ForumUser GetUserByName(string username);
+
         int GetUsersCount();
 
         ForumUser GetUserById(string id);
@@ -31,5 +33,7 @@ namespace Forum.Web.Services.Account.Contracts
         bool UserExists(string username);
 
         Task<bool> UserWithPasswordExists(string username, string password);
+
+        void ChangeUsername(ForumUser user, string username);
     }
 }

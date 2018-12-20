@@ -188,5 +188,22 @@
 
             return user;
         }
+
+        public void ChangeUsername(ForumUser user, string username)
+        {
+            this.userManager.SetUserNameAsync(user, username).GetAwaiter().GetResult();
+        }
+
+        public ForumUser GetUserByName(string username)
+        {
+            var user = 
+                this.dbService
+                .DbContext
+                .Users
+                .Where(u => u.UserName == username)
+                .FirstOrDefault();
+
+            return user;
+        }
     }
 }

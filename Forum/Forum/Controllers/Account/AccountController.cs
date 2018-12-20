@@ -74,5 +74,32 @@ namespace Forum.Web.Controllers.Account
         {
             return this.PartialView("_MyProfilePartial");
         }
+
+        [Authorize]
+        public PartialViewResult Settings()
+        {
+            return this.PartialView("_SettingsPartial");
+        }
+
+        [Authorize]
+        public PartialViewResult ChangeUsername()
+        {
+            return this.PartialView("_ChangeUsernamePartial");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult ChangeUsername(string oldUsername, string newUsername)
+        {
+            var user = this.accountService.GetUserByName(oldUsername);
+            if(user == null || user.UserName != this.User.Identity.Name)
+            {
+                return this.NotFound();
+            }
+
+            this.accountService.ChangeUsername(user, newUsername);
+
+            return this.View("Profile");
+        }
     }
 }
