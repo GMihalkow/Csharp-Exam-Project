@@ -1,25 +1,36 @@
-﻿<div >
-    <div class="profile-container m-5">
-        <div>
-            <i class="fas fa-user-alt fa-10x text-forum"></i>
+﻿<div>
+    <div class="profile-container m-0">
+        <div id="profile-pic-holder" class="text-center bg-white m-0">
+            <div class="menu-bg-forum m-0">
+                <h4 class="text-white m-0">Username: Pesho</h4>
+                <i id="profilePic" class="fas fa-user-alt fa-10x text-white m-5"></i>
+                <h5 class="text-white m-0">From: Unknown</h5>
+                <h5 class="text-white m-0">Gender: Male</h5>
+                <h5 class="text-white m-0">Posts Count: 3</h5>
+                <h5 class="text-white m-0">Last Active on: 01-01-1987</h5>
+            </div>
         </div>
-        <div>
+        <div id="profile-navigation-holder">
             <nav class="main-nav menu-bg-forum border-5">
-                <div class="forum-navigation text-center">
-                    <div class="display-inline forum-navigation.button">
-                        <button onclick="location.href='/'" class="forum-navigation-button menu-bg-forum full-width">My Info</button>
-                    </div>
-                    <div class="display-inline forum-navigation.button">
-                        <button onclick="location.href='/'" class="forum-navigation-button menu-bg-forum full-width">Statistics</button>
-                    </div>
-                    <div class="display-inline forum-navigation.button">
-                        <button class="forum-navigation-button menu-bg-forum full-width">Settings</button>
+                <div class="three-fragments-grid full-width text-center">
+                    <div class="display-inline">
+                        <button id="myProfileButton" class="menu-bg-forum full-width text-white border-none font-18 p-10">My Profile</button>
                     </div>
                     <div class="display-inline">
-                        <button class="forum-navigation-button menu-bg-forum full-width" onclick="location.href='/Account/Logout'">Logout</button>
+                        <button class="menu-bg-forum full-width text-white border-none font-18 p-10">Chat</button>
                     </div>
+                    <div class="display-inline">
+                        <button class="menu-bg-forum full-width text-white border-none font-18 p-10">Settings</button>
+                    </div>
+                </div>
+                <div id="profile-target-div" class="bg-white p-10">
+
                 </div>
             </nav>
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/profileButtonsAjax.js"></script>
+}

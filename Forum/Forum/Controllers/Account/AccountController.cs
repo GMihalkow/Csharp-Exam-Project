@@ -68,5 +68,11 @@ namespace Forum.Web.Controllers.Account
         {
             return this.View();
         }
+
+        [Authorize]
+        public PartialViewResult MyProfile()
+        {
+            return this.PartialView("_MyProfilePartial");
+        }
     }
 }
