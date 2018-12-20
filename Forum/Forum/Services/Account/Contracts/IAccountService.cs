@@ -34,6 +34,10 @@ namespace Forum.Web.Services.Account.Contracts
 
         Task<bool> UserWithPasswordExists(string username, string password);
 
-        void ChangeUsername(ForumUser user, string username);
+        bool ChangeUsername(ForumUser user, string username);
+
+        bool ChangePassword(ForumUser user, string oldPassword, string newPassword);
+
+        bool CheckPassword(ForumUser user, string password);
     }
 }

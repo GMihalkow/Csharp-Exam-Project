@@ -94,7 +94,7 @@
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
             var result = await this.signInManager.PasswordSignInAsync(model.UserName, password, false, lockoutOnFailure: true);
-            
+
             return result;
         }
 
@@ -169,7 +169,7 @@
 
         public bool UsernameExists(string username)
         {
-            var result = 
+            var result =
                 this.dbService
                 .DbContext
                 .Users
@@ -189,14 +189,23 @@
             return user;
         }
 
-        public void ChangeUsername(ForumUser user, string username)
+        public bool ChangeUsername(ForumUser user, string username)
         {
-            this.userManager.SetUserNameAsync(user, username).GetAwaiter().GetResult();
+            var result = this.userManager.SetUserNameAsync(user, username).GetAwaiter().GetResult();
+
+            if (result.Succeeded)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public ForumUser GetUserByName(string username)
         {
-            var user = 
+            var user =
                 this.dbService
                 .DbContext
                 .Users
@@ -204,6 +213,27 @@
                 .FirstOrDefault();
 
             return user;
+        }
+
+        public bool ChangePassword(ForumUser user, string oldPassword, string newPassword)
+        {
+            var result = this.userManager.ChangePasswordAsync(user, oldPassword, newPassword).GetAwaiter().GetResult();
+
+            if (result.Succeeded)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckPassword(ForumUser user, string password)
+        {
+            var result = this.userManager.CheckPasswordAsync(user, password).GetAwaiter().GetResult();
+
+            return result;
         }
     }
 }

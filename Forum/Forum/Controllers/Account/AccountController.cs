@@ -92,12 +92,43 @@ namespace Forum.Web.Controllers.Account
         public IActionResult ChangeUsername(string oldUsername, string newUsername)
         {
             var user = this.accountService.GetUserByName(oldUsername);
-            if(user == null || user.UserName != this.User.Identity.Name)
+            if (user == null || user.UserName != this.User.Identity.Name)
             {
-                return this.NotFound();
+                return this.BadRequest();
             }
 
-            this.accountService.ChangeUsername(user, newUsername);
+            var result = this.accountService.ChangeUsername(user, newUsername);
+            if(!result)
+            {
+                return this.BadRequest();
+            }
+
+            return this.View("Profile");
+        }
+
+        [Authorize]
+        public PartialViewResult ChangePassword()
+        {
+            return this.PartialView("_ChangePasswordPartial");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult ChangePassword(string oldPassword, string newPassword)
+        {
+            var user = this.accountService.GetUser(this.User);
+
+            var passwordCheck = this.accountService.CheckPassword(user, oldPassword);
+            if (!passwordCheck)
+            {
+                return this.BadRequest();
+            }
+
+            var result = this.accountService.ChangePassword(user, oldPassword, newPassword);
+            if (!result)
+            {
+                return this.BadRequest();
+            }
 
             return this.View("Profile");
         }
