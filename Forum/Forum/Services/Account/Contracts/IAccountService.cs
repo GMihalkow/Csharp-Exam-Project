@@ -39,5 +39,7 @@ namespace Forum.Web.Services.Account.Contracts
         bool ChangePassword(ForumUser user, string oldPassword, string newPassword);
 
         bool CheckPassword(ForumUser user, string password);
+
+        bool DeleteAccount(ForumUser user);
     }
 }

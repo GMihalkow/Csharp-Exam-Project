@@ -98,7 +98,7 @@ namespace Forum.Web.Controllers.Account
             }
 
             var result = this.accountService.ChangeUsername(user, newUsername);
-            if(!result)
+            if (!result)
             {
                 return this.BadRequest();
             }
@@ -131,6 +131,35 @@ namespace Forum.Web.Controllers.Account
             }
 
             return this.View("Profile");
+        }
+
+        [Authorize]
+        public PartialViewResult DeleteAccount()
+        {
+            return this.PartialView("_DeleteAccountPartial");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult DeleteAccount(string username, string password)
+        {
+            var user = this.accountService.GetUserByName(username);
+            if (user == null || user.UserName != username)
+            {
+                return this.BadRequest();
+            }
+
+            var passwordCheck = this.accountService.CheckPassword(user, password);
+            if (!passwordCheck)
+            {
+                return this.BadRequest();
+            }
+
+            this.accountService.LogoutUser();
+
+            this.accountService.DeleteAccount(user);
+            
+            return this.Redirect("/");
         }
     }
 }

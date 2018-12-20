@@ -218,7 +218,7 @@
         public bool ChangePassword(ForumUser user, string oldPassword, string newPassword)
         {
             var result = this.userManager.ChangePasswordAsync(user, oldPassword, newPassword).GetAwaiter().GetResult();
-
+            
             if (result.Succeeded)
             {
                 return true;
@@ -234,6 +234,13 @@
             var result = this.userManager.CheckPasswordAsync(user, password).GetAwaiter().GetResult();
 
             return result;
+        }
+
+        public bool DeleteAccount(ForumUser user)
+        {
+            var result = this.userManager.DeleteAsync(user).GetAwaiter().GetResult();
+
+            return result.Succeeded;
         }
     }
 }
