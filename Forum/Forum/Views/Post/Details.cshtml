@@ -41,16 +41,16 @@
         </div>
         @if (Model.Author.UserName != this.User.Identity.Name)
         {
-            <a class="m-10px dark-red reportBtn"><i class="fas fa-thumbs-down"></i> Report</a>
-            <div class="modal reportModal">
+            <a class="m-10px dark-red modalBtn"><i class="fas fa-thumbs-down"></i> Report</a>
+            <div class="modal modalElement">
                 <div class="modal-content border-5 bg-dark-red">
                     <span class="close">&times;</span>
                     <partial name="~/Views/Report/Post/_ReportPostPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
                 </div>
             </div>
         }
-        <a id="replyBtn" class="text-forum m-10px"><i class="fas fa-reply"></i> Reply</a>
-        <div id="replyModal" class="modal">
+        <a class="text-forum m-10px modalBtn"><i class="fas fa-reply"></i> Reply</a>
+        <div class="modal modalElement">
             <div class="modal-content border-5 bg-white">
                 <span class="close">&times;</span>
                 <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
@@ -91,11 +91,11 @@
             </div>
             @if (this.User.Identity.Name != reply.Author.UserName)
             {
-                <a class="m-10px dark-red reportBtn"><i class="fas fa-thumbs-down"></i> Report</a>
-                <div class="modal reportModal">
+                <a class="m-10px dark-red modalBtn"><i class="fas fa-thumbs-down"></i> Report</a>
+                <div class="modal modalElement">
                     <div class="modal-content border-5 bg-dark-red">
                         <span class="close">&times;</span>
-                        <partial name="~/Views/Report/Post/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id }" view-data="this.ViewData" />
+                        <partial name="~/Views/Report/Reply/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id }" view-data="this.ViewData" />
                     </div>
                 </div>
             }
@@ -111,5 +111,5 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/reportModal.js"></script>
+    <script src="~/js/modal.js"></script>
 }

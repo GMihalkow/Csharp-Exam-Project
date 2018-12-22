@@ -10,7 +10,7 @@
         <button onclick="location.href='/Post/Create?id=@Model.Forum.Id'" id="post-topic-button" class="menu-bg-forum"><h3 class="m-10px"><i class="fas fa-plus"></i> Post a Topic</h3></button>
         @if (this.User.IsInRole("Administrator"))
         {
-            @await Html.PartialAsync("_AdminOptionsPartial");
+            <partial name="_AdminOptionsPartial"/>
         }
     </div>
     <table class="two-thirds-width posts-table mx-5-auto">
@@ -40,5 +40,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/reportModal.js"></script>
+    <script src="~/js/modal.js"></script>
 }

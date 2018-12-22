@@ -99,7 +99,7 @@ button {
     outline: none;
 }
 
-#replyBtn:hover {
+.modalBtn:hover {
     cursor: pointer;
 }
 
