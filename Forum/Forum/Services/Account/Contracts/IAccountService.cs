@@ -41,5 +41,11 @@ namespace Forum.Web.Services.Account.Contracts
         bool CheckPassword(ForumUser user, string password);
 
         bool DeleteAccount(ForumUser user);
+
+        EditProfileInputModel MapEditModel(string username);
+
+        bool ChangeLocation(ForumUser user, string newLocation);
+
+        bool ChangeGender(ForumUser user, string newGender);
     }
 }

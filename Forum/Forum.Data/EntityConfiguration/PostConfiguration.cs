@@ -14,14 +14,15 @@
             builder
                 .HasOne(p => p.Author)
                 .WithMany(u => u.Posts)
-                .HasForeignKey(p => p.AuthorId);
+                .HasForeignKey(p => p.AuthorId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(p => p.Forum)
                 .WithMany(f => f.Posts)
-                .HasForeignKey(p => p.ForumId)
-                .OnDelete(DeleteBehavior.Cascade);
-            
+                .HasForeignKey(p => p.ForumId);
+
+
             builder
                 .HasMany(p => p.Replies)
                 .WithOne(f => f.Post)

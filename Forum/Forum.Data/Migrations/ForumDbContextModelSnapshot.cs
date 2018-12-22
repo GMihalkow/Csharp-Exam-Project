@@ -380,19 +380,20 @@ namespace Forum.Data.Migrations
                 {
                     b.HasOne("Forum.Models.ForumUser", "User")
                         .WithMany("Categories")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Forum.Models.Post", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
                         .WithMany("Posts")
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Forum.Models.SubForum", "Forum")
                         .WithMany("Posts")
-                        .HasForeignKey("ForumId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ForumId");
                 });
 
             modelBuilder.Entity("Forum.Models.PostReport", b =>
@@ -463,7 +464,8 @@ namespace Forum.Data.Migrations
                 {
                     b.HasOne("Forum.Models.Category", "Category")
                         .WithMany("Forums")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

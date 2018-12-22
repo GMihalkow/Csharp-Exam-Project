@@ -82,26 +82,30 @@ namespace Forum.Web.Controllers.Account
         }
 
         [Authorize]
-        public PartialViewResult ChangeUsername()
+        public PartialViewResult EditProfile()
         {
-            return this.PartialView("_ChangeUsernamePartial");
+            var model = this.accountService.MapEditModel(this.User.Identity.Name);
+
+            return this.PartialView("_EditProfilePartial", model);
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult ChangeUsername(string oldUsername, string newUsername)
+        public IActionResult EditProfile(EditProfileInputModel model)
         {
-            var user = this.accountService.GetUserByName(oldUsername);
-            if (user == null || user.UserName != this.User.Identity.Name)
+            var user = this.accountService.GetUserByName(this.User.Identity.Name);
+
+            var isUsernameChanged = this.accountService.ChangeUsername(user, model.Username);
+          
+            var passwordCheck = this.accountService.CheckPassword(user, model.Password);
+            if (!passwordCheck)
             {
                 return this.BadRequest();
             }
 
-            var result = this.accountService.ChangeUsername(user, newUsername);
-            if (!result)
-            {
-                return this.BadRequest();
-            }
+            var isLocationChanged = this.accountService.ChangeLocation(user, model.Location);
+
+            var isGenderChanged = this.accountService.ChangeGender(user, model.Gender);
 
             return this.View("Profile");
         }
@@ -158,7 +162,7 @@ namespace Forum.Web.Controllers.Account
             this.accountService.LogoutUser();
 
             this.accountService.DeleteAccount(user);
-            
+
             return this.Redirect("/");
         }
     }

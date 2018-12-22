@@ -14,12 +14,14 @@
             builder
                 .HasOne(c => c.User)
                 .WithMany(u => u.Categories)
-                .HasForeignKey(c => c.UserId);
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(c => c.Forums)
                 .WithOne(f => f.Category)
-                .HasForeignKey(f => f.CategoryId);
+                .HasForeignKey(f => f.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

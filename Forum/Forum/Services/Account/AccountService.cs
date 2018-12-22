@@ -218,7 +218,7 @@
         public bool ChangePassword(ForumUser user, string oldPassword, string newPassword)
         {
             var result = this.userManager.ChangePasswordAsync(user, oldPassword, newPassword).GetAwaiter().GetResult();
-            
+
             if (result.Succeeded)
             {
                 return true;
@@ -241,6 +241,45 @@
             var result = this.userManager.DeleteAsync(user).GetAwaiter().GetResult();
 
             return result.Succeeded;
+        }
+
+        public EditProfileInputModel MapEditModel(string username)
+        {
+            var user = this.GetUserByName(username);
+
+            var model = this.mapper.Map<EditProfileInputModel>(user);
+
+            return model;
+        }
+
+        public bool ChangeLocation(ForumUser user, string newLocation)
+        {
+            user.Location = newLocation;
+            var result = this.dbService.DbContext.SaveChanges();
+
+            if(result == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ChangeGender(ForumUser user, string newGender)
+        {
+            user.Gender = newGender;
+            var result = this.dbService.DbContext.SaveChanges();
+
+            if (result == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

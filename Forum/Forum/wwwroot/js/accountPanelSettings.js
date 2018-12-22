@@ -1,18 +1,20 @@
-﻿$("#changeUsernameButton")
+﻿$("#editProfileButton")
     .click(function () {
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/ChangeUsername",
+                url: "/Account/EditProfile",
                 success: function (test) {
                     $('#account-panel').html(test);
+                    $.getScript("../lib/jquery-validation/dist/jquery.validate.js");
+                    $.getScript("../lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js");
                 }
             });
 
-        $("#changeUsernameButton").removeClass("text-white");
-        $("#changeUsernameButton").removeClass("menu-bg-forum");
+        $("#editProfileButton").removeClass("text-white");
+        $("#editProfileButton").removeClass("menu-bg-forum");
 
-        $("#changeUsernameButton").addClass("active");
+        $("#editProfileButton").addClass("active");
 
         if ($("#changePasswordButton").hasClass("active")) {
             $("#changePasswordButton").removeClass("active");
@@ -44,18 +46,18 @@ $("#changePasswordButton")
 
         $("#changePasswordButton").addClass("active");
 
-        if ($("#changeUsernameButton").hasClass("active")) {
-            $("#changeUsernameButton").removeClass("active");
+        if ($("#editProfileButton").hasClass("active")) {
+            $("#editProfileButton").removeClass("active");
 
-            $("#changeUsernameButton").addClass("menu-bg-forum");
-            $("#changeUsernameButton").addClass("text-white");
+            $("#editProfileButton").addClass("menu-bg-forum");
+            $("#editProfileButton").addClass("text-white");
         }
         if ($("#deleteAccButton").hasClass("active")) {
             $("#deleteAccButton").removeClass("active");
 
             $("#deleteAccButton").addClass("menu-bg-forum");
             $("#deleteAccButton").addClass("text-white");
-        }   
+        }
     });
 
 $("#deleteAccButton")
@@ -74,11 +76,11 @@ $("#deleteAccButton")
 
         $("#deleteAccButton").addClass("active");
 
-        if ($("#changeUsernameButton").hasClass("active")) {
-            $("#changeUsernameButton").removeClass("active");
+        if ($("#editProfileButton").hasClass("active")) {
+            $("#editProfileButton").removeClass("active");
 
-            $("#changeUsernameButton").addClass("menu-bg-forum");
-            $("#changeUsernameButton").addClass("text-white");
+            $("#editProfileButton").addClass("menu-bg-forum");
+            $("#editProfileButton").addClass("text-white");
         }
         if ($("#changePasswordButton").hasClass("active")) {
             $("#changePasswordButton").removeClass("active");

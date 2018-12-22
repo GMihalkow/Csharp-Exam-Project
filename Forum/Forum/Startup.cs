@@ -78,6 +78,7 @@ namespace Forum
                  typeof(ReplyInputModel).Assembly,
                  typeof(PostViewModel).Assembly,
                  typeof(ReplyViewModel).Assembly,
+                 typeof(EditProfileInputModel).Assembly,
                  typeof(QuoteInputModel).Assembly,
                  typeof(PostReportInputModel).Assembly,
                  typeof(ReplyReportInputModel).Assembly,
