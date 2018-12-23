@@ -150,5 +150,21 @@
 
             return sb.ToString().TrimEnd();
         }
+
+        public int ViewPost(string id)
+        {
+            var post =
+                this.dbService
+                .DbContext
+                .Posts
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
+
+            post.Views++;
+
+            this.dbService.DbContext.SaveChanges();
+
+            return post.Views;
+        }
     }
 }

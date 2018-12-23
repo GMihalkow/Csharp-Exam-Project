@@ -3,9 +3,11 @@ using Forum.Services.Interfaces.Forum;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Quote;
 using Forum.ViewModels.Post;
+using Forum.Web.Filters;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -56,6 +58,7 @@ namespace Forum.Web.Controllers.Post
             }
         }
 
+        [TypeFilter(typeof(ViewsFilter))]
         public IActionResult Details(string id)
         {
             var viewModel = this.postService.GetPost(id);

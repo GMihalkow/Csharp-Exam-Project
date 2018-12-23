@@ -33,7 +33,7 @@
                 viewModel.Categories = this.categoryService.GetAllCategories().GetAwaiter().GetResult().ToArray();
             }
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
         public IActionResult About()

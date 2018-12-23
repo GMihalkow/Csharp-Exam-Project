@@ -13,5 +13,7 @@ namespace Forum.Services.Interfaces.Post
         string ParseDescription(string description);
 
         bool DoesPostExist(string Id);
+
+        int ViewPost(string id);
     }
 }
