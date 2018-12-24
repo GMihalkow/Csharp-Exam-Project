@@ -8,14 +8,17 @@
     using Forum.Services.Interfaces.Category;
     using Microsoft.AspNetCore.Http;
     using System;
+    using Forum.Services.Interfaces.Post;
 
     public class HomeController : BaseController
     {
         private readonly ICategoryService categoryService;
+        private readonly IPostService postService;
 
-        public HomeController(IAccountService accountService, ICategoryService categoryService) : base(accountService)
+        public HomeController(IAccountService accountService, ICategoryService categoryService, IPostService postService) : base(accountService)
         {
             this.categoryService = categoryService;
+            this.postService = postService;
         }
 
         public IActionResult Index()
@@ -25,7 +28,9 @@
                 Categories = this.categoryService.GetUsersCategories().ToArray(),
                 TotalUsersCount = this.accountService.GetUsersCount(),
                 NewestUser = this.accountService.GetNewestUser(),
-                TotalPostsCount = this.accountService.GetTotalPostsCount()
+                TotalPostsCount = this.accountService.GetTotalPostsCount(),
+                LatestPosts = this.postService.GetLatestPosts(),
+                PopularPosts = this.postService.GetPopularPosts()
             };
 
             if (this.User.IsInRole("Administrator"))

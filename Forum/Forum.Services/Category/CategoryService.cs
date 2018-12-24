@@ -44,6 +44,7 @@
                 .DbContext
                 .Categories
                 .Include(c => c.Forums)
+                .ThenInclude(c => c.Posts)
                 .ToArrayAsync();
 
             return categories.GetAwaiter().GetResult();
@@ -79,6 +80,7 @@
                 .Categories
                 .Where(c => (int)c.Type != 2)
                 .Include(c => c.Forums)
+                .ThenInclude(c => c.Posts)
                 .ToArray();
 
             return categories;

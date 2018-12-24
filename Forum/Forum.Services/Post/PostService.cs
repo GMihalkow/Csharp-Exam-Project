@@ -56,6 +56,35 @@
             return result;
         }
 
+        public IEnumerable<ILatestPostViewModel> GetLatestPosts()
+        {
+            var latestPosts =
+                this.dbService
+                .DbContext
+                .Posts
+                .Include(p => p.Author)
+                .OrderBy(p => p.StartedOn)
+                .Take(3)
+                .Select(p => this.mapper.Map<LatestPostViewModel>(p))
+                .ToList();
+
+            return latestPosts;
+        }
+
+        public IEnumerable<IPopularPostViewModel> GetPopularPosts()
+        {
+            var popularPosts =
+                this.dbService
+                .DbContext
+                .Posts
+                .OrderByDescending(p => p.Views)
+                .Take(3)
+                .Select(p => this.mapper.Map<PopularPostViewModel>(p))
+                .ToList();
+
+            return popularPosts;
+        }
+
         public IPostViewModel GetPost(string id)
         {
             Post post =

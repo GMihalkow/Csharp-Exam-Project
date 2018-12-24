@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Post;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Forum.Services.Interfaces.Post
@@ -15,5 +16,9 @@ namespace Forum.Services.Interfaces.Post
         bool DoesPostExist(string Id);
 
         int ViewPost(string id);
+
+        IEnumerable<ILatestPostViewModel> GetLatestPosts();
+
+        IEnumerable<IPopularPostViewModel> GetPopularPosts();
     }
 }
