@@ -33,13 +33,13 @@
             <nav class="main-nav menu-bg-forum border-5">
                 <ul class="my-list">
                     <li class="float-left">
-                        <a class="button" href="/"><i class="fas fa-home fa-lg"></i></a>
+                        <a class="button" href="/">Home</a>
                     </li>
                     <li class="float-left">
-                        <a class="button" asp-controller="Home" asp-action="About"><i class="fas fa-question-circle fa-lg"></i></a>
+                        <a class="button" asp-controller="Home" asp-action="About">Rules</a>
                     </li>
                     <li class="float-left">
-                        @await Html.PartialAsync("_MenuOptionsPartial")
+                        <partial name="_MenuOptionsPartial"/>
                     </li>
                     <li>
                         <label class="switch">

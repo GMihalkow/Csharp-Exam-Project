@@ -58,6 +58,7 @@ namespace Forum.Web.Controllers.Post
             }
         }
 
+        [AllowAnonymous]
         [TypeFilter(typeof(ViewsFilter))]
         public IActionResult Details(string id)
         {

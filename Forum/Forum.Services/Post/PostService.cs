@@ -63,7 +63,7 @@
                 .DbContext
                 .Posts
                 .Include(p => p.Author)
-                .OrderBy(p => p.StartedOn)
+                .OrderByDescending(p => p.StartedOn)
                 .Take(3)
                 .Select(p => this.mapper.Map<LatestPostViewModel>(p))
                 .ToList();
