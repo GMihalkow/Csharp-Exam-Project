@@ -23,6 +23,10 @@ button, input :hover {
     overflow:auto;
 }
 
+.p-0{
+    padding:0px;
+}
+
 .emote {
     background: none;
     outline: none;

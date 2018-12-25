@@ -72,7 +72,9 @@ namespace Forum.Web.Controllers.Account
         [Authorize]
         public PartialViewResult MyProfile()
         {
-            return this.PartialView("_MyProfilePartial");
+            var model = this.accountService.GetProfileInfo(this.User);
+
+            return this.PartialView("_MyProfilePartial", model);
         }
 
         [Authorize]
@@ -164,6 +166,12 @@ namespace Forum.Web.Controllers.Account
             this.accountService.DeleteAccount(user);
 
             return this.Redirect("/");
+        }
+
+        [Authorize]
+        public PartialViewResult MessagesPanel()
+        {
+            return this.PartialView("_MessagesPanelPartial");
         }
     }
 }

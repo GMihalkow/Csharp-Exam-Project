@@ -76,6 +76,7 @@ namespace Forum
                  typeof(ForumPostsInputModel).Assembly,
                  typeof(PostInputModel).Assembly,
                  typeof(LatestPostViewModel).Assembly,
+                 typeof(ProfileInfoViewModel).Assembly,
                  typeof(PopularPostViewModel).Assembly,
                  typeof(ReplyInputModel).Assembly,
                  typeof(PostViewModel).Assembly,

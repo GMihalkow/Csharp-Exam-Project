@@ -47,5 +47,7 @@ namespace Forum.Web.Services.Account.Contracts
         bool ChangeLocation(ForumUser user, string newLocation);
 
         bool ChangeGender(ForumUser user, string newGender);
+
+        ProfileInfoViewModel GetProfileInfo(ClaimsPrincipal principal);
     }
 }

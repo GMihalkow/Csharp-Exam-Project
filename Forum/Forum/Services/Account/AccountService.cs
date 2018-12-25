@@ -10,6 +10,7 @@
     using Forum.Web.ViewModels.Account;
     using global::Forum.Models;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     public class AccountService : IAccountService
     {
@@ -280,6 +281,21 @@
             {
                 return false;
             }
+        }
+
+        public ProfileInfoViewModel GetProfileInfo(ClaimsPrincipal principal)
+        {
+            var user =
+                this.dbService
+                .DbContext
+                .Users
+                .Include(u => u.Posts)
+                .Where(u => u.UserName == principal.Identity.Name)
+                .FirstOrDefault();
+
+            var model = this.mapper.Map<ProfileInfoViewModel>(user);
+
+            return model;
         }
     }
 }
