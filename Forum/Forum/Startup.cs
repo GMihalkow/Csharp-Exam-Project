@@ -35,6 +35,8 @@ using Forum.Services.Quote;
 using Forum.ViewModels.Report;
 using Forum.Services.Report;
 using Forum.Services.Interfaces.Report;
+using Forum.Services.Interfaces.Message;
+using Forum.Services.Message;
 
 namespace Forum
 {
@@ -144,14 +146,13 @@ namespace Forum
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReplyService, ReplyService>();
+            services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IQuoteService, QuoteService>();
             services.AddScoped<IDbService, DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 
             //Registrating the automapper
             services.AddSingleton(mapper);
-
-            services.AddSignalR();
 
             services.AddResponseCompression(options =>
             {

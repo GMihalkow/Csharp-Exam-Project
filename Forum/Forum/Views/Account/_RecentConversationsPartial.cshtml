@@ -1,8 +1,14 @@
-﻿<div class="text-center bg-burly text-forum block m-10px">
+﻿@model List<string>
+
+<div class="text-center bg-burly text-forum block m-10px">
     <h3 class="m-0">
         <label class="text-forum">Search:</label>
     </h3>
-    <input class="full-width border-5 border-none" type="text" placeholder="Search for users..." />
+    <form autocomplete="off" action="/" method="post">
+        <div class="autocomplete">
+            <input id="myInput" class="full-width border-5 border-none" type="text" placeholder="Search for users..." />
+        </div>
+    </form>
 </div>
 
 <div class="menu-bg-forum m-0">
@@ -22,3 +28,17 @@
         <h4>Pesho</h4>
     </div>
 </div>
+
+<script src="../js/searchAutocomplete.js"></script>
+<script>
+/*An array containing all the country names in the world:*/
+    var names = [];
+
+    @foreach (var name in Model)
+    {
+        @: names = names.concat('@name');
+    }
+    
+    /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+    autocomplete(document.getElementById("myInput"), names);
+</script>

@@ -1,14 +1,20 @@
-﻿using Forum.Web.Services.Account.Contracts;
+﻿using Forum.Services.Interfaces.Message;
+using Forum.ViewModels.Message;
+using Forum.Web.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Forum.Web.Controllers.Account
 {
     public class AccountController : BaseController
     {
-        public AccountController(IAccountService accountService) : base(accountService)
+        private readonly IMessageService messageService;
+
+        public AccountController(IAccountService accountService, IMessageService messageService) : base(accountService)
         {
+            this.messageService = messageService;
         }
 
         public IActionResult Login()
@@ -177,13 +183,18 @@ namespace Forum.Web.Controllers.Account
         [Authorize]
         public PartialViewResult Chat()
         {
-            return this.PartialView("_ChatViewPartial");
+            var viewModel = new SendMessageInputModel
+            {
+                
+            };
+
+            return this.PartialView("_ChatViewPartial", viewModel);
         }
 
         [Authorize]
         public PartialViewResult RecentConversations()
         {
-            return this.PartialView("_RecentConversationsPartial");
+            return this.PartialView("_RecentConversationsPartial", new List<string>() { "Ivan", "Pesho", "Gosho" });
         }
     }
 }

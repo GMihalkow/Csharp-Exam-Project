@@ -1,4 +1,10 @@
-﻿$("#chatButton")
+﻿function scrollToBottom(el) {
+    console.log(el);
+    el.scrollTop = el.scrollHeight;
+    el.scrollTop;
+}
+
+$("#chatButton")
     .click(function () {
         $.ajax(
             {
@@ -7,7 +13,10 @@
                 success: function (test) {
                     $('#messages-panel').html(test);
                     $.getScript("../js/site.js");
-                    $.getScript("../js/globalChat.js");
+                    $.getScript("../js/sendMessages.js");
+
+                    var element = document.getElementById("chat-box");
+                    scrollToBottom(element);
                 }
             });
 
