@@ -9,6 +9,15 @@
                 }
             });
 
+        $.ajax(
+            {
+                type: "GET",
+                url: "",
+                success: function (test) {
+                    $('#chat-conversations-div').html("");
+                }
+            });
+
         $("#myProfileButton").removeClass("text-white");
         $("#myProfileButton").removeClass("menu-bg-forum");
 
@@ -41,6 +50,15 @@ $("#settingsButton")
                 }
             });
 
+        $.ajax(
+                {
+                    type: "GET",
+                    url: "",
+                    success: function (test) {
+                        $('#chat-conversations-div').html("");
+                    }
+                });
+
         $("#settingsButton").removeClass("text-white");
         $("#settingsButton").removeClass("menu-bg-forum");
 
@@ -69,6 +87,7 @@ $("#messagesPanelButton")
                 url: "/Account/MessagesPanel",
                 success: function (test) {
                     $('#profile-target-div').html(test);
+                    $.getScript("../js/messagesPanel.js");
                 }
             });
 

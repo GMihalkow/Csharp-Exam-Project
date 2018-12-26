@@ -1,4 +1,8 @@
-﻿html {
+﻿textarea{
+    resize:none;
+}
+
+html {
     height: 100%;
 }
 
@@ -18,13 +22,23 @@ button, input :hover {
     font-size: 30px;
 }
 
-#profile-target-div{
-    height:500px;
+#chat-box{
+    border:black solid 1px;
+    height:350px;
     overflow:auto;
 }
 
-.p-0{
-    padding:0px;
+#profile-target-div {
+    overflow: auto;
+}
+
+#chat-emoticons-wrapper{
+    overflow:auto;
+    height: 150px;
+}
+
+.p-0 {
+    padding: 0px;
 }
 
 .emote {
@@ -136,6 +150,14 @@ button {
 
 .bg-burly {
     background-color: burlywood;
+}
+
+.full-height {
+    height: -webkit-fill-available;
+}
+
+.max-content-height{
+    height: max-content;
 }
 
 .profile-container {

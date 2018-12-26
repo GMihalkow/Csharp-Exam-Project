@@ -17,10 +17,6 @@ namespace Forum.Models
 
         public string Description { get; set; }
 
-        public ForumUser Reciever { get; set; }
-
-        public string RecieverId { get; set; }
-
         public ICollection<QuoteReport> Reports { get; set; }
     }
 }

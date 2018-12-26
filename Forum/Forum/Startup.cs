@@ -50,6 +50,7 @@ namespace Forum
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO: Make Replies to start with "Replying to: ..."
             //TODO: Use Coverlet for code coverage.
             //TODO: Add logging.
             //TODO: Extract views to a razor view class library.
@@ -149,6 +150,8 @@ namespace Forum
 
             //Registrating the automapper
             services.AddSingleton(mapper);
+
+            services.AddSignalR();
 
             services.AddResponseCompression(options =>
             {

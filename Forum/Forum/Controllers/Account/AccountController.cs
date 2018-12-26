@@ -173,5 +173,17 @@ namespace Forum.Web.Controllers.Account
         {
             return this.PartialView("_MessagesPanelPartial");
         }
+
+        [Authorize]
+        public PartialViewResult Chat()
+        {
+            return this.PartialView("_ChatViewPartial");
+        }
+
+        [Authorize]
+        public PartialViewResult RecentConversations()
+        {
+            return this.PartialView("_RecentConversationsPartial");
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿function typeEmoticonInTextarea(el, newText) {
+    console.log("CLICKED!");
     var start = el.prop("selectionStart");
     var end = el.prop("selectionEnd");
     var text = el.val();
@@ -12,6 +13,7 @@
 $(".emote")
     .off('click')
     .on("click", function (e) {
+        console.log("CLICKED!");
         typeEmoticonInTextarea($("#Description"), e.target.innerText);
         return false;
     });

@@ -25,6 +25,8 @@ namespace Forum.Data
 
         public DbSet<ReplyReport> ReplyReports { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         public DbSet<QuoteReport> QuoteReports { get; set; }    
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -38,6 +40,7 @@ namespace Forum.Data
             builder.ApplyConfiguration<PostReport>(new PostReportConfiguration());
             builder.ApplyConfiguration<ReplyReport>(new ReplyReportConfiguration());
             builder.ApplyConfiguration<QuoteReport>(new QuoteReportConfiguration());
+            builder.ApplyConfiguration<Message>(new MessageConfiguration());
         }
     }
 }

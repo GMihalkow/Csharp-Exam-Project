@@ -100,6 +100,28 @@ namespace Forum.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Forum.Models.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AuthorId");
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("RecieverId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("RecieverId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("Forum.Models.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -161,15 +183,11 @@ namespace Forum.Data.Migrations
 
                     b.Property<DateTime>("QuotedOn");
 
-                    b.Property<string>("RecieverId");
-
                     b.Property<string>("ReplyId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("RecieverId");
 
                     b.HasIndex("ReplyId");
 
@@ -384,6 +402,17 @@ namespace Forum.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Forum.Models.Message", b =>
+                {
+                    b.HasOne("Forum.Models.ForumUser", "Author")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("Forum.Models.ForumUser", "Reciever")
+                        .WithMany("RecievedMessages")
+                        .HasForeignKey("RecieverId");
+                });
+
             modelBuilder.Entity("Forum.Models.Post", b =>
                 {
                     b.HasOne("Forum.Models.ForumUser", "Author")
@@ -413,10 +442,6 @@ namespace Forum.Data.Migrations
                     b.HasOne("Forum.Models.ForumUser", "Author")
                         .WithMany("Quotes")
                         .HasForeignKey("AuthorId");
-
-                    b.HasOne("Forum.Models.ForumUser", "Reciever")
-                        .WithMany()
-                        .HasForeignKey("RecieverId");
 
                     b.HasOne("Forum.Models.Reply", "Reply")
                         .WithMany("Quotes")

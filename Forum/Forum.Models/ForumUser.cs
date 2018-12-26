@@ -28,6 +28,10 @@
 
         public ICollection<ReplyReport> ReportedReplies { get; set; }
 
+        public ICollection<Message> SentMessages { get; set; }
+
+        public ICollection<Message> RecievedMessages { get; set; }
+
         public ICollection<QuoteReport> ReportedQuotes { get; set; }
     }
 }
