@@ -4,7 +4,11 @@ using Forum.Web.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Forum.Web.Controllers.Account
 {
@@ -104,7 +108,7 @@ namespace Forum.Web.Controllers.Account
             var user = this.accountService.GetUserByName(this.User.Identity.Name);
 
             var isUsernameChanged = this.accountService.ChangeUsername(user, model.Username);
-          
+
             var passwordCheck = this.accountService.CheckPassword(user, model.Password);
             if (!passwordCheck)
             {
@@ -183,10 +187,7 @@ namespace Forum.Web.Controllers.Account
         [Authorize]
         public PartialViewResult Chat()
         {
-            var viewModel = new SendMessageInputModel
-            {
-                
-            };
+            var viewModel = new SendMessageInputModel();
 
             return this.PartialView("_ChatViewPartial", viewModel);
         }
@@ -194,7 +195,23 @@ namespace Forum.Web.Controllers.Account
         [Authorize]
         public PartialViewResult RecentConversations()
         {
-            return this.PartialView("_RecentConversationsPartial", new List<string>() { "Ivan", "Pesho", "Gosho" });
+            this.ViewData["userNames"] = this.accountService.GetUsernames();
+
+            return this.PartialView("_RecentConversationsPartial");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public PartialViewResult ChatWithSomebody([FromBody] SendMessageInputModel model)
+        {
+            var recieverId = this.accountService.GetUserByName(model.RecieverName).Id;
+
+            model.Messages = this.messageService.GetConversationMessages(this.User.Identity.Name, model.RecieverName);
+            model.RecieverId = recieverId;
+
+            var result = this.PartialView("_ChatViewPartial", model);
+
+            return result;
         }
     }
 }

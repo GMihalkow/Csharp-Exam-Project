@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\chatWebsocket.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Account\_DeleteAccountPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -2,10 +2,11 @@
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Message;
 using Forum.ViewModels.Interfaces.Message;
+using Forum.ViewModels.Message;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 
 namespace Forum.Services.Message
 {
@@ -20,20 +21,45 @@ namespace Forum.Services.Message
             this.dbService = dbService;
         }
 
-        public IEnumerable<Models.Message> GetConversationMessages(string firstPersonId, string secondPersonId)
+        public IEnumerable<Models.Message> GetConversationMessages(string firstPersonName, string secondPersonName)
         {
             var conversationMessages =
                 this.dbService
                 .DbContext
                 .Messages
+                .Include(m => m.Author)
+                .Include(m => m.Reciever)
                 .Where(m =>
-                (m.AuthorId == firstPersonId && m.RecieverId == secondPersonId)
+                (m.Author.UserName == firstPersonName && m.Reciever.UserName == secondPersonName)
                 ||
-                (m.AuthorId == secondPersonId && m.RecieverId == firstPersonId))
+                (m.Author.UserName == secondPersonName && m.Reciever.UserName == firstPersonName))
                 .OrderBy(m => m.CreatedOn)
                 .ToList();
 
             return conversationMessages;
+        }
+
+        public IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser)
+        {
+            //TODO: fix the messages to be between 2 users
+            var parsedLastDate = DateTime.Parse(lastDate);
+
+            var messages =
+                this.dbService
+                .DbContext
+                .Messages
+                .Include(m => m.Author)
+                .Where(m => m.CreatedOn.ToString("F") != parsedLastDate.ToString("F") && DateTime.Compare(m.CreatedOn, parsedLastDate) > 0)
+                .Select(m => this.mapper.Map<ChatMessageViewModel>(m))
+                .OrderBy(m => m.CreatedOn)
+                .ToList();
+
+            foreach (var message in messages)
+            {
+                message.LoggedInUser = loggedInUser;
+            }
+
+            return messages;
         }
 
         public int SendMessage(ISendMessageInputModel model, string authorId)

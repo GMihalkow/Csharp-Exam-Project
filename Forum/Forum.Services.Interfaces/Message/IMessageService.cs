@@ -6,8 +6,10 @@ namespace Forum.Services.Interfaces.Message
 {
     public interface IMessageService
     {
-        IEnumerable<Models.Message> GetConversationMessages(string firstPersonId, string secondPersonId);
+        IEnumerable<Models.Message> GetConversationMessages(string firstPersonName, string secondPersonName);
 
         int SendMessage(ISendMessageInputModel model, string authorId);
+
+        IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser);
     }
 }

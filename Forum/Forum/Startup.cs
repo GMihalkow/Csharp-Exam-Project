@@ -37,6 +37,8 @@ using Forum.Services.Report;
 using Forum.Services.Interfaces.Report;
 using Forum.Services.Interfaces.Message;
 using Forum.Services.Message;
+using System;
+using Forum.ViewModels.Message;
 
 namespace Forum
 {
@@ -52,6 +54,7 @@ namespace Forum
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO: If in the unit tests you need to access the HttpContext, use HttpContextAccessor but declare it as a service first
             //TODO: Make Replies to start with "Replying to: ..."
             //TODO: Use Coverlet for code coverage.
             //TODO: Add logging.
@@ -88,6 +91,7 @@ namespace Forum
                  typeof(QuoteInputModel).Assembly,
                  typeof(PostReportInputModel).Assembly,
                  typeof(ReplyReportInputModel).Assembly,
+                 typeof(ChatMessageViewModel).Assembly,
                  typeof(QuoteReportInputModel).Assembly);
 
             var mapper = config.CreateMapper();
@@ -184,6 +188,13 @@ namespace Forum
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseWebSockets(
+                new WebSocketOptions
+                {
+                    KeepAliveInterval = TimeSpan.FromSeconds(120),
+                    ReceiveBufferSize = 4 * 1024,
+                });
 
             app.UseHttpsRedirection();
             app.UseResponseCompression();

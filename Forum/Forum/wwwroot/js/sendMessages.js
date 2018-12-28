@@ -17,22 +17,8 @@ $("#sendButton")
                     Description: $("#Description").val()
                 }),
                 success: function (test) {
-                    $('#messages-panel').html(test);
-
-                    var element = document.getElementById('chat-box');
-                    scrollToBottom(element);
-
                     $.getScript("../js/site.js");
-                    $.getScript("../js/sendMessages.js");
-                }
-            });
-
-        $.ajax(
-            {
-                type: "GET",
-                url: "/Account/RecentConversations",
-                success: function (test) {
-                    $('#chat-conversations-div').html(test);
+                    document.getElementById("Description").value = "";
                 }
             });
     });

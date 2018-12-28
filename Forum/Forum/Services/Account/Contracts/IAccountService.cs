@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.Web.ViewModels.Account;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -49,5 +50,7 @@ namespace Forum.Web.Services.Account.Contracts
         bool ChangeGender(ForumUser user, string newGender);
 
         ProfileInfoViewModel GetProfileInfo(ClaimsPrincipal principal);
+
+        IEnumerable<string> GetUsernames();
     }
 }

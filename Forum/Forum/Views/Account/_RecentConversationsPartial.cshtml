@@ -1,6 +1,4 @@
-﻿@model List<string>
-
-<div class="text-center bg-burly text-forum block m-10px">
+﻿<div class="text-center bg-burly text-forum block m-10px">
     <h3 class="m-0">
         <label class="text-forum">Search:</label>
     </h3>
@@ -8,9 +6,11 @@
         <div class="autocomplete">
             <input id="myInput" class="full-width border-5 border-none" type="text" placeholder="Search for users..." />
         </div>
+        <div class="center-button">
+            <button id="searchButton" class="m-0 submit-button menu-bg-forum text-white" type="button">Search</button>
+        </div>
     </form>
 </div>
-
 <div class="menu-bg-forum m-0">
     <div class="text-center m-0 text-white">
         <button class="menu-bg-forum m-0 p-10 full-width text-white border-none"><h3>Global Chat</h3></button>
@@ -31,14 +31,14 @@
 
 <script src="../js/searchAutocomplete.js"></script>
 <script>
-/*An array containing all the country names in the world:*/
+/*An array containing all the user names in the world:*/
     var names = [];
 
-    @foreach (var name in Model)
+    @foreach (var name in (List<string>)this.ViewData["userNames"])
     {
         @: names = names.concat('@name');
     }
-    
+
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
     autocomplete(document.getElementById("myInput"), names);
 </script>

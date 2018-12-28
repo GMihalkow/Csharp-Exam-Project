@@ -1,6 +1,7 @@
 ﻿namespace Forum.Web.Services.Account
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -296,6 +297,18 @@
             var model = this.mapper.Map<ProfileInfoViewModel>(user);
 
             return model;
+        }
+
+        public IEnumerable<string> GetUsernames()
+        {
+            var usernames =
+                this.dbService
+                .DbContext
+                .Users
+                .Select(u => u.UserName)
+                .ToList();
+
+            return usernames;
         }
     }
 }

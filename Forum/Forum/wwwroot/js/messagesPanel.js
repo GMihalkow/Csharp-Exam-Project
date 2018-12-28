@@ -26,6 +26,7 @@ $("#chatButton")
                 url: "/Account/RecentConversations",
                 success: function (test) {
                     $('#chat-conversations-div').html(test);
+                    $.getScript("../js/searchForUser.js");
                 }
             });
 
