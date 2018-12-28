@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using global::Forum.Models;
+    using global::Forum.Models.Enums;
     using global::Forum.Services.Interfaces.Category;
     using global::Forum.Services.Interfaces.Db;
     using global::Forum.Services.Interfaces.Forum;
@@ -10,7 +11,9 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     public class ForumService : IForumService
@@ -106,6 +109,32 @@
         {
             this.dbService.DbContext.Remove(forum);
             this.dbService.DbContext.SaveChanges();
+        }
+
+        public IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal)
+        {
+            if (principal.IsInRole("Administrator"))
+            {
+                var forums =
+                    this.dbService
+                    .DbContext
+                    .Forums
+                    .ToList();
+
+                return forums;
+            }
+            else
+            {
+                var forums =
+                    this.dbService
+                    .DbContext
+                    .Forums
+                    .Include(f => f.Category)
+                    .Where(f => f.Category.Type != CategoryType.AdminOnly)
+                    .ToList();
+
+                return forums;
+            }
         }
     }
 }

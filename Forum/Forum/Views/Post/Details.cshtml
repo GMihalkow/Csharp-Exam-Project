@@ -7,6 +7,12 @@
         <h1 class="m-0 "><a id="main-heading-text" href="#">Post: @Model.Name</a></h1>
         <hr class="one-third-width border-5" />
     </div>
+    @if (this.User.Identity.Name == Model.Author.UserName)
+    {
+    <div class="text-center m-10px">
+        <a class="m-0 p-10 border-none font-18 border-5 menu-bg-forum text-white" href="/Post/Edit?Id=@Model.Id">Edit</a>
+    </div>
+    }
     <div class="content-wrapper border-5">
         <div class="post-wrapper bg-burly m-0">
             <div class="container-half text-forum bold">

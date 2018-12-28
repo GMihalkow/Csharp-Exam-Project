@@ -14,6 +14,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
@@ -54,6 +55,39 @@
         {
             var result = this.dbService.DbContext.Posts.Any(p => p.Id == Id);
             return result;
+        }
+
+        public int Edit(IEditPostInputModel model)
+        {
+            var post =
+                this.dbService
+                .DbContext
+                .Posts
+                .Where(p => p.Id == model.Id)
+                .FirstOrDefault();
+
+            post.Name = model.Name;
+            post.ForumId = model.ForumId;
+            post.Description = model.Description;
+
+            return this.dbService.DbContext.SaveChanges();
+        }
+
+        public IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal)
+        {
+            var post =
+                this.dbService
+                .DbContext
+                .Posts
+                .Include(p => p.Forum)
+                .Where(p => p.Id == Id)
+                .FirstOrDefault();
+
+            var model = this.mapper.Map<EditPostInputModel>(post);
+
+            model.AllForums = this.forumService.GetAllForums(principal);
+
+            return model;
         }
 
         public IEnumerable<ILatestPostViewModel> GetLatestPosts()

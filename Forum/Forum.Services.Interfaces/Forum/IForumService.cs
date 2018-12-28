@@ -1,6 +1,8 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Forum;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Forum.Services.Interfaces.Forum
@@ -18,5 +20,7 @@ namespace Forum.Services.Interfaces.Forum
         IForumFormInputModel GetMappedForumModel(SubForum forum);
 
         void Delete(SubForum forum);
+
+        IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal);
     }
 }

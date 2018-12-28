@@ -75,6 +75,7 @@ namespace Forum
 
             var config = AutoMapperConfig.RegisterMappings(
                  typeof(LoginUserInputModel).Assembly,
+                 typeof(EditPostInputModel).Assembly,
                  typeof(RegisterUserViewModel).Assembly,
                  typeof(CategoryInputModel).Assembly,
                  typeof(ForumFormInputModel).Assembly,

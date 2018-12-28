@@ -35,6 +35,9 @@
     <Content Update="Views\Account\_ChangePasswordPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Post\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Quote\QuoteAQuoteCreate.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

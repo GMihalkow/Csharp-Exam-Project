@@ -7,9 +7,6 @@ using Forum.Web.Filters;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Forum.Web.Controllers.Post
 {
@@ -47,7 +44,6 @@ namespace Forum.Web.Controllers.Post
             if (ModelState.IsValid)
             {
                 ForumUser user = this.accountService.GetUser(this.User);
-                model.Description = this.postService.ParseDescription(model.Description);
                 this.postService.AddPost(model, user, model.ForumId).GetAwaiter().GetResult();
 
                 return this.Redirect($"/Forum/Posts?Id={model.ForumId}");
@@ -60,12 +56,40 @@ namespace Forum.Web.Controllers.Post
 
         [AllowAnonymous]
         [TypeFilter(typeof(ViewsFilter))]
-        public IActionResult Details(string id)
+        public IActionResult Details(string Id)
         {
-            var viewModel = this.postService.GetPost(id);
-            
-            this.ViewData["PostId"] = id;
+            var viewModel = this.postService.GetPost(Id);
+            viewModel.Description = this.postService.ParseDescription(viewModel.Description);
+
+            this.ViewData["PostId"] = Id;
             return this.View(viewModel);
+        }
+
+        public IActionResult Edit(string Id)
+        {
+            var postExists = this.postService.DoesPostExist(Id);
+            if (!postExists)
+            {
+                return this.NotFound();
+            }
+
+            var viewModel = this.postService.GetEditPostModel(Id, this.User);
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditPostInputModel model)
+        {
+            var forum = this.forumService.GetForum(model.ForumId);
+            if(forum == null)
+            {
+                return this.NotFound();
+            }
+
+            this.postService.Edit(model);
+
+            return this.Redirect($"/Post/Details?Id={model.Id}");
         }
     }
 }

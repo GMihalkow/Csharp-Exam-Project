@@ -33,6 +33,10 @@ $('#searchButton')
 
                     var element = document.getElementById("chat-box");
                     scrollToBottom(element);
+
+                    var searchBar = document.getElementById("myInput");
+
+                    searchBar.value = "";
                 }
             });
     });
