@@ -50,18 +50,24 @@ namespace Forum.Web.Controllers.Message
 
                 while (true)
                 {
-                    byte[] byteArr = new byte[4096];
+                    var byteArr = new byte[4096];
 
                     webSocket.ReceiveAsync(byteArr, CancellationToken.None).GetAwaiter().GetResult();
 
-                    string result = Encoding.UTF8.GetString(byteArr);
+                    var result = Encoding.UTF8.GetString(byteArr);
+
+                    var splittedResult = result.Split(" - ");
+
+                    string date = splittedResult[0];
+
+                    string otherUserId = splittedResult[1];
 
                     if (result == "END")
                     {
                         //TODO: break loop here
                     }
 
-                    var messages = this.messageService.GetLatestMessages(result, this.User.Identity.Name);
+                    var messages = this.messageService.GetLatestMessages(date, this.User.Identity.Name, otherUserId);
 
                     var jsonStr = JsonConvert.SerializeObject(messages);
 

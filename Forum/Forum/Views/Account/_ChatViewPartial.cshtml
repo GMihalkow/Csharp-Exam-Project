@@ -9,34 +9,34 @@ else
 {
     <h3 class="menu-bg-forum text-center text-white p-10 m-0">Chatting with @Model.RecieverName</h3>
 }
-    <div id="chat-box" class="p-10">
-        @if (Model.Messages == null)
+<div id="chat-box" class="p-10">
+    @if (Model.Messages == null)
+    {
+        <p class="menu-bg-forum text-center text-white p-0 m-0">Please choose a person from the search bar.</p>
+    }
+    else
+    {
+        @foreach (var message in Model.Messages)
         {
-            <p class="menu-bg-forum text-center text-white p-0 m-0">Please choose a person from the search bar.</p>
-        }
-        else
-        {
-            @foreach (var message in Model.Messages)
+            if (message.Author.UserName == this.User.Identity.Name)
             {
-                if (message.Author.UserName == this.User.Identity.Name)
-                {
-                    <div class="bg-burly text-forum p-10 m-10px half-width float-left border-5">
-                        <p class="bold m-0">@message.Author.UserName said:</p>
-                        <p class="p-10">@message.Description</p>
-                        <p class="m-0 font-14 text-end sent-on"><b>Sent on</b> @message.CreatedOn</p>
-                    </div>
-                }
-                else
-                {
-                    <div class="bg-burly text-forum p-10 m-10px half-width float-right border-5">
-                        <p class="bold m-0">@message.Author.UserName said:</p>
-                        <p class="p-10">@message.Description</p>
-                        <p class="m-0 font-14 text-end sent-on"><b>Sent on</b> @message.CreatedOn</p>
-                    </div>
-                }
+                <div class="bg-burly text-forum p-10 m-10px half-width float-left border-5">
+                    <p class="bold m-0">@message.Author.UserName said:</p>
+                    <p class="p-10">@message.Description</p>
+                    <p class="m-0 font-14 text-end sent-on"><b>Sent on</b> @message.CreatedOn</p>
+                </div>
+            }
+            else
+            {
+                <div class="bg-burly text-forum p-10 m-10px half-width float-right border-5">
+                    <p class="bold m-0">@message.Author.UserName said:</p>
+                    <p class="p-10">@message.Description</p>
+                    <p class="m-0 font-14 text-end sent-on"><b>Sent on</b> @message.CreatedOn</p>
+                </div>
             }
         }
-    </div>
+    }
+</div>
 <div class="content-container mt-25">
     <input asp-for="RecieverId" type="hidden" hidden="hidden" />
     <div class="p-10 text-end">

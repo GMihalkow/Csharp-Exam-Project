@@ -39,16 +39,43 @@ namespace Forum.Services.Message
             return conversationMessages;
         }
 
-        public IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser)
+        public IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser, string otherUserId)
         {
-            //TODO: fix the messages to be between 2 users
-            var parsedLastDate = DateTime.Parse(lastDate);
+            var IsDate = DateTime.TryParse(lastDate, out DateTime parsedLastDate);
+            if (!IsDate)
+            {
+                var firstMessages =
+                  this.dbService
+                  .DbContext
+                  .Messages
+                  .Include(m => m.Author)
+                  .Include(m => m.Reciever)
+                  .Where(m =>
+                  (m.Author.UserName == loggedInUser && m.RecieverId == otherUserId)
+                  ||
+                  (m.AuthorId == otherUserId && m.Reciever.UserName == loggedInUser))
+                  .Select(m => this.mapper.Map<ChatMessageViewModel>(m))
+                  .OrderBy(m => m.CreatedOn)
+                  .ToList();
+
+                foreach (var message in firstMessages)
+                {
+                    message.LoggedInUser = loggedInUser;
+                }
+
+                return firstMessages;
+            }
 
             var messages =
                 this.dbService
                 .DbContext
                 .Messages
                 .Include(m => m.Author)
+                .Include(m => m.Reciever)
+                .Where(m =>
+                (m.Author.UserName == loggedInUser && m.RecieverId == otherUserId)
+                ||
+                (m.AuthorId == otherUserId && m.Reciever.UserName == loggedInUser))
                 .Where(m => m.CreatedOn.ToString("F") != parsedLastDate.ToString("F") && DateTime.Compare(m.CreatedOn, parsedLastDate) > 0)
                 .Select(m => this.mapper.Map<ChatMessageViewModel>(m))
                 .OrderBy(m => m.CreatedOn)
@@ -60,6 +87,42 @@ namespace Forum.Services.Message
             }
 
             return messages;
+        }
+
+        public IEnumerable<string> GetRecentConversations(string username)
+        {
+            var recentSentMessages =
+                this.dbService
+                .DbContext
+                .Messages
+                .Include(m => m.Author)
+                .Include(m => m.Reciever)
+                .Where(m => (m.Author.UserName == username))
+                .OrderByDescending(m => m.CreatedOn)
+                .Take(2)
+                .Select(m => m.Reciever.UserName)
+                .Distinct()
+                .ToList();
+
+            var recentRecievedMessages =
+                this.dbService
+                .DbContext
+                .Messages
+                .Include(m => m.Author)
+                .Include(m => m.Reciever)
+                .Where(m => (m.Reciever.UserName == username))
+                .OrderByDescending(m => m.CreatedOn)
+                .Take(3)
+                .Select(m => m.Author.UserName)
+                .ToList();
+
+            var recentConversations =
+                recentSentMessages
+                .Concat(recentRecievedMessages)
+                .Distinct()
+                .ToList();
+
+            return recentConversations;
         }
 
         public int SendMessage(ISendMessageInputModel model, string authorId)

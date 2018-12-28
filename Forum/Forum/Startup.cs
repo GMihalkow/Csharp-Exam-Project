@@ -79,6 +79,7 @@ namespace Forum
                  typeof(CategoryInputModel).Assembly,
                  typeof(ForumFormInputModel).Assembly,
                  typeof(ForumInputModel).Assembly,
+                 typeof(RecentConversationViewModel).Assembly,
                  typeof(ForumPostsInputModel).Assembly,
                  typeof(PostInputModel).Assembly,
                  typeof(LatestPostViewModel).Assembly,

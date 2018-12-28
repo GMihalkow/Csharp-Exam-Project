@@ -10,6 +10,8 @@ namespace Forum.Services.Interfaces.Message
 
         int SendMessage(ISendMessageInputModel model, string authorId);
 
-        IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser);
+        IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser, string otherUserId);
+
+        IEnumerable<string> GetRecentConversations(string username);
     }
 }

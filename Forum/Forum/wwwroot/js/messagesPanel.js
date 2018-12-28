@@ -13,8 +13,12 @@ $("#chatButton")
                 success: function (test) {
                     $('#messages-panel').html(test);
                     $.getScript("../js/site.js");
-                    $.getScript("../js/sendMessages.js");
+                    ////$.getScript("../js/sendMessages.js");
 
+                    //<script src="../js/chatWebsocket.js"></script>
+                    //    <script src="~/js/searchForUser.js"></script>
+                    //    <script src="~/js/sendMessages.js"></script>
+                    //    <script src="../js/switchChats.js"></script>
                     var element = document.getElementById("chat-box");
                     scrollToBottom(element);
                 }
@@ -26,7 +30,6 @@ $("#chatButton")
                 url: "/Account/RecentConversations",
                 success: function (test) {
                     $('#chat-conversations-div').html(test);
-                    $.getScript("../js/searchForUser.js");
                 }
             });
 

@@ -187,15 +187,14 @@ namespace Forum.Web.Controllers.Account
         [Authorize]
         public PartialViewResult Chat()
         {
-            var viewModel = new SendMessageInputModel();
-
-            return this.PartialView("_ChatViewPartial", viewModel);
+            return this.PartialView("_WeclomeChatViewPartial");
         }
 
         [Authorize]
         public PartialViewResult RecentConversations()
         {
             this.ViewData["userNames"] = this.accountService.GetUsernames();
+            this.ViewData["recentConversations"] = this.messageService.GetRecentConversations(this.User.Identity.Name);
 
             return this.PartialView("_RecentConversationsPartial");
         }
