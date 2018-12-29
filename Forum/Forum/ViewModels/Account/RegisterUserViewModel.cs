@@ -1,5 +1,6 @@
 ﻿namespace Forum.Web.ViewModels.Account
 {
+    using Forum.Web.Attributes;
     using global::Forum.Attributes;
     using global::Forum.MapConfiguration.Contracts;
     using global::Forum.Models;
@@ -37,7 +38,8 @@
 
         [Required(ErrorMessage = "You must select a gender.")]
         public string Gender { get; set; }
-
+        
+        [AllowedImageExtensions()]
         public IFormFile Image { get; set; }
     }
 }

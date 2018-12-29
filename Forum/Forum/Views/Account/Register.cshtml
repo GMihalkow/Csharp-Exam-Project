@@ -57,7 +57,8 @@
             <div class="m-10px">
                 <label class="bold font-18">Choose profile picture</label>
             </div>
-            <input class="bg-light" type="file"  name="Image" formenctype="multipart/form-data"/>
+            <input class="bg-light" type="file" asp-for="Image" formenctype="multipart/form-data" />
+            <span class="text-danger" asp-validation-for="Image"></span>
         </div>
         <hr class="half-width">
         <div class="center-button">

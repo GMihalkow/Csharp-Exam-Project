@@ -1,5 +1,6 @@
 ﻿using Forum.Services.Interfaces.Message;
 using Forum.ViewModels.Message;
+using Forum.Web.Attributes;
 using Forum.Web.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -217,6 +219,26 @@ namespace Forum.Web.Controllers.Account
             var result = this.PartialView("_ChatViewPartial", model);
 
             return result;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult UploadProfilePicture([AllowedImageExtensions] IFormFile image)
+        {
+            if (image == null)
+            {
+                return this.BadRequest();
+            }
+            //TODO: Add errors
+            if (ModelState.IsValid)
+            {
+                this.accountService.UploadProfilePicture(image, this.User.Identity.Name);
+                return this.Redirect("/Account/Profile");
+            }
+            else
+            {
+                return this.BadRequest();
+            }
         }
     }
 }

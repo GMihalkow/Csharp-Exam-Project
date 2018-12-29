@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.Web.ViewModels.Account;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -52,5 +53,9 @@ namespace Forum.Web.Services.Account.Contracts
         ProfileInfoViewModel GetProfileInfo(ClaimsPrincipal principal);
 
         IEnumerable<string> GetUsernames();
+
+        bool IsImageExtensionValid(string fileName);
+
+        void UploadProfilePicture(IFormFile image, string username);
     }
 }

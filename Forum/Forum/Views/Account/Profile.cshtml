@@ -6,14 +6,18 @@
                 @if (this.ViewData["profilePicUrl"] == null)
                 {
                     <i id="profilePic" class="fas fa-user-alt fa-10x text-white m-5"></i>
-                    <a href="#"><h4 class="text-white m-0">Upload picture</h4></a>
-                    <input class="menu-bg-forum text-white" type="file" />
+                    <form enctype="multipart/form-data" method="post" asp-controller="Account" asp-action="UploadProfilePicture">
+                        <input class="submit-button border-none border-5 font-14 bold p-10 m-10px" type="submit" value="Upload picture">
+                        <input class="menu-bg-forum text-white" name="image" type="file" />
+                    </form>
                 }
                 else
                 {
                     <img class="mt-25" height="200" width="200" src="@this.ViewData["profilePicUrl"]" />
-                    <a href="#"><h4 class="text-white m-0">Change picture</h4></a>
-                    <input class="menu-bg-forum text-white" type="file" />
+                    <form enctype="multipart/form-data" method="post" asp-controller="Account" asp-action="UploadProfilePicture">
+                        <input class="submit-button border-none border-5 font-14 bold p-10 m-10px" type="submit" value="Change picture">
+                        <input class="menu-bg-forum text-white" name="image" type="file" />
+                    </form>
                 }
             </div>
             <div id="chat-conversations-div"></div>

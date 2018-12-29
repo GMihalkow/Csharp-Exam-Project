@@ -12,6 +12,7 @@
     using Forum.Web.Utilities;
     using Forum.Web.ViewModels.Account;
     using global::Forum.Models;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
@@ -77,23 +78,26 @@
                  this.mapper
                  .Map<RegisterUserViewModel, ForumUser>(viewModel);
 
-            CloudinaryDotNet.Account cloudAccount = new CloudinaryDotNet.Account(this.CloudConfig.Value.CloudName, this.CloudConfig.Value.ApiKey, this.CloudConfig.Value.ApiSecret);
-
-            Cloudinary cloudinary = new Cloudinary(cloudAccount);
-
-            var stream = viewModel.Image.OpenReadStream();
-
-            CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+            if (viewModel.Image != null)
             {
-                File = new FileDescription(viewModel.Image.FileName, stream),
-                PublicId = $"{model.UserName}_profile_pic"
-            };
-            
-            CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+                CloudinaryDotNet.Account cloudAccount = new CloudinaryDotNet.Account(this.CloudConfig.Value.CloudName, this.CloudConfig.Value.ApiKey, this.CloudConfig.Value.ApiSecret);
 
-            string url = cloudinary.Api.UrlImgUp.BuildUrl($"{model.UserName}_profile_pic");
+                Cloudinary cloudinary = new Cloudinary(cloudAccount);
 
-            model.ProfilePicutre = url;
+                var stream = viewModel.Image.OpenReadStream();
+
+                CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+                {
+                    File = new FileDescription(viewModel.Image.FileName, stream),
+                    PublicId = $"{model.UserName}_profile_pic"
+                };
+
+                CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+
+                string url = cloudinary.Api.UrlImgUp.BuildUrl($"{model.UserName}_profile_pic");
+
+                model.ProfilePicutre = url;
+            }
 
             model.RegisteredOn = DateTime.UtcNow;
 
@@ -283,7 +287,7 @@
             user.Location = newLocation;
             var result = this.dbService.DbContext.SaveChanges();
 
-            if(result == 1)
+            if (result == 1)
             {
                 return true;
             }
@@ -333,6 +337,64 @@
                 .ToList();
 
             return usernames;
+        }
+
+        public bool IsImageExtensionValid(string fileName)
+        {
+            var allowedExtensions = new string[]
+            {
+                ".jpg",
+                ".png",
+                ".jpeg",
+                ".bmp"
+            };
+
+            int counter = 0;
+
+            foreach (var extension in allowedExtensions)
+            {
+                if (fileName.EndsWith(extension))
+                {
+                    counter++;
+                }
+            }
+
+            if (counter == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void UploadProfilePicture(IFormFile image, string username)
+        {
+            var user = this.GetUserByName(username);
+
+            CloudinaryDotNet.Account cloudAccount = new CloudinaryDotNet.Account(this.CloudConfig.Value.CloudName, this.CloudConfig.Value.ApiKey, this.CloudConfig.Value.ApiSecret);
+
+            Cloudinary cloudinary = new Cloudinary(cloudAccount);
+
+            var stream = image.OpenReadStream();
+
+            CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+            {
+                File = new FileDescription(image.FileName, stream),
+                PublicId = $"{username}_profile_pic"
+            };
+
+            CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+
+            string url = cloudinary.Api.UrlImgUp.BuildUrl($"{username}_profile_pic");
+
+            var updatedUrl = cloudinary.GetResource(uploadParams.PublicId).Url;
+            
+            user.ProfilePicutre = updatedUrl;
+
+            this.dbService.DbContext.Entry(user).State = EntityState.Modified;
+            this.dbService.DbContext.SaveChanges();
         }
     }
 }
