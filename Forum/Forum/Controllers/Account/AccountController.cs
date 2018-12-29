@@ -3,6 +3,8 @@ using Forum.ViewModels.Message;
 using Forum.Web.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net.WebSockets;
@@ -48,6 +50,7 @@ namespace Forum.Web.Controllers.Account
         [HttpPost]
         public IActionResult Register(RegisterUserViewModel model)
         {
+            //TODO: Validate that files you upload are only images, (EndsWith .jpeg, png...)
             if (ModelState.IsValid)
             {
                 this.accountService.RegisterUser(model);
@@ -63,7 +66,10 @@ namespace Forum.Web.Controllers.Account
         [Authorize]
         public IActionResult Profile()
         {
-            //TODO: Finish implementing profile view
+            var user = this.accountService.GetUserByName(this.User.Identity.Name);
+
+            this.ViewData["profilePicUrl"] = user.ProfilePicutre;
+
             return this.View();
         }
 

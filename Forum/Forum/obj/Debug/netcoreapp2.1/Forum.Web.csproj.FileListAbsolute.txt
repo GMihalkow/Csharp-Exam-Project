@@ -52,7 +52,6 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Forum\Create.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Forum\Posts.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_AdminOptionsPartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.pdb
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.dll
@@ -92,3 +91,4 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_RecentConversationsPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_WeclomeChatViewPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Post\Edit.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

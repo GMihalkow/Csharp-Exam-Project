@@ -5,7 +5,7 @@
     <h1><a id="main-heading-text" href="#">Register</a></h1>
 </div>
 <div class="container mx-5-auto">
-    <form class="my-form" asp-controller="Account" asp-action="Register">
+    <form class="my-form" asp-controller="Account" asp-action="Register" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
         <hr class="two-thirds-width">
         <div class="two-thirds-width register-container">
@@ -52,9 +52,14 @@
             <input asp-for="Gender" type="radio" class="checkmark" name="gender" id="other" value="Other">
             <span class="text-danger" asp-validation-for="Gender"></span>
         </div>
-        <div>
-            <input type="file" name="myfile" />
+        <hr class="half-width">
+        <div class="text-forum text-center bg-light mt-25">
+            <div class="m-10px">
+                <label class="bold font-18">Choose profile picture</label>
+            </div>
+            <input class="bg-light" type="file"  name="Image" formenctype="multipart/form-data"/>
         </div>
+        <hr class="half-width">
         <div class="center-button">
             <input class="submit-button menu-bg-forum text-white" type="submit" value="Register">
         </div>

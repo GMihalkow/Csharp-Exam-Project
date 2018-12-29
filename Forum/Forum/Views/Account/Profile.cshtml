@@ -1,9 +1,20 @@
 ﻿<div class="bg-white">
     <div class="profile-container m-0">
         <div id="profile-pic-holder" class="text-center bg-white m-0">
-            <div class="menu-bg-forum m-0 p-10">
+            <div class="menu-bg-forum m-0 p-10 text-center">
                 <h4 class="text-white m-0">Username: @this.User.Identity.Name</h4>
-                <i id="profilePic" class="fas fa-user-alt fa-10x text-white m-5"></i>
+                @if (this.ViewData["profilePicUrl"] == null)
+                {
+                    <i id="profilePic" class="fas fa-user-alt fa-10x text-white m-5"></i>
+                    <a href="#"><h4 class="text-white m-0">Upload picture</h4></a>
+                    <input class="menu-bg-forum text-white" type="file" />
+                }
+                else
+                {
+                    <img class="mt-25" height="200" width="200" src="@this.ViewData["profilePicUrl"]" />
+                    <a href="#"><h4 class="text-white m-0">Change picture</h4></a>
+                    <input class="menu-bg-forum text-white" type="file" />
+                }
             </div>
             <div id="chat-conversations-div"></div>
         </div>

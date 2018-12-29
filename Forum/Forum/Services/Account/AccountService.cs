@@ -6,23 +6,28 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using AutoMapper;
+    using CloudinaryDotNet;
     using Forum.Services.Interfaces.Db;
     using Forum.Web.Services.Account.Contracts;
+    using Forum.Web.Utilities;
     using Forum.Web.ViewModels.Account;
     using global::Forum.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Options;
 
     public class AccountService : IAccountService
     {
         private readonly IMapper mapper;
+        private readonly IOptions<CloudConfiguration> CloudConfig;
         private readonly UserManager<ForumUser> userManager;
         private readonly SignInManager<ForumUser> signInManager;
         private readonly IDbService dbService;
 
-        public AccountService(IMapper mapper, UserManager<ForumUser> userManager, SignInManager<ForumUser> signInManager, IDbService dbService)
+        public AccountService(IMapper mapper, IOptions<CloudConfiguration> CloudConfig, UserManager<ForumUser> userManager, SignInManager<ForumUser> signInManager, IDbService dbService)
         {
             this.mapper = mapper;
+            this.CloudConfig = CloudConfig;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.dbService = dbService;
@@ -39,11 +44,7 @@
 
         public void RegisterUser(RegisterUserViewModel model)
         {
-            var user =
-                 this.mapper
-                 .Map<RegisterUserViewModel, ForumUser>(model);
-
-            this.OnPostRegisterAsync(user, model.Password);
+            this.OnPostRegisterAsync(model, model.Password);
         }
 
         public void LogoutUser()
@@ -70,9 +71,32 @@
             }
         }
 
-        public IdentityResult OnPostRegisterAsync(ForumUser model, string password)
+        public IdentityResult OnPostRegisterAsync(RegisterUserViewModel viewModel, string password)
         {
+            var model =
+                 this.mapper
+                 .Map<RegisterUserViewModel, ForumUser>(viewModel);
+
+            CloudinaryDotNet.Account cloudAccount = new CloudinaryDotNet.Account(this.CloudConfig.Value.CloudName, this.CloudConfig.Value.ApiKey, this.CloudConfig.Value.ApiSecret);
+
+            Cloudinary cloudinary = new Cloudinary(cloudAccount);
+
+            var stream = viewModel.Image.OpenReadStream();
+
+            CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+            {
+                File = new FileDescription(viewModel.Image.FileName, stream),
+                PublicId = $"{model.UserName}_profile_pic"
+            };
+            
+            CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+
+            string url = cloudinary.Api.UrlImgUp.BuildUrl($"{model.UserName}_profile_pic");
+
+            model.ProfilePicutre = url;
+
             model.RegisteredOn = DateTime.UtcNow;
+
             var result = userManager.CreateAsync(model, password).GetAwaiter().GetResult();
             if (result.Succeeded)
             {

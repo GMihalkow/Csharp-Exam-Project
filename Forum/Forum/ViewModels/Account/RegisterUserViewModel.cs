@@ -3,9 +3,11 @@
     using global::Forum.Attributes;
     using global::Forum.MapConfiguration.Contracts;
     using global::Forum.Models;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterUserViewModel: IMapTo<ForumUser>
+    public class RegisterUserViewModel : IMapTo<ForumUser>
     {
         [Required(ErrorMessage = "You must enter a username.")]
         [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
@@ -35,5 +37,7 @@
 
         [Required(ErrorMessage = "You must select a gender.")]
         public string Gender { get; set; }
+
+        public IFormFile Image { get; set; }
     }
 }

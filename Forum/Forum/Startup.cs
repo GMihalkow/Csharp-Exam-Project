@@ -39,14 +39,19 @@ using Forum.Services.Interfaces.Message;
 using Forum.Services.Message;
 using System;
 using Forum.ViewModels.Message;
+using Forum.Web.Utilities;
 
 namespace Forum
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -133,6 +138,10 @@ namespace Forum
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                 options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
             });
+
+            services.AddOptions();
+
+            services.Configure<CloudConfiguration>(Configuration.GetSection("CloudConfiguration"));
 
             services.ConfigureApplicationCookie(options =>
             {
