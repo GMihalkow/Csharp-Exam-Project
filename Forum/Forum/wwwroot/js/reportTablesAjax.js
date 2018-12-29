@@ -6,7 +6,7 @@
                 url: "/Report/GetPostReports",
                 success: function (test) {
                     $('#tableDiv').html(test);
-                    $.getScript("../js/reportModal.js");
+                    $.getScript("../js/modal.js");
                     $.getScript("../js/dismissPostReports.js");
                 }
             });
@@ -37,7 +37,7 @@ $('#replyReportsBtn')
                 url: "/Report/GetReplyReports",
                 success: function (test) {
                     $('#tableDiv').html(test);
-                    $.getScript("../js/reportModal.js");
+                    $.getScript("../js/modal.js");
                     $.getScript("../js/dismissReplyReports.js");
                 }
             });
@@ -69,7 +69,7 @@ $('#quoteReportsBtn')
                 url: "/Report/GetQuoteReports",
                 success: function (test) {
                     $('#tableDiv').html(test);
-                    $.getScript("../js/reportModal.js");
+                    $.getScript("../js/modal.js");
                     $.getScript("../js/dismissQuoteReports.js");
                 }
             });

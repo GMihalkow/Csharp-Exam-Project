@@ -60,10 +60,17 @@
             string result = path;
             if (this.Request.Query.ContainsKey("?id"))
             {
-                result = result +"?id=" + this.Request.Query["?id"];
+                result = result + "?id=" + this.Request.Query["?id"];
             }
 
             return this.Redirect(result);
+        }
+
+        public IActionResult AcceptConsent()
+        {
+            this.Response.Cookies.Append("GDPR", "true", new CookieOptions { Path = "/", Expires = DateTime.UtcNow.AddDays(3), HttpOnly = false, IsEssential = true });
+
+            return this.Redirect("/");
         }
     }
 }

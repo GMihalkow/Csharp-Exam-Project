@@ -41,6 +41,14 @@ button, input :hover {
     padding: 0px;
 }
 
+#gdprDiv {
+    height: 500px;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
 .emote {
     background: none;
     outline: none;

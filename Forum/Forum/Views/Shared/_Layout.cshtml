@@ -28,6 +28,7 @@
     </environment>
 </head>
 <body class="bg-forum">
+    <partial name="_ConsentPartial" />
     <div id="header" class="border-5">
         <header>
             <nav class="main-nav menu-bg-forum border-5">
@@ -39,7 +40,7 @@
                         <a class="button" asp-controller="Home" asp-action="About">Rules</a>
                     </li>
                     <li class="float-left">
-                        <partial name="_MenuOptionsPartial"/>
+                        <partial name="_MenuOptionsPartial" />
                     </li>
                     <li>
                         <label class="switch">
@@ -52,7 +53,7 @@
                                 }
                                 else
                                 {
-                                    <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=dark&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox"  value="">
+                                    <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=dark&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox" value="">
                                 }
                             }
                             else

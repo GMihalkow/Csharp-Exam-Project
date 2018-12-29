@@ -12,7 +12,7 @@ for (var i = 0; i < elements.length; i++) {
                 url: "/Report/DismissReplyReport",
                 success: function (test) {
                     $('#tableDiv').html(test);
-                    $.getScript("../js/reportModal.js");
+                    $.getScript("../js/modal.js");
                     $.getScript("../js/dismissReplyReports.js");
                 },
                 data: {

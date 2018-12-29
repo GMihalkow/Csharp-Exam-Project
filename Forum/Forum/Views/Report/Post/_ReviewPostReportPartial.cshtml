@@ -23,7 +23,7 @@
         </p>
     </div>
     <div class="p-10">
-        <h5 class="text-end text-white m-0">Link to post <a class="profile-link text-white" asp-controller="Post" asp-action="Details" asp-route-id="@Model.Post.Id">here</a></h5>
+        <h5 class="text-end text-white m-0">Link to post <a class="profile-link text-white" href="/Post/Details?id=@Model.Post.Id" >here</a></h5>
         <h5 class="text-end text-white m-0">Date: @Model.ReportedOn.ToString("dd-MM-yyyy")</h5>
     </div>
 </div>
