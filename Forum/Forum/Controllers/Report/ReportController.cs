@@ -1,5 +1,7 @@
 ﻿using Forum.Services.Interfaces.Report;
 using Forum.ViewModels.Report;
+using Forum.Web.Attributes.CustomAuthorizeAttributes;
+using Forum.Web.Common;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -67,16 +69,14 @@ namespace Forum.Web.Controllers.Report
                 return this.Redirect("/");
             }
         }
-
-        [Authorize("Administrator")]
-        [Authorize("Owner")]
+        
+        [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public IActionResult All()
         {
             return this.View();
         }
-
-        [Authorize("Administrator")]
-        [Authorize("Owner")]
+        
+        [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult GetPostReports()
         {
             var reports = this.reportService.GetPostReports();
@@ -84,8 +84,8 @@ namespace Forum.Web.Controllers.Report
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
 
-        [Authorize("Administrator")]
-        [Authorize("Owner")]
+
+        [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult GetReplyReports()
         {
             var reports = this.reportService.GetReplyReports();
@@ -102,8 +102,7 @@ namespace Forum.Web.Controllers.Report
             return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
         }
 
-        [Authorize("Administrator")]
-        [Authorize("Owner")]
+        [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult DismissPostReport(string id)
         {
             this.reportService.DismissPostReport(id);
@@ -113,8 +112,7 @@ namespace Forum.Web.Controllers.Report
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
 
-        [Authorize("Administrator")]
-        [Authorize("Owner")]
+        [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult DismissReplyReport(string id)
         {
             this.reportService.DismissReplyReport(id);
@@ -124,8 +122,7 @@ namespace Forum.Web.Controllers.Report
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
 
-        [Authorize("Administrator")]
-        [Authorize("Owner")]
+        [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult DismissQuoteReport(string id)
         {
             this.reportService.DismissQuoteReport(id);

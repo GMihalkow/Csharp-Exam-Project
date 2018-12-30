@@ -96,3 +96,15 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_SearchUsernamePartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\Details.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_SendMessagePartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Role\Index.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\Error.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_AdminOptionsPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_ConsentPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_GdprConsentPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_Layout.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_LoginPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_MenuOptionsPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_MenuPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\_ViewImports.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\_ViewStart.g.cshtml.cs

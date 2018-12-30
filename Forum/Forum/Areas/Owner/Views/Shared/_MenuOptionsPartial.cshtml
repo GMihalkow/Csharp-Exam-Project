@@ -6,10 +6,6 @@
             <a asp-controller="Forum" asp-action="Create">New Forum</a>
             <a asp-controller="Category" asp-action="Create">New Category</a>
             <a asp-controller="Report" asp-action="All">View Reports</a>
-            @if (this.User.IsInRole("Owner"))
-            {
-                <a asp-area="Owner" asp-controller="Role" asp-action="Index">Edit Roles</a>
-            }
         </div>
     </div>
 }

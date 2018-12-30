@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using Forum.MapConfiguration.Contracts;
-    using global::Forum.Attributes;
+    using Forum.Web.Attributes.CustomValidationAttributes;
     using System.ComponentModel.DataAnnotations;
 
     public class EditProfileInputModel : IHaveCustomMappings

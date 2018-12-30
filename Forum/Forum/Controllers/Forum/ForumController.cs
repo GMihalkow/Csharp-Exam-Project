@@ -6,11 +6,12 @@ using Forum.Web.Services.Account.Contracts;
 using Forum.Services.Interfaces.Category;
 using Forum.Services.Interfaces.Forum;
 using Forum.ViewModels.Forum;
+using Forum.Web.Common;
+using Forum.Web.Attributes.CustomAuthorizeAttributes;
 
 namespace Forum.Web.Controllers.Forum
 {
-    [Authorize("Administrator")]
-    [Authorize("Owner")]
+    [AuthorizeRoles(Role.Administrator, Role.Owner)]
     public class ForumController : BaseController
     {
         private readonly ICategoryService categoryService;

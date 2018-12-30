@@ -1,11 +1,9 @@
 ﻿namespace Forum.Web.ViewModels.Account
 {
-    using Forum.Web.Attributes;
-    using global::Forum.Attributes;
+    using Forum.Web.Attributes.CustomValidationAttributes;
     using global::Forum.MapConfiguration.Contracts;
     using global::Forum.Models;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using System.ComponentModel.DataAnnotations;
 
     public class RegisterUserViewModel : IMapTo<ForumUser>

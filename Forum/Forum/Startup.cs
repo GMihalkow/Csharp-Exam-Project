@@ -40,6 +40,9 @@ using Forum.Services.Message;
 using System;
 using Forum.ViewModels.Message;
 using Forum.Web.Utilities;
+using Forum.Web.Areas.Owner.Services.Contracts;
+using Forum.Web.Areas.Owner.Services;
+using Forum.Web.Areas.Owner.ViewModels.Role;
 
 namespace Forum
 {
@@ -99,6 +102,7 @@ namespace Forum
                  typeof(QuoteInputModel).Assembly,
                  typeof(PostReportInputModel).Assembly,
                  typeof(ReplyReportInputModel).Assembly,
+                 typeof(UserRoleViewModel).Assembly,
                  typeof(ChatMessageViewModel).Assembly,
                  typeof(QuoteReportInputModel).Assembly);
 
@@ -160,6 +164,7 @@ namespace Forum
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReplyService, ReplyService>();
             services.AddScoped<IMessageService, MessageService>();
@@ -182,6 +187,7 @@ namespace Forum
                     {
                         authBuilder.RequireRole("Administrator");
                     });
+
                 options.AddPolicy("Owner",
                     authBuilder =>
                     {
@@ -226,8 +232,14 @@ namespace Forum
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                      name: "areas",
+                      template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                  );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }

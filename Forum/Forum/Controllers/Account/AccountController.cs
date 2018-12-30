@@ -1,6 +1,6 @@
 ﻿using Forum.Services.Interfaces.Message;
 using Forum.ViewModels.Message;
-using Forum.Web.Attributes;
+using Forum.Web.Attributes.CustomValidationAttributes;
 using Forum.Web.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;

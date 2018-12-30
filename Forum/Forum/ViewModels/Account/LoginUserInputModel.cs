@@ -1,6 +1,6 @@
-﻿using Forum.Attributes;
-using Forum.MapConfiguration.Contracts;
+﻿using Forum.MapConfiguration.Contracts;
 using Forum.Models;
+using Forum.Web.Attributes.CustomValidationAttributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Forum.Web.ViewModels.Account

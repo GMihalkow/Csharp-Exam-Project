@@ -1,4 +1,4 @@
-﻿namespace Forum.Attributes
+﻿namespace Forum.Web.Attributes.CustomValidationAttributes
 {
     using Forum.Services.Db;
     using Forum.Web.Services.Account.Contracts;

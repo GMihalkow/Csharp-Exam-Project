@@ -4,11 +4,13 @@ using Forum.Services.Interfaces.Quote;
 using Forum.Services.Interfaces.Reply;
 using Forum.ViewModels.Quote;
 using Forum.Web.Services.Account.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace Forum.Web.Controllers.Quote
 {
+    [Authorize]
     public class QuoteController : BaseController
     {
         private readonly IQuoteService quoteService;
