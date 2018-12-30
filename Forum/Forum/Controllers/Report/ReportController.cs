@@ -69,12 +69,14 @@ namespace Forum.Web.Controllers.Report
         }
 
         [Authorize("Administrator")]
+        [Authorize("Owner")]
         public IActionResult All()
         {
             return this.View();
         }
 
         [Authorize("Administrator")]
+        [Authorize("Owner")]
         public PartialViewResult GetPostReports()
         {
             var reports = this.reportService.GetPostReports();
@@ -83,6 +85,7 @@ namespace Forum.Web.Controllers.Report
         }
 
         [Authorize("Administrator")]
+        [Authorize("Owner")]
         public PartialViewResult GetReplyReports()
         {
             var reports = this.reportService.GetReplyReports();
@@ -91,6 +94,7 @@ namespace Forum.Web.Controllers.Report
         }
 
         [Authorize("Administrator")]
+        [Authorize("Owner")]
         public PartialViewResult GetQuoteReports()
         {
             var reports = this.reportService.GetQuoteReports();
@@ -99,6 +103,7 @@ namespace Forum.Web.Controllers.Report
         }
 
         [Authorize("Administrator")]
+        [Authorize("Owner")]
         public PartialViewResult DismissPostReport(string id)
         {
             this.reportService.DismissPostReport(id);
@@ -109,6 +114,7 @@ namespace Forum.Web.Controllers.Report
         }
 
         [Authorize("Administrator")]
+        [Authorize("Owner")]
         public PartialViewResult DismissReplyReport(string id)
         {
             this.reportService.DismissReplyReport(id);
@@ -119,6 +125,7 @@ namespace Forum.Web.Controllers.Report
         }
 
         [Authorize("Administrator")]
+        [Authorize("Owner")]
         public PartialViewResult DismissQuoteReport(string id)
         {
             this.reportService.DismissQuoteReport(id);

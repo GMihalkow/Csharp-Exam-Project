@@ -1,4 +1,4 @@
-﻿@if (this.User.IsInRole("Administrator"))
+﻿@if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
 {
     <div class="dropdown">
         <a class="button" onclick="myFunction()"><i class="fas fa-bars fa-lg"></i></a>

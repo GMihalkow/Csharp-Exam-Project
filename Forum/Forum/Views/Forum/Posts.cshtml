@@ -10,7 +10,7 @@
         <div class="post-button-div m-10px">
             <a href="/Post/Create?id=@Model.Forum.Id" class="menu-bg-forum p-10 text-white border-5"><h3 class="m-10px display-inline"><i class="fas fa-plus"></i> Post a Topic</h3></a>
         </div>
-        @if (this.User.IsInRole("Administrator"))
+        @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
         {
             <partial name="_AdminOptionsPartial"/>  
         }

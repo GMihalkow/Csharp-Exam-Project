@@ -33,7 +33,7 @@
                 PopularPosts = this.postService.GetPopularPosts()
             };
 
-            if (this.User.IsInRole("Administrator"))
+            if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
             {
                 viewModel.Categories = this.categoryService.GetAllCategories().GetAwaiter().GetResult().ToArray();
             }

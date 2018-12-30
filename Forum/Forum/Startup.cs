@@ -182,6 +182,11 @@ namespace Forum
                     {
                         authBuilder.RequireRole("Administrator");
                     });
+                options.AddPolicy("Owner",
+                    authBuilder =>
+                    {
+                        authBuilder.RequireRole("Owner");
+                    });
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

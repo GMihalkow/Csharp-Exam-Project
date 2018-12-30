@@ -10,6 +10,7 @@ using Forum.ViewModels.Forum;
 namespace Forum.Web.Controllers.Forum
 {
     [Authorize("Administrator")]
+    [Authorize("Owner")]
     public class ForumController : BaseController
     {
         private readonly ICategoryService categoryService;

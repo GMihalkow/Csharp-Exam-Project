@@ -113,7 +113,7 @@
 
         public IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal)
         {
-            if (principal.IsInRole("Administrator"))
+            if (principal.IsInRole("Administrator") || principal.IsInRole("Owner"))
             {
                 var forums =
                     this.dbService

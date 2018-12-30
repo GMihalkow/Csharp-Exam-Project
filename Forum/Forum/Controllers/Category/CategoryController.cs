@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize("Administrator")]
+    [Authorize("Owner")]
     public class CategoryController : BaseController
     {
         private readonly ICategoryService categoryService;

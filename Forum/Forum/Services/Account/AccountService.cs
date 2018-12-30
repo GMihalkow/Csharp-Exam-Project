@@ -117,6 +117,10 @@
             {
                 if (this.dbService.DbContext.Users.Count() == 1)
                 {
+                    this.userManager.AddToRoleAsync(model, "Owner").GetAwaiter().GetResult();
+                }
+                else if (this.dbService.DbContext.Users.Count() == 2)
+                {
                     this.userManager.AddToRoleAsync(model, "Administrator").GetAwaiter().GetResult();
                 }
                 else
