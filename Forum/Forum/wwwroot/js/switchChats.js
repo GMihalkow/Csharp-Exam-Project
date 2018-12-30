@@ -3,30 +3,6 @@ for (var index = 0; index < recentConversationButtons.length; index++) {
 
     recentConversationButtons[index].onclick = function TEST(e, index) {
 
-        var btnElement = e.target;
-        var allBtns = document.getElementsByClassName("recentConversationButton");
-
-        console.log(btnElement.classList);
-
-        btnElement.classList.remove("text-white");
-        btnElement.classList.remove("menu-bg-forum");
-
-        btnElement.classList.remove("text-forum");
-        btnElement.classList.remove("bg-white");
-
-        btnElement.classList.add("active");
-
-        for (var i = 0; i < allBtns.length; i++) {
-            if (allBtns[i] !== btnElement) {
-                if (allBtns[i].classList.contains("active")) {
-                    allBtns[i].classList.remove("active");
-
-                    allBtns[i].classList.add("menu-bg-forum");
-                    allBtns[i].classList.add("text-white");
-                }
-            }
-        }
-        
         $.ajax(
             {
                 type: "POST",

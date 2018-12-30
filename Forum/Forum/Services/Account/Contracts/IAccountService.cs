@@ -57,5 +57,7 @@ namespace Forum.Web.Services.Account.Contracts
         bool IsImageExtensionValid(string fileName);
 
         void UploadProfilePicture(IFormFile image, string username);
+
+        byte[] BuildFile(ClaimsPrincipal principal);
     }
 }

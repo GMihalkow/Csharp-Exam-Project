@@ -5,14 +5,7 @@ using Forum.Web.Services.Account.Contracts;
 using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Forum.Web.Controllers.Account
 {
@@ -242,6 +235,14 @@ namespace Forum.Web.Controllers.Account
             {
                 return this.BadRequest();
             }
+        }
+
+        [Authorize]
+        public IActionResult DownloadInfo()
+        {
+            var byteArr = this.accountService.BuildFile(this.User);
+
+            return this.File(byteArr, "text/json", "info.txt");
         }
     }
 }

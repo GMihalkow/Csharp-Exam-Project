@@ -83,6 +83,7 @@ namespace Forum
                  typeof(EditPostInputModel).Assembly,
                  typeof(RegisterUserViewModel).Assembly,
                  typeof(CategoryInputModel).Assembly,
+                 typeof(UserJsonViewModel).Assembly,
                  typeof(ForumFormInputModel).Assembly,
                  typeof(ForumInputModel).Assembly,
                  typeof(RecentConversationViewModel).Assembly,

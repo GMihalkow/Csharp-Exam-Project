@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using System.Text;
     using System.Threading.Tasks;
     using AutoMapper;
     using CloudinaryDotNet;
@@ -19,6 +20,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
+    using Newtonsoft.Json;
 
     public class AccountService : IAccountService
     {
@@ -410,6 +412,19 @@
 
             this.dbService.DbContext.Entry(user).State = EntityState.Modified;
             this.dbService.DbContext.SaveChanges();
+        }
+
+        public byte[] BuildFile(ClaimsPrincipal principal)
+        {
+            var user = this.GetUserByName(principal.Identity.Name);
+
+            var viewModel = this.mapper.Map<UserJsonViewModel>(user);
+
+            var jsonStr = JsonConvert.SerializeObject(viewModel);
+
+            var byteArr = Encoding.UTF8.GetBytes(jsonStr);
+
+            return byteArr;
         }
     }
 }

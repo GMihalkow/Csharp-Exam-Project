@@ -1,18 +1,7 @@
 ﻿@using Forum.ViewModels.Message;
 
-<div class="text-center bg-burly text-forum block m-10px">
-    <h3 class="m-0">
-        <label class="text-forum">Search:</label>
-    </h3>
-    <form autocomplete="off" action="/" method="post">
-        <div class="autocomplete">
-            <input id="myInput" class="full-width border-5 border-none" type="text" placeholder="Search for users..." />
-        </div>
-        <div class="center-button">
-            <button id="searchButton" class="m-0 submit-button menu-bg-forum text-white" type="button">Search</button>
-        </div>
-    </form>
-</div>
+<partial name="_SearchUsernamePartial" />
+
 <h4 class="text-center text-forum bg-burly p-10 m-0">Recent Conversations</h4>
 <div class="menu-bg-forum m-0 p-0">
     @foreach (var username in (List<string>)this.ViewData["recentConversations"])
@@ -27,7 +16,6 @@
         <button class="m-0 p-10 border-none font-18 recentConversationButton bg-white text-forum full-width" value="@unreadMessage.AuthorName" type="button">@unreadMessage.AuthorName (@unreadMessage.MessagesCount)</button>
     }
 </div>
-
 
 <script src="../js/searchAutocomplete.js"></script>
 <script>

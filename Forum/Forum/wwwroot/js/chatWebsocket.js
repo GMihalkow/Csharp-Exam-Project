@@ -22,12 +22,11 @@ setInterval(function () {
     500);
 
 socket.onmessage = (message) => {
-    console.log(message.data);
 
     var targetDiv = $("#chat-box");
 
     var messagesArr = JSON.parse(message.data);
-    console.log(messagesArr);
+
     if (messagesArr.length > 0) {
         for (var index = 0; index < messagesArr.length; index++) {
 
