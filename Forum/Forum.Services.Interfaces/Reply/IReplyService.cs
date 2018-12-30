@@ -9,5 +9,7 @@ namespace Forum.Services.Interfaces.Reply
         Task<int> Add(IReplyInputModel model, ForumUser user);
 
         Models.Reply GetReply(string id);
+
+        int DeleteUserReplies(string username);
     }
 }

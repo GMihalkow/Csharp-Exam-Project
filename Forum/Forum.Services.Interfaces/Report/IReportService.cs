@@ -22,5 +22,7 @@ namespace Forum.Services.Interfaces.Report
         int DismissReplyReport(string id);
 
         int DismissQuoteReport(string id);
+
+        int DeleteUserReports(string username);
     }
 }

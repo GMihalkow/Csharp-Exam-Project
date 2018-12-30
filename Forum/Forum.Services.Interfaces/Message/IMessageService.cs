@@ -13,5 +13,9 @@ namespace Forum.Services.Interfaces.Message
         IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser, string otherUserId);
 
         IEnumerable<string> GetRecentConversations(string username);
+
+        void RemoveUserMessages(string username);
+
+        IEnumerable<IUnreadMessageViewModel> GetUnreadMessages(string username);
     }
 }

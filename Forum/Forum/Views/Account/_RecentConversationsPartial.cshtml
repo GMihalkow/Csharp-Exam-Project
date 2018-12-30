@@ -1,4 +1,6 @@
-﻿<div class="text-center bg-burly text-forum block m-10px">
+﻿@using Forum.ViewModels.Message;
+
+<div class="text-center bg-burly text-forum block m-10px">
     <h3 class="m-0">
         <label class="text-forum">Search:</label>
     </h3>
@@ -15,9 +17,17 @@
 <div class="menu-bg-forum m-0 p-0">
     @foreach (var username in (List<string>)this.ViewData["recentConversations"])
     {
-        <button class="m-0 p-10 border-none font-18 recentConversationButton menu-bg-forum text-white full-width" type="button">@username</button>
+        <button class="m-0 p-10 border-none font-18 recentConversationButton menu-bg-forum text-white full-width" value="@username" type="button">@username</button>
     }
 </div>
+<h4 class="text-center text-forum bg-burly p-10 m-0">Unread Messages</h4>
+<div class="menu-bg-forum m-0 p-0">
+    @foreach (var unreadMessage in (List<UnreadMessageViewModel>)this.ViewData["unreadMessages"])
+    {
+        <button class="m-0 p-10 border-none font-18 recentConversationButton bg-white text-forum full-width" value="@unreadMessage.AuthorName" type="button">@unreadMessage.AuthorName (@unreadMessage.MessagesCount)</button>
+    }
+</div>
+
 
 <script src="../js/searchAutocomplete.js"></script>
 <script>

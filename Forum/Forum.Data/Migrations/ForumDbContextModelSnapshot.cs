@@ -113,6 +113,8 @@ namespace Forum.Data.Migrations
 
                     b.Property<string>("RecieverId");
 
+                    b.Property<bool>("Seen");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");

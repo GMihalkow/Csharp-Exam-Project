@@ -8,6 +8,9 @@
     using AutoMapper;
     using CloudinaryDotNet;
     using Forum.Services.Interfaces.Db;
+    using Forum.Services.Interfaces.Message;
+    using Forum.Services.Interfaces.Reply;
+    using Forum.Services.Interfaces.Report;
     using Forum.Web.Services.Account.Contracts;
     using Forum.Web.Utilities;
     using Forum.Web.ViewModels.Account;
@@ -21,14 +24,20 @@
     {
         private readonly IMapper mapper;
         private readonly IOptions<CloudConfiguration> CloudConfig;
+        private readonly IReplyService replyService;
+        private readonly IReportService reportService;
+        private readonly IMessageService messageService;
         private readonly UserManager<ForumUser> userManager;
         private readonly SignInManager<ForumUser> signInManager;
         private readonly IDbService dbService;
 
-        public AccountService(IMapper mapper, IOptions<CloudConfiguration> CloudConfig, UserManager<ForumUser> userManager, SignInManager<ForumUser> signInManager, IDbService dbService)
+        public AccountService(IMapper mapper, IOptions<CloudConfiguration> CloudConfig, IReplyService replyService, IReportService reportService, IMessageService messageService, UserManager<ForumUser> userManager, SignInManager<ForumUser> signInManager, IDbService dbService)
         {
             this.mapper = mapper;
             this.CloudConfig = CloudConfig;
+            this.replyService = replyService;
+            this.reportService = reportService;
+            this.messageService = messageService;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.dbService = dbService;
@@ -268,6 +277,12 @@
 
         public bool DeleteAccount(ForumUser user)
         {
+            this.replyService.DeleteUserReplies(user.UserName);
+
+            this.reportService.DeleteUserReports(user.UserName);
+
+            this.messageService.RemoveUserMessages(user.UserName);
+
             var result = this.userManager.DeleteAsync(user).GetAwaiter().GetResult();
 
             return result.Succeeded;
@@ -390,7 +405,7 @@
             string url = cloudinary.Api.UrlImgUp.BuildUrl($"{username}_profile_pic");
 
             var updatedUrl = cloudinary.GetResource(uploadParams.PublicId).Url;
-            
+
             user.ProfilePicutre = updatedUrl;
 
             this.dbService.DbContext.Entry(user).State = EntityState.Modified;

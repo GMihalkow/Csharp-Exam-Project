@@ -13,7 +13,7 @@
                 }
                 else
                 {
-                    <img class="mt-25" height="200" width="200" src="@this.ViewData["profilePicUrl"]" />
+                    <img class="mt-25 circle" height="200" width="200" src="@this.ViewData["profilePicUrl"]" />
                     <form enctype="multipart/form-data" method="post" asp-controller="Account" asp-action="UploadProfilePicture">
                         <input class="submit-button border-none border-5 font-14 bold p-10 m-10px" type="submit" value="Change picture">
                         <input class="menu-bg-forum text-white" name="image" type="file" />

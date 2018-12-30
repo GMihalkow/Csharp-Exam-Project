@@ -15,5 +15,7 @@ namespace Forum.Models
         public string RecieverId { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public bool Seen { get; set; }
     }
 }

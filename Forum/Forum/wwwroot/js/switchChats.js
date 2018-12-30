@@ -11,6 +11,9 @@ for (var index = 0; index < recentConversationButtons.length; index++) {
         btnElement.classList.remove("text-white");
         btnElement.classList.remove("menu-bg-forum");
 
+        btnElement.classList.remove("text-forum");
+        btnElement.classList.remove("bg-white");
+
         btnElement.classList.add("active");
 
         for (var i = 0; i < allBtns.length; i++) {
@@ -23,9 +26,7 @@ for (var index = 0; index < recentConversationButtons.length; index++) {
                 }
             }
         }
-
-        var nameStr = e.target.textContent;
-
+        
         $.ajax(
             {
                 type: "POST",
@@ -33,7 +34,7 @@ for (var index = 0; index < recentConversationButtons.length; index++) {
                 dataType: "text",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
-                    recieverName: e.target.textContent
+                    recieverName: e.target.value
                 }),
                 success: function (test) {
                     $('#messages-panel').html(test);

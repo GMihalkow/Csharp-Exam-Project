@@ -6,7 +6,6 @@ using Forum.Web.Services.Account.Contracts;
 using Forum.Services.Interfaces.Category;
 using Forum.Services.Interfaces.Forum;
 using Forum.ViewModels.Forum;
-using System;
 
 namespace Forum.Web.Controllers.Forum
 {

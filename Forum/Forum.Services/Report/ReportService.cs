@@ -67,7 +67,7 @@ namespace Forum.Services.Report
                 .Where(pr => pr.Id == id)
                 .FirstOrDefault();
 
-            if(report == null)
+            if (report == null)
             {
                 return 0;
             }
@@ -166,6 +166,41 @@ namespace Forum.Services.Report
                    .ToList();
 
             return reports;
+        }
+
+        public int DeleteUserReports(string username)
+        {
+            var postReports =
+                this.dbService
+                .DbContext
+                .PostReports
+                .Include(pr => pr.Author)
+                .Where(pr => pr.Author.UserName == username)
+                .ToList();
+
+            this.dbService.DbContext.PostReports.RemoveRange(postReports);
+
+            var replyReports =
+                this.dbService
+                .DbContext
+                .ReplyReports
+                .Include(pr => pr.Author)
+                .Where(pr => pr.Author.UserName == username)
+                .ToList();
+
+            this.dbService.DbContext.ReplyReports.RemoveRange(replyReports);
+
+            var quoteReports =
+                this.dbService
+                .DbContext
+                .QuoteReports
+                .Include(pr => pr.Author)
+                .Where(pr => pr.Author.UserName == username)
+                .ToList();
+
+            this.dbService.DbContext.QuoteReports.RemoveRange(quoteReports);
+            
+            return this.dbService.DbContext.SaveChanges();
         }
     }
 }

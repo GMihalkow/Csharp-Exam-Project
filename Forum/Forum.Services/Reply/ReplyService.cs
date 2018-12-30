@@ -38,6 +38,21 @@ namespace Forum.Services.Reply
             return test;
         }
 
+        public int DeleteUserReplies(string username)
+        {
+            var userReplies =
+                this.dbService
+                .DbContext
+                .Replies
+                .Include(r => r.Author)
+                .Where(r => r.Author.UserName == username)
+                .ToList();
+
+            this.dbService.DbContext.Replies.RemoveRange(userReplies);
+
+            return this.dbService.DbContext.SaveChanges();
+        }
+
         public Models.Reply GetReply(string id)
         {
             var reply = 

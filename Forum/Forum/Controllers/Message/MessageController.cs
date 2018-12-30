@@ -37,8 +37,7 @@ namespace Forum.Web.Controllers.Message
                 RecieverName = reciever.UserName
             };
         }
-
-        [Authorize]
+        
         public void UpdateChat()
         {
             var context = this.HttpContext;

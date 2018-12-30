@@ -168,7 +168,7 @@ namespace Forum.Web.Controllers.Account
         public IActionResult DeleteAccount(string username, string password)
         {
             var user = this.accountService.GetUserByName(username);
-            if (user == null || user.UserName != username)
+            if (user == null || this.User.Identity.Name != username)
             {
                 return this.BadRequest();
             }
@@ -202,7 +202,10 @@ namespace Forum.Web.Controllers.Account
         public PartialViewResult RecentConversations()
         {
             this.ViewData["userNames"] = this.accountService.GetUsernames();
+
             this.ViewData["recentConversations"] = this.messageService.GetRecentConversations(this.User.Identity.Name);
+
+            this.ViewData["unreadMessages"] = this.messageService.GetUnreadMessages(this.User.Identity.Name);
 
             return this.PartialView("_RecentConversationsPartial");
         }

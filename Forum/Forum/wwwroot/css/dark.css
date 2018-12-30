@@ -41,6 +41,10 @@ button, input :hover {
     padding: 0px;
 }
 
+.circle{
+    border-radius:50%;
+}
+
 #gdprDiv {
     height: 500px;
 }
