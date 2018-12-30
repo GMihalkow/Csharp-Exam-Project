@@ -347,9 +347,7 @@
         public IEnumerable<string> GetUsernames()
         {
             var usernames =
-                this.dbService
-                .DbContext
-                .Users
+                this.GetUsers()
                 .Select(u => u.UserName)
                 .ToList();
 
@@ -425,6 +423,17 @@
             var byteArr = Encoding.UTF8.GetBytes(jsonStr);
 
             return byteArr;
+        }
+
+        public IEnumerable<ForumUser> GetUsers()
+        {
+            var users =
+                this.dbService
+                .DbContext
+                .Users
+                .ToList();
+
+            return users;
         }
     }
 }

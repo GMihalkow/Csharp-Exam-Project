@@ -52,6 +52,8 @@ namespace Forum.Web.Services.Account.Contracts
 
         ProfileInfoViewModel GetProfileInfo(ClaimsPrincipal principal);
 
+        IEnumerable<ForumUser> GetUsers();
+
         IEnumerable<string> GetUsernames();
 
         bool IsImageExtensionValid(string fileName);

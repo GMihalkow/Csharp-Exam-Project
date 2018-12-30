@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Account\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Account\_DeleteAccountPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

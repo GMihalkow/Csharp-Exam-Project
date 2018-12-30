@@ -244,5 +244,20 @@ namespace Forum.Web.Controllers.Account
 
             return this.File(byteArr, "text/json", "info.txt");
         }
+
+        public IActionResult Details(string id)
+        {
+            var user = this.accountService.GetUserById(id);
+
+            this.ViewData["profilePicUrl"] = user.ProfilePicutre;
+
+            this.ViewData["userId"] = user.Id;
+
+            this.ViewData["username"] = user.UserName;
+            
+            var model = this.accountService.GetProfileInfo(this.User);
+
+            return this.View(model);
+        }
     }
 }

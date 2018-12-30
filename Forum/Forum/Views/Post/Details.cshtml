@@ -26,7 +26,7 @@
             <div class="post-container text-forum m-0">
                 <div class="bg-light text-center border-black-right p-10">
                     <div class="m-10px bg-white border-5">
-                        @Model.Author.UserName
+                        <a href="/Account/Details?id=@Model.Author.Id">@Model.Author.UserName</a>
                     </div>
                     <div class="m-10">
                         <i class="fas fa-user-alt fa-5x text-forum"></i>
@@ -79,7 +79,7 @@
                 <div class="post-container text-forum m-0">
                     <div class="bg-light text-center  border-black-right p-10">
                         <div class="m-10px bg-white border-5">
-                            @reply.Author.UserName
+                            <a href="/Account/Details?id=@reply.AuthorId">@reply.Author.UserName</a>
                         </div>
                         <div class="m-10">
                             <i class="fas fa-user-alt fa-5x text-forum"></i>
