@@ -1,4 +1,5 @@
 ﻿@using Forum.Web.Areas.Owner.ViewModels.Role;
+@using Forum.Web.Common;
 @model IEnumerable<UserRoleViewModel>
 
 <div id="shoutbox" class="menu-bg-forum text-center">
@@ -8,29 +9,39 @@
     <table class="two-thirds-width posts-table mx-5-auto">
         <thead class="posts-table-head">
             <tr>
-                <th class="p-10 bottom-black-border"><h2 class="m-10px">#</h2></th>
                 <th class="p-10 bottom-black-border"><h2 class="m-10px">User</h2></th>
                 <th class="p-10 bottom-black-border"><h2 class="m-10px">Role</h2></th>
-                <th class="p-10 bottom-black-border"><h2 class="m-10px">Actions</h2></th>
-            </tr>   
+                <th class="p-10 bottom-black-border"><h2 id="role-edit-actions-header" class="m-10px">Actions</h2></th>
+            </tr>
         </thead>
-        <tbody class="posts-table-body text-center">
+        <tbody class="text-center p-0 bg-white">
             @foreach (var userRole in Model)
             {
-            <tr>
-                <td class="text-forum"> <i class="fab fa-forumbee fa-3x"></i></td>
-                <td class="text-forum"><h2>@userRole.User.UserName</h2></td>
-                <td class="text-forum"><h2>@userRole.Role.Name</h2></td>
-                <td class="text-forum">
-                    <div class="m-10">
-                        <a class="menu-bg-forum text-white m-10px p-10 border-none border-5" href="#">Promote</a>
-                    </div>
-                    <div class="m-10">
-                        <a class="bg-dark-red text-white m-10px p-10 border-none border-5" href="#">Demote</a>
-                    </div>
-                </td>
-            </tr>
+                <tr>
+                    <td class="text-forum bold m-0">
+                        <input type="hidden" hidden="hidden" class="oldUsername" value="@userRole.User.UserName" />
+                        <h3 class="mx-10px username">@userRole.User.UserName</h3>
+                    </td>
+                    <td class="text-forum bold m-0">
+                        <input type="hidden" hidden="hidden" class="oldRoleName" value="@userRole.Role.Name" />
+                        <h3 class="mx-10px roleName">@userRole.Role.Name</h3>
+                    </td>
+                    <td class="text-forum bold m-0">
+                        @if (userRole.Role.Name == Role.User)
+                        {
+                            <div class="mx-10px"><a asp-area="Owner" asp-controller="Role" asp-action="Promote" asp-route-id="@userRole.UserId" class="menu-bg-forum p-10 text-white border-5">Promote</a></div>
+                        }
+                        else if (userRole.Role.Name == Role.Administrator)
+                        {
+                            <div class="mx-10px"><a asp-area="Owner" asp-controller="Role" asp-action="Demote" asp-route-id="@userRole.UserId" class="text-white p-10 border-5 bg-dark-red">Demote</a></div>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
+
+@section Scripts{
+    <script src="~/js/roleEditTable.js"></script>
+}
