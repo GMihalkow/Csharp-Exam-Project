@@ -5,43 +5,36 @@
 <div id="shoutbox" class="menu-bg-forum text-center">
     <h1><a id="main-heading-text" href="#">Edit Roles</a></h1>
 </div>
-<div class="mt-25">
-    <table class="two-thirds-width posts-table mx-5-auto">
-        <thead class="posts-table-head">
-            <tr>
-                <th class="p-10 bottom-black-border"><h2 class="m-10px">User</h2></th>
-                <th class="p-10 bottom-black-border"><h2 class="m-10px">Role</h2></th>
-                <th class="p-10 bottom-black-border"><h2 id="role-edit-actions-header" class="m-10px">Actions</h2></th>
-            </tr>
-        </thead>
-        <tbody class="text-center p-0 bg-white">
-            @foreach (var userRole in Model)
-            {
-                <tr>
-                    <td class="text-forum bold m-0">
-                        <input type="hidden" hidden="hidden" class="oldUsername" value="@userRole.User.UserName" />
-                        <h3 class="mx-10px username">@userRole.User.UserName</h3>
-                    </td>
-                    <td class="text-forum bold m-0">
-                        <input type="hidden" hidden="hidden" class="oldRoleName" value="@userRole.Role.Name" />
-                        <h3 class="mx-10px roleName">@userRole.Role.Name</h3>
-                    </td>
-                    <td class="text-forum bold m-0">
-                        @if (userRole.Role.Name == Role.User)
-                        {
-                            <div class="mx-10px"><a asp-area="Owner" asp-controller="Role" asp-action="Promote" asp-route-id="@userRole.UserId" class="menu-bg-forum p-10 text-white border-5">Promote</a></div>
-                        }
-                        else if (userRole.Role.Name == Role.Administrator)
-                        {
-                            <div class="mx-10px"><a asp-area="Owner" asp-controller="Role" asp-action="Demote" asp-route-id="@userRole.UserId" class="text-white p-10 border-5 bg-dark-red">Demote</a></div>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="text-center bg-light text-forum block m-10px">
+    <h3 class="m-0">
+        <label class="text-forum">Search:</label>
+    </h3>
+    <form autocomplete="off" action="/" method="post">
+        <div class="autocomplete">
+            <input id="myInput" class="full-width border-5 border-none" type="text" placeholder="Search for users..." />
+        </div>
+        <div class="center-button">
+            <button id="searchButton" class="m-0 submit-button menu-bg-forum text-white" type="button">Search</button>
+        </div>
+    </form>
 </div>
-
+<div id="edit-roles-table-div">
+    <partial name="_EditRolesTablePartial" model="Model" />
+</div>
 @section Scripts{
-    <script src="~/js/roleEditTable.js"></script>
+    <script src="../js/searchAutocomplete.js"></script>
+    <script>
+    /*An array containing all the user names in the db:*/
+    var names = [];
+
+    @foreach (var name in (List<string>)this.ViewData["usernames"])
+    {
+        @: names = names.concat('@name');
+    }
+
+    /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+    autocomplete(document.getElementById("myInput"), names);
+    </script>
+    <script src="~/js/roleEditTableResponsiveness.js"></script>
+    <script src="~/js/searchForUsersWithRoles.js"></script>
 }

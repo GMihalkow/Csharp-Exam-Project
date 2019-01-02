@@ -27,14 +27,6 @@ namespace Forum.Web.Areas.Owner.Services
             this.roleManager = roleManager;
         }
 
-        public int Demote(ForumUser user)
-        {
-            this.userManager.RemoveFromRoleAsync(user, Common.Role.Administrator).GetAwaiter().GetResult();
-            this.userManager.AddToRoleAsync(user, Common.Role.User).GetAwaiter().GetResult();
-            
-            return this.dbService.DbContext.SaveChanges();
-        }
-
         public IEnumerable<UserRoleViewModel> GetUsersRoles()
         {
             var usersRoles =
@@ -54,6 +46,13 @@ namespace Forum.Web.Areas.Owner.Services
 
             return usersRoles;
         }
+        public int Demote(ForumUser user)
+        {
+            this.userManager.RemoveFromRoleAsync(user, Common.Role.Administrator).GetAwaiter().GetResult();
+            this.userManager.AddToRoleAsync(user, Common.Role.User).GetAwaiter().GetResult();
+
+            return this.dbService.DbContext.SaveChanges();
+        }
 
         public int Promote(ForumUser user)
         {
@@ -61,6 +60,26 @@ namespace Forum.Web.Areas.Owner.Services
             this.userManager.AddToRoleAsync(user, Common.Role.Administrator).GetAwaiter().GetResult();
 
             return this.dbService.DbContext.SaveChanges();
+        }
+
+        public IEnumerable<UserRoleViewModel> SearchForUsers(string str)
+        {
+            var usersRoles =
+                this.dbService
+                .DbContext
+                .UserRoles
+                .Select(ur => this.mapper.Map<UserRoleViewModel>(ur))
+                .ToList();
+
+            foreach (var userRole in usersRoles)
+            {
+                userRole.User = this.accountService.GetUserById(userRole.UserId);
+                userRole.Role = this.dbService.DbContext.Roles.Where(r => r.Id == userRole.RoleId).FirstOrDefault();
+            }
+
+            usersRoles = usersRoles.Where(ur => ur.Role.Name != Common.Role.Owner && ur.User.UserName.ToLower().StartsWith(str)).OrderBy(ur => ur.User.UserName).ToList();
+
+            return usersRoles;
         }
     }
 }

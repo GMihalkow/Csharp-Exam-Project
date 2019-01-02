@@ -439,5 +439,16 @@
 
             return users;
         }
+
+        public IEnumerable<string> GetUsernamesWithoutOwner()
+        {
+            var usernames =
+                this.GetUsers()
+                .Where(u => !this.userManager.IsInRoleAsync(u, Common.Role.Owner).GetAwaiter().GetResult())
+                .Select(u => u.UserName)
+                .ToList();
+
+            return usernames;
+        }
     }
 }

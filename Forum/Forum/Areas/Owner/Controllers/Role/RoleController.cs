@@ -23,6 +23,8 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
         {
             var usersRoles = this.roleService.GetUsersRoles();
 
+            this.ViewData["usernames"] = this.accountService.GetUsernamesWithoutOwner();
+
             return this.View(usersRoles);
         }
 
@@ -52,6 +54,14 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
             this.roleService.Demote(user);
 
             return this.Redirect("/Owner/Role");
+        }
+
+        [HttpGet("Search")]
+        public PartialViewResult Search(string key)
+        {
+            var usersRoles = this.roleService.SearchForUsers(key);
+
+            return this.PartialView("_EditRolesTablePartial", usersRoles);
         }
     }
 }

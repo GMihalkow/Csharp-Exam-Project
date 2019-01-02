@@ -11,5 +11,7 @@ namespace Forum.Web.Areas.Owner.Services.Contracts
         int Promote(ForumUser user);
 
         int Demote(ForumUser user);
+
+        IEnumerable<UserRoleViewModel> SearchForUsers(string str);
     }
 }

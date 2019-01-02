@@ -10,6 +10,8 @@ namespace Forum.Web.Services.Account.Contracts
 
     public interface IAccountService
     {
+        IEnumerable<string> GetUsernamesWithoutOwner();
+
         ForumUser GetUserByName(string username);
 
         int GetUsersCount();
