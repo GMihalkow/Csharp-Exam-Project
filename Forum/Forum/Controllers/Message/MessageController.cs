@@ -27,15 +27,7 @@ namespace Forum.Web.Controllers.Message
             var author = this.accountService.GetUser(this.User);
 
             this.messageService.SendMessage(model, author.Id);
-
-            var reciever = this.accountService.GetUserById(model.RecieverId);
-
-            var viewModel = new SendMessageInputModel
-            {
-                Messages = this.messageService.GetConversationMessages(author.UserName, reciever.UserName),
-                RecieverId = reciever.Id,
-                RecieverName = reciever.UserName
-            };
+            
         }
         
         public void UpdateChat()

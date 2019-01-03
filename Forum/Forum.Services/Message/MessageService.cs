@@ -21,7 +21,7 @@ namespace Forum.Services.Message
             this.dbService = dbService;
         }
 
-        public IEnumerable<Models.Message> GetConversationMessages(string firstPersonName, string secondPersonName)
+        public IEnumerable<Models.Message> GetConversationMessages(string firstPersonName, string secondPersonName, bool showAll)
         {
             var conversationMessages =
                 this.dbService
@@ -33,7 +33,7 @@ namespace Forum.Services.Message
                 (m.Author.UserName == firstPersonName && m.Reciever.UserName == secondPersonName)
                 ||
                 (m.Author.UserName == secondPersonName && m.Reciever.UserName == firstPersonName))
-                .OrderBy(m => m.CreatedOn)
+                .OrderByDescending(m => m.CreatedOn)
                 .ToList();
 
             foreach (var message in conversationMessages)
@@ -45,6 +45,22 @@ namespace Forum.Services.Message
             }
 
             this.dbService.DbContext.SaveChanges();
+
+            if (showAll == true)
+            {
+                conversationMessages =
+                    conversationMessages
+                    .OrderBy(m => m.CreatedOn)
+                    .ToList();
+            }
+            else
+            {
+                conversationMessages =
+                    conversationMessages
+                    .Take(5)
+                    .OrderBy(m => m.CreatedOn)
+                    .ToList();
+            }
 
             return conversationMessages;
         }

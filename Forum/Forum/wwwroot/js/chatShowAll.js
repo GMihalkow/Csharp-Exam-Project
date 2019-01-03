@@ -1,9 +1,4 @@
-﻿function scrollToBottom(el) {
-    el.scrollTop = el.scrollHeight;
-    el.scrollTop;
-}
-
-$('#searchButton')
+﻿$('#showMoreBtn')
     .click(function () {
         $.ajax(
             {
@@ -12,10 +7,11 @@ $('#searchButton')
                 dataType: "text",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
-                    recieverName: document.getElementById("myInput").value,
-                    showAll: false
+                    recieverName: document.getElementById("RecieverName").value,
+                    showAll: true
                 }),
                 success: function (test) {
+                    console.log(test);
                     $('#messages-panel').html(test);
                     $.getScript("../js/site.js");
 

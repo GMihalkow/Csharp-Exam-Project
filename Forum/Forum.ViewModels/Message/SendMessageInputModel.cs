@@ -14,5 +14,7 @@ namespace Forum.ViewModels.Message
         public string RecieverName { get; set; }
 
         public IEnumerable<Models.Message> Messages { get; set; }
+
+        public bool ShowAll { get; set; }
     }
 }

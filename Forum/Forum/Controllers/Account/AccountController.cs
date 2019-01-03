@@ -209,7 +209,7 @@ namespace Forum.Web.Controllers.Account
         {
             var recieverId = this.accountService.GetUserByName(model.RecieverName).Id;
 
-            model.Messages = this.messageService.GetConversationMessages(this.User.Identity.Name, model.RecieverName);
+            model.Messages = this.messageService.GetConversationMessages(this.User.Identity.Name, model.RecieverName, model.ShowAll);
             model.RecieverId = recieverId;
 
             var result = this.PartialView("_ChatViewPartial", model);

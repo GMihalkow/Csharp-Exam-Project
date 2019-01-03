@@ -6,7 +6,7 @@ namespace Forum.Services.Interfaces.Message
 {
     public interface IMessageService
     {
-        IEnumerable<Models.Message> GetConversationMessages(string firstPersonName, string secondPersonName);
+        IEnumerable<Models.Message> GetConversationMessages(string firstPersonName, string secondPersonName, bool showAll);
 
         int SendMessage(ISendMessageInputModel model, string authorId);
 
