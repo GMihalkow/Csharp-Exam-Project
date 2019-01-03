@@ -28,9 +28,9 @@ namespace Forum.Services.Reply
         public async Task<int> Add(IReplyInputModel model, ForumUser user)
         {
             var reply = this.mapper.Map<Models.Reply>(model);
-
-            reply.Description = this.postService.ParseDescription(model.Description);
+            
             reply.Author = user;
+            reply.Description = this.postService.ParseDescription(reply.Description);
             reply.AuthorId = user.Id;
             reply.RepliedOn = DateTime.UtcNow;
 

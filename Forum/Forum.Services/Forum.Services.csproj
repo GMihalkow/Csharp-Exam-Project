@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="4.0.199" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.6" />
   </ItemGroup>
 
@@ -12,6 +13,7 @@
     <ProjectReference Include="..\Forum.Data\Forum.Data.csproj" />
     <ProjectReference Include="..\Forum.MapConfiguration\Forum.MapConfiguration.csproj" />
     <ProjectReference Include="..\Forum.Models\Forum.Models.csproj" />
+    <ProjectReference Include="..\Forum.Services.Common\Forum.Services.Common.csproj" />
     <ProjectReference Include="..\Forum.Services.Interfaces\Forum.Services.Interfaces.csproj" />
     <ProjectReference Include="..\Forum.ViewModels.Interfaces\Forum.ViewModels.Interfaces.csproj" />
     <ProjectReference Include="..\Forum.ViewModels\Forum.ViewModels.csproj" />

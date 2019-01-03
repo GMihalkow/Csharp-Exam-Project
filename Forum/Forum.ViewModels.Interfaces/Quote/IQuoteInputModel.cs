@@ -2,16 +2,16 @@
 {
     public interface IQuoteInputModel
     {
-        string Id { get; }
+        string Id { get; set; }
 
-        string ReplyId { get; }
+        string ReplyId { get; set; }
 
-        string Description { get; }
+        string Description { get; set; }
 
-        string Quote { get; }
+        string Quote { get; set; }
 
-        string RecieverId { get; }
+        string RecieverId { get; set; }
 
-        string QuoteRecieverId { get; }
-    }
+        string QuoteRecieverId { get; set; }
+        }
 }

@@ -1,7 +1,9 @@
 ﻿namespace Forum.Services.Post.Contracts
 {
     using AutoMapper;
+    using Ganss.XSS;
     using global::Forum.Models;
+    using global::Forum.Services.Common;
     using global::Forum.Services.Interfaces.Db;
     using global::Forum.Services.Interfaces.Forum;
     using global::Forum.Services.Interfaces.Post;
@@ -41,6 +43,7 @@
                 .GetForum(forumId);
 
             post.StartedOn = DateTime.UtcNow;
+            post.Description = this.ParseDescription(post.Description);
             post.Views = 0;
             post.Author = user;
             post.AuthorId = user.Id;
@@ -145,7 +148,7 @@
                 .OrderBy(r => r.RepliedOn)
                 .Take(5)
                 .ToList();
-
+            
             return viewModel;
         }
 
@@ -212,7 +215,12 @@
                 }
             }
 
-            return sb.ToString().TrimEnd();
+            //Valdiating the allowed tags
+            var sanitizer = new HtmlSanitizer(ServicesConstants.AllowedTags);
+
+            var result = sanitizer.Sanitize(sb.ToString().TrimEnd());
+
+            return result;
         }
 
         public int ViewPost(string id)

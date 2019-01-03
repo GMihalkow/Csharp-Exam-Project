@@ -6,7 +6,6 @@ using Forum.ViewModels.Quote;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace Forum.Web.Controllers.Quote
 {
@@ -59,9 +58,7 @@ namespace Forum.Web.Controllers.Quote
 
             model.Description = this.postService.ParseDescription(model.Description);
 
-            model.Description = $"<h3><a class=\"text-forum profile-link\" href=\"#\">@{recieverName}</a></h3>" + Environment.NewLine + model.Description;
-
-            this.quoteService.Add(model, user);
+            this.quoteService.Add(model, user, recieverName);
             
             return this.Redirect($"/Post/Details?id={reply.PostId}");
         }
@@ -100,11 +97,9 @@ namespace Forum.Web.Controllers.Quote
 
             var recieverName = this.accountService.GetUserById(model.QuoteRecieverId).UserName;
 
-            model.Description =  this.postService.ParseDescription(model.Description);
+            model.Description = this.postService.ParseDescription(model.Description);
 
-            model.Description = $"<h3><a class=\"text-forum profile-link\" href=\"#\">@{recieverName}</a></h3>" + Environment.NewLine + model.Description;
-
-            this.quoteService.Add(model, user);
+            this.quoteService.Add(model, user, recieverName);
 
             return this.Redirect($"/Post/Details?id={reply.PostId}");
         }

@@ -1,0 +1,9 @@
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Services.Common.deps.json
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Services.Common.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Services.Common.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.csprojAssemblyReference.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.csproj.CoreCompileInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.AssemblyInfoInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.AssemblyInfo.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.pdb

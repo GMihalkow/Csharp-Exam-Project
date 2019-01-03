@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "0c4c6196c76acb6ae860135b81a0a3fd290c60ec"
+    "signature": "f8217f9b3aa9a882f7549935bfcd04d5c85952a6"
   },
   "compilationOptions": {
     "defines": [
@@ -31,6 +31,7 @@
           "Forum.Models": "1.0.0",
           "Forum.Services": "1.0.0",
           "Forum.ViewModels": "1.0.0",
+          "HtmlSanitizer": "4.0.199",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
@@ -41,6 +42,36 @@
         },
         "compile": {
           "Forum.Web.dll": {}
+        }
+      },
+      "AngleSharp/0.9.11": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Dynamic.Runtime": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.Requests": "4.0.11",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Extensions": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Text.Encoding": "4.3.0",
+          "System.Text.Encoding.Extensions": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.0/AngleSharp.dll": {
+            "assemblyVersion": "0.9.9.0",
+            "fileVersion": "0.9.9.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/AngleSharp.dll": {}
         }
       },
       "AutoMapper/8.0.0": {
@@ -85,6 +116,20 @@
         },
         "compile": {
           "lib/netstandard1.3/CloudinaryDotNet.dll": {}
+        }
+      },
+      "HtmlSanitizer/4.0.199": {
+        "dependencies": {
+          "AngleSharp": "0.9.11"
+        },
+        "runtime": {
+          "lib/netstandard2.0/HtmlSanitizer.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "4.0.199.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/HtmlSanitizer.dll": {}
         }
       },
       "Microsoft.AspNetCore.Identity/2.1.6": {
@@ -890,6 +935,41 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Net.Requests/4.0.11": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.1.0",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.0.1",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "runtimeTargets": {
+          "runtime/unix/lib/_._": {
+            "rid": "unix",
+            "assetType": "runtime"
+          },
+          "runtime/win/lib/_._": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
+      "System.Net.WebHeaderCollection/4.0.1": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
+        }
+      },
       "Forum.Data/1.0.0": {
         "dependencies": {
           "Forum.Models": "1.0.0",
@@ -933,9 +1013,11 @@
           "Forum.Data": "1.0.0",
           "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
+          "Forum.Services.Common": "1.0.0",
           "Forum.Services.Interfaces": "1.0.0",
           "Forum.ViewModels": "1.0.0",
           "Forum.ViewModels.Interfaces": "1.0.0",
+          "HtmlSanitizer": "4.0.199",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.1.6"
         },
         "runtime": {
@@ -943,6 +1025,14 @@
         },
         "compile": {
           "Forum.Services.dll": {}
+        }
+      },
+      "Forum.Services.Common/1.0.0": {
+        "runtime": {
+          "Forum.Services.Common.dll": {}
+        },
+        "compile": {
+          "Forum.Services.Common.dll": {}
         }
       },
       "Forum.Services.Interfaces/1.0.0": {
@@ -3694,6 +3784,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "AngleSharp/0.9.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Mo1+W3kY8k+0+NtLvDUJTWbyzCMlJZ4JKTVuD3iSNExiUuRU943BMZSvDJ/tWQHxI66L0shyhQFqUj9MDZsWLg==",
+      "path": "anglesharp/0.9.11",
+      "hashPath": "anglesharp.0.9.11.nupkg.sha512"
+    },
     "AutoMapper/8.0.0": {
       "type": "package",
       "serviceable": true,
@@ -3714,6 +3811,13 @@
       "sha512": "sha512-HKROJitzDyQ6X8sGP4KoThLU0UKHaPcR3Rr9ahMyF4WgwtIMC/UAivn7328tJGR7MgXZ+DOXVj+ecm2thHC1xw==",
       "path": "cloudinarydotnet/1.6.0",
       "hashPath": "cloudinarydotnet.1.6.0.nupkg.sha512"
+    },
+    "HtmlSanitizer/4.0.199": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aakM3MwRUV6b+5MM0B4DO43p7iVYPkf0Tk83WiO6AofX/B96JoaaC7602RTIIvhR6yhbSfnNcE32fpeZvraFDQ==",
+      "path": "htmlsanitizer/4.0.199",
+      "hashPath": "htmlsanitizer.4.0.199.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Identity/2.1.6": {
       "type": "package",
@@ -4051,6 +4155,20 @@
       "path": "system.linq.queryable/4.0.1",
       "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
     },
+    "System.Net.Requests/4.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vxGt7C0cZixN+VqoSW4Yakc1Y9WknmxauDqzxgpw/FnBdz4kQNN51l4wxdXX5VY1xjqy//+G+4CvJWp1+f+y6Q==",
+      "path": "system.net.requests/4.0.11",
+      "hashPath": "system.net.requests.4.0.11.nupkg.sha512"
+    },
+    "System.Net.WebHeaderCollection/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XX2TIAN+wBSAIV51BU2FvvXMdstUa8b0FBSZmDWjZdwUMmggQSifpTOZ5fNH20z9ZCg2fkV1L5SsZnpO2RQDRQ==",
+      "path": "system.net.webheadercollection/4.0.1",
+      "hashPath": "system.net.webheadercollection.4.0.1.nupkg.sha512"
+    },
     "Forum.Data/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -4067,6 +4185,11 @@
       "sha512": ""
     },
     "Forum.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Forum.Services.Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

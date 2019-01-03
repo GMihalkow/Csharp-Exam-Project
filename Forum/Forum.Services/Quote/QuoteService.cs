@@ -25,14 +25,14 @@ namespace Forum.Services.Quote
             this.dbService = dbService;
         }
 
-        public int Add(IQuoteInputModel model, ForumUser user)
+        public int Add(IQuoteInputModel model, ForumUser user, string recieverName)
         {
             var quote = this.mapper.Map<Models.Quote>(model);
             quote.Id = Guid.NewGuid().ToString();
             quote.Author = user;
             quote.AuthorId = user.Id;
             quote.QuotedOn = DateTime.UtcNow;
-
+            
             this.dbService.DbContext.Quotes.Add(quote);
             return this.dbService.DbContext.SaveChanges();
         }

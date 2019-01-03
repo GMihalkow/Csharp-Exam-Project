@@ -63,7 +63,6 @@ namespace Forum.Web.Controllers.Post
         public IActionResult Details(string Id, int start)
         {
             var viewModel = this.postService.GetPost(Id, start);
-            viewModel.Description = this.postService.ParseDescription(viewModel.Description);
             viewModel.PagesCount = this.postService.GetPagesCount(this.replyService.GetPostRepliesIds(Id).Count());
 
             this.ViewData["PostId"] = Id;
