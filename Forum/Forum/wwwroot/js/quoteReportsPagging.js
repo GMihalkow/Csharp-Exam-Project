@@ -1,24 +1,22 @@
-﻿var elements = document.getElementsByClassName("dismissButton");
-
-var Ids = $(".entityId");
-
-for (var i = 0; i < elements.length; i++) {
-    var test = Ids[i];
-
-    elements[i].onclick = function () {
+﻿function SwitchPostReportsPage(index) {
+    pageBtns[index].onclick = function () {
+        var number = pageBtns[index].textContent;
         $.ajax(
             {
                 type: "GET",
-                url: "/Report/DismissQuoteReport",
+                url: "/Report/GetQuoteReports?start=" + (number - 1) * 5,
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
                     $.getScript("../js/dismissQuoteReports.js");
                     $.getScript("../js/quoteReportsPagging.js");
-                },
-                data: {
-                    "id": test.value
                 }
             });
     };
+}
+
+var pageBtns = document.getElementsByClassName("quote-report-page-btn");
+
+for (var i = 0; i < pageBtns.length; i++) {
+    SwitchPostReportsPage(i);
 }

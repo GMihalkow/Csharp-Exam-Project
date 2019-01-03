@@ -22,6 +22,12 @@ else
                     <a id="showMoreBtn" href="#">Show all messages</a>
                 </div>
             }
+            else
+            {
+                <div class="text-forum text-center">
+                    <a href="#">No other messages to show</a>
+                </div>
+            }
             @foreach (var message in Model.Messages.Take(5))
             {
                 if (message.Author.UserName == this.User.Identity.Name)

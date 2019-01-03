@@ -118,7 +118,7 @@ namespace Forum.Services.Report
             return result;
         }
 
-        public IEnumerable<IPostReportViewModel> GetPostReports()
+        public IEnumerable<IPostReportViewModel> GetPostReports(int start)
         {
             var reports =
                 this.dbService
@@ -128,13 +128,15 @@ namespace Forum.Services.Report
                 .Include(pr => pr.Post)
                 .ThenInclude(pr => pr.Author)
                 .OrderBy(pr => pr.ReportedOn)
+                .Skip(start)
+                .Take(5)
                 .Select(pr => this.mapper.Map<PostReportViewModel>(pr))
                 .ToList();
 
             return reports;
         }
 
-        public IEnumerable<IQuoteReportViewModel> GetQuoteReports()
+        public IEnumerable<IQuoteReportViewModel> GetQuoteReports(int start)
         {
             var reports =
                    this.dbService
@@ -146,13 +148,15 @@ namespace Forum.Services.Report
                    .Include(qr => qr.Quote)
                    .ThenInclude(qr => qr.Reply)
                    .OrderBy(qr => qr.ReportedOn)
+                   .Skip(start)
+                   .Take(5)
                    .Select(qr => this.mapper.Map<QuoteReportViewModel>(qr))
                    .ToList();
 
             return reports;
         }
 
-        public IEnumerable<IReplyReportViewModel> GetReplyReports()
+        public IEnumerable<IReplyReportViewModel> GetReplyReports(int start)
         {
             var reports =
                    this.dbService
@@ -162,6 +166,8 @@ namespace Forum.Services.Report
                    .Include(rr => rr.Reply)
                    .ThenInclude(rr => rr.Author)
                    .OrderBy(rr => rr.ReportedOn)
+                   .Skip(start)
+                   .Take(5)
                    .Select(rr => this.mapper.Map<ReplyReportViewModel>(rr))
                    .ToList();
 
@@ -201,6 +207,46 @@ namespace Forum.Services.Report
             this.dbService.DbContext.QuoteReports.RemoveRange(quoteReports);
 
             return this.dbService.DbContext.SaveChanges();
+        }
+
+        public int GetPostReportsCount()
+        {
+            var count =
+                this.dbService
+                .DbContext
+                .PostReports
+                .Count();
+
+            return count;
+        }
+
+        public int GetPagesCount(int reportsCount)
+        {
+            var result = (int)Math.Ceiling(reportsCount / 5.0);
+
+            return result;
+        }
+
+        public int GetReplyReportsCount()
+        {
+            var count =
+                this.dbService
+                .DbContext
+                .ReplyReports
+                .Count();
+
+            return count;
+        }
+
+        public int GetQuoteReportsCount()
+        {
+            var count =
+                this.dbService
+                .DbContext
+                .QuoteReports
+                .Count();
+
+            return count;
         }
     }
 }

@@ -10,6 +10,10 @@ button, input :hover {
     cursor: pointer;
 }
 
+.hover-pointer:hover{
+    cursor:pointer;
+}
+
 .toggleBtn:hover {
     cursor: pointer;
 }
@@ -45,12 +49,12 @@ button, input :hover {
     padding: 0px;
 }
 
-.display-none{
-    display:none;
+.display-none {
+    display: none;
 }
 
-.display-block{
-    display:block;
+.display-block {
+    display: block;
 }
 
 .circle {
@@ -61,8 +65,8 @@ button, input :hover {
     height: 500px;
 }
 
-.show-quotes:hover{
-    cursor:pointer;
+.show-quotes:hover {
+    cursor: pointer;
 }
 
 .overflow-auto {

@@ -7,6 +7,7 @@
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
+                    $.getScript("../js/postReportsPagging.js");
                     $.getScript("../js/dismissPostReports.js");
                 }
             });
@@ -39,6 +40,7 @@ $('#replyReportsBtn')
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
                     $.getScript("../js/dismissReplyReports.js");
+                    $.getScript("../js/replyReportsPagging.js");
                 }
             });
         
@@ -71,6 +73,7 @@ $('#quoteReportsBtn')
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
                     $.getScript("../js/dismissQuoteReports.js");
+                    $.getScript("../js/quoteReportsPagging.js");
                 }
             });
 

@@ -13,6 +13,7 @@ for (var i = 0; i < elements.length; i++) {
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
+                    $.getScript("../js/postReportsPagging.js");
                     $.getScript("../js/dismissPostReports.js");
                 },
                 data: {

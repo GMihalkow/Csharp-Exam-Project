@@ -11,11 +11,11 @@ namespace Forum.Services.Interfaces.Report
 
         IQuoteReportInputModel AddQuoteReport(IQuoteReportInputModel model, string authorId);
 
-        IEnumerable<IPostReportViewModel> GetPostReports();
+        IEnumerable<IPostReportViewModel> GetPostReports(int start);
 
-        IEnumerable<IReplyReportViewModel> GetReplyReports();
+        IEnumerable<IReplyReportViewModel> GetReplyReports(int start);
 
-        IEnumerable<IQuoteReportViewModel> GetQuoteReports();
+        IEnumerable<IQuoteReportViewModel> GetQuoteReports(int start);
 
         int DismissPostReport(string id);
 
@@ -24,5 +24,13 @@ namespace Forum.Services.Interfaces.Report
         int DismissQuoteReport(string id);
 
         int DeleteUserReports(string username);
+
+        int GetPostReportsCount();
+
+        int GetReplyReportsCount();
+
+        int GetQuoteReportsCount();
+
+        int GetPagesCount(int reportsCount);
     }
 }

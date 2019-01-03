@@ -77,25 +77,37 @@ namespace Forum.Web.Controllers.Report
         }
         
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
-        public PartialViewResult GetPostReports()
+        public PartialViewResult GetPostReports(int start)
         {
-            var reports = this.reportService.GetPostReports();
+            var reports = this.reportService.GetPostReports(start);
+
+            this.ViewData["PostReportsCount"] = this.reportService.GetPostReportsCount();
+
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetPostReportsCount());
 
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
 
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
-        public PartialViewResult GetReplyReports()
+        public PartialViewResult GetReplyReports(int start)
         {
-            var reports = this.reportService.GetReplyReports();
+            var reports = this.reportService.GetReplyReports(start);
+
+            this.ViewData["ReplyReportsCount"] = this.reportService.GetReplyReportsCount();
+
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetReplyReportsCount());
 
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
 
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
-        public PartialViewResult GetQuoteReports()
+        public PartialViewResult GetQuoteReports(int start)
         {
-            var reports = this.reportService.GetQuoteReports();
+            var reports = this.reportService.GetQuoteReports(start);
+
+            this.ViewData["QuoteReportsCount"] = this.reportService.GetQuoteReportsCount();
+
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetQuoteReportsCount());
 
             return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
         }
@@ -105,7 +117,11 @@ namespace Forum.Web.Controllers.Report
         {
             this.reportService.DismissPostReport(id);
 
-            var reports = this.reportService.GetPostReports();
+            var reports = this.reportService.GetPostReports(0);
+
+            this.ViewData["PostReportsCount"] = this.reportService.GetPostReportsCount();
+
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetPostReportsCount());
 
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
@@ -115,7 +131,11 @@ namespace Forum.Web.Controllers.Report
         {
             this.reportService.DismissReplyReport(id);
 
-            var reports = this.reportService.GetReplyReports();
+            var reports = this.reportService.GetReplyReports(0);
+
+            this.ViewData["ReplyReportsCount"] = this.reportService.GetReplyReportsCount();
+
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetReplyReportsCount());
 
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
@@ -125,8 +145,12 @@ namespace Forum.Web.Controllers.Report
         {
             this.reportService.DismissQuoteReport(id);
 
-            var reports = this.reportService.GetQuoteReports();
+            var reports = this.reportService.GetQuoteReports(0);
 
+            this.ViewData["QuoteReportsCount"] = this.reportService.GetQuoteReportsCount();
+
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetQuoteReportsCount());
+            
             return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
         }
     }
