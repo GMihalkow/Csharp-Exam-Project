@@ -25,5 +25,7 @@ namespace Forum.ViewModels.Interfaces.Post
         IReplyInputModel ReplyModel { get; set; }
 
         IEnumerable<IQuoteViewModel> PostQuotes { get; set; }
+
+        int PagesCount { get; set; }
     }
 }

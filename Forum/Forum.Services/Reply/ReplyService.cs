@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -51,6 +52,22 @@ namespace Forum.Services.Reply
             this.dbService.DbContext.Replies.RemoveRange(userReplies);
 
             return this.dbService.DbContext.SaveChanges();
+        }
+
+        public IEnumerable<string> GetPostRepliesIds(string id)
+        {
+            var Ids =
+                this.dbService
+                .DbContext
+                .Posts
+                .Where(p => p.Id == id)
+                .Include(p => p.Replies)
+                .FirstOrDefault()
+                .Replies
+                .Select(r => r.Id)
+                .ToList();
+
+            return Ids;
         }
 
         public Models.Reply GetReply(string id)

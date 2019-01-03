@@ -45,12 +45,24 @@ button, input :hover {
     padding: 0px;
 }
 
+.display-none{
+    display:none;
+}
+
+.display-block{
+    display:block;
+}
+
 .circle {
     border-radius: 50%;
 }
 
 #gdprDiv {
     height: 500px;
+}
+
+.show-quotes:hover{
+    cursor:pointer;
 }
 
 .overflow-auto {

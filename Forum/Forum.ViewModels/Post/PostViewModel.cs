@@ -33,5 +33,7 @@ namespace Forum.ViewModels.Post
         public IReplyInputModel ReplyModel { get; set; }
 
         public IEnumerable<IQuoteViewModel> PostQuotes { get; set; }
+
+        public int PagesCount { get; set; }
     }
 }

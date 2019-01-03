@@ -13,6 +13,10 @@ namespace Forum.Web.ViewComponents
             {
                 return this.View("Pagging", new PaggingViewModel { ControllerName = controller, ControllerAction = action, Ids = Ids, PagesCount = PagesCount, EntityId = entityId });
             }
+            else if (controller == "Post")
+            {
+                return this.View("Pagging", new PaggingViewModel { ControllerName = controller, ControllerAction = action, Ids = Ids, PagesCount = PagesCount, EntityId = entityId });
+            }
 
             return null;
         }

@@ -8,8 +8,6 @@
     using global::Forum.Services.Interfaces.Quote;
     using global::Forum.ViewModels.Interfaces.Post;
     using global::Forum.ViewModels.Post;
-    using global::Forum.ViewModels.Quote;
-    using global::Forum.ViewModels.Reply;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -119,7 +117,7 @@
             return popularPosts;
         }
 
-        public IPostViewModel GetPost(string id)
+        public IPostViewModel GetPost(string id, int start)
         {
             Post post =
                 this.dbService
@@ -138,12 +136,15 @@
                 .ThenInclude(p => p.Posts)
                 .FirstOrDefault(p => p.Id == id);
 
-            var replies =
-                post
-                .Replies
-                .Select(r => this.mapper.Map<ReplyViewModel>(r));
-
             PostViewModel viewModel = this.mapper.Map<PostViewModel>(post);
+
+            viewModel.Replies =
+                viewModel
+                .Replies
+                .Skip(start)
+                .OrderBy(r => r.RepliedOn)
+                .Take(5)
+                .ToList();
 
             return viewModel;
         }
@@ -228,6 +229,13 @@
             this.dbService.DbContext.SaveChanges();
 
             return post.Views;
+        }
+
+        public int GetPagesCount(int repliesCount)
+        {
+            var result = (int)Math.Ceiling(repliesCount / 5.0);
+
+            return result;
         }
     }
 }

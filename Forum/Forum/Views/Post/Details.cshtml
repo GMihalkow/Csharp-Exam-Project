@@ -112,17 +112,22 @@
                 }
                 <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
             }
-            <div class="m-10px">
+            <div class="m-10px quotes-div display-none">
                 @foreach (var quote in reply.Quotes.OrderBy(q => q.QuotedOn))
                 {
                     <partial name="../Quote/_QuoteViewPartial" model="quote" />
                 }
             </div>
-
+            <div class="text-white menu-bg-forum p-10 mx-10px">
+                <a class="text-white show-quotes">Show Quotes </a><i class="fas fa-arrow-down fa-lg icon-arrow"></i>
+            </div>
         }
     </div>
 </div>
+
+@await Component.InvokeAsync("Pagging", new { Controller = "Post", Action = "Details", Ids = (List<string>)this.ViewData["PostReplyIds"], PagesCount = Model.PagesCount, EntityId = this.ViewData["PostId"] })
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/modal.js"></script>
+    <script src="~/js/togglePostQuotes.js"></script>
 }
