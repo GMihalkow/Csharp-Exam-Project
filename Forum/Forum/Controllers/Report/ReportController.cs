@@ -84,7 +84,6 @@ namespace Forum.Web.Controllers.Report
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
 
-
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult GetReplyReports()
         {
@@ -93,8 +92,7 @@ namespace Forum.Web.Controllers.Report
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
 
-        [Authorize("Administrator")]
-        [Authorize("Owner")]
+        [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult GetQuoteReports()
         {
             var reports = this.reportService.GetQuoteReports();

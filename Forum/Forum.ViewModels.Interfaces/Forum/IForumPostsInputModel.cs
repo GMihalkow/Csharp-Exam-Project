@@ -8,6 +8,8 @@
     {
         SubForum Forum { get; set; }
 
-        ICollection<Post> Posts { get; set; }
+        IEnumerable<Post> Posts { get; set; }
+
+        int PagesCount { get; }
     }
 }

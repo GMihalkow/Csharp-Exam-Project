@@ -11,7 +11,7 @@ namespace Forum.Services.Interfaces.Forum
     {
         void Add(IForumFormInputModel model, string category);
 
-        Task<SubForum> GetPostsByForum(string Id);
+        IEnumerable<Models.Post> GetPostsByForum(string Id, int start);
 
         SubForum GetForum(string Id);
 
@@ -22,5 +22,9 @@ namespace Forum.Services.Interfaces.Forum
         void Delete(SubForum forum);
 
         IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal);
+
+        int GetPagesCount(int postsCount);
+
+        IEnumerable<string> GetForumPostsIds(string id);
     }
 }

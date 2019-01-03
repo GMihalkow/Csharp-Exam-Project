@@ -245,6 +245,7 @@ namespace Forum.Web.Controllers.Account
             return this.File(byteArr, "text/json", "info.txt");
         }
 
+        [Authorize]
         public IActionResult Details(string id)
         {
             var user = this.accountService.GetUserById(id);

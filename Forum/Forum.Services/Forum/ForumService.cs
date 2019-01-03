@@ -14,7 +14,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
-    using System.Threading.Tasks;
 
     public class ForumService : IForumService
     {
@@ -44,11 +43,18 @@
             return forum;
         }
 
-        public async Task<SubForum> GetPostsByForum(string id)
+        public IEnumerable<Post> GetPostsByForum(string id, int start)
         {
             SubForum forum = this.GetForum(id);
 
-            return forum;
+            var posts =
+                forum.Posts
+                .Skip(start)
+                .Take(5)
+                .OrderBy(p => p.StartedOn)
+                .ToList() ?? new List<Post>();
+
+            return posts;
         }
 
         public void Add(IForumFormInputModel model, string categoryId)
@@ -107,6 +113,9 @@
 
         public void Delete(SubForum forum)
         {
+            var forumPosts = this.dbService.DbContext.Posts.Where(p => p.ForumId == forum.Id);
+
+            this.dbService.DbContext.RemoveRange(forumPosts);
             this.dbService.DbContext.Remove(forum);
             this.dbService.DbContext.SaveChanges();
         }
@@ -135,6 +144,23 @@
 
                 return forums;
             }
+        }
+
+        public int GetPagesCount(int postsCount)
+        {
+            var result = (int)Math.Ceiling(postsCount / 5.0);
+
+            return result;
+        }
+
+        public IEnumerable<string> GetForumPostsIds(string id)
+        {
+            var postsIds =
+                this.GetPostsByForum(id, 0)
+                .Select(p => p.Id)
+                .ToList();
+
+            return postsIds;
         }
     }
 }

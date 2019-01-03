@@ -8,18 +8,21 @@ using Forum.Services.Interfaces.Forum;
 using Forum.ViewModels.Forum;
 using Forum.Web.Common;
 using Forum.Web.Attributes.CustomAuthorizeAttributes;
+using Forum.Services.Interfaces.Db;
 
 namespace Forum.Web.Controllers.Forum
 {
     [AuthorizeRoles(Role.Administrator, Role.Owner)]
     public class ForumController : BaseController
     {
+        private readonly IDbService dbService;
         private readonly ICategoryService categoryService;
         private readonly IForumService forumService;
 
-        public ForumController(IAccountService accountService, ICategoryService categoryService, IForumService forumService)
+        public ForumController(IDbService dbService, IAccountService accountService, ICategoryService categoryService, IForumService forumService)
             : base(accountService)
         {
+            this.dbService = dbService;
             this.categoryService = categoryService;
             this.forumService = forumService;
         }
@@ -79,14 +82,18 @@ namespace Forum.Web.Controllers.Forum
         }
 
         [AllowAnonymous]
-        public IActionResult Posts(string id)
+        public IActionResult Posts(string id, int start)
         {
-            var forum = this.forumService.GetPostsByForum(id).GetAwaiter().GetResult();
+            var forum = this.forumService.GetForum(id);
+            var posts = this.forumService.GetPostsByForum(id, start);
+
+            this.ViewData["PostsIds"] = this.forumService.GetForumPostsIds(id);
 
             var model = new ForumPostsInputModel
             {
                 Forum = forum,
-                Posts = forum.Posts
+                Posts = posts,
+                PagesCount = this.forumService.GetPagesCount(forum.Posts.Count())
             };
 
             return this.View(model);
@@ -97,7 +104,7 @@ namespace Forum.Web.Controllers.Forum
             var forum = this.forumService.GetForum(id);
 
             var model = (ForumFormInputModel)this.forumService.GetMappedForumModel(forum);
-            
+
             this.ViewData["ForumId"] = forum.Id;
 
             return this.View(model);

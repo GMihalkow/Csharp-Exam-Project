@@ -12,22 +12,21 @@
         </div>
         @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
         {
-            <partial name="_AdminOptionsPartial"/>  
+            <partial name="_AdminOptionsPartial" />
         }
     </div>
     <table class="two-thirds-width posts-table mx-5-auto">
         <thead class="posts-table-head">
             <tr>
-                <th class="p-10 bottom-black-border"><h2 class="m-10px">#</h2></th>
                 <th class="p-10 bottom-black-border"><h2 class="m-10px">Title</h2></th>
                 <th class="p-10 bottom-black-border"><h2 class="m-10px">Statistics</h2></th>
+                <th class="p-10 bottom-black-border"><h2 class="m-10px">Date</h2></th>
             </tr>
         </thead>
         <tbody class="posts-table-body text-center">
             @foreach (var post in Model.Posts)
             {
                 <tr>
-                    <td class="p-10 text-forum"><i class="fab fa-forumbee fa-3x"></i></td>
                     <td class="p-10 text-forum"><a href="/Post/Details?id=@post.Id" class="text-forum"><h2 class="m-0">@post.Name</h2></a></td>
                     <td class="p-10 text-forum">
                         <div>
@@ -35,12 +34,13 @@
                             <p class="m-0">Started by: @post.Author.UserName</p>
                         </div>
                     </td>
+                    <td class="p-10 text-forum bold">@post.StartedOn.ToString("yyyy-MM-dd")</td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
+@await Component.InvokeAsync("Pagging", new { Controller = "Forum", Action = "Posts", Ids = (List<string>)this.ViewData["PostsIds"], PagesCount = Model.PagesCount, EntityId = Model.Forum.Id })
 @section Scripts {
     <script src="~/js/modal.js"></script>
 }

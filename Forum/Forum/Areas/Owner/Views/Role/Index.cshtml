@@ -21,8 +21,11 @@
 <div id="edit-roles-table-div">
     <partial name="_EditRolesTablePartial" model="Model" />
 </div>
+
+    
 @section Scripts{
     <script src="../js/searchAutocomplete.js"></script>
+
     <script>
     /*An array containing all the user names in the db:*/
     var names = [];
@@ -35,6 +38,7 @@
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
     autocomplete(document.getElementById("myInput"), names);
     </script>
+
     <script src="~/js/roleEditTableResponsiveness.js"></script>
     <script src="~/js/searchForUsersWithRoles.js"></script>
 }
