@@ -27,7 +27,7 @@ namespace Forum.Web.Areas.Owner.Services
             this.roleManager = roleManager;
         }
 
-        public IEnumerable<UserRoleViewModel> GetUsersRoles()
+        public IEnumerable<UserRoleViewModel> GetUsersRoles(int start)
         {
             var usersRoles =
                 this.dbService
@@ -42,7 +42,13 @@ namespace Forum.Web.Areas.Owner.Services
                 userRole.Role = this.dbService.DbContext.Roles.Where(r => r.Id == userRole.RoleId).FirstOrDefault();
             }
 
-            usersRoles = usersRoles.Where(ur => ur.Role.Name != Common.Role.Owner).OrderBy(ur => ur.User.UserName).ToList();
+            usersRoles = 
+                usersRoles
+                .Where(ur => ur.Role.Name != Common.Role.Owner)
+                .OrderBy(ur => ur.User.UserName)
+                .Skip(start)
+                .Take(5)
+                .ToList();
 
             return usersRoles;
         }
@@ -77,7 +83,11 @@ namespace Forum.Web.Areas.Owner.Services
                 userRole.Role = this.dbService.DbContext.Roles.Where(r => r.Id == userRole.RoleId).FirstOrDefault();
             }
 
-            usersRoles = usersRoles.Where(ur => ur.Role.Name != Common.Role.Owner && ur.User.UserName.ToLower().StartsWith(str)).OrderBy(ur => ur.User.UserName).ToList();
+            usersRoles = 
+                usersRoles
+                .Where(ur => ur.Role.Name != Common.Role.Owner && ur.User.UserName.ToLower().StartsWith(str) || ur.User.UserName == str)
+                .OrderBy(ur => ur.User.UserName)
+                .ToList();
 
             return usersRoles;
         }

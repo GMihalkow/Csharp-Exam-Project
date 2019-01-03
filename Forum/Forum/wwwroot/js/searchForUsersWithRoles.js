@@ -7,6 +7,8 @@
                 dataType: "text",
                 data: 'key=' + document.getElementById("myInput").value,
                 success: function (test) {
+                    console.log(test);
+
                     $.getScript("../js/site.js");
 
                     var searchBar = document.getElementById("myInput");

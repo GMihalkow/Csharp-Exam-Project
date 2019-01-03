@@ -6,7 +6,7 @@ namespace Forum.Web.Areas.Owner.Services.Contracts
 {
     public interface IRoleService
     {
-        IEnumerable<UserRoleViewModel> GetUsersRoles();
+        IEnumerable<UserRoleViewModel> GetUsersRoles(int start);
 
         int Promote(ForumUser user);
 

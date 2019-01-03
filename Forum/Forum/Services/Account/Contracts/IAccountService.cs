@@ -63,5 +63,7 @@ namespace Forum.Web.Services.Account.Contracts
         void UploadProfilePicture(IFormFile image, string username);
 
         byte[] BuildFile(ClaimsPrincipal principal);
+
+        int GetPagesCount(int usersCount);
     }
 }

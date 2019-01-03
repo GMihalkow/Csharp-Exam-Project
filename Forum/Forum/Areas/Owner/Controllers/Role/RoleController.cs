@@ -2,6 +2,7 @@
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Forum.Web.Areas.Owner.Controllers.Role
 {
@@ -19,11 +20,14 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
             this.accountService = accountService;
         }
 
-        public IActionResult Index()
+        [HttpGet("Index")]
+        public IActionResult Index(int start)
         {
-            var usersRoles = this.roleService.GetUsersRoles();
+            var usersRoles = this.roleService.GetUsersRoles(start);
 
             this.ViewData["usernames"] = this.accountService.GetUsernamesWithoutOwner();
+
+            this.ViewData["pagesCount"] = this.accountService.GetPagesCount(this.accountService.GetUsernamesWithoutOwner().Count());
 
             return this.View(usersRoles);
         }
@@ -38,8 +42,8 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
             }
 
             this.roleService.Promote(user);
-
-            return this.Redirect("/Owner/Role");
+            
+            return this.Redirect($"/Owner/Role/Index");
         }
 
         [HttpGet("Demote/id={id}")]
@@ -53,7 +57,7 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
 
             this.roleService.Demote(user);
 
-            return this.Redirect("/Owner/Role");
+            return this.Redirect($"/Owner/Role/Index");
         }
 
         [HttpGet("Search")]

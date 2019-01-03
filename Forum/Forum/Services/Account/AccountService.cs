@@ -450,5 +450,12 @@
 
             return usernames;
         }
+
+        public int GetPagesCount(int usersCount)
+        {
+            var result = (int)Math.Ceiling(usersCount / 5.0);
+
+            return result;
+        }
     }
 }

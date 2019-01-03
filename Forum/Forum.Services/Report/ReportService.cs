@@ -199,7 +199,7 @@ namespace Forum.Services.Report
                 .ToList();
 
             this.dbService.DbContext.QuoteReports.RemoveRange(quoteReports);
-            
+
             return this.dbService.DbContext.SaveChanges();
         }
     }
