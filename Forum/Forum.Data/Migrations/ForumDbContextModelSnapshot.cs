@@ -56,8 +56,6 @@ namespace Forum.Data.Migrations
 
                     b.Property<string>("Gender");
 
-                    b.Property<DateTime>("LastActiveOn");
-
                     b.Property<string>("Location");
 
                     b.Property<bool>("LockoutEnabled");

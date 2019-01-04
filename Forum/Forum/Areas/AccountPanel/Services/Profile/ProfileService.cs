@@ -73,7 +73,7 @@ namespace Forum.Web.Areas.Profile.Services.Account
         {
             int counter = 0;
 
-            foreach (var extension in Constants.AllowedExtensions)
+            foreach (var extension in Constants.AllowedImageExtensions)
             {
                 if (fileName.EndsWith(extension))
                 {

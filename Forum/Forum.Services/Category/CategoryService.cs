@@ -2,7 +2,6 @@
 {
     using AutoMapper;
     using global::Forum.Models;
-    using global::Forum.Services.Db;
     using global::Forum.Services.Interfaces.Category;
     using global::Forum.Services.Interfaces.Db;
     using global::Forum.ViewModels.Category;

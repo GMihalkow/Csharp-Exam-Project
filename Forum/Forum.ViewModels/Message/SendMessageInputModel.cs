@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Forum.MapConfiguration.Contracts;
 using Forum.ViewModels.Interfaces.Message;
 
 namespace Forum.ViewModels.Message
 {
-    public class SendMessageInputModel : ISendMessageInputModel
+    public class SendMessageInputModel : ISendMessageInputModel, IMapTo<Models.Message>
     {
         [MinLength(1)]
         public string Description { get; set; }

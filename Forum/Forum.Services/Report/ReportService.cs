@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
-using Forum.Models;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Report;
-using Forum.ViewModels.Interfaces.Report;
-using Forum.ViewModels.Report;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Forum.Services.Report
 {
     public class ReportService : IReportService
     {
+        //TODO: Break down to separate to service for every separate entity
         private readonly IMapper mapper;
         private readonly IDbService dbService;
 
@@ -20,158 +17,6 @@ namespace Forum.Services.Report
         {
             this.mapper = mapper;
             this.dbService = dbService;
-        }
-
-        public IPostReportInputModel AddPostReport(IPostReportInputModel model, string authorId)
-        {
-            var report = this.mapper.Map<PostReport>(model);
-            report.ReportedOn = DateTime.UtcNow;
-            report.AuthorId = authorId;
-
-            this.dbService.DbContext.PostReports.Add(report);
-            this.dbService.DbContext.SaveChanges();
-
-            return model;
-        }
-
-        public IQuoteReportInputModel AddQuoteReport(IQuoteReportInputModel model, string authorId)
-        {
-            var report = this.mapper.Map<QuoteReport>(model);
-            report.ReportedOn = DateTime.UtcNow;
-            report.AuthorId = authorId;
-
-            this.dbService.DbContext.QuoteReports.Add(report);
-            this.dbService.DbContext.SaveChanges();
-
-            return model;
-        }
-
-        public IReplyReportInputModel AddReplyReport(IReplyReportInputModel model, string authorId)
-        {
-            var report = this.mapper.Map<ReplyReport>(model);
-            report.ReportedOn = DateTime.UtcNow;
-            report.AuthorId = authorId;
-
-            this.dbService.DbContext.ReplyReports.Add(report);
-            this.dbService.DbContext.SaveChanges();
-
-            return model;
-        }
-
-        public int DismissPostReport(string id)
-        {
-            var report =
-                this.dbService
-                .DbContext
-                .PostReports
-                .Where(pr => pr.Id == id)
-                .FirstOrDefault();
-
-            if (report == null)
-            {
-                return 0;
-            }
-
-            this.dbService.DbContext.PostReports.Remove(report);
-            var result = this.dbService.DbContext.SaveChanges();
-
-            return result;
-        }
-
-        public int DismissQuoteReport(string id)
-        {
-            var report =
-                 this.dbService
-                 .DbContext
-                 .QuoteReports
-                 .Where(pr => pr.Id == id)
-                 .FirstOrDefault();
-
-            if (report == null)
-            {
-                return 0;
-            }
-
-            this.dbService.DbContext.QuoteReports.Remove(report);
-            var result = this.dbService.DbContext.SaveChanges();
-
-            return result;
-        }
-
-        public int DismissReplyReport(string id)
-        {
-            var report =
-                   this.dbService
-                   .DbContext
-                   .ReplyReports
-                   .Where(pr => pr.Id == id)
-                   .FirstOrDefault();
-
-            if (report == null)
-            {
-                return 0;
-            }
-
-            this.dbService.DbContext.ReplyReports.Remove(report);
-            var result = this.dbService.DbContext.SaveChanges();
-
-            return result;
-        }
-
-        public IEnumerable<IPostReportViewModel> GetPostReports(int start)
-        {
-            var reports =
-                this.dbService
-                .DbContext
-                .PostReports
-                .Include(pr => pr.Author)
-                .Include(pr => pr.Post)
-                .ThenInclude(pr => pr.Author)
-                .OrderBy(pr => pr.ReportedOn)
-                .Skip(start)
-                .Take(5)
-                .Select(pr => this.mapper.Map<PostReportViewModel>(pr))
-                .ToList();
-
-            return reports;
-        }
-
-        public IEnumerable<IQuoteReportViewModel> GetQuoteReports(int start)
-        {
-            var reports =
-                   this.dbService
-                   .DbContext
-                   .QuoteReports
-                   .Include(qr => qr.Author)
-                   .Include(qr => qr.Quote)
-                   .ThenInclude(qr => qr.Author)
-                   .Include(qr => qr.Quote)
-                   .ThenInclude(qr => qr.Reply)
-                   .OrderBy(qr => qr.ReportedOn)
-                   .Skip(start)
-                   .Take(5)
-                   .Select(qr => this.mapper.Map<QuoteReportViewModel>(qr))
-                   .ToList();
-
-            return reports;
-        }
-
-        public IEnumerable<IReplyReportViewModel> GetReplyReports(int start)
-        {
-            var reports =
-                   this.dbService
-                   .DbContext
-                   .ReplyReports
-                   .Include(rr => rr.Author)
-                   .Include(rr => rr.Reply)
-                   .ThenInclude(rr => rr.Author)
-                   .OrderBy(rr => rr.ReportedOn)
-                   .Skip(start)
-                   .Take(5)
-                   .Select(rr => this.mapper.Map<ReplyReportViewModel>(rr))
-                   .ToList();
-
-            return reports;
         }
 
         public int DeleteUserReports(string username)
@@ -209,44 +54,11 @@ namespace Forum.Services.Report
             return this.dbService.DbContext.SaveChanges();
         }
 
-        public int GetPostReportsCount()
-        {
-            var count =
-                this.dbService
-                .DbContext
-                .PostReports
-                .Count();
-
-            return count;
-        }
-
         public int GetPagesCount(int reportsCount)
         {
             var result = (int)Math.Ceiling(reportsCount / 5.0);
 
             return result;
-        }
-
-        public int GetReplyReportsCount()
-        {
-            var count =
-                this.dbService
-                .DbContext
-                .ReplyReports
-                .Count();
-
-            return count;
-        }
-
-        public int GetQuoteReportsCount()
-        {
-            var count =
-                this.dbService
-                .DbContext
-                .QuoteReports
-                .Count();
-
-            return count;
         }
     }
 }

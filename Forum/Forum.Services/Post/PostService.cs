@@ -122,13 +122,7 @@
 
             ViewModels.Post.PostViewModel viewModel = this.mapper.Map<ViewModels.Post.PostViewModel>(post);
 
-            viewModel.Replies =
-                viewModel
-                .Replies
-                .Skip(start)
-                .OrderBy(r => r.RepliedOn)
-                .Take(5)
-                .ToList();
+            viewModel.Replies = viewModel.Replies.Skip(start).OrderBy(r => r.RepliedOn).Take(5).ToList();
 
             return viewModel;
         }
@@ -145,6 +139,18 @@
             string pattern = @"(\[(\w+)\])(.*?)(\[\/\2\])";
             Regex tagsRegex = new Regex(pattern);
 
+            ParseTags(inputArray, sb, tagsRegex);
+
+            //Valdiating the allowed tags
+            var sanitizer = new HtmlSanitizer(Common.ServicesConstants.AllowedTags);
+
+            var result = sanitizer.Sanitize(sb.ToString().TrimEnd());
+
+            return result;
+        }
+
+        private static void ParseTags(string[] inputArray, StringBuilder sb, Regex tagsRegex)
+        {
             for (int index = 0; index < inputArray.Length; index++)
             {
                 var match = tagsRegex.Match(inputArray[index]);
@@ -195,13 +201,6 @@
                     sb.AppendLine(inputArray[index]);
                 }
             }
-
-            //Valdiating the allowed tags
-            var sanitizer = new HtmlSanitizer(Common.ServicesConstants.AllowedTags);
-
-            var result = sanitizer.Sanitize(sb.ToString().TrimEnd());
-
-            return result;
         }
 
         public int ViewPost(string id)

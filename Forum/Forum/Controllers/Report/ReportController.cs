@@ -1,4 +1,7 @@
 ﻿using Forum.Services.Interfaces.Report;
+using Forum.Services.Interfaces.Report.Post;
+using Forum.Services.Interfaces.Report.Quote;
+using Forum.Services.Interfaces.Report.Reply;
 using Forum.ViewModels.Report;
 using Forum.Web.Attributes.CustomAuthorizeAttributes;
 using Forum.Web.Common;
@@ -13,11 +16,17 @@ namespace Forum.Web.Controllers.Report
     public class ReportController : BaseController
     {
         private readonly IReportService reportService;
+        private readonly IPostReportService postReportService;
+        private readonly IReplyReportService replyReportService;
+        private readonly IQuoteReportService quoteReportService;
 
-        public ReportController(IAccountService accountService, IReportService reportService)
+        public ReportController(IAccountService accountService, IReportService reportService, IPostReportService postReportService, IReplyReportService replyReportService, IQuoteReportService quoteReportService)
             : base(accountService)
         {
             this.reportService = reportService;
+            this.postReportService = postReportService;
+            this.replyReportService = replyReportService;
+            this.quoteReportService = quoteReportService;
         }
 
         [HttpPost]
@@ -27,7 +36,7 @@ namespace Forum.Web.Controllers.Report
             {
                 string authorId = this.accountService.GetUser(this.User).Id;
 
-                this.reportService.AddPostReport(model, authorId);
+                this.postReportService.AddPostReport(model, authorId);
                 return this.Redirect($"/Post/Details?id={model.PostId}");
             }
             else
@@ -46,7 +55,7 @@ namespace Forum.Web.Controllers.Report
             {
                 string authorId = this.accountService.GetUser(this.User).Id;
 
-                this.reportService.AddReplyReport(model, authorId);
+                this.replyReportService.AddReplyReport(model, authorId);
                 return this.Redirect($"/Post/Details?id={model.PostId}");
             }
             else
@@ -65,7 +74,7 @@ namespace Forum.Web.Controllers.Report
             {
                 string authorId = this.accountService.GetUser(this.User).Id;
 
-                this.reportService.AddQuoteReport(model, authorId);
+                this.quoteReportService.AddQuoteReport(model, authorId);
                 return this.Redirect($"/Post/Details?id={model.PostId}");
             }
             else
@@ -86,11 +95,11 @@ namespace Forum.Web.Controllers.Report
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult GetPostReports(int start)
         {
-            var reports = this.reportService.GetPostReports(start);
+            var reports = this.postReportService.GetPostReports(start);
 
-            this.ViewData["PostReportsCount"] = this.reportService.GetPostReportsCount();
+            this.ViewData["PostReportsCount"] = this.postReportService.GetPostReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetPostReportsCount());
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.postReportService.GetPostReportsCount());
 
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
@@ -98,11 +107,11 @@ namespace Forum.Web.Controllers.Report
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult GetReplyReports(int start)
         {
-            var reports = this.reportService.GetReplyReports(start);
+            var reports = this.replyReportService.GetReplyReports(start);
 
-            this.ViewData["ReplyReportsCount"] = this.reportService.GetReplyReportsCount();
+            this.ViewData["ReplyReportsCount"] = this.replyReportService.GetReplyReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetReplyReportsCount());
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.replyReportService.GetReplyReportsCount());
 
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
@@ -110,11 +119,11 @@ namespace Forum.Web.Controllers.Report
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult GetQuoteReports(int start)
         {
-            var reports = this.reportService.GetQuoteReports(start);
+            var reports = this.quoteReportService.GetQuoteReports(start);
 
-            this.ViewData["QuoteReportsCount"] = this.reportService.GetQuoteReportsCount();
+            this.ViewData["QuoteReportsCount"] = this.quoteReportService.GetQuoteReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetQuoteReportsCount());
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.quoteReportService.GetQuoteReportsCount());
 
             return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
         }
@@ -122,13 +131,13 @@ namespace Forum.Web.Controllers.Report
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult DismissPostReport(string id)
         {
-            this.reportService.DismissPostReport(id);
+            this.postReportService.DismissPostReport(id);
 
-            var reports = this.reportService.GetPostReports(0);
+            var reports = this.postReportService.GetPostReports(0);
 
-            this.ViewData["PostReportsCount"] = this.reportService.GetPostReportsCount();
+            this.ViewData["PostReportsCount"] = this.postReportService.GetPostReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetPostReportsCount());
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.postReportService.GetPostReportsCount());
 
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
@@ -136,13 +145,13 @@ namespace Forum.Web.Controllers.Report
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult DismissReplyReport(string id)
         {
-            this.reportService.DismissReplyReport(id);
+            this.replyReportService.DismissReplyReport(id);
 
-            var reports = this.reportService.GetReplyReports(0);
+            var reports = this.replyReportService.GetReplyReports(0);
 
-            this.ViewData["ReplyReportsCount"] = this.reportService.GetReplyReportsCount();
+            this.ViewData["ReplyReportsCount"] = this.replyReportService.GetReplyReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetReplyReportsCount());
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.replyReportService.GetReplyReportsCount());
 
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
@@ -150,13 +159,13 @@ namespace Forum.Web.Controllers.Report
         [AuthorizeRoles(Role.Administrator, Role.Owner)]
         public PartialViewResult DismissQuoteReport(string id)
         {
-            this.reportService.DismissQuoteReport(id);
+            this.quoteReportService.DismissQuoteReport(id);
 
-            var reports = this.reportService.GetQuoteReports(0);
+            var reports = this.quoteReportService.GetQuoteReports(0);
 
-            this.ViewData["QuoteReportsCount"] = this.reportService.GetQuoteReportsCount();
+            this.ViewData["QuoteReportsCount"] = this.quoteReportService.GetQuoteReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.reportService.GetQuoteReportsCount());
+            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.quoteReportService.GetQuoteReportsCount());
             
             return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
         }

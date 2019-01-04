@@ -11,20 +11,19 @@
     using Forum.Web.Services.Account.Contracts;
     using Forum.Web.Utilities;
     using Forum.Web.ViewModels.Account;
-    using global::Forum.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Options;
 
     public class AccountService : IAccountService
     {
         private readonly IMapper mapper;
-        private readonly UserManager<ForumUser> userManager;
+        private readonly UserManager<Models.ForumUser> userManager;
         private readonly IOptions<CloudConfiguration> cloudConfig;
-        private readonly SignInManager<ForumUser> signInManager;
+        private readonly SignInManager<Models.ForumUser> signInManager;
         private readonly IDbService dbService;
         private readonly IProfileService profileService;
 
-        public AccountService(IMapper mapper, UserManager<ForumUser> userManager, IOptions<CloudConfiguration> CloudConfig, SignInManager<ForumUser> signInManager, IDbService dbService, IProfileService profileService)
+        public AccountService(IMapper mapper, UserManager<Models.ForumUser> userManager, IOptions<CloudConfiguration> CloudConfig, SignInManager<Models.ForumUser> signInManager, IDbService dbService, IProfileService profileService)
         {
             this.mapper = mapper;
             this.userManager = userManager;
@@ -38,7 +37,7 @@
         {
             var user =
                 this.mapper
-                .Map<LoginUserInputModel, ForumUser>(model);
+                .Map<LoginUserInputModel, Models.ForumUser>(model);
 
             this.OnPostLoginAsync(user, model.Password).GetAwaiter().GetResult();
         }
@@ -55,7 +54,7 @@
 
         public async Task<bool> EmailExists(string email)
         {
-            ForumUser user = await this.userManager.FindByEmailAsync(email);
+            Models.ForumUser user = await this.userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -71,7 +70,7 @@
         {
             var model =
                  this.mapper
-                 .Map<RegisterUserViewModel, ForumUser>(viewModel);
+                 .Map<RegisterUserViewModel, Models.ForumUser>(viewModel);
 
             model.RegisteredOn = DateTime.UtcNow;
 
@@ -103,7 +102,7 @@
             return result;
         }
 
-        public async Task<SignInResult> OnPostLoginAsync(ForumUser model, string password)
+        public async Task<SignInResult> OnPostLoginAsync(Models.ForumUser model, string password)
         {
             var result = await this.signInManager.PasswordSignInAsync(model.UserName, password, false, lockoutOnFailure: true);
 
@@ -131,16 +130,16 @@
             return result.Succeeded;
         }
 
-        public ForumUser GetUser(ClaimsPrincipal principal)
+        public Models.ForumUser GetUser(ClaimsPrincipal principal)
         {
-            ForumUser user = this.userManager.GetUserAsync(principal).GetAwaiter().GetResult();
+            Models.ForumUser user = this.userManager.GetUserAsync(principal).GetAwaiter().GetResult();
 
             return user;
         }
 
         public string GetNewestUser()
         {
-            ForumUser user = this.dbService.DbContext.Users.OrderByDescending(u => u.RegisteredOn).FirstOrDefault();
+            Models.ForumUser user = this.dbService.DbContext.Users.OrderByDescending(u => u.RegisteredOn).FirstOrDefault();
 
             string username = string.Empty;
             if (user != null)
@@ -158,14 +157,14 @@
             return result;
         }
 
-        public ForumUser GetUserById(string id)
+        public Models.ForumUser GetUserById(string id)
         {
             var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == id);
 
             return user;
         }
 
-        public ForumUser GetUserByName(string username)
+        public Models.ForumUser GetUserByName(string username)
         {
             var user =
                 this.dbService
@@ -184,7 +183,7 @@
             return usernames;
         }
 
-        public IEnumerable<ForumUser> GetUsers()
+        public IEnumerable<Models.ForumUser> GetUsers()
         {
             var users = this.dbService.DbContext.Users.ToList();
 

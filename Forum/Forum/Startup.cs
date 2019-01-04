@@ -49,6 +49,14 @@ using Forum.Web.Areas.Settings.ViewModels.Settings;
 using Forum.Web.Areas.Profile.Services.Account.Contracts;
 using Forum.Web.Areas.Profile.Services.Account;
 using Forum.Web.Areas.AccountPanel.ViewModels.Profile;
+using Forum.Services.Interfaces.Report.Post;
+using Forum.Services.Report.Post;
+using Forum.Services.Report.Reply;
+using Forum.Services.Interfaces.Report.Reply;
+using Forum.Services.Interfaces.Report.Quote;
+using Forum.Services.Report.Quote;
+using Forum.Services.Interfaces.Chat;
+using Forum.Services.Chat;
 
 namespace Forum
 {
@@ -74,7 +82,6 @@ namespace Forum
             //TODO: Extract views to a razor view class library.
             //TODO: Extract logout view to a modal.
             //TODO: Create method in service should return the model so you can test it
-            //TODO: Add Cookie consent.
             //TODO: Validate that names of entities are unique
             //TODO: Look at the presentation for Advanced topics and follow the GDPR slide for the GDPR
             //TODO: Extract model binding validation magic strings
@@ -100,6 +107,7 @@ namespace Forum
                  typeof(PostViewModel).Assembly,
                  typeof(ReplyViewModel).Assembly,
                  typeof(EditProfileInputModel).Assembly,
+                 typeof(SendMessageInputModel).Assembly,
                  typeof(QuoteInputModel).Assembly,
                  typeof(PostReportInputModel).Assembly,
                  typeof(ReplyReportInputModel).Assembly,
@@ -171,8 +179,12 @@ namespace Forum
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IQuoteService, QuoteService>();
+            services.AddScoped<IPostReportService, PostReportService>();
+            services.AddScoped<IReplyReportService, ReplyReportService>();
+            services.AddScoped<IQuoteReportService, QuoteReportService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IDbService, DbService>();
+            services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 
             //Registrating the automapper

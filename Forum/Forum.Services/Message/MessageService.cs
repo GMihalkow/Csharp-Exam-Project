@@ -36,6 +36,24 @@ namespace Forum.Services.Message
                 .OrderByDescending(m => m.CreatedOn)
                 .ToList();
 
+            SetMessagesToSeen(firstPersonName, conversationMessages);
+
+            this.dbService.DbContext.SaveChanges();
+
+            if (showAll == true)
+            {
+                conversationMessages = conversationMessages.OrderBy(m => m.CreatedOn).ToList();
+            }
+            else
+            {
+                conversationMessages = conversationMessages.Take(5).OrderBy(m => m.CreatedOn).ToList();
+            }
+
+            return conversationMessages;
+        }
+
+        private static void SetMessagesToSeen(string firstPersonName, List<Models.Message> conversationMessages)
+        {
             foreach (var message in conversationMessages)
             {
                 if (message.Reciever.UserName == firstPersonName)
@@ -43,26 +61,6 @@ namespace Forum.Services.Message
                     message.Seen = true;
                 }
             }
-
-            this.dbService.DbContext.SaveChanges();
-
-            if (showAll == true)
-            {
-                conversationMessages =
-                    conversationMessages
-                    .OrderBy(m => m.CreatedOn)
-                    .ToList();
-            }
-            else
-            {
-                conversationMessages =
-                    conversationMessages
-                    .Take(5)
-                    .OrderBy(m => m.CreatedOn)
-                    .ToList();
-            }
-
-            return conversationMessages;
         }
 
         public IEnumerable<IChatMessageViewModel> GetLatestMessages(string lastDate, string loggedInUser, string otherUserId)
@@ -70,40 +68,7 @@ namespace Forum.Services.Message
             var IsDate = DateTime.TryParse(lastDate, out DateTime parsedLastDate);
             if (!IsDate)
             {
-                var firstMessages =
-                  this.dbService
-                  .DbContext
-                  .Messages
-                  .Include(m => m.Author)
-                  .Include(m => m.Reciever)
-                  .Where(m =>
-                  (m.Author.UserName == loggedInUser && m.RecieverId == otherUserId)
-                  ||
-                  (m.AuthorId == otherUserId && m.Reciever.UserName == loggedInUser))
-                  .ToList();
-
-                foreach (var message in firstMessages)
-                {
-                    if (message.Reciever.UserName == loggedInUser)
-                    {
-                        message.Seen = true;
-                    }
-                }
-
-                this.dbService.DbContext.SaveChanges();
-
-                var messagesViewModel =
-                  firstMessages
-                  .Select(m => this.mapper.Map<ChatMessageViewModel>(m))
-                  .OrderBy(m => m.CreatedOn)
-                  .ToList();
-
-                foreach (var message in messagesViewModel)
-                {
-                    message.LoggedInUser = loggedInUser;
-                }
-
-                return messagesViewModel;
+                return new List<ChatMessageViewModel>();
             }
 
             var messages =
@@ -119,13 +84,7 @@ namespace Forum.Services.Message
                 .Where(m => m.CreatedOn.ToString("F") != parsedLastDate.ToString("F") && DateTime.Compare(m.CreatedOn, parsedLastDate) > 0)
                 .ToList();
 
-            foreach (var message in messages)
-            {
-                if (message.Reciever.UserName == loggedInUser)
-                {
-                    message.Seen = true;
-                }
-            }
+            SetMessagesToSeen(loggedInUser, messages);
 
             this.dbService.DbContext.SaveChanges();
 
@@ -182,12 +141,7 @@ namespace Forum.Services.Message
 
             foreach (var authorName in unreadMessagesAuthors)
             {
-                var messagesCount =
-                    this.dbService
-                    .DbContext
-                    .Messages
-                    .Include(m => m.Author)
-                    .Include(m => m.Reciever)
+                var messagesCount = this.dbService.DbContext.Messages.Include(m => m.Author).Include(m => m.Reciever)
                     .Where(m => m.Author.UserName == authorName && m.Reciever.UserName == username)
                     .Where(m => m.Seen == false)
                     .Count();
@@ -206,10 +160,7 @@ namespace Forum.Services.Message
 
         public void RemoveUserMessages(string username)
         {
-            var messages =
-                this.dbService
-                .DbContext
-                .Messages
+            var messages = this.dbService.DbContext.Messages
                 .Include(m => m.Author)
                 .Include(m => m.Reciever)
                 .Where(m => m.Author.UserName == username || m.Reciever.UserName == username)
@@ -220,14 +171,10 @@ namespace Forum.Services.Message
 
         public int SendMessage(ISendMessageInputModel model, string authorId)
         {
-            var message = new Models.Message
-            {
-                RecieverId = model.RecieverId,
-                Description = model.Description,
-                CreatedOn = DateTime.UtcNow,
-                AuthorId = authorId,
-                Seen = false
-            };
+            var message = this.mapper.Map<Models.Message>(model);
+            message.CreatedOn = DateTime.UtcNow;
+            message.AuthorId = authorId;
+            message.Seen = false;
 
             this.dbService.DbContext.Messages.Add(message);
             return this.dbService.DbContext.SaveChanges();
