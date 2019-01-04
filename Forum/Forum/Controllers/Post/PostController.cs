@@ -9,6 +9,7 @@ using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net;
 
 namespace Forum.Web.Controllers.Post
 {
@@ -45,7 +46,7 @@ namespace Forum.Web.Controllers.Post
         [HttpPost]
         public IActionResult Create(PostInputModel model)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 ForumUser user = this.accountService.GetUser(this.User);
                 this.postService.AddPost(model, user, model.ForumId).GetAwaiter().GetResult();
@@ -54,7 +55,10 @@ namespace Forum.Web.Controllers.Post
             }
             else
             {
-                return this.View(model);
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
             }
         }
 
@@ -68,7 +72,7 @@ namespace Forum.Web.Controllers.Post
             this.ViewData["PostId"] = Id;
 
             this.ViewData["PostReplyIds"] = this.replyService.GetPostRepliesIds(Id).ToList();
-            
+
             return this.View(viewModel);
         }
 
@@ -88,15 +92,31 @@ namespace Forum.Web.Controllers.Post
         [HttpPost]
         public IActionResult Edit(EditPostInputModel model)
         {
-            var forum = this.forumService.GetForum(model.ForumId);
-            if(forum == null)
+            var forumsIds = this.forumService.GetAllForums(this.User).Select(f => f.Id);
+            if (!forumsIds.Contains(model.ForumId))
             {
-                return this.NotFound();
+                this.ModelState.AddModelError("Invalid forum id", "Invalid forum id");
             }
 
-            this.postService.Edit(model);
+            if (this.ModelState.IsValid)
+            {
+                var forum = this.forumService.GetForum(model.ForumId);
+                if (forum == null)
+                {
+                    return this.NotFound();
+                }
 
-            return this.Redirect($"/Post/Details?Id={model.Id}");
+                this.postService.Edit(model);
+
+                return this.Redirect($"/Post/Details?Id={model.Id}");
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
+            }
         }
     }
 }

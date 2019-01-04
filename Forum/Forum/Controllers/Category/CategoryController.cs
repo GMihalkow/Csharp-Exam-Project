@@ -6,6 +6,7 @@
     using global::Forum.Web.Common;
     using global::Forum.Web.Services.Account.Contracts;
     using Microsoft.AspNetCore.Mvc;
+    using System.Net;
 
     [AuthorizeRoles(Role.Administrator, Role.Owner)]
     public class CategoryController : BaseController
@@ -38,7 +39,10 @@
             }
             else
             {
-                return this.View(model);
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
             }
         }
     }

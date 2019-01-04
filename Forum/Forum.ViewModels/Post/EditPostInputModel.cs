@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Forum.MapConfiguration.Contracts;
+using Forum.Services.Interfaces.Forum;
 using Forum.ViewModels.Interfaces.Post;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Post
 {
@@ -10,8 +11,13 @@ namespace Forum.ViewModels.Post
     {
         public string Id { get; set; }
 
+        [Required]
+        [RegularExpression(@"^[a-zA-Z_\-0-9]*$", ErrorMessage = "{0} is allowed to contain only lowercase/uppercase characters, digits and '_', '-'")]
+        [StringLength(50, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
         public string Name { get; set; }
 
+        [Required]
+        [MinLength(5)]
         public string Description { get; set; }
 
         public string ForumName { get; set; }
@@ -32,5 +38,6 @@ namespace Forum.ViewModels.Post
                 .ForMember(dest => dest.Name,
                 x => x.MapFrom(src => src.Name));
         }
+        
     }
 }

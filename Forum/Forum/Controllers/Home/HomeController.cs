@@ -72,5 +72,10 @@
 
             return this.Redirect("/");
         }
+
+        public IActionResult Error()
+        {
+            return this.View();
+        }
     }
 }

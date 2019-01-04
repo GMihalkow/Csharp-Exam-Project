@@ -40,7 +40,7 @@ namespace Forum.Web.Services.Account.Contracts
 
         bool ChangeUsername(ForumUser user, string username);
 
-        bool ChangePassword(ForumUser user, string oldPassword, string newPassword);
+        void ChangePassword(ForumUser user, string oldPassword, string newPassword);
 
         bool CheckPassword(ForumUser user, string password);
 

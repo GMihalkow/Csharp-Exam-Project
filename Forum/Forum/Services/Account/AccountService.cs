@@ -260,18 +260,9 @@
             return user;
         }
 
-        public bool ChangePassword(ForumUser user, string oldPassword, string newPassword)
+        public void ChangePassword(ForumUser user, string oldPassword, string newPassword)
         {
             var result = this.userManager.ChangePasswordAsync(user, oldPassword, newPassword).GetAwaiter().GetResult();
-
-            if (result.Succeeded)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public bool CheckPassword(ForumUser user, string password)

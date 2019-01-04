@@ -9,6 +9,7 @@ using Forum.ViewModels.Forum;
 using Forum.Web.Common;
 using Forum.Web.Attributes.CustomAuthorizeAttributes;
 using Forum.Services.Interfaces.Db;
+using System.Net;
 
 namespace Forum.Web.Controllers.Forum
 {
@@ -60,24 +61,10 @@ namespace Forum.Web.Controllers.Forum
             }
             else
             {
-                var names = this.categoryService.GetAllCategories().GetAwaiter().GetResult();
+                var result = this.View("Error", ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
 
-                var namesList =
-                    names
-                    .Select(x => new SelectListItem
-                    {
-                        Value = x.Id,
-                        Text = x.Name
-                    })
-                    .ToList();
-
-                ForumFormInputModel viewModel = new ForumFormInputModel
-                {
-                    ForumModel = model.ForumModel,
-                    Categories = namesList
-                };
-
-                return this.View(viewModel);
+                return result;
             }
         }
 

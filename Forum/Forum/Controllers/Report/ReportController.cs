@@ -5,6 +5,7 @@ using Forum.Web.Common;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Forum.Web.Controllers.Report
 {
@@ -22,7 +23,7 @@ namespace Forum.Web.Controllers.Report
         [HttpPost]
         public IActionResult ReportPost(PostReportInputModel model)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 string authorId = this.accountService.GetUser(this.User).Id;
 
@@ -31,8 +32,10 @@ namespace Forum.Web.Controllers.Report
             }
             else
             {
-                //TODO: Show errors correctly
-                return this.Redirect("/");
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
             }
         }
 
@@ -48,8 +51,10 @@ namespace Forum.Web.Controllers.Report
             }
             else
             {
-                //TODO: Show errors correctly
-                return this.Redirect("/");
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
             }
         }
 
@@ -65,8 +70,10 @@ namespace Forum.Web.Controllers.Report
             }
             else
             {
-                //TODO: Show errors correctly
-                return this.Redirect("/");
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
             }
         }
         

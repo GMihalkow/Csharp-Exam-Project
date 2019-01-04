@@ -6,7 +6,7 @@
         <form class="my-form" asp-controller="Reply" asp-action="Create" method="post">
             <input type="hidden" hidden="hidden" asp-for="@Model.PostId" value="@this.ViewData["PostId"]" />
             <span asp-validation-for="@Model.PostId"></span>
-            <div class="text-center"> 
+            <div class="text-center">
                 <div class="block">
                     <div>
                         <h2><label class="text-forum bold">Reply</label></h2>
@@ -61,3 +61,5 @@
         </form>
     </div>
 </div>
+
+<partial name="_ValidationScriptsPartial" />

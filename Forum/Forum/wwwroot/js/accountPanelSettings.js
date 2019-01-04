@@ -6,8 +6,8 @@
                 url: "/Account/EditProfile",
                 success: function (test) {
                     $('#account-panel').html(test);
-                    $.getScript("../lib/jquery-validation/dist/jquery.validate.js");
-                    $.getScript("../lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js");
+                    //$.getScript("../lib/jquery-validation/dist/jquery.validate.js");
+                    //$.getScript("../lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js");
                 }
             });
 

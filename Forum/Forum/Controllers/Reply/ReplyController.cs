@@ -1,12 +1,8 @@
-﻿using Forum.Models;
-using Forum.Services.Interfaces.Reply;
+﻿using Forum.Services.Interfaces.Reply;
 using Forum.ViewModels.Reply;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
-using System.Linq;
-using System.Text;
+using System.Net;
 
 namespace Forum.Web.Controllers.Reply
 {
@@ -33,16 +29,10 @@ namespace Forum.Web.Controllers.Reply
             }
             else
             {
-                var sb = new StringBuilder();
-                foreach (var value in ModelState.Values)
-                {
-                    if (value.ValidationState == ModelValidationState.Invalid)
-                    {
-                        sb.AppendLine(string.Join(Environment.NewLine, value.Errors.Select(e => e.ErrorMessage)));
-                    }
-                }
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
 
-                return this.View("Error", new ErrorViewModel { Message = sb.ToString().TrimEnd() });
+                return result;
             }
         }
     }

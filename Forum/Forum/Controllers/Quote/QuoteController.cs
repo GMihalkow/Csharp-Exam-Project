@@ -6,6 +6,7 @@ using Forum.ViewModels.Quote;
 using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Forum.Web.Controllers.Quote
 {
@@ -50,17 +51,27 @@ namespace Forum.Web.Controllers.Quote
         [HttpPost]
         public IActionResult Create(QuoteInputModel model)
         {
-            var user = this.accountService.GetUser(this.User);
+            if (this.ModelState.IsValid)
+            {
+                var user = this.accountService.GetUser(this.User);
 
-            var reply = this.replyService.GetReply(model.ReplyId);
+                var reply = this.replyService.GetReply(model.ReplyId);
 
-            var recieverName = this.accountService.GetUserById(model.RecieverId).UserName;
+                var recieverName = this.accountService.GetUserById(model.RecieverId).UserName;
 
-            model.Description = this.postService.ParseDescription(model.Description);
+                model.Description = this.postService.ParseDescription(model.Description);
 
-            this.quoteService.Add(model, user, recieverName);
-            
-            return this.Redirect($"/Post/Details?id={reply.PostId}");
+                this.quoteService.Add(model, user, recieverName);
+
+                return this.Redirect($"/Post/Details?id={reply.PostId}");
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
+            }
         }
 
         public IActionResult Quote(string id)
@@ -91,17 +102,27 @@ namespace Forum.Web.Controllers.Quote
         [HttpPost]
         public IActionResult QuoteAQuoteCreate(QuoteInputModel model)
         {
-            var user = this.accountService.GetUser(this.User);
+            if (this.ModelState.IsValid)
+            {
+                var user = this.accountService.GetUser(this.User);
 
-            var reply = this.replyService.GetReply(model.ReplyId);
+                var reply = this.replyService.GetReply(model.ReplyId);
 
-            var recieverName = this.accountService.GetUserById(model.QuoteRecieverId).UserName;
+                var recieverName = this.accountService.GetUserById(model.QuoteRecieverId).UserName;
 
-            model.Description = this.postService.ParseDescription(model.Description);
+                model.Description = this.postService.ParseDescription(model.Description);
 
-            this.quoteService.Add(model, user, recieverName);
+                this.quoteService.Add(model, user, recieverName);
 
-            return this.Redirect($"/Post/Details?id={reply.PostId}");
+                return this.Redirect($"/Post/Details?id={reply.PostId}");
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
+            }
         }
     }
 }

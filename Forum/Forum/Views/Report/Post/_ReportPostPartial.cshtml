@@ -4,8 +4,8 @@
 <div>
     <div class="full-width">
         <form class="my-form" asp-controller="Report" asp-action="ReportPost" method="post">
+            <div class="text-white text-center" asp-validation-summary="All"></div>
             <input type="hidden" hidden="hidden" asp-for="@Model.PostId" value="@this.ViewData["PostId"]" />
-            <span asp-validation-for="@Model.PostId"></span>
             <div class="text-center">
                 <div>
                     <h2><label class="text-white bold">Something wrong?</label></h2>

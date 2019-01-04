@@ -6,6 +6,7 @@ using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Forum.Web.Controllers.Account
 {
@@ -106,21 +107,31 @@ namespace Forum.Web.Controllers.Account
         [HttpPost]
         public IActionResult EditProfile(EditProfileInputModel model)
         {
-            var user = this.accountService.GetUserByName(this.User.Identity.Name);
-
-            var isUsernameChanged = this.accountService.ChangeUsername(user, model.Username);
-
-            var passwordCheck = this.accountService.CheckPassword(user, model.Password);
-            if (!passwordCheck)
+            if (ModelState.IsValid)
             {
-                return this.BadRequest();
+                var user = this.accountService.GetUserByName(this.User.Identity.Name);
+
+                var isUsernameChanged = this.accountService.ChangeUsername(user, model.Username);
+
+                var passwordCheck = this.accountService.CheckPassword(user, model.Password);
+                if (!passwordCheck)
+                {
+                    return this.BadRequest();
+                }
+
+                var isLocationChanged = this.accountService.ChangeLocation(user, model.Location);
+
+                var isGenderChanged = this.accountService.ChangeGender(user, model.Gender);
+
+                return this.View("Profile");
             }
+            else
+            {
+                var result = this.View("Error", ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
 
-            var isLocationChanged = this.accountService.ChangeLocation(user, model.Location);
-
-            var isGenderChanged = this.accountService.ChangeGender(user, model.Gender);
-
-            return this.View("Profile");
+                return result;
+            }
         }
 
         [Authorize]
@@ -131,23 +142,23 @@ namespace Forum.Web.Controllers.Account
 
         [Authorize]
         [HttpPost]
-        public IActionResult ChangePassword(string oldPassword, string newPassword)
+        public IActionResult ChangePassword(ChangePasswordInputModel model)
         {
-            var user = this.accountService.GetUser(this.User);
-
-            var passwordCheck = this.accountService.CheckPassword(user, oldPassword);
-            if (!passwordCheck)
+            if (ModelState.IsValid)
             {
-                return this.BadRequest();
-            }
+                var user = this.accountService.GetUser(this.User);
 
-            var result = this.accountService.ChangePassword(user, oldPassword, newPassword);
-            if (!result)
+                this.accountService.ChangePassword(user, model.OldPassword, model.NewPassword);
+               
+                return this.View("Profile");
+            }
+            else
             {
-                return this.BadRequest();
-            }
+                var result = this.View("Error", ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
 
-            return this.View("Profile");
+                return result;
+            }
         }
 
         [Authorize]
@@ -158,25 +169,29 @@ namespace Forum.Web.Controllers.Account
 
         [Authorize]
         [HttpPost]
-        public IActionResult DeleteAccount(string username, string password)
-        {
-            var user = this.accountService.GetUserByName(username);
-            if (user == null || this.User.Identity.Name != username)
+        public IActionResult DeleteAccount(DeleteUserInputModel model)
+        { 
+            var user = this.accountService.GetUserByName(model.Username);
+            if (user == null || this.User.Identity.Name != model.Username)
             {
-                return this.BadRequest();
+                this.ModelState.AddModelError("Invalid user", "Error. Invalid username and password.");
             }
 
-            var passwordCheck = this.accountService.CheckPassword(user, password);
-            if (!passwordCheck)
+            if (ModelState.IsValid)
             {
-                return this.BadRequest();
+                this.accountService.LogoutUser();
+
+                this.accountService.DeleteAccount(user);
+
+                return this.Redirect("/");
             }
+            else
+            {
+                var result = this.View("Error", ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
 
-            this.accountService.LogoutUser();
-
-            this.accountService.DeleteAccount(user);
-
-            return this.Redirect("/");
+                return result;
+            }
         }
 
         [Authorize]
