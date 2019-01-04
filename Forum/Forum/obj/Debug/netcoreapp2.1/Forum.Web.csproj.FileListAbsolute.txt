@@ -78,12 +78,6 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Report\Reply\_ReplyReportsPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Report\Post\_PostReportsPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Report\Quote\_QuoteReportsPartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_MyProfilePartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_SettingsPartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_ChangePasswordPartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_DeleteAccountPartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_EditProfilePartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_ChangeUsernamePartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_MenuPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_MessagesPanelPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_ChatViewPartial.g.cshtml.cs
@@ -93,8 +87,6 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_GdprConsentPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ConsentPartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_SearchUsernamePartial.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\Details.g.cshtml.cs
-C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Views\Account\_SendMessagePartial.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\Role\Index.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\_ViewImports.g.cshtml.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\Owner\Views\_ViewStart.g.cshtml.cs
@@ -103,3 +95,13 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\n
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.Common.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\bin\Debug\netcoreapp2.1\Forum.Services.Common.pdb
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Settings\Profile.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Settings\_ChangePasswordPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Settings\_DeleteAccountPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Settings\_EditProfilePartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Settings\_SettingsPartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\_ViewImports.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\_ViewStart.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Profile\Details.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Profile\_MyProfilePartial.g.cshtml.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum\obj\Debug\netcoreapp2.1\Razor\Areas\AccountPanel\Views\Profile\_SendMessagePartial.g.cshtml.cs

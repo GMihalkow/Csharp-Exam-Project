@@ -20,6 +20,8 @@ namespace Forum.Services.Interfaces.Post
 
         bool DoesPostExist(string Id);
 
+        int GetTotalPostsCount();
+
         int ViewPost(string id);
 
         IEnumerable<ILatestPostViewModel> GetLatestPosts();

@@ -8,8 +8,6 @@ namespace Forum.Web.Attributes.CustomValidationAttributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
     public class AllowedImageExtensions : ValidationAttribute
     {
-        private IAccountService accountService;
-
         public AllowedImageExtensions()
         {
         }
@@ -26,10 +24,10 @@ namespace Forum.Web.Attributes.CustomValidationAttributes
                 return ValidationResult.Success;
             }
 
-            this.accountService = (IAccountService)validationContext
-                   .GetService(typeof(IAccountService));
+            var manageAccountService = (Areas.Profile.Services.Account.Contracts.IProfileService)validationContext
+                   .GetService(typeof(Areas.Profile.Services.Account.Contracts.IProfileService));
 
-            var result = this.accountService.IsImageExtensionValid(image.FileName);
+            var result = manageAccountService.IsImageExtensionValid(image.FileName);
 
             if (result)
             {

@@ -43,6 +43,12 @@ using Forum.Web.Utilities;
 using Forum.Web.Areas.Owner.Services.Contracts;
 using Forum.Web.Areas.Owner.Services;
 using Forum.Web.Areas.Owner.ViewModels.Role;
+using Forum.Web.Areas.AccountPanel.Services.Settings;
+using Forum.Web.Areas.AccountPanel.Services.Settings.Contracts;
+using Forum.Web.Areas.Settings.ViewModels.Settings;
+using Forum.Web.Areas.Profile.Services.Account.Contracts;
+using Forum.Web.Areas.Profile.Services.Account;
+using Forum.Web.Areas.AccountPanel.ViewModels.Profile;
 
 namespace Forum
 {
@@ -162,8 +168,10 @@ namespace Forum
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReplyService, ReplyService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IQuoteService, QuoteService>();
+            services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IDbService, DbService>();
             services.AddScoped<IUserClaimsPrincipalFactory<ForumUser>, UserClaimsPrincipalFactory<ForumUser, IdentityRole>>();
 

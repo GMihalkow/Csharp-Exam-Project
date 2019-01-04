@@ -34,7 +34,10 @@ namespace Forum.Web.Controllers.Account
             }
             else
             {
-                return this.View(model);
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
             }
         }
 
@@ -55,7 +58,10 @@ namespace Forum.Web.Controllers.Account
             }
             else
             {
-                return this.View(model);
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
             }
         }
 
@@ -64,11 +70,12 @@ namespace Forum.Web.Controllers.Account
         {
             var user = this.accountService.GetUserByName(this.User.Identity.Name);
 
-            this.ViewData["profilePicUrl"] = user.ProfilePicutre;
+            this.ViewData["profilePicUrl"] = user.ProfilePicutre ?? null;
 
             return this.View();
         }
 
+        [Authorize]
         public IActionResult Dismiss()
         {
             this.accountService.LogoutUser();
@@ -76,123 +83,12 @@ namespace Forum.Web.Controllers.Account
             return this.Redirect("/Account/Logout");
         }
 
+        [Authorize]
         public IActionResult Logout()
         {
             return this.View();
         }
-
-        [Authorize]
-        public PartialViewResult MyProfile()
-        {
-            var model = this.accountService.GetProfileInfo(this.User);
-
-            return this.PartialView("_MyProfilePartial", model);
-        }
-
-        [Authorize]
-        public PartialViewResult Settings()
-        {
-            return this.PartialView("_SettingsPartial");
-        }
-
-        [Authorize]
-        public PartialViewResult EditProfile()
-        {
-            var model = this.accountService.MapEditModel(this.User.Identity.Name);
-
-            return this.PartialView("_EditProfilePartial", model);
-        }
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult EditProfile(EditProfileInputModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = this.accountService.GetUserByName(this.User.Identity.Name);
-
-                var isUsernameChanged = this.accountService.ChangeUsername(user, model.Username);
-
-                var passwordCheck = this.accountService.CheckPassword(user, model.Password);
-                if (!passwordCheck)
-                {
-                    return this.BadRequest();
-                }
-
-                var isLocationChanged = this.accountService.ChangeLocation(user, model.Location);
-
-                var isGenderChanged = this.accountService.ChangeGender(user, model.Gender);
-
-                return this.View("Profile");
-            }
-            else
-            {
-                var result = this.View("Error", ModelState);
-                result.StatusCode = (int)HttpStatusCode.BadRequest;
-
-                return result;
-            }
-        }
-
-        [Authorize]
-        public PartialViewResult ChangePassword()
-        {
-            return this.PartialView("_ChangePasswordPartial");
-        }
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult ChangePassword(ChangePasswordInputModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = this.accountService.GetUser(this.User);
-
-                this.accountService.ChangePassword(user, model.OldPassword, model.NewPassword);
-               
-                return this.View("Profile");
-            }
-            else
-            {
-                var result = this.View("Error", ModelState);
-                result.StatusCode = (int)HttpStatusCode.BadRequest;
-
-                return result;
-            }
-        }
-
-        [Authorize]
-        public PartialViewResult DeleteAccount()
-        {
-            return this.PartialView("_DeleteAccountPartial");
-        }
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult DeleteAccount(DeleteUserInputModel model)
-        { 
-            var user = this.accountService.GetUserByName(model.Username);
-            if (user == null || this.User.Identity.Name != model.Username)
-            {
-                this.ModelState.AddModelError("Invalid user", "Error. Invalid username and password.");
-            }
-
-            if (ModelState.IsValid)
-            {
-                this.accountService.LogoutUser();
-
-                this.accountService.DeleteAccount(user);
-
-                return this.Redirect("/");
-            }
-            else
-            {
-                var result = this.View("Error", ModelState);
-                result.StatusCode = (int)HttpStatusCode.NotFound;
-
-                return result;
-            }
-        }
+        
 
         [Authorize]
         public PartialViewResult MessagesPanel()
@@ -230,50 +126,6 @@ namespace Forum.Web.Controllers.Account
             var result = this.PartialView("_ChatViewPartial", model);
 
             return result;
-        }
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult UploadProfilePicture([AllowedImageExtensions] IFormFile image)
-        {
-            if (image == null)
-            {
-                return this.BadRequest();
-            }
-            //TODO: Add errors
-            if (ModelState.IsValid)
-            {
-                this.accountService.UploadProfilePicture(image, this.User.Identity.Name);
-                return this.Redirect("/Account/Profile");
-            }
-            else
-            {
-                return this.BadRequest();
-            }
-        }
-
-        [Authorize]
-        public IActionResult DownloadInfo()
-        {
-            var byteArr = this.accountService.BuildFile(this.User);
-
-            return this.File(byteArr, "text/json", "info.txt");
-        }
-
-        [Authorize]
-        public IActionResult Details(string id)
-        {
-            var user = this.accountService.GetUserById(id);
-
-            this.ViewData["profilePicUrl"] = user.ProfilePicutre;
-
-            this.ViewData["userId"] = user.Id;
-
-            this.ViewData["username"] = user.UserName;
-            
-            var model = this.accountService.GetProfileInfo(this.User);
-
-            return this.View(model);
         }
     }
 }

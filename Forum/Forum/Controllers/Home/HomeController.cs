@@ -26,9 +26,9 @@
             IndexInfoViewModel viewModel = new IndexInfoViewModel
             {
                 Categories = this.categoryService.GetUsersCategories().ToArray(),
-                TotalUsersCount = this.accountService.GetUsersCount(),
+                TotalUsersCount = this.accountService.GetUsernames().Count(),
                 NewestUser = this.accountService.GetNewestUser(),
-                TotalPostsCount = this.accountService.GetTotalPostsCount(),
+                TotalPostsCount = this.postService.GetTotalPostsCount(),
                 LatestPosts = this.postService.GetLatestPosts(),
                 PopularPosts = this.postService.GetPopularPosts()
             };

@@ -1,10 +1,10 @@
-﻿@using Forum.Web.ViewModels.Account;
+﻿@using Forum.Web.Areas.Settings.ViewModels.Settings
 @model DeleteUserInputModel;
 
 <div class="text-center p-10 text-white menu-bg-forum">
     <h2 class="text-center text-white">Enter Account Information</h2>
     <hr class="bg-white" />
-    <form asp-controller="Account" asp-action="DeleteAccount" method="post" class="m-10">
+    <form asp-area="AccountPanel" asp-controller="Settings" asp-action="DeleteAccount" method="post" class="m-10">
         <div asp-validation-summary="All" class="text-danger"></div>
         <h3 class="m-0"><label>Username</label></h3>
         <div class="block">

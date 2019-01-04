@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Areas\AccountPanel\Views\Shared\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,19 +31,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\AccountPanel\Views\Settings\Profile.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\AccountPanel\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\AccountPanel\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Owner\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Owner\Views\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Account\Details.cshtml">
+    <Content Update="Areas\AccountPanel\Views\Profile\Details.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Account\_DeleteAccountPartial.cshtml">
+    <Content Update="Areas\AccountPanel\Views\Settings\_DeleteAccountPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Account\_ChangePasswordPartial.cshtml">
+    <Content Update="Areas\AccountPanel\Views\Settings\_ChangePasswordPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Post\Edit.cshtml">

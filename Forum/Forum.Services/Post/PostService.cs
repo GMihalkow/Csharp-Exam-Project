@@ -2,14 +2,6 @@
 {
     using AutoMapper;
     using Ganss.XSS;
-    using global::Forum.Models;
-    using global::Forum.Services.Common;
-    using global::Forum.Services.Interfaces.Db;
-    using global::Forum.Services.Interfaces.Forum;
-    using global::Forum.Services.Interfaces.Post;
-    using global::Forum.Services.Interfaces.Quote;
-    using global::Forum.ViewModels.Interfaces.Post;
-    using global::Forum.ViewModels.Post;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -19,14 +11,14 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
-    public class PostService : IPostService
+    public class PostService : Interfaces.Post.IPostService
     {
         private readonly IMapper mapper;
-        private readonly IQuoteService quoteService;
-        private readonly IDbService dbService;
-        private readonly IForumService forumService;
+        private readonly Interfaces.Quote.IQuoteService quoteService;
+        private readonly Interfaces.Db.IDbService dbService;
+        private readonly Interfaces.Forum.IForumService forumService;
 
-        public PostService(IMapper mapper, IQuoteService quoteService, IDbService dbService, IForumService forumService)
+        public PostService(IMapper mapper, Interfaces.Quote.IQuoteService quoteService, Interfaces.Db.IDbService dbService, Interfaces.Forum.IForumService forumService)
         {
             this.mapper = mapper;
             this.quoteService = quoteService;
@@ -34,9 +26,9 @@
             this.forumService = forumService;
         }
 
-        public async Task AddPost(IPostInputModel model, ForumUser user, string forumId)
+        public async Task AddPost(ViewModels.Interfaces.Post.IPostInputModel model, Models.ForumUser user, string forumId)
         {
-            var post = this.mapper.Map<Post>(model);
+            var post = this.mapper.Map<Models.Post>(model);
 
             var forum =
                 this.forumService
@@ -58,14 +50,9 @@
             return result;
         }
 
-        public int Edit(IEditPostInputModel model)
+        public int Edit(ViewModels.Interfaces.Post.IEditPostInputModel model)
         {
-            var post =
-                this.dbService
-                .DbContext
-                .Posts
-                .Where(p => p.Id == model.Id)
-                .FirstOrDefault();
+            var post = this.dbService.DbContext.Posts.Where(p => p.Id == model.Id).FirstOrDefault();
 
             post.Name = model.Name;
             post.ForumId = model.ForumId;
@@ -74,24 +61,18 @@
             return this.dbService.DbContext.SaveChanges();
         }
 
-        public IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal)
+        public ViewModels.Interfaces.Post.IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal)
         {
-            var post =
-                this.dbService
-                .DbContext
-                .Posts
-                .Include(p => p.Forum)
-                .Where(p => p.Id == Id)
-                .FirstOrDefault();
+            var post = this.dbService.DbContext.Posts.Include(p => p.Forum).Where(p => p.Id == Id).FirstOrDefault();
 
-            var model = this.mapper.Map<EditPostInputModel>(post);
+            var model = this.mapper.Map<ViewModels.Post.EditPostInputModel>(post);
 
             model.AllForums = this.forumService.GetAllForums(principal);
 
             return model;
         }
 
-        public IEnumerable<ILatestPostViewModel> GetLatestPosts()
+        public IEnumerable<ViewModels.Interfaces.Post.ILatestPostViewModel> GetLatestPosts()
         {
             var latestPosts =
                 this.dbService
@@ -100,13 +81,13 @@
                 .Include(p => p.Author)
                 .OrderByDescending(p => p.StartedOn)
                 .Take(3)
-                .Select(p => this.mapper.Map<LatestPostViewModel>(p))
+                .Select(p => this.mapper.Map<ViewModels.Post.LatestPostViewModel>(p))
                 .ToList();
 
             return latestPosts;
         }
 
-        public IEnumerable<IPopularPostViewModel> GetPopularPosts()
+        public IEnumerable<ViewModels.Interfaces.Post.IPopularPostViewModel> GetPopularPosts()
         {
             var popularPosts =
                 this.dbService
@@ -114,15 +95,15 @@
                 .Posts
                 .OrderByDescending(p => p.Views)
                 .Take(3)
-                .Select(p => this.mapper.Map<PopularPostViewModel>(p))
+                .Select(p => this.mapper.Map<ViewModels.Post.PopularPostViewModel>(p))
                 .ToList();
 
             return popularPosts;
         }
 
-        public IPostViewModel GetPost(string id, int start)
+        public ViewModels.Interfaces.Post.IPostViewModel GetPost(string id, int start)
         {
-            Post post =
+            Models.Post post =
                 this.dbService
                 .DbContext
                 .Posts
@@ -139,7 +120,7 @@
                 .ThenInclude(p => p.Posts)
                 .FirstOrDefault(p => p.Id == id);
 
-            PostViewModel viewModel = this.mapper.Map<PostViewModel>(post);
+            ViewModels.Post.PostViewModel viewModel = this.mapper.Map<ViewModels.Post.PostViewModel>(post);
 
             viewModel.Replies =
                 viewModel
@@ -148,7 +129,7 @@
                 .OrderBy(r => r.RepliedOn)
                 .Take(5)
                 .ToList();
-            
+
             return viewModel;
         }
 
@@ -216,7 +197,7 @@
             }
 
             //Valdiating the allowed tags
-            var sanitizer = new HtmlSanitizer(ServicesConstants.AllowedTags);
+            var sanitizer = new HtmlSanitizer(Common.ServicesConstants.AllowedTags);
 
             var result = sanitizer.Sanitize(sb.ToString().TrimEnd());
 
@@ -225,12 +206,7 @@
 
         public int ViewPost(string id)
         {
-            var post =
-                this.dbService
-                .DbContext
-                .Posts
-                .Where(p => p.Id == id)
-                .FirstOrDefault();
+            var post = this.dbService.DbContext.Posts.Where(p => p.Id == id).FirstOrDefault();
 
             post.Views++;
 
@@ -244,6 +220,13 @@
             var result = (int)Math.Ceiling(repliesCount / 5.0);
 
             return result;
+        }
+
+        public int GetTotalPostsCount()
+        {
+            int totalPostsCount = this.dbService.DbContext.Posts.Count();
+
+            return totalPostsCount;
         }
     }
 }

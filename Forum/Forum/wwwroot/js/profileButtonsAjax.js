@@ -3,7 +3,7 @@
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/MyProfile",
+                url: "/AccountPanel/Profile/MyProfile",
                 success: function (test) {
                     $('#profile-target-div').html(test);
                 }
@@ -43,7 +43,7 @@ $("#settingsButton")
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/Settings",
+                url: "/AccountPanel/Settings/Settings",
                 success: function (test) {
                     $('#profile-target-div').html(test);
                     $.getScript("../js/accountPanelSettings.js");

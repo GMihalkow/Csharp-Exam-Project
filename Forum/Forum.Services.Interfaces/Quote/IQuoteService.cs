@@ -11,5 +11,7 @@ namespace Forum.Services.Interfaces.Quote
         IEnumerable<IQuoteViewModel> GetQuotesByPost(string id);
 
         Models.Quote GetQuote(string id);
+
+        int DeleteUserQuotes(ForumUser user);
     }
 }

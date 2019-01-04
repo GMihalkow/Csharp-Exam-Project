@@ -3,11 +3,9 @@
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/EditProfile",
+                url: "/AccountPanel/Settings/EditProfile",
                 success: function (test) {
                     $('#account-panel').html(test);
-                    //$.getScript("../lib/jquery-validation/dist/jquery.validate.js");
-                    //$.getScript("../lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js");
                 }
             });
 
@@ -35,7 +33,7 @@ $("#changePasswordButton")
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/ChangePassword",
+                url: "/AccountPanel/Settings/ChangePassword",
                 success: function (test) {
                     $('#account-panel').html(test);
                 }
@@ -65,7 +63,7 @@ $("#deleteAccButton")
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/DeleteAccount",
+                url: "/AccountPanel/Settings/DeleteAccount",
                 success: function (test) {
                     $('#account-panel').html(test);
                 }

@@ -5,7 +5,6 @@ using AutoMapper;
 using Forum.MapConfiguration.Contracts;
 using Forum.Models;
 using Forum.Services.Interfaces.Db;
-using Forum.Services.Interfaces.Post;
 using Forum.ViewModels.Interfaces.Quote;
 using Forum.ViewModels.Quote;
 using Microsoft.AspNetCore.Authorization;
@@ -34,6 +33,19 @@ namespace Forum.Services.Quote
             quote.QuotedOn = DateTime.UtcNow;
             
             this.dbService.DbContext.Quotes.Add(quote);
+            return this.dbService.DbContext.SaveChanges();
+        }
+
+        public int DeleteUserQuotes(ForumUser user)
+        {
+            var quotes =
+                this.dbService
+                .DbContext
+                .Quotes
+                .Where(q => q.AuthorId == user.Id)
+                .ToList();
+
+            this.dbService.DbContext.RemoveRange(quotes);
             return this.dbService.DbContext.SaveChanges();
         }
 
