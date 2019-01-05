@@ -9,7 +9,7 @@ $("#chatButton")
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/Chat",
+                url: "/AccountPanel/Chat/Chat",
                 success: function (test) {
                     $('#messages-panel').html(test);
                     $.getScript("../js/site.js");
@@ -22,7 +22,7 @@ $("#chatButton")
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/RecentConversations",
+                url: "/AccountPanel/Chat/RecentConversations",
                 success: function (test) {
                     $('#chat-conversations-div').html(test);
                 }

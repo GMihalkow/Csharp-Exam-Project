@@ -1,7 +1,7 @@
-﻿using Forum.Services.Interfaces.Chat;
+﻿using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Chat;
 using Forum.Services.Interfaces.Message;
 using Forum.ViewModels.Message;
-using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;

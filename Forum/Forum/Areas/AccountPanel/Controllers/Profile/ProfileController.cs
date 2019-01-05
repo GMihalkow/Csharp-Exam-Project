@@ -1,7 +1,7 @@
-﻿using Forum.Web.Areas.AccountPanel.Services.Settings.Contracts;
-using Forum.Web.Areas.Profile.Services.Account.Contracts;
-using Forum.Web.Attributes.CustomValidationAttributes;
-using Forum.Web.Services.Account.Contracts;
+﻿using Forum.Services.Common.Attributes.Validation;
+using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Profile;
+using Forum.Services.Interfaces.Settings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

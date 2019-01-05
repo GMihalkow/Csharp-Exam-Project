@@ -56,6 +56,18 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "CloudinaryDotNet/1.6.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/CloudinaryDotNet.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/CloudinaryDotNet.dll": {}
+        }
+      },
       "HtmlSanitizer/4.0.199": {
         "type": "package",
         "dependencies": {
@@ -2274,6 +2286,9 @@
       "Forum.Services.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Forum.Services.Interfaces": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Forum.Services.Common.dll": {}
         },
@@ -2302,6 +2317,7 @@
         "dependencies": {
           "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
+          "Forum.Services.Common": "1.0.0",
           "Forum.Services.Interfaces": "1.0.0",
           "Forum.ViewModels.Interfaces": "1.0.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3"
@@ -2380,6 +2396,23 @@
         "automapper.extensions.microsoft.dependencyinjection.nuspec",
         "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll",
         "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.pdb"
+      ]
+    },
+    "CloudinaryDotNet/1.6.0": {
+      "sha512": "HKROJitzDyQ6X8sGP4KoThLU0UKHaPcR3Rr9ahMyF4WgwtIMC/UAivn7328tJGR7MgXZ+DOXVj+ecm2thHC1xw==",
+      "type": "package",
+      "path": "cloudinarydotnet/1.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "cloudinarydotnet.1.6.0.nupkg.sha512",
+        "cloudinarydotnet.nuspec",
+        "lib/net40/CloudinaryDotNet.dll",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/netcore/CloudinaryDotNet.deps.json",
+        "lib/netcore/CloudinaryDotNet.dll",
+        "lib/netstandard1.3/CloudinaryDotNet.deps.json",
+        "lib/netstandard1.3/CloudinaryDotNet.dll"
       ]
     },
     "HtmlSanitizer/4.0.199": {
@@ -7140,6 +7173,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "CloudinaryDotNet >= 1.6.0",
       "Forum.Data >= 1.0.0",
       "Forum.MapConfiguration >= 1.0.0",
       "Forum.Models >= 1.0.0",
@@ -7215,6 +7249,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "CloudinaryDotNet": {
+            "target": "Package",
+            "version": "[1.6.0, )"
+          },
           "HtmlSanitizer": {
             "target": "Package",
             "version": "[4.0.199, )"

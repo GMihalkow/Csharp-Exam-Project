@@ -4,11 +4,11 @@
     using Forum.Web.Controllers;
     using Forum.Web.ViewModels.Home;
     using System.Linq;
-    using Forum.Web.Services.Account.Contracts;
     using Forum.Services.Interfaces.Category;
     using Microsoft.AspNetCore.Http;
     using System;
     using Forum.Services.Interfaces.Post;
+    using Forum.Services.Interfaces.Account;
 
     public class HomeController : BaseController
     {

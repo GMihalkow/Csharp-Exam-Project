@@ -1,10 +1,8 @@
-﻿using Forum.Services.Interfaces.Message;
+﻿using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Message;
+using Forum.ViewModels.Account;
 using Forum.ViewModels.Message;
-using Forum.Web.Attributes.CustomValidationAttributes;
-using Forum.Web.Services.Account.Contracts;
-using Forum.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -89,43 +87,5 @@ namespace Forum.Web.Controllers.Account
             return this.View();
         }
         
-
-        [Authorize]
-        public PartialViewResult MessagesPanel()
-        {
-            return this.PartialView("_MessagesPanelPartial");
-        }
-
-        [Authorize]
-        public PartialViewResult Chat()
-        {
-            return this.PartialView("_WeclomeChatViewPartial");
-        }
-
-        [Authorize]
-        public PartialViewResult RecentConversations()
-        {
-            this.ViewData["userNames"] = this.accountService.GetUsernames();
-
-            this.ViewData["recentConversations"] = this.messageService.GetRecentConversations(this.User.Identity.Name);
-
-            this.ViewData["unreadMessages"] = this.messageService.GetUnreadMessages(this.User.Identity.Name);
-
-            return this.PartialView("_RecentConversationsPartial");
-        }
-
-        [Authorize]
-        [HttpPost]
-        public PartialViewResult ChatWithSomebody([FromBody] SendMessageInputModel model)
-        {
-            var recieverId = this.accountService.GetUserByName(model.RecieverName).Id;
-
-            model.Messages = this.messageService.GetConversationMessages(this.User.Identity.Name, model.RecieverName, model.ShowAll);
-            model.RecieverId = recieverId;
-
-            var result = this.PartialView("_ChatViewPartial", model);
-
-            return result;
-        }
     }
 }

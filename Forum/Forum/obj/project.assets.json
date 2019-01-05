@@ -4788,6 +4788,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
+          "CloudinaryDotNet": "1.6.0",
           "Forum.Data": "1.0.0",
           "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
@@ -4808,6 +4809,9 @@
       "Forum.Services.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Forum.Services.Interfaces": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Forum.Services.Common.dll": {}
         },
@@ -4836,6 +4840,7 @@
         "dependencies": {
           "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
+          "Forum.Services.Common": "1.0.0",
           "Forum.Services.Interfaces": "1.0.0",
           "Forum.ViewModels.Interfaces": "1.0.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3"

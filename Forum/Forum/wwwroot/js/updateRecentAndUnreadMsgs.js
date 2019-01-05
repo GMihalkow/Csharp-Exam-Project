@@ -3,7 +3,7 @@
     $.ajax(
         {
             type: "GET",
-            url: "/Account/RecentConversations",
+            url: "/AccountPanel/Chat/RecentConversations",
             success: function (test) {
                 var oldSearchValue = document.getElementById("myInput").value;
 

@@ -1,6 +1,6 @@
-﻿using Forum.Services.Interfaces.Reply;
+﻿using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Reply;
 using Forum.ViewModels.Reply;
-using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

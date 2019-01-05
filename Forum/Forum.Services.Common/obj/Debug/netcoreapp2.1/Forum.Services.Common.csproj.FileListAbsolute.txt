@@ -7,3 +7,14 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Co
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.AssemblyInfo.cs
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Data.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Models.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Services.Interfaces.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Services.Interfaces.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Data.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.MapConfiguration.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.Models.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\bin\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Common\obj\Debug\netcoreapp2.1\Forum.Services.Common.csproj.CopyComplete

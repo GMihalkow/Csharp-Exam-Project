@@ -1,6 +1,6 @@
 ﻿namespace Forum.Web.Controllers
 {
-    using global::Forum.Web.Services.Account.Contracts;
+    using global::Forum.Services.Interfaces.Account;
     using Microsoft.AspNetCore.Mvc;
 
     public class BaseController : Controller

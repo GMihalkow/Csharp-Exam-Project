@@ -8,7 +8,7 @@ $('#searchButton')
         $.ajax(
             {
                 type: "POST",
-                url: "/Account/ChatWithSomebody",
+                url: "/AccountPanel/Chat/ChatWithSomebody",
                 dataType: "text",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({

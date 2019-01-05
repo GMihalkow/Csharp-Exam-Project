@@ -84,7 +84,7 @@ $("#messagesPanelButton")
         $.ajax(
             {
                 type: "GET",
-                url: "/Account/MessagesPanel",
+                url: "/AccountPanel/Chat/MessagesPanel",
                 success: function (test) {
                     $('#profile-target-div').html(test);
                     $.getScript("../js/messagesPanel.js");

@@ -1,11 +1,11 @@
-﻿using Forum.Services.Interfaces.Report;
+﻿using Forum.Services.Common;
+using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Report;
 using Forum.Services.Interfaces.Report.Post;
 using Forum.Services.Interfaces.Report.Quote;
 using Forum.Services.Interfaces.Report.Reply;
 using Forum.ViewModels.Report;
 using Forum.Web.Attributes.CustomAuthorizeAttributes;
-using Forum.Web.Common;
-using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

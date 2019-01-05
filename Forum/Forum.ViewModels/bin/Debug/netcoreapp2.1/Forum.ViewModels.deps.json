@@ -10,6 +10,7 @@
         "dependencies": {
           "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
+          "Forum.Services.Common": "1.0.0",
           "Forum.Services.Interfaces": "1.0.0",
           "Forum.ViewModels.Interfaces": "1.0.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3"
@@ -1258,6 +1259,14 @@
           "Forum.Models.dll": {}
         }
       },
+      "Forum.Services.Common/1.0.0": {
+        "dependencies": {
+          "Forum.Services.Interfaces": "1.0.0"
+        },
+        "runtime": {
+          "Forum.Services.Common.dll": {}
+        }
+      },
       "Forum.Services.Interfaces/1.0.0": {
         "dependencies": {
           "Forum.Data": "1.0.0",
@@ -2102,6 +2111,11 @@
       "sha512": ""
     },
     "Forum.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Forum.Services.Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

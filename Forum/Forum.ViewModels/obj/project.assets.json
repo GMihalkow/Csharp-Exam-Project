@@ -1808,6 +1808,19 @@
           "bin/placeholder/Forum.Models.dll": {}
         }
       },
+      "Forum.Services.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "Forum.Services.Interfaces": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Forum.Services.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Forum.Services.Common.dll": {}
+        }
+      },
       "Forum.Services.Interfaces/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
@@ -5635,6 +5648,11 @@
       "path": "../Forum.Models/Forum.Models.csproj",
       "msbuildProject": "../Forum.Models/Forum.Models.csproj"
     },
+    "Forum.Services.Common/1.0.0": {
+      "type": "project",
+      "path": "../Forum.Services.Common/Forum.Services.Common.csproj",
+      "msbuildProject": "../Forum.Services.Common/Forum.Services.Common.csproj"
+    },
     "Forum.Services.Interfaces/1.0.0": {
       "type": "project",
       "path": "../Forum.Services.Interfaces/Forum.Services.Interfaces.csproj",
@@ -5650,6 +5668,7 @@
     ".NETCoreApp,Version=v2.1": [
       "Forum.MapConfiguration >= 1.0.0",
       "Forum.Models >= 1.0.0",
+      "Forum.Services.Common >= 1.0.0",
       "Forum.Services.Interfaces >= 1.0.0",
       "Forum.ViewModels.Interfaces >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.ViewFeatures >= 2.1.3",
@@ -5691,6 +5710,9 @@
             },
             "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj": {
               "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj"
+            },
+            "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Services.Common\\Forum.Services.Common.csproj": {
+              "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Services.Common\\Forum.Services.Common.csproj"
             },
             "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Services.Interfaces\\Forum.Services.Interfaces.csproj": {
               "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Services.Interfaces\\Forum.Services.Interfaces.csproj"

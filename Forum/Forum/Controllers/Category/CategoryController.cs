@@ -1,10 +1,10 @@
 ﻿namespace Forum.Web.Controllers.Category
 {
+    using global::Forum.Services.Common;
+    using global::Forum.Services.Interfaces.Account;
     using global::Forum.Services.Interfaces.Category;
     using global::Forum.ViewModels.Category;
     using global::Forum.Web.Attributes.CustomAuthorizeAttributes;
-    using global::Forum.Web.Common;
-    using global::Forum.Web.Services.Account.Contracts;
     using Microsoft.AspNetCore.Mvc;
     using System.Net;
 

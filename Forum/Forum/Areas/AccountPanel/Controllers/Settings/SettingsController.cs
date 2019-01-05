@@ -1,6 +1,6 @@
-﻿using Forum.Web.Areas.AccountPanel.Services.Settings.Contracts;
-using Forum.Web.Areas.Settings.ViewModels.Settings;
-using Forum.Web.Services.Account.Contracts;
+﻿using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Settings;
+using Forum.ViewModels.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -12,7 +12,7 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Settings
     public class SettingsController : Controller
     {
         private readonly ISettingsService settingsService;
-        private readonly Web.Services.Account.Contracts.IAccountService accountService;
+        private readonly IAccountService accountService;
 
         public SettingsController(ISettingsService settingsService, IAccountService accountService)
         {

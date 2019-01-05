@@ -1,9 +1,9 @@
 ﻿using Forum.Models;
+using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Quote;
 using Forum.Services.Interfaces.Reply;
 using Forum.ViewModels.Quote;
-using Forum.Web.Services.Account.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

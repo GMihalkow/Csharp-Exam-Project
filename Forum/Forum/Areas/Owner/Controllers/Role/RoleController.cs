@@ -1,5 +1,5 @@
-﻿using Forum.Web.Areas.Owner.Services.Contracts;
-using Forum.Web.Services.Account.Contracts;
+﻿using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Role;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Linq;
 namespace Forum.Web.Areas.Owner.Controllers.Role
 {
     [Area("Owner")]
-    [Authorize(Common.Role.Owner)]
+    [Authorize(Forum.Services.Common.Role.Owner)]
     [Route("[area]/[controller]")]
     public class RoleController : Controller
     {
