@@ -11,15 +11,11 @@ using System.Linq;
 
 namespace Forum.Services.Report.Quote
 {
-    public class QuoteReportService : IQuoteReportService
+    public class QuoteReportService : BaseService, IQuoteReportService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
-
         public QuoteReportService(IMapper mapper, IDbService dbService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
         }
 
         public IQuoteReportInputModel AddQuoteReport(IQuoteReportInputModel model, string authorId)

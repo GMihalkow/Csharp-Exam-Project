@@ -1,17 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Forum.ViewModels.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Interfaces.Forum
 {
     public interface IForumInputModel : IValidatableObject
     {
-        [Required]
-        [RegularExpression(@"^[a-zA-Z_\-0-9]*$", ErrorMessage = "{0} is allowed to contain only lowercase/uppercase characters, digits and '_', '-'")]
-        [StringLength(50, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [RegularExpression(ModelsConstants.NamesRegex, ErrorMessage = ErrorConstants.NamesAllowedCharactersError)]
+        [StringLength(ErrorConstants.MaximumNamesLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumNamesLength)]
         string Name { get; set; }
 
-        [Required]
-        [RegularExpression(@"^[a-zA-Z _\/\-0-9!.?()&]*$", ErrorMessage = "{0} is allowed to contain only lowercase/uppercase characters, digits and '_', '-', '(', ')', '&', '.', '/', '?', '!'")]
-        [StringLength(500, ErrorMessage = "{0} length must be between {1} and {2} characters.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [RegularExpression(ModelsConstants.DescriptionsRegex, ErrorMessage = ErrorConstants.DescriptionsAllowedCharactersError)]
+        [MinLength(ErrorConstants.MinimumDescriptionLength, ErrorMessage = ErrorConstants.MinimumLengthError)]
         string Description { get; set; }
 
         string Category { get; set; }

@@ -1,8 +1,8 @@
-﻿namespace Forum.Services.Db
-{
-    using global::Forum.Data;
-    using global::Forum.Services.Interfaces.Db;
+﻿using Forum.Data;
+using Forum.Services.Interfaces.Db;
 
+namespace Forum.Services.Db
+{
     public class DbService : IDbService
     {
         public DbService(ForumDbContext dbContext)

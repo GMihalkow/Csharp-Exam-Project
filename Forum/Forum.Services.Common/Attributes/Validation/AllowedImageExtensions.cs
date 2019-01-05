@@ -1,4 +1,5 @@
 ﻿using Forum.Services.Interfaces.Profile;
+using Forum.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -35,7 +36,7 @@ namespace Forum.Services.Common.Attributes.Validation
             }
             else
             {
-                return new ValidationResult("Allowed image extansions are .jpeg, .png, .jpg and .bmp");
+                return new ValidationResult(ErrorConstants.AllowedImgExtensionsError);
             }
         }
     }

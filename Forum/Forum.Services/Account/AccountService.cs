@@ -14,22 +14,19 @@ using Microsoft.Extensions.Options;
 
 namespace Forum.Services.Account
 {
-    public class AccountService : IAccountService
+    public class AccountService : BaseService, IAccountService
     {
-        private readonly IMapper mapper;
         private readonly UserManager<Models.ForumUser> userManager;
         private readonly IOptions<CloudConfiguration> cloudConfig;
         private readonly SignInManager<Models.ForumUser> signInManager;
-        private readonly IDbService dbService;
         private readonly IProfileService profileService;
 
-        public AccountService(IMapper mapper, UserManager<Models.ForumUser> userManager, IOptions<CloudConfiguration> CloudConfig, SignInManager<Models.ForumUser> signInManager, IDbService dbService, IProfileService profileService)
+        public AccountService(IMapper mapper, IDbService dbService, UserManager<Models.ForumUser> userManager, IOptions<CloudConfiguration> CloudConfig, SignInManager<Models.ForumUser> signInManager, IProfileService profileService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
             this.userManager = userManager;
             cloudConfig = CloudConfig;
             this.signInManager = signInManager;
-            this.dbService = dbService;
             this.profileService = profileService;
         }
 
@@ -79,15 +76,15 @@ namespace Forum.Services.Account
             {
                 if (this.dbService.DbContext.Users.Count() == 1)
                 {
-                    this.userManager.AddToRoleAsync(model, "Owner").GetAwaiter().GetResult();
+                    this.userManager.AddToRoleAsync(model, Common.Role.Owner).GetAwaiter().GetResult();
                 }
                 else if (this.dbService.DbContext.Users.Count() == 2)
                 {
-                    this.userManager.AddToRoleAsync(model, "Administrator").GetAwaiter().GetResult();
+                    this.userManager.AddToRoleAsync(model, Common.Role.Administrator).GetAwaiter().GetResult();
                 }
                 else
                 {
-                    this.userManager.AddToRoleAsync(model, "User").GetAwaiter().GetResult();
+                    this.userManager.AddToRoleAsync(model, Common.Role.User).GetAwaiter().GetResult();
                 }
 
                 if (viewModel.Image != null)
@@ -198,13 +195,6 @@ namespace Forum.Services.Account
                 .ToList();
 
             return usernames;
-        }
-
-        public int GetPagesCount(int usersCount)
-        {
-            var result = (int)Math.Ceiling(usersCount / 5.0);
-
-            return result;
         }
     }
 }

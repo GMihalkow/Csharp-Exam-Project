@@ -1,20 +1,20 @@
-﻿namespace Forum.ViewModels.Category
-{
-    using global::Forum.MapConfiguration.Contracts;
-    using System.ComponentModel.DataAnnotations;
-    using global::Forum.Models;
-    using global::Forum.ViewModels.Interfaces;
-    using global::Forum.ViewModels.Interfaces.Category;
-    using global::Forum.Models.Enums;
+﻿using Forum.MapConfiguration.Contracts;
+using System.ComponentModel.DataAnnotations;
+using Forum.ViewModels.Interfaces.Category;
+using Forum.Models.Enums;
+using Forum.ViewModels.Common;
 
-    public class CategoryInputModel : ICategoryInputModel, IMapTo<Category>
+namespace Forum.ViewModels.Category
+{
+
+    public class CategoryInputModel : ICategoryInputModel, IMapTo<Models.Category>
     {
-        [Required]
-        [StringLength(50, ErrorMessage = "{0} name must be between {1} and {2} characters long.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [StringLength(ErrorConstants.MaximumNamesLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumNamesLength)]
         public string Name { get; set; }
 
-        [Required]
-        [EnumDataType(typeof(CategoryType), ErrorMessage = "You must enter a valid {0} value.")]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [EnumDataType(typeof(CategoryType), ErrorMessage = ErrorConstants.MustEnterValidValueError)]
         public CategoryType Type { get; set; }
     }
 }

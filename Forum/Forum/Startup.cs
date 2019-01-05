@@ -57,6 +57,8 @@ using Forum.Services.Interfaces.Profile;
 using Forum.Services.Profile;
 using Forum.Services.Settings;
 using Forum.Services.Interfaces.Settings;
+using Forum.Services.Pagging;
+using Forum.Services.Interfaces.Pagging;
 
 namespace Forum
 {
@@ -171,6 +173,7 @@ namespace Forum
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPaggingService, PaggingService>();
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IRoleService, RoleService>();
@@ -197,16 +200,16 @@ namespace Forum
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Administrator",
+                options.AddPolicy(Role.Administrator,
                     authBuilder =>
                     {
-                        authBuilder.RequireRole("Administrator");
+                        authBuilder.RequireRole(Role.Administrator);
                     });
 
-                options.AddPolicy("Owner",
+                options.AddPolicy(Role.Owner,
                     authBuilder =>
                     {
-                        authBuilder.RequireRole("Owner");
+                        authBuilder.RequireRole(Role.Owner);
                     });
             });
 
@@ -243,7 +246,6 @@ namespace Forum
 
             //Custom middlewares
             app.UseMiddleware(typeof(SeedRolesMiddleware));
-            app.UseMiddleware(typeof(ThemesMiddleware));
 
             app.UseMvc(routes =>
             {

@@ -3,6 +3,7 @@ using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Quote;
 using Forum.Services.Interfaces.Reply;
+using Forum.ViewModels;
 using Forum.ViewModels.Quote;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -77,9 +78,13 @@ namespace Forum.Web.Controllers.Quote
         public IActionResult Quote(string id)
         {
             var quote = this.quoteService.GetQuote(id);
-            if (quote == null)
+            this.ModelState.AddModelError("invalid id", "Message = \"Invalid quote Id.");
+            if (!this.ModelState.IsValid)
             {
-                return this.View("Error", new ErrorViewModel { Message = "Invalid quote Id." });
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
             }
 
             var recieverName = quote.Author.UserName;

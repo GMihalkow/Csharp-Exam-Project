@@ -13,15 +13,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Forum.Services.Quote
 {
     [Authorize]
-    public class QuoteService : Interfaces.Quote.IQuoteService, IMapTo<Models.Quote>
+    public class QuoteService : BaseService, Interfaces.Quote.IQuoteService, IMapTo<Models.Quote>
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
-
         public QuoteService(IMapper mapper, IDbService dbService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
         }
 
         public int Add(IQuoteInputModel model, ForumUser user, string recieverName)
@@ -31,7 +27,7 @@ namespace Forum.Services.Quote
             quote.Author = user;
             quote.AuthorId = user.Id;
             quote.QuotedOn = DateTime.UtcNow;
-            
+
             this.dbService.DbContext.Quotes.Add(quote);
             return this.dbService.DbContext.SaveChanges();
         }

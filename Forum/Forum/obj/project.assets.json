@@ -4810,7 +4810,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "Forum.Services.Interfaces": "1.0.0"
+          "Forum.Services.Interfaces": "1.0.0",
+          "Forum.ViewModels.Common": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Forum.Services.Common.dll": {}
@@ -4842,6 +4843,7 @@
           "Forum.Models": "1.0.0",
           "Forum.Services.Common": "1.0.0",
           "Forum.Services.Interfaces": "1.0.0",
+          "Forum.ViewModels.Common": "1.0.0",
           "Forum.ViewModels.Interfaces": "1.0.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3"
         },
@@ -4852,12 +4854,23 @@
           "bin/placeholder/Forum.ViewModels.dll": {}
         }
       },
+      "Forum.ViewModels.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "compile": {
+          "bin/placeholder/Forum.ViewModels.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Forum.ViewModels.Common.dll": {}
+        }
+      },
       "Forum.ViewModels.Interfaces/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
           "Forum.MapConfiguration": "1.0.0",
           "Forum.Models": "1.0.0",
+          "Forum.ViewModels.Common": "1.0.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.3"
         },
         "compile": {
@@ -12792,6 +12805,11 @@
       "type": "project",
       "path": "../Forum.ViewModels/Forum.ViewModels.csproj",
       "msbuildProject": "../Forum.ViewModels/Forum.ViewModels.csproj"
+    },
+    "Forum.ViewModels.Common/1.0.0": {
+      "type": "project",
+      "path": "../Forum.ViewModels.Common/Forum.ViewModels.Common.csproj",
+      "msbuildProject": "../Forum.ViewModels.Common/Forum.ViewModels.Common.csproj"
     },
     "Forum.ViewModels.Interfaces/1.0.0": {
       "type": "project",

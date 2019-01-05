@@ -1,13 +1,13 @@
-﻿namespace Forum.Web.Controllers.Category
-{
-    using global::Forum.Services.Common;
-    using global::Forum.Services.Interfaces.Account;
-    using global::Forum.Services.Interfaces.Category;
-    using global::Forum.ViewModels.Category;
-    using global::Forum.Web.Attributes.CustomAuthorizeAttributes;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Net;
+﻿using Forum.Services.Common;
+using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Category;
+using Forum.ViewModels.Category;
+using Forum.Web.Attributes.CustomAuthorizeAttributes;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
+namespace Forum.Web.Controllers.Category
+{
     [AuthorizeRoles(Role.Administrator, Role.Owner)]
     public class CategoryController : BaseController
     {

@@ -8,8 +8,6 @@ namespace Forum.Services.Interfaces.Post
 {
     public interface IPostService
     {
-        int GetPagesCount(int repliesCount);
-
         IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal);
 
         Task AddPost(IPostInputModel model, ForumUser user, string forumId);

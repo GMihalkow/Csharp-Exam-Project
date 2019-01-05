@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Forum.MapConfiguration\Forum.MapConfiguration.csproj" />
     <ProjectReference Include="..\Forum.Models\Forum.Models.csproj" />
+    <ProjectReference Include="..\Forum.ViewModels.Common\Forum.ViewModels.Common.csproj" />
   </ItemGroup>
 
 </Project>

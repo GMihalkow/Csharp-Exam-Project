@@ -1,7 +1,25 @@
-﻿namespace Forum.Services
+﻿using AutoMapper;
+using Forum.Services.Interfaces.Db;
+using System;
+
+namespace Forum.Services
 {
-    public class BaseService
+    public abstract class BaseService
     {
-        //TODO: Add shared methods
+        protected readonly IMapper mapper;
+        protected readonly IDbService dbService;
+
+        public BaseService(IMapper mapper, IDbService dbService)
+        {
+            this.mapper = mapper;
+            this.dbService = dbService;
+        }
+
+        public int GetPagesCount(int postsCount)
+        {
+            var result = (int)Math.Ceiling(postsCount / 5.0);
+
+            return result;
+        }
     }
 }

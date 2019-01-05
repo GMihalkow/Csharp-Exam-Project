@@ -1,21 +1,23 @@
-﻿namespace Forum.Controllers
-{
-    using Microsoft.AspNetCore.Mvc;
-    using Forum.Web.Controllers;
-    using Forum.Web.ViewModels.Home;
-    using System.Linq;
-    using Forum.Services.Interfaces.Category;
-    using Microsoft.AspNetCore.Http;
-    using System;
-    using Forum.Services.Interfaces.Post;
-    using Forum.Services.Interfaces.Account;
+﻿using Microsoft.AspNetCore.Mvc;
+using Forum.Web.Controllers;
+using System.Linq;
+using Forum.Services.Interfaces.Category;
+using Microsoft.AspNetCore.Http;
+using System;
+using Forum.Services.Interfaces.Post;
+using Forum.Services.Interfaces.Account;
+using Forum.ViewModels.Home;
+using Forum.Services.Common;
 
+namespace Forum.Controllers
+{
     public class HomeController : BaseController
     {
         private readonly ICategoryService categoryService;
         private readonly IPostService postService;
 
-        public HomeController(IAccountService accountService, ICategoryService categoryService, IPostService postService) : base(accountService)
+        public HomeController(IAccountService accountService, ICategoryService categoryService, IPostService postService) 
+            : base(accountService)
         {
             this.categoryService = categoryService;
             this.postService = postService;
@@ -33,7 +35,7 @@
                 PopularPosts = this.postService.GetPopularPosts()
             };
 
-            if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
+            if (this.User.IsInRole(Role.Administrator) || this.User.IsInRole(Role.Owner))
             {
                 viewModel.Categories = this.categoryService.GetAllCategories().GetAwaiter().GetResult().ToArray();
             }
@@ -45,27 +47,7 @@
         {
             return this.View();
         }
-
-        public IActionResult ChangeTheme(string theme, string path)
-        {
-            if ((this.HttpContext.Request.Cookies.ContainsKey("Theme")))
-            {
-                this.HttpContext.Response.Cookies.Delete("Theme");
-                this.HttpContext.Response.Cookies.Append("Theme", theme, new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
-            }
-            else
-            {
-                this.HttpContext.Response.Cookies.Append("Theme", theme, new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
-            }
-            string result = path;
-            if (this.Request.Query.ContainsKey("?id"))
-            {
-                result = result + "?id=" + this.Request.Query["?id"];
-            }
-
-            return this.Redirect(result);
-        }
-
+        
         public IActionResult AcceptConsent()
         {
             this.Response.Cookies.Append("GDPR", "true", new CookieOptions { Path = "/", Expires = DateTime.UtcNow.AddDays(3), HttpOnly = false, IsEssential = true });

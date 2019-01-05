@@ -1,4 +1,5 @@
-﻿using Forum.Services.Interfaces.Chat;
+﻿using Forum.Services.Common;
+using Forum.Services.Interfaces.Chat;
 using Forum.Services.Interfaces.Message;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -31,16 +32,16 @@ namespace Forum.Services.Chat
 
                 var result = Encoding.UTF8.GetString(byteArr);
 
-                var splittedResult = result.Split(" - ");
+                var splittedResult = result.Split(ServicesConstants.MessagesSeparator);
 
                 string date = splittedResult[0];
 
                 string otherUserId = splittedResult[1];
 
-                if (result == "END")
-                {
-                    //TODO: break loop here
-                }
+                //if (result == "END")
+                //{
+                //    //TODO: break loop here
+                //}
 
                 var messages = this.messageService.GetLatestMessages(date, principal.Identity.Name, otherUserId);
 

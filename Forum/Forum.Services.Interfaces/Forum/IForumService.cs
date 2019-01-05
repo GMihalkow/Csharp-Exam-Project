@@ -23,8 +23,6 @@ namespace Forum.Services.Interfaces.Forum
 
         IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal);
 
-        int GetPagesCount(int postsCount);
-
         IEnumerable<string> GetForumPostsIds(string id);
     }
 }

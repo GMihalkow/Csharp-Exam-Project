@@ -16,24 +16,19 @@ using System.Text;
 
 namespace Forum.Services.Settings
 {
-    public class SettingsService : ISettingsService
+    public class SettingsService : BaseService, ISettingsService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
         private readonly IReplyService replyService;
-        private readonly SignInManager<ForumUser> signInManager;
         private readonly IQuoteService quoteService;
         private readonly IReportService reportService;
         private readonly IMessageService messageService;
         private readonly UserManager<ForumUser> userManager;
         private readonly IAccountService accountService;
 
-        public SettingsService(IMapper mapper, IDbService dbService, IReplyService replyService, SignInManager<ForumUser> signInManager, IQuoteService quoteService, IReportService reportService, IMessageService messageService, UserManager<ForumUser> userManager, IAccountService accountService)
+        public SettingsService(IMapper mapper, IDbService dbService, IReplyService replyService, IQuoteService quoteService, IReportService reportService, IMessageService messageService, UserManager<ForumUser> userManager, IAccountService accountService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
             this.replyService = replyService;
-            this.signInManager = signInManager;
             this.quoteService = quoteService;
             this.reportService = reportService;
             this.messageService = messageService;

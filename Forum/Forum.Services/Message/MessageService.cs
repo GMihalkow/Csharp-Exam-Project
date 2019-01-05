@@ -10,15 +10,11 @@ using System.Linq;
 
 namespace Forum.Services.Message
 {
-    public class MessageService : IMessageService
+    public class MessageService : BaseService, IMessageService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
-
         public MessageService(IMapper mapper, IDbService dbService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
         }
 
         public IEnumerable<Models.Message> GetConversationMessages(string firstPersonName, string secondPersonName, bool showAll)

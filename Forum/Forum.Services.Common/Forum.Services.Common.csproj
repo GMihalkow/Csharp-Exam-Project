@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Forum.Services.Interfaces\Forum.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Forum.ViewModels.Common\Forum.ViewModels.Common.csproj" />
   </ItemGroup>
 
 </Project>

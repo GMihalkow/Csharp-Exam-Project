@@ -24,10 +24,7 @@
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\AccountPanel\Views\Shared\" />
-    <Folder Include="Attributes\CustomValidationAttributes\" />
     <Folder Include="Common\" />
-    <Folder Include="Services\Account\Contracts\" />
-    <Folder Include="ViewModels\Account\" />
   </ItemGroup>
 
   <ItemGroup>

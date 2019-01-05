@@ -1,44 +1,45 @@
-﻿namespace Forum.ViewModels.Account
-{
-    using global::Forum.MapConfiguration.Contracts;
-    using global::Forum.Models;
-    using global::Forum.Services.Common.Attributes.Validation;
-    using global::Forum.ViewModels.Interfaces.Account;
-    using Microsoft.AspNetCore.Http;
-    using System.ComponentModel.DataAnnotations;
+﻿using Forum.MapConfiguration.Contracts;
+using Forum.Models;
+using Forum.Services.Common.Attributes.Validation;
+using Forum.ViewModels.Common;
+using Forum.ViewModels.Interfaces.Account;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
+namespace Forum.ViewModels.Account
+{
     public class RegisterUserViewModel : IMapTo<ForumUser>, IRegisterUserViewModel
     {
-        [Required(ErrorMessage = "You must enter a username.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
-        [UsernameExists("{0} already exists.")]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [StringLength(ErrorConstants.MaximumNamesLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumNamesLength)]
+        [UsernameExists(ErrorConstants.AlreadyExistsError)]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "You must enter an email address.")]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
         [EmailAddress]
-        [EmailExists("{0} already exists.")]
+        [EmailExists(ErrorConstants.AlreadyExistsError)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "You must enter a country name.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 2)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [StringLength(ErrorConstants.MaximumLocationLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumLocationLength)]
         public string Location { get; set; }
 
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "You must enter a password.")]
-        [Compare("ConfirmPassword", ErrorMessage = "Passwords do not match.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [Compare(nameof(ConfirmPassword), ErrorMessage = ErrorConstants.PasswordDontMatch)]
+        [StringLength(ErrorConstants.MaximumPasswordsLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumPasswordsLength)]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "You must confirm your password.")]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [Compare(nameof(Password), ErrorMessage = ErrorConstants.PasswordDontMatch)]
+        [StringLength(ErrorConstants.MaximumPasswordsLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumPasswordsLength)]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "You must select a gender.")]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
         public string Gender { get; set; }
         
-        [AllowedImageExtensions()]
+        [AllowedImageExtensions]
         public IFormFile Image { get; set; }
     }
 }

@@ -12,23 +12,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Services.Reply
 {
-    public class ReplyService : IReplyService
+    public class ReplyService : BaseService, IReplyService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
         private readonly IPostService postService;
 
         public ReplyService(IMapper mapper, IDbService dbService, IPostService postService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
             this.postService = postService;
         }
 
         public async Task<int> Add(IReplyInputModel model, ForumUser user)
         {
             var reply = this.mapper.Map<Models.Reply>(model);
-            
+
             reply.Author = user;
             reply.Description = this.postService.ParseDescription(reply.Description);
             reply.AuthorId = user.Id;
@@ -72,7 +69,7 @@ namespace Forum.Services.Reply
 
         public Models.Reply GetReply(string id)
         {
-            var reply = 
+            var reply =
                 this.dbService
                 .DbContext
                 .Replies

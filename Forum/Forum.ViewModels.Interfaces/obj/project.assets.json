@@ -1506,6 +1506,16 @@
         "runtime": {
           "bin/placeholder/Forum.Models.dll": {}
         }
+      },
+      "Forum.ViewModels.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "compile": {
+          "bin/placeholder/Forum.ViewModels.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Forum.ViewModels.Common.dll": {}
+        }
       }
     }
   },
@@ -4863,12 +4873,18 @@
       "type": "project",
       "path": "../Forum.Models/Forum.Models.csproj",
       "msbuildProject": "../Forum.Models/Forum.Models.csproj"
+    },
+    "Forum.ViewModels.Common/1.0.0": {
+      "type": "project",
+      "path": "../Forum.ViewModels.Common/Forum.ViewModels.Common.csproj",
+      "msbuildProject": "../Forum.ViewModels.Common/Forum.ViewModels.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Forum.MapConfiguration >= 1.0.0",
       "Forum.Models >= 1.0.0",
+      "Forum.ViewModels.Common >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.ViewFeatures >= 2.1.3",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
@@ -4908,6 +4924,9 @@
             },
             "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj": {
               "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.Models\\Forum.Models.csproj"
+            },
+            "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.ViewModels.Common\\Forum.ViewModels.Common.csproj": {
+              "projectPath": "C:\\Users\\Georgi-PC\\Documents\\Visual Studio 2017\\Projects\\Forum\\Forum.ViewModels.Common\\Forum.ViewModels.Common.csproj"
             }
           }
         }

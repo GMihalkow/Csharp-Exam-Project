@@ -1,4 +1,5 @@
 ﻿using Forum.MapConfiguration.Contracts;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Quote;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,8 +9,8 @@ namespace Forum.ViewModels.Quote
     {
         public string Id { get; set; }
 
-        [Required]
-        [MinLength(5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [MinLength(ErrorConstants.MinimumDescriptionLength, ErrorMessage = ErrorConstants.MinimumLengthError)]
         public string Description { get; set; }
 
         public string Quote { get; set; }

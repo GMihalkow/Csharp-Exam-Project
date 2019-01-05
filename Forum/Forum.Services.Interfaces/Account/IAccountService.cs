@@ -35,7 +35,5 @@ namespace Forum.Services.Interfaces.Account
         IEnumerable<ForumUser> GetUsers();
 
         IEnumerable<string> GetUsernames();
-
-        int GetPagesCount(int usersCount);
     }
 }

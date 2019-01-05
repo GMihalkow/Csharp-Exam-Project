@@ -11,18 +11,15 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Forum.Services.Role
 {
-    public class RoleService : IRoleService
+    public class RoleService : BaseService, IRoleService
     {
-        private readonly IDbService dbService;
-        private readonly IMapper mapper;
         private readonly IAccountService accountService;
         private readonly UserManager<ForumUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
         public RoleService(IDbService dbService, IMapper mapper, IAccountService accountService, UserManager<ForumUser> userManager, RoleManager<IdentityRole> roleManager)
+            : base(mapper, dbService)
         {
-            this.dbService = dbService;
-            this.mapper = mapper;
             this.accountService = accountService;
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -43,7 +40,7 @@ namespace Forum.Services.Role
                 userRole.Role = this.dbService.DbContext.Roles.Where(r => r.Id == userRole.RoleId).FirstOrDefault();
             }
 
-            usersRoles = 
+            usersRoles =
                 usersRoles
                 .Where(ur => ur.Role.Name != Common.Role.Owner)
                 .OrderBy(ur => ur.User.UserName)
@@ -84,7 +81,7 @@ namespace Forum.Services.Role
                 userRole.Role = this.dbService.DbContext.Roles.Where(r => r.Id == userRole.RoleId).FirstOrDefault();
             }
 
-            usersRoles = 
+            usersRoles =
                 usersRoles
                 .Where(ur => ur.Role.Name != Common.Role.Owner && ur.User.UserName.ToLower().StartsWith(str) || ur.User.UserName == str)
                 .OrderBy(ur => ur.User.UserName)

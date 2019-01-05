@@ -11,15 +11,11 @@ using System.Linq;
 
 namespace Forum.Services.Report.Post
 {
-    public class PostReportService : IPostReportService
+    public class PostReportService : BaseService, IPostReportService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
-
         public PostReportService(IMapper mapper, IDbService dbService)
+            :base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
         }
 
         public IPostReportInputModel AddPostReport(IPostReportInputModel model, string authorId)

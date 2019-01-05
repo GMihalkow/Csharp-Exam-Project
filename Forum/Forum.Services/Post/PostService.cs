@@ -1,28 +1,26 @@
-﻿namespace Forum.Services.Post.Contracts
-{
-    using AutoMapper;
-    using Ganss.XSS;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
+﻿using AutoMapper;
+using Forum.Services.Common;
+using Ganss.XSS;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-    public class PostService : Interfaces.Post.IPostService
+namespace Forum.Services.Post.Contracts
+{
+    public class PostService : BaseService, Interfaces.Post.IPostService
     {
-        private readonly IMapper mapper;
         private readonly Interfaces.Quote.IQuoteService quoteService;
-        private readonly Interfaces.Db.IDbService dbService;
         private readonly Interfaces.Forum.IForumService forumService;
 
         public PostService(IMapper mapper, Interfaces.Quote.IQuoteService quoteService, Interfaces.Db.IDbService dbService, Interfaces.Forum.IForumService forumService)
+            :base(mapper, dbService)
         {
-            this.mapper = mapper;
             this.quoteService = quoteService;
-            this.dbService = dbService;
             this.forumService = forumService;
         }
 
@@ -136,7 +134,7 @@
 
             var sb = new StringBuilder();
 
-            string pattern = @"(\[(\w+)\])(.*?)(\[\/\2\])";
+            string pattern = ServicesConstants.ParseTagsRegex;
             Regex tagsRegex = new Regex(pattern);
 
             ParseTags(inputArray, sb, tagsRegex);
@@ -212,13 +210,6 @@
             this.dbService.DbContext.SaveChanges();
 
             return post.Views;
-        }
-
-        public int GetPagesCount(int repliesCount)
-        {
-            var result = (int)Math.Ceiling(repliesCount / 5.0);
-
-            return result;
         }
 
         public int GetTotalPostsCount()

@@ -2,6 +2,7 @@
 using Forum.Models;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Reply;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Report;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,14 +13,14 @@ namespace Forum.ViewModels.Report
     {
         public string ReplyId { get; set; }
 
-        [Required]
-        [MinLength(5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [MinLength(ErrorConstants.MinimumDescriptionLength, ErrorMessage = ErrorConstants.MinimumLengthError)]
         public string Description { get; set; }
         
         public string PostId { get; set; }
 
-        [Required]
-        [StringLength(20, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [StringLength(ErrorConstants.MaximumNamesLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumNamesLength)]
         public string Title { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -35,7 +36,7 @@ namespace Forum.ViewModels.Report
             var reply = replyService.GetReply(model.ReplyId);
             if (reply == null)
             {
-                yield return new ValidationResult("Error. Invalid reply id.");
+                yield return new ValidationResult(ErrorConstants.InvalidReplyIdError);
             }
 
             if (postService.DoesPostExist(model.PostId))
@@ -44,7 +45,7 @@ namespace Forum.ViewModels.Report
             }
             else
             {
-                yield return new ValidationResult("Error. Invalid post id.");
+                yield return new ValidationResult(ErrorConstants.InvalidPostIdError);
             }
         }
     }

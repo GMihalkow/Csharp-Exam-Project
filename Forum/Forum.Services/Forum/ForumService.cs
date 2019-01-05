@@ -1,30 +1,28 @@
-﻿namespace Forum.Services.Forum
-{
-    using AutoMapper;
-    using global::Forum.Models;
-    using global::Forum.Models.Enums;
-    using global::Forum.Services.Interfaces.Category;
-    using global::Forum.Services.Interfaces.Db;
-    using global::Forum.Services.Interfaces.Forum;
-    using global::Forum.ViewModels.Forum;
-    using global::Forum.ViewModels.Interfaces.Forum;
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Claims;
+﻿using AutoMapper;
+using Forum.Models;
+using Forum.Models.Enums;
+using Forum.Services.Interfaces.Category;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.Interfaces.Forum;
+using Forum.ViewModels.Forum;
+using Forum.ViewModels.Interfaces.Forum;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
-    public class ForumService : IForumService
+namespace Forum.Services.Forum
+{
+
+    public class ForumService : BaseService, IForumService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
         private readonly ICategoryService categoryService;
 
         public ForumService(IMapper mapper, IDbService dbService, ICategoryService categoryService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
             this.categoryService = categoryService;
         }
 
@@ -43,7 +41,7 @@
             return forum;
         }
 
-        public IEnumerable<Post> GetPostsByForum(string id, int start)
+        public IEnumerable<Models.Post> GetPostsByForum(string id, int start)
         {
             SubForum forum = this.GetForum(id);
 
@@ -52,7 +50,7 @@
                 .Skip(start)
                 .Take(5)
                 .OrderBy(p => p.StartedOn)
-                .ToList() ?? new List<Post>();
+                .ToList() ?? new List<Models.Post>();
 
             return posts;
         }
@@ -63,7 +61,7 @@
                   this.mapper
                   .Map<SubForum>(model);
 
-            Category category = this.categoryService.GetCategoryById(categoryId);
+            Models.Category category = this.categoryService.GetCategoryById(categoryId);
 
             forum.CreatedOn = DateTime.UtcNow;
             forum.CategoryId = categoryId;
@@ -122,7 +120,7 @@
 
         public IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal)
         {
-            if (principal.IsInRole("Administrator") || principal.IsInRole("Owner"))
+            if (principal.IsInRole(Common.Role.Administrator) || principal.IsInRole(Common.Role.Owner))
             {
                 var forums =
                     this.dbService
@@ -144,13 +142,6 @@
 
                 return forums;
             }
-        }
-
-        public int GetPagesCount(int postsCount)
-        {
-            var result = (int)Math.Ceiling(postsCount / 5.0);
-
-            return result;
         }
 
         public IEnumerable<string> GetForumPostsIds(string id)

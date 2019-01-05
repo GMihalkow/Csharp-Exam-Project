@@ -31,23 +31,5 @@
                 var result = await roleManager.CreateAsync(userRole);
             }
         }
-
-        public static async Task SeedThemes(HttpContext httpContext)
-        {
-            if (!httpContext.Request.Cookies.ContainsKey("Theme"))
-            {
-                httpContext.Response.Cookies.Append("Theme", "dark", new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
-            }
-            else
-            {
-                if (httpContext.Request.Cookies["Theme"] != "dark" &&
-                    httpContext.Request.Cookies["Theme"] != "light")
-                {
-                    httpContext.Response.Cookies.Delete("Theme");
-                    httpContext.Response.Cookies.Append("Theme", "dark", new CookieOptions { Expires = DateTime.UtcNow.AddDays(3), Path = "/" });
-                    httpContext.Response.Redirect(httpContext.Request.Path);
-                }
-            }
-        }
     }
 }

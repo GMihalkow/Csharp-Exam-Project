@@ -10,19 +10,23 @@ using Forum.Services.Interfaces.Db;
 using System.Net;
 using Forum.Services.Interfaces.Account;
 using Forum.Services.Common;
+using Forum.Services.Interfaces.Pagging;
+using Forum.ViewModels.Common;
 
 namespace Forum.Web.Controllers.Forum
 {
     [AuthorizeRoles(Role.Administrator, Role.Owner)]
     public class ForumController : BaseController
     {
+        private readonly IPaggingService paggingService;
         private readonly IDbService dbService;
         private readonly ICategoryService categoryService;
         private readonly IForumService forumService;
 
-        public ForumController(IDbService dbService, IAccountService accountService, ICategoryService categoryService, IForumService forumService)
+        public ForumController(IPaggingService paggingService, IDbService dbService, IAccountService accountService, ICategoryService categoryService, IForumService forumService)
             : base(accountService)
         {
+            this.paggingService = paggingService;
             this.dbService = dbService;
             this.categoryService = categoryService;
             this.forumService = forumService;
@@ -80,7 +84,7 @@ namespace Forum.Web.Controllers.Forum
             {
                 Forum = forum,
                 Posts = posts,
-                PagesCount = this.forumService.GetPagesCount(forum.Posts.Count())
+                PagesCount = this.paggingService.GetPagesCount(forum.Posts.Count())
             };
 
             return this.View(model);
@@ -101,20 +105,47 @@ namespace Forum.Web.Controllers.Forum
         public IActionResult Edit(ForumFormInputModel model, string forumId)
         {
             var forum = this.forumService.GetForum(forumId);
+            if (forum == null)
+            {
+                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
+            }
 
-            this.forumService.Edit(model.ForumModel, forumId);
+            if (this.ModelState.IsValid)
+            {
+                this.forumService.Edit(model.ForumModel, forumId);
 
-            return this.Redirect("/");
+                return this.Redirect("/");
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
+            }
         }
 
         public IActionResult Delete(string id)
         {
             var forum = this.forumService.GetForum(id);
-            //TODO: Validate
+            if (forum == null)
+            {
+                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
+            }
 
-            this.forumService.Delete(forum);
+            if (this.ModelState.IsValid)
+            {
+                this.forumService.Delete(forum);
 
-            return this.Redirect("/");
+                return this.Redirect("/");
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
+            }
         }
     }
 }

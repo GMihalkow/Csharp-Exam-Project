@@ -1,5 +1,6 @@
 ﻿using Forum.Services.Common;
 using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Pagging;
 using Forum.Services.Interfaces.Report;
 using Forum.Services.Interfaces.Report.Post;
 using Forum.Services.Interfaces.Report.Quote;
@@ -15,14 +16,16 @@ namespace Forum.Web.Controllers.Report
     [Authorize]
     public class ReportController : BaseController
     {
+        private readonly IPaggingService paggingService;
         private readonly IReportService reportService;
         private readonly IPostReportService postReportService;
         private readonly IReplyReportService replyReportService;
         private readonly IQuoteReportService quoteReportService;
 
-        public ReportController(IAccountService accountService, IReportService reportService, IPostReportService postReportService, IReplyReportService replyReportService, IQuoteReportService quoteReportService)
+        public ReportController(IPaggingService paggingService, IAccountService accountService, IReportService reportService, IPostReportService postReportService, IReplyReportService replyReportService, IQuoteReportService quoteReportService)
             : base(accountService)
         {
+            this.paggingService = paggingService;
             this.reportService = reportService;
             this.postReportService = postReportService;
             this.replyReportService = replyReportService;
@@ -99,7 +102,7 @@ namespace Forum.Web.Controllers.Report
 
             this.ViewData["PostReportsCount"] = this.postReportService.GetPostReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.postReportService.GetPostReportsCount());
+            this.ViewData["PagesCount"] = this.paggingService.GetPagesCount(this.postReportService.GetPostReportsCount());
 
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
@@ -111,7 +114,7 @@ namespace Forum.Web.Controllers.Report
 
             this.ViewData["ReplyReportsCount"] = this.replyReportService.GetReplyReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.replyReportService.GetReplyReportsCount());
+            this.ViewData["PagesCount"] = this.paggingService.GetPagesCount(this.replyReportService.GetReplyReportsCount());
 
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
@@ -123,7 +126,7 @@ namespace Forum.Web.Controllers.Report
 
             this.ViewData["QuoteReportsCount"] = this.quoteReportService.GetQuoteReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.quoteReportService.GetQuoteReportsCount());
+            this.ViewData["PagesCount"] = this.paggingService.GetPagesCount(this.quoteReportService.GetQuoteReportsCount());
 
             return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
         }
@@ -137,7 +140,7 @@ namespace Forum.Web.Controllers.Report
 
             this.ViewData["PostReportsCount"] = this.postReportService.GetPostReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.postReportService.GetPostReportsCount());
+            this.ViewData["PagesCount"] = this.paggingService.GetPagesCount(this.postReportService.GetPostReportsCount());
 
             return this.PartialView("~/Views/Report/Post/_PostReportsPartial.cshtml", reports);
         }
@@ -151,7 +154,7 @@ namespace Forum.Web.Controllers.Report
 
             this.ViewData["ReplyReportsCount"] = this.replyReportService.GetReplyReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.replyReportService.GetReplyReportsCount());
+            this.ViewData["PagesCount"] = this.paggingService.GetPagesCount(this.replyReportService.GetReplyReportsCount());
 
             return this.PartialView("~/Views/Report/Reply/_ReplyReportsPartial.cshtml", reports);
         }
@@ -165,7 +168,7 @@ namespace Forum.Web.Controllers.Report
 
             this.ViewData["QuoteReportsCount"] = this.quoteReportService.GetQuoteReportsCount();
 
-            this.ViewData["PagesCount"] = this.reportService.GetPagesCount(this.quoteReportService.GetQuoteReportsCount());
+            this.ViewData["PagesCount"] = this.paggingService.GetPagesCount(this.quoteReportService.GetQuoteReportsCount());
             
             return this.PartialView("~/Views/Report/Quote/_QuoteReportsPartial.cshtml", reports);
         }

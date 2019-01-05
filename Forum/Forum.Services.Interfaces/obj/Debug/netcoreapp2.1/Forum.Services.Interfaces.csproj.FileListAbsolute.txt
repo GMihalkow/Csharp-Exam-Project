@@ -16,3 +16,5 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.In
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Interfaces\obj\Debug\netcoreapp2.1\Forum.Services.Interfaces.pdb
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Interfaces\bin\Debug\netcoreapp2.1\Forum.Data.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Interfaces\bin\Debug\netcoreapp2.1\Forum.Data.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Interfaces\bin\Debug\netcoreapp2.1\Forum.ViewModels.Common.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.Services.Interfaces\bin\Debug\netcoreapp2.1\Forum.ViewModels.Common.pdb

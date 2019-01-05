@@ -3,6 +3,7 @@ using CloudinaryDotNet;
 using Forum.Services.Common;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Profile;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Profile;
 using Forum.ViewModels.Profile;
 using Microsoft.AspNetCore.Http;
@@ -13,16 +14,13 @@ using System.Security.Claims;
 
 namespace Forum.Services.Profile
 {
-    public class ProfileService : IProfileService
+    public class ProfileService : BaseService, IProfileService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
         private readonly IOptions<CloudConfiguration> cloudConfig;
 
         public ProfileService(IMapper mapper, IDbService dbService, IOptions<CloudConfiguration> CloudConfig)
+            :base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
             cloudConfig = CloudConfig;
         }
 
@@ -54,12 +52,12 @@ namespace Forum.Services.Profile
             CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
             {
                 File = new FileDescription(image.FileName, stream),
-                PublicId = $"{username}_profile_pic"
+                PublicId = string.Format(ServicesConstants.CloudinaryPublicId, username)
             };
 
             CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
 
-            string url = cloudinary.Api.UrlImgUp.BuildUrl($"{username}_profile_pic");
+            string url = cloudinary.Api.UrlImgUp.BuildUrl(string.Format(ServicesConstants.CloudinaryPictureName, username));
 
             var updatedUrl = cloudinary.GetResource(uploadParams.PublicId).Url;
 
@@ -73,7 +71,7 @@ namespace Forum.Services.Profile
         {
             int counter = 0;
 
-            foreach (var extension in ServicesConstants.AllowedImageExtensions)
+            foreach (var extension in ModelsConstants.AllowedImageExtensions)
             {
                 if (fileName.EndsWith(extension))
                 {

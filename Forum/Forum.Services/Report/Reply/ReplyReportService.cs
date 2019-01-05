@@ -11,16 +11,13 @@ using System.Linq;
 
 namespace Forum.Services.Report.Reply
 {
-    public class ReplyReportService : IReplyReportService
+    public class ReplyReportService : BaseService, IReplyReportService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
-
         public ReplyReportService(IMapper mapper, IDbService dbService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
         }
+
         public IReplyReportInputModel AddReplyReport(IReplyReportInputModel model, string authorId)
         {
             var report = this.mapper.Map<ReplyReport>(model);

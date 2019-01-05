@@ -6,7 +6,5 @@ namespace Forum.Services.Interfaces.Report
     public interface IReportService
     {
         int DeleteUserReports(string username);
-
-        int GetPagesCount(int reportsCount);
     }
 }

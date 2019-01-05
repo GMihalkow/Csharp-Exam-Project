@@ -1,9 +1,11 @@
 ﻿using Forum.Models;
 using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Forum;
+using Forum.Services.Interfaces.Pagging;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Quote;
 using Forum.Services.Interfaces.Reply;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Post;
 using Forum.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
@@ -16,14 +18,16 @@ namespace Forum.Web.Controllers.Post
     [Authorize]
     public class PostController : BaseController
     {
+        private readonly IPaggingService paggingService;
         private readonly IReplyService replyService;
         private readonly IQuoteService quoteService;
         private readonly IForumService forumService;
         private readonly IPostService postService;
 
-        public PostController(IAccountService accountService, IReplyService replyService, IQuoteService quoteService, IForumService forumService, IPostService postService)
+        public PostController(IPaggingService paggingService, IAccountService accountService, IReplyService replyService, IQuoteService quoteService, IForumService forumService, IPostService postService)
             : base(accountService)
         {
+            this.paggingService = paggingService;
             this.replyService = replyService;
             this.quoteService = quoteService;
             this.forumService = forumService;
@@ -67,7 +71,7 @@ namespace Forum.Web.Controllers.Post
         public IActionResult Details(string Id, int start)
         {
             var viewModel = this.postService.GetPost(Id, start);
-            viewModel.PagesCount = this.postService.GetPagesCount(this.replyService.GetPostRepliesIds(Id).Count());
+            viewModel.PagesCount = this.paggingService.GetPagesCount(this.replyService.GetPostRepliesIds(Id).Count());
 
             this.ViewData["PostId"] = Id;
 
@@ -95,7 +99,7 @@ namespace Forum.Web.Controllers.Post
             var forumsIds = this.forumService.GetAllForums(this.User).Select(f => f.Id);
             if (!forumsIds.Contains(model.ForumId))
             {
-                this.ModelState.AddModelError("Invalid forum id", "Invalid forum id");
+                this.ModelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
             }
 
             if (this.ModelState.IsValid)

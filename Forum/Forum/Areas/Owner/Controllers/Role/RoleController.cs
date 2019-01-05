@@ -1,8 +1,11 @@
 ﻿using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Pagging;
 using Forum.Services.Interfaces.Role;
+using Forum.ViewModels.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net;
 
 namespace Forum.Web.Areas.Owner.Controllers.Role
 {
@@ -13,11 +16,13 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
     {
         private readonly IRoleService roleService;
         private readonly IAccountService accountService;
+        private readonly IPaggingService paggingService;
 
-        public RoleController(IRoleService roleService, IAccountService accountService)
+        public RoleController(IRoleService roleService, IAccountService accountService, IPaggingService paggingService)
         {
             this.roleService = roleService;
             this.accountService = accountService;
+            this.paggingService = paggingService;
         }
 
         [HttpGet("Index")]
@@ -27,7 +32,7 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
 
             this.ViewData["usernames"] = this.accountService.GetUsernamesWithoutOwner();
 
-            this.ViewData["pagesCount"] = this.accountService.GetPagesCount(this.accountService.GetUsernamesWithoutOwner().Count());
+            this.ViewData["pagesCount"] = this.paggingService.GetPagesCount(this.accountService.GetUsernamesWithoutOwner().Count());
 
             return this.View(usersRoles);
         }
@@ -38,12 +43,22 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
             var user = this.accountService.GetUserById(id);
             if (user == null)
             {
-                //TODO: Add error
+                this.ModelState.AddModelError("error", ErrorConstants.UserNotFoundError);
             }
 
-            this.roleService.Promote(user);
-            
-            return this.Redirect($"/Owner/Role/Index");
+            if (this.ModelState.IsValid)
+            {
+                this.roleService.Promote(user);
+
+                return this.Redirect($"/Owner/Role/Index");
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
+            }
         }
 
         [HttpGet("Demote/id={id}")]
@@ -52,12 +67,22 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
             var user = this.accountService.GetUserById(id);
             if (user == null)
             {
-                //TODO: Add error
+                this.ModelState.AddModelError("error", ErrorConstants.UserNotFoundError);
             }
 
-            this.roleService.Demote(user);
+            if (this.ModelState.IsValid)
+            {
+                this.roleService.Demote(user);
+                
+                return this.Redirect($"/Owner/Role/Index");
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
 
-            return this.Redirect($"/Owner/Role/Index");
+                return result;
+            }
         }
 
         [HttpGet("Search")]

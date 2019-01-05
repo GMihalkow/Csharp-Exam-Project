@@ -12,3 +12,5 @@ C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Interfaces\bin\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.pdb
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Interfaces\obj\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.dll
 C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Interfaces\obj\Debug\netcoreapp2.1\Forum.ViewModels.Interfaces.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Interfaces\bin\Debug\netcoreapp2.1\Forum.ViewModels.Common.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Interfaces\bin\Debug\netcoreapp2.1\Forum.ViewModels.Common.pdb

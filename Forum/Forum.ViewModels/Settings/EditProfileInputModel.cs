@@ -1,34 +1,35 @@
-﻿namespace Forum.ViewModels.Settings
-{
-    using AutoMapper;
-    using global::Forum.Services.Common.Attributes.Validation;
-    using global::Forum.ViewModels.Interfaces.Settings;
-    using System.ComponentModel.DataAnnotations;
+﻿using AutoMapper;
+using Forum.Services.Common.Attributes.Validation;
+using Forum.ViewModels.Common;
+using Forum.ViewModels.Interfaces.Settings;
+using System.ComponentModel.DataAnnotations;
 
+namespace Forum.ViewModels.Settings
+{
     public class EditProfileInputModel : IEditProfileInputModel
     {
-        [Required(ErrorMessage = "You must enter a username.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
-        [UsernameExists("{0} already exists.")]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [StringLength(ErrorConstants.MaximumNamesLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumNamesLength)]
+        [UsernameExists(ErrorMessage = ErrorConstants.AlreadyExistsError)]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "You must enter a country name.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 2)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [StringLength(ErrorConstants.MaximumLocationLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumLocationLength)]
         public string Location { get; set; }
 
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "You must enter a password.")]
-        [Compare("ConfirmPassword", ErrorMessage = "Passwords do not match.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [Compare(nameof(ConfirmPassword), ErrorMessage = ErrorConstants.PasswordDontMatch)]
+        [StringLength(ErrorConstants.MaximumPasswordsLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumPasswordsLength)]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "You must confirm your password.")]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
-        [StringLength(50, ErrorMessage = "{0} must be between {1} and {2} characters long.", MinimumLength = 5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [Compare(nameof(Password), ErrorMessage = ErrorConstants.PasswordDontMatch)]
+        [StringLength(ErrorConstants.MaximumPasswordsLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumPasswordsLength)]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "You must select a gender.")]
+        [Required(ErrorMessage = ErrorConstants.MustEnterValidValueError)]
         public string Gender { get; set; }
 
         public void CreateMappings(IMapperConfigurationExpression configuration)

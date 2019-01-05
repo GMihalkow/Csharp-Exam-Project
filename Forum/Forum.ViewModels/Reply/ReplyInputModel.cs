@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.Services.Interfaces.Post;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Reply;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,10 +13,10 @@ namespace Forum.ViewModels.Reply
 
         public ForumUser Author { get; set; }
 
-        [Required]
-        [MinLength(5)]
+        [Required(ErrorMessage = ErrorConstants.RequiredError)]
+        [MinLength(ErrorConstants.MinimumDescriptionLength, ErrorMessage = ErrorConstants.MinimumLengthError)]
         public string Description { get; set; }
-        
+
         public string PostId { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -31,7 +32,7 @@ namespace Forum.ViewModels.Reply
             }
             else
             {
-                yield return new ValidationResult("Error. Invalid post id.");
+                yield return new ValidationResult(ErrorConstants.InvalidPostIdError);
             }
         }
     }

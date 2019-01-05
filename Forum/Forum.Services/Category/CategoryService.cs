@@ -1,32 +1,28 @@
-﻿namespace Forum.Services.Category
+﻿using AutoMapper;
+using Forum.Models;
+using Forum.Services.Interfaces.Category;
+using Forum.Services.Interfaces.Db;
+using Forum.ViewModels.Category;
+using Forum.ViewModels.Interfaces.Category;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Forum.Services.Category
 {
-    using AutoMapper;
-    using global::Forum.Models;
-    using global::Forum.Services.Interfaces.Category;
-    using global::Forum.Services.Interfaces.Db;
-    using global::Forum.ViewModels.Category;
-    using global::Forum.ViewModels.Interfaces.Category;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    public class CategoryService : ICategoryService
+    public class CategoryService : BaseService, ICategoryService
     {
-        private readonly IMapper mapper;
-        private readonly IDbService dbService;
-
-        public CategoryService(IMapper mapper,  IDbService dbService)
+        public CategoryService(IMapper mapper, IDbService dbService)
+            : base(mapper, dbService)
         {
-            this.mapper = mapper;
-            this.dbService = dbService;
         }
-        
+
         public async Task<int> AddCategory(ICategoryInputModel model, ForumUser user)
         {
             var category =
                 this.mapper
-                .Map<CategoryInputModel, Category>(model as CategoryInputModel);
+                .Map<CategoryInputModel, Models.Category>(model as CategoryInputModel);
 
             category.CreatedOn = DateTime.UtcNow;
             category.User = user;
@@ -36,7 +32,7 @@
             return await this.dbService.DbContext.SaveChangesAsync();
         }
 
-        public async Task<Category[]> GetAllCategories()
+        public async Task<Models.Category[]> GetAllCategories()
         {
             var categories =
                 this.dbService
@@ -49,7 +45,7 @@
             return categories.GetAwaiter().GetResult();
         }
 
-        public Category GetCategoryById(string Id)
+        public Models.Category GetCategoryById(string Id)
         {
             var category =
                 this.dbService
@@ -60,9 +56,9 @@
             return category;
         }
 
-        public Category GetCategoryByName(string name)
+        public Models.Category GetCategoryByName(string name)
         {
-            Category category = 
+            Models.Category category =
                 this.dbService
                 .DbContext
                 .Categories
@@ -71,7 +67,7 @@
             return category;
         }
 
-        public Category[] GetUsersCategories()
+        public Models.Category[] GetUsersCategories()
         {
             var categories =
                 this.dbService
@@ -84,7 +80,7 @@
 
             return categories;
         }
-        
+
         public bool IsCategoryValid(string id)
         {
             var result =

@@ -1,0 +1,9 @@
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\bin\Debug\netcoreapp2.1\Forum.ViewModels.Common.deps.json
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\bin\Debug\netcoreapp2.1\Forum.ViewModels.Common.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\bin\Debug\netcoreapp2.1\Forum.ViewModels.Common.pdb
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\obj\Debug\netcoreapp2.1\Forum.ViewModels.Common.csprojAssemblyReference.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\obj\Debug\netcoreapp2.1\Forum.ViewModels.Common.csproj.CoreCompileInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\obj\Debug\netcoreapp2.1\Forum.ViewModels.Common.AssemblyInfoInputs.cache
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\obj\Debug\netcoreapp2.1\Forum.ViewModels.Common.AssemblyInfo.cs
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\obj\Debug\netcoreapp2.1\Forum.ViewModels.Common.dll
+C:\Users\Georgi-PC\Documents\Visual Studio 2017\Projects\Forum\Forum.ViewModels.Common\obj\Debug\netcoreapp2.1\Forum.ViewModels.Common.pdb

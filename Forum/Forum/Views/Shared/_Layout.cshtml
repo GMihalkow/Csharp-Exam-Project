@@ -4,21 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @if (this.Context.Request.Cookies.ContainsKey("Theme"))
-    {
-        if (this.Context.Request.Cookies["Theme"] == "dark")
-        {
-            <link href="~/css/dark.css" rel="stylesheet" />
-        }
-        else if (this.Context.Request.Cookies["Theme"] == "light")
-        {
-            <link href="~/css/light.css" rel="stylesheet" />
-        }
-    }
-    else
-    {
-        <link href="~/css/dark.css" rel="stylesheet" />
-    }
+    <link href="~/css/dark.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>My - Forum</title>
 
@@ -41,28 +27,6 @@
                     </li>
                     <li class="float-left">
                         <partial name="_MenuOptionsPartial" />
-                    </li>
-                    <li>
-                        <label class="switch">
-                            @if (this.Context.Request.Cookies.ContainsKey("Theme"))
-                            {
-                                var cookieValue = this.Context.Request.Cookies["Theme"];
-                                if (cookieValue == "dark")
-                                {
-                                    <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=light&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox" checked="checked" value="">
-                                }
-                                else
-                                {
-                                    <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=dark&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox" value="">
-                                }
-                            }
-                            else
-                            {
-                                <input onclick="location.href='/Home/ChangeTheme?path=@this.Context.Request.Path&theme=light&@this.Context.Request.QueryString.ToUriComponent()'" type="checkbox" checked="checked" value="">
-                            }
-                            <span class="slider round"></span>
-                        </label>
-                        Theme
                     </li>
                     <li>
                         @await Html.PartialAsync("_LoginPartial")
