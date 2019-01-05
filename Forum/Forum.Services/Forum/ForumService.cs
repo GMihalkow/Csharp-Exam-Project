@@ -15,7 +15,6 @@ using System.Security.Claims;
 
 namespace Forum.Services.Forum
 {
-
     public class ForumService : BaseService, IForumService
     {
         private readonly ICategoryService categoryService;
@@ -152,6 +151,13 @@ namespace Forum.Services.Forum
                 .ToList();
 
             return postsIds;
+        }
+
+        public bool ForumExists(string name)
+        {
+            var result = this.dbService.DbContext.Forums.Any(f => f.Name == name);
+
+            return result;
         }
     }
 }

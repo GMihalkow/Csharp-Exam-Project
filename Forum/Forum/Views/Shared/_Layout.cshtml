@@ -16,22 +16,16 @@
 <body class="bg-forum">
     <partial name="_ConsentPartial" />
     <div id="header" class="border-5">
-        <header>
-            <nav class="main-nav menu-bg-forum border-5">
-                <ul class="my-list">
-                    <li class="float-left">
-                        <a class="button" href="/">Home</a>
-                    </li>
-                    <li class="float-left">
-                        <a class="button" asp-controller="Home" asp-action="About">Rules</a>
-                    </li>
-                    <li class="float-left">
+        <header class="menu-bg-forum border-5">
+            <nav class="main-nav menu-bg-forum border-5 two-thirds-width mx-auto">
+                <div class="dropdown display-inline bold m-10px">
+                    <a class="button" onclick="myFunction()"><i class="fas fa-bars fa-2x"></i></a>
+                    <div id="myDropdown" class="admin-dropdown-content border-5">
                         <partial name="_MenuOptionsPartial" />
-                    </li>
-                    <li>
-                        @await Html.PartialAsync("_LoginPartial")
-                    </li>
-                </ul>
+                        <a class="font-25" asp-controller="Home" asp-action="About">Rules</a>
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
             </nav>
         </header>
     </div>
@@ -64,6 +58,7 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
     <script src="~/js/site.js"></script>
+    <script src="~/js/navResponsivness.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

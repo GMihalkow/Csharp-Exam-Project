@@ -1,15 +1,15 @@
-﻿@if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
+﻿<a class="font-25" href="/">Home</a>
+@if (this.User.Identity.IsAuthenticated)
 {
-    <div class="dropdown">
-        <a class="button" onclick="myFunction()"><i class="fas fa-bars fa-lg"></i></a>
-        <div id="myDropdown" class="admin-dropdown-content border-5">
-            <a asp-controller="Forum" asp-action="Create">New Forum</a>
-            <a asp-controller="Category" asp-action="Create">New Category</a>
-            <a asp-controller="Report" asp-action="All">View Reports</a>
-            @if (this.User.IsInRole("Owner"))
-            {
-                <a asp-area="Owner" asp-controller="Role" asp-action="Index">Edit Roles</a>
-            }
-        </div>
-    </div>
+    <a class="font-25" href="/Account/Profile">Profile</a>
+    @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
+    {
+        <a class="font-25" asp-controller="Forum" asp-action="Create">New Forum</a>
+        <a class="font-25" asp-controller="Category" asp-action="Create">New Category</a>
+        <a class="font-25" asp-controller="Report" asp-action="All">View Reports</a>
+        @if (this.User.IsInRole("Owner"))
+        {
+            <a class="font-25" asp-area="Owner" asp-controller="Role" asp-action="Index">Edit Roles</a>
+        }
+    }
 }

@@ -1,8 +1,10 @@
 ﻿using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Message;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Forum.Web.Areas.AccountPanel.Controllers.Chat
 {
@@ -23,12 +25,12 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Chat
         {
             return this.PartialView("_MessagesPanelPartial");
         }
-        
+
         public PartialViewResult Chat()
         {
             return this.PartialView("_WeclomeChatViewPartial");
         }
-        
+
         public PartialViewResult RecentConversations()
         {
             this.ViewData["userNames"] = this.accountService.GetUsernames();
@@ -39,18 +41,33 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Chat
 
             return this.PartialView("_RecentConversationsPartial");
         }
-        
+
         [HttpPost]
         public PartialViewResult ChatWithSomebody([FromBody] SendMessageInputModel model)
         {
-            var recieverId = this.accountService.GetUserByName(model.RecieverName).Id;
+            var reciever = this.accountService.GetUserByName(model.RecieverName);
+            if (reciever == null)
+            {
+                this.ModelState.AddModelError("error", ErrorConstants.UserNotFoundError);
+            }
 
-            model.Messages = this.messageService.GetConversationMessages(this.User.Identity.Name, model.RecieverName, model.ShowAll);
-            model.RecieverId = recieverId;
+            if (this.ModelState.IsValid)
+            {
+                var recieverId = reciever.Id;
 
-            var result = this.PartialView("_ChatViewPartial", model);
+                model.Messages = this.messageService.GetConversationMessages(this.User.Identity.Name, model.RecieverName, model.ShowAll);
+                model.RecieverId = recieverId;
 
-            return result;
+                var result = this.PartialView("_ChatViewPartial", model);
+
+                return result;
+            }
+            else
+            {
+                var result = this.PartialView("_ErrorPartial", this.ModelState);
+
+                return result;
+            }
         }
     }
 }

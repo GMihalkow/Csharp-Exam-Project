@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Interfaces.Forum
 {
-    public interface IForumInputModel : IValidatableObject
+    public interface IForumInputModel
     {
         [Required(ErrorMessage = ErrorConstants.RequiredError)]
         [RegularExpression(ModelsConstants.NamesRegex, ErrorMessage = ErrorConstants.NamesAllowedCharactersError)]

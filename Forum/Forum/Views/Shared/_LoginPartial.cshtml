@@ -5,18 +5,10 @@
 
 @if (this.User.Identity.IsAuthenticated)
 {
-    <li class="float-right">
-        <a class="button" href="/Account/Dismiss">Logout</a>
-    </li>
-    <li class="float-right">
-        <a class="button" href="/Account/Logout"><i class="fas fa-bell fa-lg"></i></a>
-    </li>
-    <li class="float-right">
-        <a class="button" href="/Account/Profile"><i class="fas fa-user-circle fa-lg"></i></a>
-    </li>
+    <a class="font-25" href="/Account/Dismiss">Logout</a>
 }
 else
 {
-    <li class="float-right"><a class="button" href="/Account/Login">Login</a></li>
-    <li class="float-right"><a class="button" href="/Account/Register">Register</a></li>
+    <a class="font-25" href="/Account/Register">Register</a>
+    <a class="font-25" href="/Account/Login">Login</a>
 }

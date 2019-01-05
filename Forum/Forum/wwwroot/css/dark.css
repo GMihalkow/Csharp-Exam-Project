@@ -770,6 +770,10 @@ input {
 }
 
 .button {
+    font-size: 35px;
+}
+
+.font-25{
     font-size: 25px;
 }
 
@@ -809,12 +813,11 @@ input {
     font-weight: bold;
     margin: 0;
     list-style: none;
-    padding: 10px 60px;
 }
 
     .my-list li {
         display: inline;
-        margin-right: 20px;
+        /*margin-right: 20px;*/
     }
 
 .button:hover {

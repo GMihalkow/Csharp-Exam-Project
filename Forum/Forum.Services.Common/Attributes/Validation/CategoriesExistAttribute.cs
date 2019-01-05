@@ -1,14 +1,13 @@
-﻿namespace Forum.Services.Common.Attributes.Validation
+﻿using Forum.Services.Interfaces.Category;
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Forum.Services.Common.Attributes.Validation
 {
-    using Forum.Services.Interfaces.Category;
-    using Forum.Services.Interfaces.Db;
-    using System;
-    using System.ComponentModel.DataAnnotations;
 
     [AttributeUsage(AttributeTargets.Property)]
     public class CategoriesExistAttribute : ValidationAttribute
     {
-        private IDbService dbService;
         private ICategoryService categoryService;
 
         public CategoriesExistAttribute()
@@ -21,9 +20,6 @@
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var dbService = (IDbService)validationContext
-                   .GetService(typeof(IDbService));
-
             this.categoryService = (ICategoryService)validationContext
                    .GetService(typeof(ICategoryService));
 

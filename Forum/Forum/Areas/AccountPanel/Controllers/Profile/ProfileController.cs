@@ -2,6 +2,8 @@
 using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Profile;
 using Forum.Services.Interfaces.Settings;
+using Forum.ViewModels.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -22,6 +24,7 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Profile
             this.profileService = profileService;
         }
 
+        [Authorize]
         public IActionResult Details(string id)
         {
             var user = this.accountService.GetUserById(id);
@@ -37,6 +40,7 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Profile
             return this.View(model);
         }
 
+        [Authorize]
         public PartialViewResult MyProfile()
         {
             var model = this.profileService.GetProfileInfo(this.User);
@@ -49,8 +53,9 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Profile
         {
             if (image == null)
             {
-                return this.BadRequest();
+                this.ModelState.AddModelError("error", ErrorConstants.MustChooseAnImage);
             }
+
             if (ModelState.IsValid)
             {
                 this.profileService.UploadProfilePicture(image, this.User.Identity.Name);

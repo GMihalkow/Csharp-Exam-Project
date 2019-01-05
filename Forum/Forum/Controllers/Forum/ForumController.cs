@@ -76,29 +76,58 @@ namespace Forum.Web.Controllers.Forum
         public IActionResult Posts(string id, int start)
         {
             var forum = this.forumService.GetForum(id);
-            var posts = this.forumService.GetPostsByForum(id, start);
-
-            this.ViewData["PostsIds"] = this.forumService.GetForumPostsIds(id);
-
-            var model = new ForumPostsInputModel
+            if (forum == null)
             {
-                Forum = forum,
-                Posts = posts,
-                PagesCount = this.paggingService.GetPagesCount(forum.Posts.Count())
-            };
+                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
+            }
 
-            return this.View(model);
+            if (this.ModelState.IsValid)
+            {
+                var posts = this.forumService.GetPostsByForum(id, start);
+
+                this.ViewData["PostsIds"] = this.forumService.GetForumPostsIds(id);
+
+                var model = new ForumPostsInputModel
+                {
+                    Forum = forum,
+                    Posts = posts,
+                    PagesCount = this.paggingService.GetPagesCount(forum.Posts.Count())
+                };
+
+                return this.View(model);
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
+            }
         }
 
         public IActionResult Edit(string id)
         {
             var forum = this.forumService.GetForum(id);
+            if (forum == null)
+            {
+                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
+            }
 
-            var model = (ForumFormInputModel)this.forumService.GetMappedForumModel(forum);
+            if (this.ModelState.IsValid)
+            {
+                var model = (ForumFormInputModel)this.forumService.GetMappedForumModel(forum);
 
-            this.ViewData["ForumId"] = forum.Id;
+                this.ViewData["ForumId"] = forum.Id;
 
-            return this.View(model);
+                return this.View(model);
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
+            }
         }
 
         [HttpPost]

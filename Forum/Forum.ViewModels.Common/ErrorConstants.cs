@@ -44,9 +44,16 @@
 
         public const string InvalidForumIdError = "Error. Invalid forum id.";
 
+        public const string InvalidCategory = "Error. Invalid category.";
+
         public const string IncorrectPasswordError = "Error. Incorrect password";
 
         public const string UserNotFoundError = "Error. User not found.";
 
+        public const string MustChooseAnImage = "Error. You must choose an image.";
+
+        public const string CategoryExistsError = "Error. Category already exists";
+
+        public const string ForumExistsError = "Error. Forum already exists";
     }
 }

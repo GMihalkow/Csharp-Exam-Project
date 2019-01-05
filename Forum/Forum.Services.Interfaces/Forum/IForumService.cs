@@ -9,6 +9,8 @@ namespace Forum.Services.Interfaces.Forum
 {
     public interface IForumService
     {
+        bool ForumExists(string name);
+
         void Add(IForumFormInputModel model, string category);
 
         IEnumerable<Models.Post> GetPostsByForum(string Id, int start);
