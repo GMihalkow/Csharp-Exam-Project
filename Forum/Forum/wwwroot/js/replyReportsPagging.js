@@ -4,7 +4,7 @@
         $.ajax(
             {
                 type: "GET",
-                url: "/Report/GetReplyReports?start=" + (number - 1) * 5,
+                url: "/ReplyReport/GetReplyReports?start=" + (number - 1) * 5,
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");

@@ -3,7 +3,7 @@
         $.ajax(
             {
                 type: "GET",
-                url: "/Report/GetPostReports",
+                url: "/PostReport/GetPostReports",
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
@@ -35,7 +35,7 @@ $('#replyReportsBtn')
         $.ajax(
             {
                 type: "GET",
-                url: "/Report/GetReplyReports",
+                url: "/ReplyReport/GetReplyReports",
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
@@ -68,7 +68,7 @@ $('#quoteReportsBtn')
         $.ajax(
             {
                 type: "GET",
-                url: "/Report/GetQuoteReports",
+                url: "/QuoteReport/GetQuoteReports",
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");

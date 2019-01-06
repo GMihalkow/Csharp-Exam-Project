@@ -3,7 +3,7 @@
 
 <div>
     <div class="full-width">
-        <form class="my-form" asp-controller="Report" asp-action="ReportPost" method="post">
+        <form class="my-form" asp-controller="PostReport" asp-action="Add" method="post">
             <div class="text-white text-center" asp-validation-summary="All"></div>
             <input type="hidden" hidden="hidden" asp-for="@Model.PostId" value="@this.ViewData["PostId"]" />
             <div class="text-center">

@@ -9,7 +9,7 @@ for (var i = 0; i < elements.length; i++) {
         $.ajax(
             {
                 type: "GET",
-                url: "/Report/DismissReplyReport",
+                url: "/ReplyReport/DismissReplyReport",
                 success: function (test) {
                     $('#tableDiv').html(test);
                     $.getScript("../js/modal.js");
