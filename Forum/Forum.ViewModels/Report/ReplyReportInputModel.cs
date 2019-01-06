@@ -1,11 +1,12 @@
 ﻿using Forum.MapConfiguration.Contracts;
 using Forum.Models;
+using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Post;
-using Forum.Services.Interfaces.Reply;
 using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Report;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Forum.ViewModels.Report
 {
@@ -28,12 +29,13 @@ namespace Forum.ViewModels.Report
             var postService = (IPostService)validationContext
                    .GetService(typeof(IPostService));
 
-            var replyService = (IReplyService)validationContext
-                .GetService(typeof(IReplyService));
+            var dbService = (IDbService)validationContext
+                .GetService(typeof(IDbService));
             
             var model = validationContext.ObjectInstance as ReplyReportInputModel;
 
-            var reply = replyService.GetReply(model.ReplyId);
+            var reply = dbService.DbContext.Replies.FirstOrDefault(r => r.Id == model.ReplyId);
+            
             if (reply == null)
             {
                 yield return new ValidationResult(ErrorConstants.InvalidReplyIdError);

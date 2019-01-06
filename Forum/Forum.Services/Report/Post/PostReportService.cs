@@ -2,8 +2,10 @@
 using Forum.Models;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Report.Post;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Report;
 using Forum.ViewModels.Report;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace Forum.Services.Report.Post
     public class PostReportService : BaseService, IPostReportService
     {
         public PostReportService(IMapper mapper, IDbService dbService)
-            :base(mapper, dbService)
+            : base(mapper, dbService)
         {
         }
 
@@ -30,13 +32,13 @@ namespace Forum.Services.Report.Post
             return model;
         }
 
-        public int DismissPostReport(string id)
+        public int DismissPostReport(string id, ModelStateDictionary modelState)
         {
             var report = this.dbService.DbContext.PostReports.Where(pr => pr.Id == id).FirstOrDefault();
 
             if (report == null)
             {
-                return 0;
+                modelState.AddModelError("error", ErrorConstants.InvalidPostReportIdError);
             }
 
             this.dbService.DbContext.PostReports.Remove(report);
@@ -44,7 +46,7 @@ namespace Forum.Services.Report.Post
 
             return result;
         }
-        
+
         public IEnumerable<IPostReportViewModel> GetPostReports(int start)
         {
             var reports =

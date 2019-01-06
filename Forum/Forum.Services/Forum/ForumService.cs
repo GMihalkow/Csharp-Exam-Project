@@ -4,8 +4,10 @@ using Forum.Models.Enums;
 using Forum.Services.Interfaces.Category;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Forum;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Forum;
 using Forum.ViewModels.Interfaces.Forum;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,7 +27,7 @@ namespace Forum.Services.Forum
             this.categoryService = categoryService;
         }
 
-        public SubForum GetForum(string id)
+        public SubForum GetForum(string id, ModelStateDictionary modelState)
         {
             SubForum forum =
                 this.dbService
@@ -37,12 +39,17 @@ namespace Forum.Services.Forum
                 .ThenInclude(f => f.Author)
                 .FirstOrDefault();
 
+            if (forum == null)
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
+            }
+
             return forum;
         }
 
         public IEnumerable<Models.Post> GetPostsByForum(string id, int start)
         {
-            SubForum forum = this.GetForum(id);
+            var forum = this.dbService.DbContext.Forums.FirstOrDefault(f => f.Id == id);
 
             var posts =
                 forum.Posts
@@ -72,7 +79,7 @@ namespace Forum.Services.Forum
 
         public void Edit(IForumInputModel model, string forumId)
         {
-            var forum = this.GetForum(forumId);
+            var forum = this.dbService.DbContext.Forums.FirstOrDefault(f => f.Id == forumId);
             var category = this.categoryService.GetCategoryById(model.Category);
 
             forum.Description = model.Description;
@@ -158,6 +165,30 @@ namespace Forum.Services.Forum
             var result = this.dbService.DbContext.Forums.Any(f => f.Name == name);
 
             return result;
+        }
+
+        public IEnumerable<string> GetAllForumsIds(ClaimsPrincipal principal, ModelStateDictionary modelState, string forumId)
+        {
+            var forums = this.GetAllForums(principal);
+            if (forums == null)
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
+
+                return null;
+            }
+            else
+            {
+                var forumsIds = forums.Select(f => f.Id).ToList();
+                if (!forumsIds.Contains(forumId))
+                {
+                    modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
+                    return null;
+                }
+                else
+                {
+                    return forumsIds;
+                }
+            }
         }
     }
 }

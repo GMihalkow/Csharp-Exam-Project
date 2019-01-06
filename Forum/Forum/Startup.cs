@@ -84,12 +84,6 @@ namespace Forum
             //TODO: Extract views to a razor view class library.
             //TODO: Extract logout view to a modal.
             //TODO: Create method in service should return the model so you can test it
-            //TODO: Validate that names of entities are unique
-            //TODO: Look at the presentation for Advanced topics and follow the GDPR slide for the GDPR
-            //TODO: Extract model binding validation magic strings
-            //TODO: Create areas
-            //TODO: Extract magic strings in private consts where needed, 
-            //and extract to a global constants class if they are used in more places
 
             var config = AutoMapperConfig.RegisterMappings(
                  typeof(LoginUserInputModel).Assembly,
@@ -216,7 +210,7 @@ namespace Forum
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())

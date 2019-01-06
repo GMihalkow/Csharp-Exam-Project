@@ -1,4 +1,5 @@
 ﻿using Forum.ViewModels.Interfaces.Report;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 
 namespace Forum.Services.Interfaces.Report.Quote
@@ -9,7 +10,7 @@ namespace Forum.Services.Interfaces.Report.Quote
 
         IEnumerable<IQuoteReportViewModel> GetQuoteReports(int start);
 
-        int DismissQuoteReport(string id);
+        int DismissQuoteReport(string id, ModelStateDictionary modelState);
 
         int GetQuoteReportsCount();
     }

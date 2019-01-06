@@ -1,7 +1,6 @@
 ﻿using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Message;
 using Forum.ViewModels.Account;
-using Forum.ViewModels.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -47,7 +46,6 @@ namespace Forum.Web.Controllers.Account
         [HttpPost]
         public IActionResult Register(RegisterUserViewModel model)
         {
-            //TODO: Validate that files you upload are only images, (EndsWith .jpeg, png...)
             if (ModelState.IsValid)
             {
                 this.accountService.RegisterUser(model);

@@ -5,9 +5,11 @@ using AutoMapper;
 using Forum.MapConfiguration.Contracts;
 using Forum.Models;
 using Forum.Services.Interfaces.Db;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Quote;
 using Forum.ViewModels.Quote;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Services.Quote
@@ -45,7 +47,7 @@ namespace Forum.Services.Quote
             return this.dbService.DbContext.SaveChanges();
         }
 
-        public Models.Quote GetQuote(string id)
+        public Models.Quote GetQuote(string id, ModelStateDictionary modelState)
         {
             var quote =
                 this.dbService
@@ -56,6 +58,11 @@ namespace Forum.Services.Quote
                 .ThenInclude(q => q.Author)
                 .Include(q => q.Reply.Post)
                 .FirstOrDefault(q => q.Id == id);
+
+            if (quote == null)
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidQuoteIdError);
+            }
 
             return quote;
         }

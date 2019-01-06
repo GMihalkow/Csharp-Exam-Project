@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Reply;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace Forum.Services.Interfaces.Reply
     {
         Task<int> Add(IReplyInputModel model, ForumUser user);
 
-        Models.Reply GetReply(string id);
+        Models.Reply GetReply(string id, ModelStateDictionary modelState);
 
         int DeleteUserReplies(string username);
 

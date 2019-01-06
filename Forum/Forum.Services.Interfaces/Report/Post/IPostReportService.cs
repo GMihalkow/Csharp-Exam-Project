@@ -1,4 +1,5 @@
 ﻿using Forum.ViewModels.Interfaces.Report;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 
 namespace Forum.Services.Interfaces.Report.Post
@@ -9,7 +10,7 @@ namespace Forum.Services.Interfaces.Report.Post
 
         IEnumerable<IPostReportViewModel> GetPostReports(int start);
 
-        int DismissPostReport(string id);
+        int DismissPostReport(string id, ModelStateDictionary modelState);
 
         int GetPostReportsCount();
     }

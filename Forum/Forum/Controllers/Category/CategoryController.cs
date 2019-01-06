@@ -27,8 +27,6 @@ namespace Forum.Web.Controllers.Category
         [HttpPost]
         public IActionResult Create(CategoryInputModel model)
         {
-            /*TODO: Creata a separete library for the view models 
-            and make controllers to know only about them, not the Forum.Models*/
             if(ModelState.IsValid)
             {
                 var user = this.accountService.GetUser(this.User);

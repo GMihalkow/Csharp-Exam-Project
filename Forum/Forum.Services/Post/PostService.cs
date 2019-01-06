@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Forum.Services.Common;
+using Forum.ViewModels.Common;
 using Ganss.XSS;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,9 +30,7 @@ namespace Forum.Services.Post.Contracts
         {
             var post = this.mapper.Map<Models.Post>(model);
 
-            var forum =
-                this.forumService
-                .GetForum(forumId);
+            var forum = this.dbService.DbContext.Forums.FirstOrDefault(f => f.Id == forumId);
 
             post.StartedOn = DateTime.UtcNow;
             post.Description = this.ParseDescription(post.Description);
@@ -99,7 +99,7 @@ namespace Forum.Services.Post.Contracts
             return popularPosts;
         }
 
-        public ViewModels.Interfaces.Post.IPostViewModel GetPost(string id, int start)
+        public ViewModels.Interfaces.Post.IPostViewModel GetPost(string id, int start, ModelStateDictionary modelState)
         {
             Models.Post post =
                 this.dbService
@@ -117,6 +117,13 @@ namespace Forum.Services.Post.Contracts
                 .ThenInclude(p => p.Author)
                 .ThenInclude(p => p.Posts)
                 .FirstOrDefault(p => p.Id == id);
+
+            if(post == null)
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
+
+                return null;
+            }
 
             ViewModels.Post.PostViewModel viewModel = this.mapper.Map<ViewModels.Post.PostViewModel>(post);
 

@@ -1,9 +1,8 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Forum;
-using System;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Forum.Services.Interfaces.Forum
 {
@@ -15,7 +14,7 @@ namespace Forum.Services.Interfaces.Forum
 
         IEnumerable<Models.Post> GetPostsByForum(string Id, int start);
 
-        SubForum GetForum(string Id);
+        SubForum GetForum(string Id, ModelStateDictionary modelState);
 
         void Edit(IForumInputModel model, string forumId);
 
@@ -24,6 +23,8 @@ namespace Forum.Services.Interfaces.Forum
         void Delete(SubForum forum);
 
         IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal);
+
+        IEnumerable<string> GetAllForumsIds(ClaimsPrincipal principal, ModelStateDictionary modelState, string forumId);
 
         IEnumerable<string> GetForumPostsIds(string id);
     }

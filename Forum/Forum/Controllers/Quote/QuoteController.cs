@@ -1,5 +1,4 @@
-﻿using Forum.Models;
-using Forum.Services.Interfaces.Account;
+﻿using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Quote;
 using Forum.Services.Interfaces.Reply;
@@ -27,36 +26,42 @@ namespace Forum.Web.Controllers.Quote
 
         public IActionResult Create(string id)
         {
-            var reply = this.replyService.GetReply(id);
-            if (reply == null)
+            var reply = this.replyService.GetReply(id, this.ModelState);
+
+            if (this.ModelState.IsValid)
             {
-                return this.View("Error", new ErrorViewModel { Message = "Invalid reply Id." });
+                var recieverName = reply.Author.UserName;
+
+                var model =
+                    new QuoteInputModel
+                    {
+                        ReplyId = id,
+                        Quote = reply.Description,
+                        RecieverId = reply.Author.Id,
+                    };
+
+                this.ViewData["ReplierName"] = reply.Author.UserName;
+                this.ViewData["PostName"] = reply.Post.Name;
+
+                return this.View(model);
             }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
 
-            var recieverName = reply.Author.UserName;
-
-            var model =
-                new QuoteInputModel
-                {
-                    ReplyId = id,
-                    Quote = reply.Description,
-                    RecieverId = reply.Author.Id,
-                };
-
-            this.ViewData["ReplierName"] = reply.Author.UserName;
-            this.ViewData["PostName"] = reply.Post.Name;
-
-            return this.View(model);
+                return result;
+            }
         }
 
         [HttpPost]
         public IActionResult Create(QuoteInputModel model)
         {
+            var reply = this.replyService.GetReply(model.ReplyId, this.ModelState);
+
             if (this.ModelState.IsValid)
             {
                 var user = this.accountService.GetUser(this.User);
-
-                var reply = this.replyService.GetReply(model.ReplyId);
 
                 var recieverName = this.accountService.GetUserById(model.RecieverId).UserName;
 
@@ -77,42 +82,45 @@ namespace Forum.Web.Controllers.Quote
 
         public IActionResult Quote(string id)
         {
-            var quote = this.quoteService.GetQuote(id);
-            this.ModelState.AddModelError("invalid id", "Message = \"Invalid quote Id.");
-            if (!this.ModelState.IsValid)
+            var quote = this.quoteService.GetQuote(id, this.ModelState);
+
+            if (this.ModelState.IsValid)
+            {
+                var recieverName = quote.Author.UserName;
+
+                var model =
+                    new QuoteInputModel
+                    {
+                        ReplyId = quote.ReplyId,
+                        Quote = quote.Description,
+                        RecieverId = quote.Reply.Author.Id,
+                    };
+
+                this.ViewData["ReplierName"] = quote.Reply.Author.UserName;
+                this.ViewData["PostName"] = quote.Reply.Post.Name;
+                this.ViewData["QuoteRecieverId"] = quote.Author.Id;
+
+                return this.View("QuoteAQuoteCreate", model);
+
+            }
+            else 
             {
                 var result = this.View("Error", this.ModelState);
                 result.StatusCode = (int)HttpStatusCode.NotFound;
 
                 return result;
             }
-
-            var recieverName = quote.Author.UserName;
-
-            var model =
-                new QuoteInputModel
-                {
-                    ReplyId = quote.ReplyId,
-                    Quote = quote.Description,
-                    RecieverId = quote.Reply.Author.Id,
-                };
-
-            this.ViewData["ReplierName"] = quote.Reply.Author.UserName;
-            this.ViewData["PostName"] = quote.Reply.Post.Name;
-            this.ViewData["QuoteRecieverId"] = quote.Author.Id;
-
-            return this.View("QuoteAQuoteCreate", model);
         }
 
         [HttpPost]
         public IActionResult QuoteAQuoteCreate(QuoteInputModel model)
         {
+            var reply = this.replyService.GetReply(model.ReplyId, this.ModelState);
+
             if (this.ModelState.IsValid)
             {
                 var user = this.accountService.GetUser(this.User);
-
-                var reply = this.replyService.GetReply(model.ReplyId);
-
+                
                 var recieverName = this.accountService.GetUserById(model.QuoteRecieverId).UserName;
 
                 model.Description = this.postService.ParseDescription(model.Description);

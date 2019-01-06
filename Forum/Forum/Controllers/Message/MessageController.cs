@@ -26,7 +26,6 @@ namespace Forum.Web.Controllers.Message
             var author = this.accountService.GetUser(this.User);
 
             this.messageService.SendMessage(model, author.Id);
-
         }
 
         public void UpdateChat()

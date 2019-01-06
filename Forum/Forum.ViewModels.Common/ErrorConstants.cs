@@ -44,6 +44,12 @@
 
         public const string InvalidForumIdError = "Error. Invalid forum id.";
 
+        public const string InvalidPostReportIdError = "Error. Invalid post report id.";
+
+        public const string InvalidReplyReportIdError = "Error. Invalid reply report id.";
+
+        public const string InvalidQuoteReportIdError = "Error. Invalid quote report id.";
+
         public const string InvalidCategory = "Error. Invalid category.";
 
         public const string IncorrectPasswordError = "Error. Incorrect password";
@@ -53,6 +59,8 @@
         public const string MustChooseAnImage = "Error. You must choose an image.";
 
         public const string CategoryExistsError = "Error. Category already exists";
+
+        public const string PostExistsError = "Error. Post already exists";
 
         public const string ForumExistsError = "Error. Forum already exists";
     }

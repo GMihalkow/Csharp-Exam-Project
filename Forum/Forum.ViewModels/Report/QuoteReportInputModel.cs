@@ -1,11 +1,12 @@
 ﻿using Forum.MapConfiguration.Contracts;
 using Forum.Models;
+using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Post;
-using Forum.Services.Interfaces.Quote;
 using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Report;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Forum.ViewModels.Report
 {
@@ -28,13 +29,13 @@ namespace Forum.ViewModels.Report
             var postService = (IPostService)validationContext
                    .GetService(typeof(IPostService));
 
-            var quoteService = (IQuoteService)validationContext
-                .GetService(typeof(IQuoteService));
+            var dbService = (IDbService)validationContext
+                .GetService(typeof(IDbService));
 
             var model = validationContext.ObjectInstance as QuoteReportInputModel;
 
-            var quote = quoteService.GetQuote(model.QuoteId);
-            if(quote == null)
+            var quote = dbService.DbContext.Quotes.FirstOrDefault(q => q.Id == model.QuoteId);
+            if (quote == null)
             {
                 yield return new ValidationResult(ErrorConstants.InvalidQuoteIdError);
             }

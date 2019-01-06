@@ -7,7 +7,9 @@ using Forum.Models;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Reply;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Reply;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Services.Reply
@@ -67,7 +69,7 @@ namespace Forum.Services.Reply
             return Ids;
         }
 
-        public Models.Reply GetReply(string id)
+        public Models.Reply GetReply(string id, ModelStateDictionary modelState)
         {
             var reply =
                 this.dbService
@@ -76,6 +78,11 @@ namespace Forum.Services.Reply
                 .Include(r => r.Author)
                 .Include(r => r.Post)
                 .FirstOrDefault(r => r.Id == id);
+
+            if (reply == null)
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidReplyIdError);
+            }
 
             return reply;
         }

@@ -75,11 +75,7 @@ namespace Forum.Web.Controllers.Forum
         [AllowAnonymous]
         public IActionResult Posts(string id, int start)
         {
-            var forum = this.forumService.GetForum(id);
-            if (forum == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
-            }
+            var forum = this.forumService.GetForum(id, this.ModelState);
 
             if (this.ModelState.IsValid)
             {
@@ -107,12 +103,8 @@ namespace Forum.Web.Controllers.Forum
 
         public IActionResult Edit(string id)
         {
-            var forum = this.forumService.GetForum(id);
-            if (forum == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
-            }
-
+            var forum = this.forumService.GetForum(id, this.ModelState);
+            
             if (this.ModelState.IsValid)
             {
                 var model = (ForumFormInputModel)this.forumService.GetMappedForumModel(forum);
@@ -133,12 +125,8 @@ namespace Forum.Web.Controllers.Forum
         [HttpPost]
         public IActionResult Edit(ForumFormInputModel model, string forumId)
         {
-            var forum = this.forumService.GetForum(forumId);
-            if (forum == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
-            }
-
+            var forum = this.forumService.GetForum(forumId, this.ModelState);
+            
             if (this.ModelState.IsValid)
             {
                 this.forumService.Edit(model.ForumModel, forumId);
@@ -156,12 +144,8 @@ namespace Forum.Web.Controllers.Forum
 
         public IActionResult Delete(string id)
         {
-            var forum = this.forumService.GetForum(id);
-            if (forum == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.InvalidForumIdError);
-            }
-
+            var forum = this.forumService.GetForum(id, this.ModelState);
+            
             if (this.ModelState.IsValid)
             {
                 this.forumService.Delete(forum);

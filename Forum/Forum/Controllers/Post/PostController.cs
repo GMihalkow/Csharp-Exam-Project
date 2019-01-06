@@ -36,15 +36,25 @@ namespace Forum.Web.Controllers.Post
 
         public IActionResult Create(string id)
         {
-            SubForum Forum = this.forumService.GetForum(id);
+            var Forum = this.forumService.GetForum(id, this.ModelState);
 
-            PostInputModel model = new PostInputModel
+            if (this.ModelState.IsValid)
             {
-                ForumId = Forum.Id,
-                ForumName = Forum.Name
-            };
+                PostInputModel model = new PostInputModel
+                {
+                    ForumId = Forum.Id,
+                    ForumName = Forum.Name
+                };
 
-            return this.View(model);
+                return this.View(model);
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                return result;
+            }
         }
 
         [HttpPost]
@@ -70,46 +80,51 @@ namespace Forum.Web.Controllers.Post
         [TypeFilter(typeof(ViewsFilter))]
         public IActionResult Details(string Id, int start)
         {
-            var viewModel = this.postService.GetPost(Id, start);
-            viewModel.PagesCount = this.paggingService.GetPagesCount(this.replyService.GetPostRepliesIds(Id).Count());
+            var viewModel = this.postService.GetPost(Id, start, this.ModelState);
+            if (this.ModelState.IsValid)
+            {
+                viewModel.PagesCount = this.paggingService.GetPagesCount(this.replyService.GetPostRepliesIds(Id).Count());
 
-            this.ViewData["PostId"] = Id;
+                this.ViewData["PostId"] = Id;
 
-            this.ViewData["PostReplyIds"] = this.replyService.GetPostRepliesIds(Id).ToList();
+                this.ViewData["PostReplyIds"] = this.replyService.GetPostRepliesIds(Id).ToList();
 
-            return this.View(viewModel);
+                return this.View(viewModel);
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
+            }
         }
 
         public IActionResult Edit(string Id)
         {
-            var postExists = this.postService.DoesPostExist(Id);
-            if (!postExists)
+            var postExists = this.postService.GetPost(Id, default(int), this.ModelState);
+            if (this.ModelState.IsValid)
             {
-                return this.NotFound();
+                var viewModel = this.postService.GetEditPostModel(Id, this.User);
+
+                return this.View(viewModel);
             }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
 
-            var viewModel = this.postService.GetEditPostModel(Id, this.User);
-
-            return this.View(viewModel);
+                return result;
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(EditPostInputModel model)
         {
-            var forumsIds = this.forumService.GetAllForums(this.User).Select(f => f.Id);
-            if (!forumsIds.Contains(model.ForumId))
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
-            }
-
+            var forumsIds = this.forumService.GetAllForumsIds(this.User, this.ModelState, model.ForumId);
+            
             if (this.ModelState.IsValid)
             {
-                var forum = this.forumService.GetForum(model.ForumId);
-                if (forum == null)
-                {
-                    return this.NotFound();
-                }
-
                 this.postService.Edit(model);
 
                 return this.Redirect($"/Post/Details?Id={model.Id}");

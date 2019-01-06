@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Post;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Forum.Services.Interfaces.Post
 
         Task AddPost(IPostInputModel model, ForumUser user, string forumId);
 
-        IPostViewModel GetPost(string id, int start);
+        IPostViewModel GetPost(string id, int start, ModelStateDictionary modelState);
 
         string ParseDescription(string description);
 

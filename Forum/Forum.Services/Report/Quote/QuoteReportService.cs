@@ -2,8 +2,10 @@
 using Forum.Models;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Report.Quote;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Report;
 using Forum.ViewModels.Report;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,13 +32,13 @@ namespace Forum.Services.Report.Quote
             return model;
         }
 
-        public int DismissQuoteReport(string id)
+        public int DismissQuoteReport(string id, ModelStateDictionary modelState)
         {
             var report = this.dbService.DbContext.QuoteReports.Where(pr => pr.Id == id).FirstOrDefault();
-
+            
             if (report == null)
             {
-                return 0;
+                modelState.AddModelError("error", ErrorConstants.InvalidQuoteReportIdError);
             }
 
             this.dbService.DbContext.QuoteReports.Remove(report);
