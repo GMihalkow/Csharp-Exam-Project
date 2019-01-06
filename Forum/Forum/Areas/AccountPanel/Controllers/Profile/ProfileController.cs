@@ -6,6 +6,7 @@ using Forum.ViewModels.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 
 namespace Forum.Web.Areas.AccountPanel.Controllers.Profile
@@ -27,17 +28,27 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Profile
         [Authorize]
         public IActionResult Details(string id)
         {
-            var user = this.accountService.GetUserById(id);
+            var user = this.accountService.GetUserById(id, this.ModelState);
 
-            this.ViewData["profilePicUrl"] = user.ProfilePicutre;
+            if (this.ModelState.IsValid)
+            {
+                this.ViewData["profilePicUrl"] = user.ProfilePicutre;
 
-            this.ViewData["userId"] = user.Id;
+                this.ViewData["userId"] = user.Id;
 
-            this.ViewData["username"] = user.UserName;
+                this.ViewData["username"] = user.UserName;
 
-            var model = this.profileService.GetProfileInfo(this.User);
+                var model = this.profileService.GetProfileInfo(this.User);
 
-            return this.View(model);
+                return this.View(model);
+            }
+            else
+            {
+                var result = this.View("Error", this.ModelState);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+
+                return result;
+            }
         }
 
         [Authorize]
@@ -49,13 +60,8 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Profile
         }
 
         [HttpPost("UploadProfilePicture")]
-        public IActionResult UploadProfilePicture([AllowedImageExtensions] IFormFile image)
+        public IActionResult UploadProfilePicture([AllowedImageExtensions] [Required(ErrorMessage = ErrorConstants.MustChooseAnImage)] IFormFile image)
         {
-            if (image == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.MustChooseAnImage);
-            }
-
             if (ModelState.IsValid)
             {
                 this.profileService.UploadProfilePicture(image, this.User.Identity.Name);

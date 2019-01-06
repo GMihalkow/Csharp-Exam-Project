@@ -1,10 +1,8 @@
 ﻿using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Message;
-using Forum.ViewModels.Common;
 using Forum.ViewModels.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace Forum.Web.Areas.AccountPanel.Controllers.Chat
 {
@@ -45,11 +43,7 @@ namespace Forum.Web.Areas.AccountPanel.Controllers.Chat
         [HttpPost]
         public PartialViewResult ChatWithSomebody([FromBody] SendMessageInputModel model)
         {
-            var reciever = this.accountService.GetUserByName(model.RecieverName);
-            if (reciever == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.UserNotFoundError);
-            }
+            var reciever = this.accountService.GetUserByName(model.RecieverName, this.ModelState);
 
             if (this.ModelState.IsValid)
             {

@@ -1,9 +1,12 @@
 ﻿using Forum.Services.Interfaces.Account;
+using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Settings;
 using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Settings;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Forum.ViewModels.Settings
 {
@@ -26,14 +29,14 @@ namespace Forum.ViewModels.Settings
             var settingsService = (ISettingsService)validationContext
                    .GetService(typeof(ISettingsService));
 
-            var accountService = (IAccountService)validationContext
-                  .GetService(typeof(IAccountService));
-
-            var user = accountService.GetUserByName(this.Username);
-
+            var dbService = (IDbService)validationContext
+                  .GetService(typeof(IDbService));
+            
             var model = validationContext.ObjectInstance as ChangePasswordInputModel;
 
-            var result = settingsService.CheckPassword(user, model.OldPassword);
+            var user = dbService.DbContext.Users.FirstOrDefault(u => u.UserName == model.Username);
+
+            var result = settingsService.CheckPassword(user, model.OldPassword, new ModelStateDictionary());
             if (!result)
             {
                 yield return new ValidationResult(ErrorConstants.IncorrectPasswordError);

@@ -1,7 +1,6 @@
 ﻿using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Pagging;
 using Forum.Services.Interfaces.Role;
-using Forum.ViewModels.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -40,11 +39,7 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
         [HttpGet("Promote/id={id}")]
         public IActionResult Promote(string id)
         {
-            var user = this.accountService.GetUserById(id);
-            if (user == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.UserNotFoundError);
-            }
+            var user = this.accountService.GetUserById(id, this.ModelState);
 
             if (this.ModelState.IsValid)
             {
@@ -64,11 +59,7 @@ namespace Forum.Web.Areas.Owner.Controllers.Role
         [HttpGet("Demote/id={id}")]
         public IActionResult Demote(string id)
         {
-            var user = this.accountService.GetUserById(id);
-            if (user == null)
-            {
-                this.ModelState.AddModelError("error", ErrorConstants.UserNotFoundError);
-            }
+            var user = this.accountService.GetUserById(id, this.ModelState);
 
             if (this.ModelState.IsValid)
             {

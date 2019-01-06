@@ -16,6 +16,8 @@
 
         public const int MinimumLocationLength = 5;
 
+        public const string IncorrectUsernameOrPasswordError = "Incorrect username or password";
+
         public const string InvalidLoginAttempt = "Invalid login attempt.";
 
         public const string RequiredError = "You must enter a/an {0}.";

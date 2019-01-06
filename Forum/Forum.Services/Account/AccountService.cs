@@ -8,8 +8,10 @@ using Forum.Services.Common;
 using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Profile;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Account;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 
 namespace Forum.Services.Account
@@ -154,14 +156,19 @@ namespace Forum.Services.Account
             return result;
         }
 
-        public Models.ForumUser GetUserById(string id)
+        public Models.ForumUser GetUserById(string id, ModelStateDictionary modelState)
         {
             var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == id);
+
+            if(user == null)
+            {
+                modelState.AddModelError("error", ErrorConstants.UserNotFoundError);
+            }
 
             return user;
         }
 
-        public Models.ForumUser GetUserByName(string username)
+        public Models.ForumUser GetUserByName(string username, ModelStateDictionary modelState)
         {
             var user =
                 this.dbService
@@ -169,6 +176,11 @@ namespace Forum.Services.Account
                 .Users
                 .Where(u => u.UserName == username)
                 .FirstOrDefault();
+
+            if (user == null)
+            {
+                modelState.AddModelError("error", ErrorConstants.UserNotFoundError);
+            }
 
             return user;
         }

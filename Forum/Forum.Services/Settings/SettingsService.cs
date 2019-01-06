@@ -7,10 +7,13 @@ using Forum.Services.Interfaces.Quote;
 using Forum.Services.Interfaces.Reply;
 using Forum.Services.Interfaces.Report;
 using Forum.Services.Interfaces.Settings;
+using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Settings;
 using Forum.ViewModels.Settings;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -64,9 +67,13 @@ namespace Forum.Services.Settings
             return result.Succeeded;
         }
 
-        public bool CheckPassword(ForumUser user, string password)
+        public bool CheckPassword(ForumUser user, string password,ModelStateDictionary modelState)
         {
             var result = this.userManager.CheckPasswordAsync(user, password).GetAwaiter().GetResult();
+            if(!result)
+            {
+                modelState.AddModelError("error", ErrorConstants.IncorrectUsernameOrPasswordError);
+            }
 
             return result;
         }
@@ -99,7 +106,7 @@ namespace Forum.Services.Settings
 
         public IEditProfileInputModel MapEditModel(string username)
         {
-            var user = this.accountService.GetUserByName(username);
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.UserName == username);
 
             var model = this.mapper.Map<EditProfileInputModel>(user);
 
@@ -108,7 +115,7 @@ namespace Forum.Services.Settings
 
         public byte[] BuildFile(ClaimsPrincipal principal)
         {
-            var user = this.accountService.GetUserByName(principal.Identity.Name);
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.UserName == principal.Identity.Name);
 
             var viewModel = this.mapper.Map<UserJsonViewModel>(user);
 

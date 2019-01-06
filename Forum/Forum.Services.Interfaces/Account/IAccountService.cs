@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.ViewModels.Interfaces.Account;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace Forum.Services.Interfaces.Account
     {
         IEnumerable<string> GetUsernamesWithoutOwner();
 
-        ForumUser GetUserByName(string username);
+        ForumUser GetUserByName(string username, ModelStateDictionary modelState);
 
-        ForumUser GetUserById(string id);
+        ForumUser GetUserById(string id, ModelStateDictionary modelState);
 
         bool UsernameExists(string username);
 

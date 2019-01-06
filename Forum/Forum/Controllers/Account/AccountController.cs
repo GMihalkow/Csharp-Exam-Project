@@ -64,7 +64,7 @@ namespace Forum.Web.Controllers.Account
         [Authorize]
         public IActionResult Profile()
         {
-            var user = this.accountService.GetUserByName(this.User.Identity.Name);
+            var user = this.accountService.GetUserByName(this.User.Identity.Name, this.ModelState);
 
             this.ViewData["profilePicUrl"] = user.ProfilePicutre ?? null;
 

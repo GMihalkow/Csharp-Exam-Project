@@ -63,7 +63,7 @@ namespace Forum.Web.Controllers.Quote
             {
                 var user = this.accountService.GetUser(this.User);
 
-                var recieverName = this.accountService.GetUserById(model.RecieverId).UserName;
+                var recieverName = this.accountService.GetUserById(model.RecieverId, this.ModelState).UserName;
 
                 model.Description = this.postService.ParseDescription(model.Description);
 
@@ -121,7 +121,7 @@ namespace Forum.Web.Controllers.Quote
             {
                 var user = this.accountService.GetUser(this.User);
                 
-                var recieverName = this.accountService.GetUserById(model.QuoteRecieverId).UserName;
+                var recieverName = this.accountService.GetUserById(model.QuoteRecieverId, this.ModelState).UserName;
 
                 model.Description = this.postService.ParseDescription(model.Description);
 

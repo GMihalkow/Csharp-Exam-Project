@@ -36,7 +36,7 @@ namespace Forum.Services.Role
 
             foreach (var userRole in usersRoles)
             {
-                userRole.User = this.accountService.GetUserById(userRole.UserId);
+                userRole.User = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == userRole.UserId);
                 userRole.Role = this.dbService.DbContext.Roles.Where(r => r.Id == userRole.RoleId).FirstOrDefault();
             }
 
@@ -77,7 +77,7 @@ namespace Forum.Services.Role
 
             foreach (var userRole in usersRoles)
             {
-                userRole.User = this.accountService.GetUserById(userRole.UserId);
+                userRole.User = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == userRole.UserId);
                 userRole.Role = this.dbService.DbContext.Roles.Where(r => r.Id == userRole.RoleId).FirstOrDefault();
             }
 
