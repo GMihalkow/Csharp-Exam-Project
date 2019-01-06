@@ -168,12 +168,19 @@ namespace Forum.Services.Message
         public int SendMessage(ISendMessageInputModel model, string authorId)
         {
             var message = this.mapper.Map<Models.Message>(model);
-            message.CreatedOn = DateTime.UtcNow;
-            message.AuthorId = authorId;
-            message.Seen = false;
+            if (message.Description.Length > 0)
+            {
+                message.CreatedOn = DateTime.UtcNow;
+                message.AuthorId = authorId;
+                message.Seen = false;
 
-            this.dbService.DbContext.Messages.Add(message);
-            return this.dbService.DbContext.SaveChanges();
+                this.dbService.DbContext.Messages.Add(message);
+                return this.dbService.DbContext.SaveChanges();
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

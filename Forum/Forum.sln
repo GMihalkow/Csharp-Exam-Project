@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forum.ViewModels.Interfaces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forum.Services.Common", "Forum.Services.Common\Forum.Services.Common.csproj", "{519A2891-F38B-4981-A2C0-B556FD1DED45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forum.ViewModels.Common", "Forum.ViewModels.Common\Forum.ViewModels.Common.csproj", "{937AA0F3-CE9E-4EAF-977A-9C1BF4D59BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forum.ViewModels.Common", "Forum.ViewModels.Common\Forum.ViewModels.Common.csproj", "{937AA0F3-CE9E-4EAF-977A-9C1BF4D59BDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forum.Services.UnitTests", "Forum.Services.UnitTests\Forum.Services.UnitTests.csproj", "{243DAD63-E2C4-48E8-8522-97429E47C8F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{937AA0F3-CE9E-4EAF-977A-9C1BF4D59BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{937AA0F3-CE9E-4EAF-977A-9C1BF4D59BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{937AA0F3-CE9E-4EAF-977A-9C1BF4D59BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{243DAD63-E2C4-48E8-8522-97429E47C8F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{243DAD63-E2C4-48E8-8522-97429E47C8F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{243DAD63-E2C4-48E8-8522-97429E47C8F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{243DAD63-E2C4-48E8-8522-97429E47C8F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

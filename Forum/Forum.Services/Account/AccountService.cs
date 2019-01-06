@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using Forum.Services.Common;
 using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Profile;
@@ -12,22 +11,19 @@ using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Options;
 
 namespace Forum.Services.Account
 {
     public class AccountService : BaseService, IAccountService
     {
         private readonly UserManager<Models.ForumUser> userManager;
-        private readonly IOptions<CloudConfiguration> cloudConfig;
         private readonly SignInManager<Models.ForumUser> signInManager;
         private readonly IProfileService profileService;
 
-        public AccountService(IMapper mapper, IDbService dbService, UserManager<Models.ForumUser> userManager, IOptions<CloudConfiguration> CloudConfig, SignInManager<Models.ForumUser> signInManager, IProfileService profileService)
+        public AccountService(IMapper mapper, IDbService dbService, UserManager<Models.ForumUser> userManager, SignInManager<Models.ForumUser> signInManager, IProfileService profileService)
             : base(mapper, dbService)
         {
             this.userManager = userManager;
-            cloudConfig = CloudConfig;
             this.signInManager = signInManager;
             this.profileService = profileService;
         }
