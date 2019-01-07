@@ -7,5 +7,6 @@ namespace Forum.ViewModels.Message
         public string AuthorName { get; set; }
 
         public int MessagesCount { get; set; }
+        
     }
 }

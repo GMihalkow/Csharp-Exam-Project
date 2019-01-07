@@ -67,7 +67,7 @@ namespace Forum.Web.Controllers.Quote
 
                 model.Description = this.postService.ParseDescription(model.Description);
 
-                this.quoteService.Add(model, user, recieverName);
+                this.quoteService.AddQuote(model, user, recieverName);
 
                 return this.Redirect($"/Post/Details?id={reply.PostId}");
             }
@@ -125,7 +125,7 @@ namespace Forum.Web.Controllers.Quote
 
                 model.Description = this.postService.ParseDescription(model.Description);
 
-                this.quoteService.Add(model, user, recieverName);
+                this.quoteService.AddQuote(model, user, recieverName);
 
                 return this.Redirect($"/Post/Details?id={reply.PostId}");
             }

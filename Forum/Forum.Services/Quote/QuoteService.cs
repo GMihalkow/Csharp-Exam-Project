@@ -22,7 +22,7 @@ namespace Forum.Services.Quote
         {
         }
 
-        public int Add(IQuoteInputModel model, ForumUser user, string recieverName)
+        public int AddQuote(IQuoteInputModel model, ForumUser user, string recieverName)
         {
             var quote = this.mapper.Map<Models.Quote>(model);
             quote.Id = Guid.NewGuid().ToString();

@@ -7,7 +7,7 @@ namespace Forum.Services.Interfaces.Quote
 {
     public interface IQuoteService
     {
-        int Add(IQuoteInputModel model, ForumUser user, string recieverName);
+        int AddQuote(IQuoteInputModel model, ForumUser user, string recieverName);
 
         IEnumerable<IQuoteViewModel> GetQuotesByPost(string id);
 

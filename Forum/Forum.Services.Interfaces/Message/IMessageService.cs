@@ -1,6 +1,5 @@
 ﻿using Forum.ViewModels.Interfaces.Message;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace Forum.Services.Interfaces.Message
 {
@@ -14,7 +13,7 @@ namespace Forum.Services.Interfaces.Message
 
         IEnumerable<string> GetRecentConversations(string username);
 
-        void RemoveUserMessages(string username);
+        int RemoveUserMessages(string username);
 
         IEnumerable<IUnreadMessageViewModel> GetUnreadMessages(string username);
     }

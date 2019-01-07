@@ -5,7 +5,6 @@ using Forum.Models;
 using Forum.Models.Enums;
 using Forum.Services.Category;
 using Forum.Services.Common;
-using Forum.Services.Common.Comparers;
 using Forum.Services.Db;
 using Forum.Services.Forum;
 using Forum.ViewModels.Account;
@@ -19,21 +18,17 @@ using Forum.ViewModels.Reply;
 using Forum.ViewModels.Report;
 using Forum.ViewModels.Role;
 using Forum.ViewModels.Settings;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Forum
 {
     public class ForumServiceTests
     {
-        private readonly HttpContextAccessor httpContext;
-
         private readonly DbContextOptionsBuilder<ForumDbContext> options;
 
         private readonly ForumDbContext dbContext;
@@ -85,8 +80,6 @@ namespace Forum.Services.UnitTests.Forum
             this.categoryService = new CategoryService(this.mapper, this.dbService);
 
             this.forumService = new ForumService(this.mapper, this.dbService, this.categoryService);
-
-            this.httpContext = new HttpContextAccessor();
         }
 
         private void TruncateCategoriesTable()

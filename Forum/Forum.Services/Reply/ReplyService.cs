@@ -24,7 +24,7 @@ namespace Forum.Services.Reply
             this.postService = postService;
         }
 
-        public async Task<int> Add(IReplyInputModel model, ForumUser user)
+        public async Task<int> AddReply(IReplyInputModel model, ForumUser user)
         {
             var reply = this.mapper.Map<Models.Reply>(model);
 

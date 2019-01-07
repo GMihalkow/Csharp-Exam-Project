@@ -27,5 +27,15 @@
         public const string ValidForumName = "TestForum";
 
         public const string ValidPostName = "TestPost";
+
+        public const string ValidTestMessageDescription = "Test Description";
+
+        public const string ValidPostDescription = "[h1]Hello World![/h1]";
+
+        public const string ParsedValidPostDescription = "<h1>Hello World!</h1>";
+
+        public const string InvalidTestMessageDescription = "";
+
+        public const string InvalidDateTime = "Test";
     }
 }

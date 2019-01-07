@@ -19,7 +19,7 @@ namespace Forum.Services.Profile
         private readonly IOptions<CloudConfiguration> cloudConfig;
 
         public ProfileService(IMapper mapper, IDbService dbService, IOptions<CloudConfiguration> CloudConfig)
-            :base(mapper, dbService)
+            : base(mapper, dbService)
         {
             cloudConfig = CloudConfig;
         }
@@ -38,7 +38,7 @@ namespace Forum.Services.Profile
 
             return model;
         }
-        
+
         public void UploadProfilePicture(IFormFile image, string username)
         {
             var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.UserName == username);

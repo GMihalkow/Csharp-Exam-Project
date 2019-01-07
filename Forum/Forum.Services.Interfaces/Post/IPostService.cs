@@ -11,7 +11,7 @@ namespace Forum.Services.Interfaces.Post
     {
         IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal);
 
-        Task AddPost(IPostInputModel model, ForumUser user, string forumId);
+        Task<int> AddPost(IPostInputModel model, ForumUser user, string forumId);
 
         IPostViewModel GetPost(string id, int start, ModelStateDictionary modelState);
 

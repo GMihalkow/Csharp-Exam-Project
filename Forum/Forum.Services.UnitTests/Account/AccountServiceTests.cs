@@ -198,7 +198,10 @@ namespace Forum.Services.UnitTests.Account
             this.dbService.DbContext.Users.Add(new ForumUser() { UserName = TestsConstants.TestUsername3, Id = Guid.NewGuid().ToString() });
             this.dbService.DbContext.SaveChanges();
 
-            Assert.Equal(new List<string> { TestsConstants.TestUsername1, TestsConstants.TestUsername2, TestsConstants.TestUsername3 }, this.accountService.GetUsernames());
+            var expectedList = new List<string> { TestsConstants.TestUsername1, TestsConstants.TestUsername2, TestsConstants.TestUsername3 }.OrderBy(n => n).ToList();
+            var actualList = this.accountService.GetUsernames().OrderBy(n => n).ToList();
+
+            Assert.Equal(expectedList, actualList);
         }
 
         [Fact]

@@ -92,6 +92,7 @@ namespace Forum.Services.UnitTests.Category
 
             this.dbService.DbContext.SaveChanges();
         }
+
         [Fact]
         public void GetCategoryByName_returns_entity_when_correct()
         {

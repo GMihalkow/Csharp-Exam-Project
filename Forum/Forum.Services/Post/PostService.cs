@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Forum.Services.Post.Contracts
+namespace Forum.Services.Post
 {
     public class PostService : BaseService, Interfaces.Post.IPostService
     {
@@ -20,13 +20,13 @@ namespace Forum.Services.Post.Contracts
         private readonly Interfaces.Forum.IForumService forumService;
 
         public PostService(IMapper mapper, Interfaces.Quote.IQuoteService quoteService, Interfaces.Db.IDbService dbService, Interfaces.Forum.IForumService forumService)
-            :base(mapper, dbService)
+            : base(mapper, dbService)
         {
             this.quoteService = quoteService;
             this.forumService = forumService;
         }
 
-        public async Task AddPost(ViewModels.Interfaces.Post.IPostInputModel model, Models.ForumUser user, string forumId)
+        public async Task<int> AddPost(ViewModels.Interfaces.Post.IPostInputModel model, Models.ForumUser user, string forumId)
         {
             var post = this.mapper.Map<Models.Post>(model);
 
@@ -39,7 +39,7 @@ namespace Forum.Services.Post.Contracts
             post.AuthorId = user.Id;
 
             await this.dbService.DbContext.Posts.AddAsync(post);
-            await this.dbService.DbContext.SaveChangesAsync();
+            return await this.dbService.DbContext.SaveChangesAsync();
         }
 
         public bool DoesPostExist(string Id)
@@ -118,7 +118,7 @@ namespace Forum.Services.Post.Contracts
                 .ThenInclude(p => p.Posts)
                 .FirstOrDefault(p => p.Id == id);
 
-            if(post == null)
+            if (post == null)
             {
                 modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
 

@@ -28,7 +28,7 @@ namespace Forum.Web.Controllers.Reply
             {
                 var user = this.accountService.GetUser(this.User);
 
-                this.replyService.Add(model, user).GetAwaiter().GetResult();
+                this.replyService.AddReply(model, user).GetAwaiter().GetResult();
 
                 return this.Redirect($"/Post/Details?id={post.Id}");
             }

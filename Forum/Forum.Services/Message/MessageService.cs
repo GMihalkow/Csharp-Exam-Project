@@ -108,13 +108,29 @@ namespace Forum.Services.Message
                 .Include(m => m.Reciever)
                 .Where(m => (m.Reciever.UserName == username) || (m.Author.UserName == username))
                 .OrderByDescending(m => m.CreatedOn)
-                .Take(5)
+                .Take(2)
                 .Select(m => m.Author.UserName)
                 .Where(m => m != null)
                 .Distinct()
                 .ToList();
 
-            return recentRecievedMessages;
+            var recentSentMessages =
+                this.dbService
+                .DbContext
+                .Messages
+                .Include(m => m.Author)
+                .Include(m => m.Reciever)
+                .Where(m => (m.Reciever.UserName == username) || (m.Author.UserName == username))
+                .OrderByDescending(m => m.CreatedOn)
+                .Take(2)
+                .Select(m => m.Reciever.UserName)
+                .Where(m => m != null)
+                .Distinct()
+                .ToList();
+
+            var combinedList = recentRecievedMessages.Concat(recentSentMessages).Distinct().OrderBy(n => n).ToList();
+
+            return combinedList;
         }
 
         public IEnumerable<IUnreadMessageViewModel> GetUnreadMessages(string username)
@@ -137,7 +153,8 @@ namespace Forum.Services.Message
 
             foreach (var authorName in unreadMessagesAuthors)
             {
-                var messagesCount = this.dbService.DbContext.Messages.Include(m => m.Author).Include(m => m.Reciever)
+                var messagesCount = this.dbService.DbContext.Messages
+                    .Include(m => m.Author).Include(m => m.Reciever)
                     .Where(m => m.Author.UserName == authorName && m.Reciever.UserName == username)
                     .Where(m => m.Seen == false)
                     .Count();
@@ -154,7 +171,7 @@ namespace Forum.Services.Message
             return unreadMessages;
         }
 
-        public void RemoveUserMessages(string username)
+        public int RemoveUserMessages(string username)
         {
             var messages = this.dbService.DbContext.Messages
                 .Include(m => m.Author)
@@ -162,7 +179,7 @@ namespace Forum.Services.Message
                 .Where(m => m.Author.UserName == username || m.Reciever.UserName == username)
                 .ToList();
 
-            this.dbService.DbContext.SaveChanges();
+            return this.dbService.DbContext.SaveChanges();
         }
 
         public int SendMessage(ISendMessageInputModel model, string authorId)

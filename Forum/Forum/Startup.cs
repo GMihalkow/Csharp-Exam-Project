@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Forum.Web;
 using Forum.Web.Middlewares;
 using Forum.Services.Forum;
-using Forum.Services.Post.Contracts;
+using Forum.Services.Post;
 using Forum.Services.Category;
 using Forum.Services.Db;
 using Forum.MapConfiguration;
