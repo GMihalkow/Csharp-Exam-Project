@@ -1,9 +1,11 @@
-﻿using Forum.ViewModels.Common;
+﻿using Forum.MapConfiguration.Contracts;
+using Forum.Models;
+using Forum.ViewModels.Common;
 using System.ComponentModel.DataAnnotations;
 
 namespace Forum.ViewModels.Interfaces.Forum
 {
-    public interface IForumInputModel
+    public interface IForumInputModel : IHaveCustomMappings, IMapTo<SubForum>
     {
         [Required(ErrorMessage = ErrorConstants.RequiredError)]
         [RegularExpression(ModelsConstants.NamesRegex, ErrorMessage = ErrorConstants.NamesAllowedCharactersError)]

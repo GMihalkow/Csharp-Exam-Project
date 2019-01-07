@@ -11,7 +11,6 @@ using System.Net;
 using Forum.Services.Interfaces.Account;
 using Forum.Services.Common;
 using Forum.Services.Interfaces.Pagging;
-using Forum.ViewModels.Common;
 
 namespace Forum.Web.Controllers.Forum
 {
@@ -34,7 +33,7 @@ namespace Forum.Web.Controllers.Forum
 
         public IActionResult Create()
         {
-            var names = this.categoryService.GetAllCategories().GetAwaiter().GetResult();
+            var names = this.categoryService.GetAllCategories();
 
             var namesList =
                 names
@@ -44,7 +43,6 @@ namespace Forum.Web.Controllers.Forum
                     Text = x.Name
                 })
                 .ToList();
-
 
             ForumFormInputModel model = new ForumFormInputModel
             {
@@ -59,7 +57,7 @@ namespace Forum.Web.Controllers.Forum
         {
             if (ModelState.IsValid)
             {
-                this.forumService.Add(model, model.ForumModel.Category);
+                this.forumService.AddForum(model, model.ForumModel.Category);
 
                 return this.Redirect("/");
             }
@@ -79,7 +77,7 @@ namespace Forum.Web.Controllers.Forum
 
             if (this.ModelState.IsValid)
             {
-                var posts = this.forumService.GetPostsByForum(id, start);
+                var posts = this.forumService.GetPostsByForum(forum.Id, start);
 
                 this.ViewData["PostsIds"] = this.forumService.GetForumPostsIds(id);
 

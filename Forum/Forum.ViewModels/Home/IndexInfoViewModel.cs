@@ -6,7 +6,7 @@ namespace Forum.ViewModels.Home
 {
     public class IndexInfoViewModel : IIndexInfoViewModel
     {
-        public Models.Category[] Categories { get; set; }
+        public IEnumerable<Models.Category> Categories { get; set; }
 
         public int TotalUsersCount { get; set; }
 

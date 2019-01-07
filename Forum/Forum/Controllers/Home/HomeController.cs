@@ -27,7 +27,7 @@ namespace Forum.Controllers
         {
             IndexInfoViewModel viewModel = new IndexInfoViewModel
             {
-                Categories = this.categoryService.GetUsersCategories().ToArray(),
+                Categories = this.categoryService.GetPublicCategories().ToArray(),
                 TotalUsersCount = this.accountService.GetUsernames().Count(),
                 NewestUser = this.accountService.GetNewestUser(),
                 TotalPostsCount = this.postService.GetTotalPostsCount(),
@@ -37,7 +37,7 @@ namespace Forum.Controllers
 
             if (this.User.IsInRole(Role.Administrator) || this.User.IsInRole(Role.Owner))
             {
-                viewModel.Categories = this.categoryService.GetAllCategories().GetAwaiter().GetResult().ToArray();
+                viewModel.Categories = this.categoryService.GetAllCategories();
             }
 
             return this.View(viewModel);

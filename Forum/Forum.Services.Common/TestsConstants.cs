@@ -17,5 +17,15 @@
         public const string TestId2 = "testId2";
 
         public const string TestId3 = "testId3";
+
+        public const string ValidCategoryName = "Gaming";
+
+        public const string ValidCategoryName1 = "Gaming1";
+
+        public const string InvalidCategoryName = "GamingGamingGamingGamingGamingGamingGaming";
+
+        public const string ValidForumName = "TestForum";
+
+        public const string ValidPostName = "TestPost";
     }
 }

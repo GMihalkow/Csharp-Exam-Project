@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Forum.MapConfiguration.Contracts;
 using Forum.Models;
 using Forum.ViewModels.Interfaces.Forum;
 
 namespace Forum.ViewModels.Forum
 {
-    public class ForumInputModel : IForumInputModel, IHaveCustomMappings, IMapTo<SubForum>
+    public class ForumInputModel : IForumInputModel
     {
         public string Name { get; set; }
 

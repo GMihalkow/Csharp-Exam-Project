@@ -3,6 +3,7 @@ using Forum.ViewModels.Interfaces.Forum;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Forum.Services.Interfaces.Forum
 {
@@ -10,17 +11,17 @@ namespace Forum.Services.Interfaces.Forum
     {
         bool ForumExists(string name);
 
-        void Add(IForumFormInputModel model, string category);
+        int AddForum(IForumFormInputModel model, string category);
 
         IEnumerable<Models.Post> GetPostsByForum(string Id, int start);
 
         SubForum GetForum(string Id, ModelStateDictionary modelState);
 
-        void Edit(IForumInputModel model, string forumId);
+        int Edit(IForumInputModel model, string forumId);
 
         IForumFormInputModel GetMappedForumModel(SubForum forum);
 
-        void Delete(SubForum forum);
+        int Delete(SubForum forum);
 
         IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal);
 

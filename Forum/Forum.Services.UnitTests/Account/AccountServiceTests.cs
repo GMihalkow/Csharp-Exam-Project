@@ -232,7 +232,7 @@ namespace Forum.Services.UnitTests.Account
                 new ForumUser() { UserName = TestsConstants.TestUsername3, Id = TestsConstants.TestId3 }
             }.OrderBy(u => u.UserName);
 
-            Assert.Equal(expectedList, actualList, new UserIdComperer());
+            Assert.Equal(expectedList, actualList, new IdComparer());
         }
 
         [Fact]

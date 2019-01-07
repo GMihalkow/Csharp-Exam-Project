@@ -6,6 +6,7 @@ using Forum.ViewModels.Category;
 using Forum.ViewModels.Interfaces.Category;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace Forum.Services.Category
             return await this.dbService.DbContext.SaveChangesAsync();
         }
 
-        public async Task<Models.Category[]> GetAllCategories()
+        public IEnumerable<Models.Category> GetAllCategories()
         {
             var categories =
                 this.dbService
@@ -40,9 +41,9 @@ namespace Forum.Services.Category
                 .Categories
                 .Include(c => c.Forums)
                 .ThenInclude(c => c.Posts)
-                .ToArrayAsync();
+                .ToList();
 
-            return categories.GetAwaiter().GetResult();
+            return categories;
         }
 
         public Models.Category GetCategoryById(string Id)
@@ -67,7 +68,7 @@ namespace Forum.Services.Category
             return category;
         }
 
-        public Models.Category[] GetUsersCategories()
+        public IEnumerable<Models.Category> GetPublicCategories()
         {
             var categories =
                 this.dbService
@@ -76,7 +77,7 @@ namespace Forum.Services.Category
                 .Where(c => (int)c.Type != 2)
                 .Include(c => c.Forums)
                 .ThenInclude(c => c.Posts)
-                .ToArray();
+                .ToList();
 
             return categories;
         }

@@ -3,6 +3,6 @@
     public enum CategoryType
     {
         Public = 1,
-        AdminOnly = 2,
+        AdminOnly = 2
     }
 }

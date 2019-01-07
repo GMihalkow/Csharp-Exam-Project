@@ -61,7 +61,7 @@ namespace Forum.Services.Forum
             return posts;
         }
 
-        public void Add(IForumFormInputModel model, string categoryId)
+        public int AddForum(IForumFormInputModel model, string categoryId)
         {
             var forum =
                   this.mapper
@@ -74,10 +74,10 @@ namespace Forum.Services.Forum
             forum.Category = category;
 
             this.dbService.DbContext.Forums.Add(forum);
-            this.dbService.DbContext.SaveChanges();
+            return this.dbService.DbContext.SaveChanges();
         }
 
-        public void Edit(IForumInputModel model, string forumId)
+        public int Edit(IForumInputModel model, string forumId)
         {
             var forum = this.dbService.DbContext.Forums.FirstOrDefault(f => f.Id == forumId);
             var category = this.categoryService.GetCategoryById(model.Category);
@@ -88,14 +88,14 @@ namespace Forum.Services.Forum
             forum.CategoryId = category.Id;
 
             this.dbService.DbContext.Entry(forum).State = EntityState.Modified;
-            this.dbService.DbContext.SaveChanges();
+            return this.dbService.DbContext.SaveChanges();
         }
 
         public IForumFormInputModel GetMappedForumModel(SubForum forum)
         {
             var model = this.mapper.Map<ForumInputModel>(forum);
 
-            var names = this.categoryService.GetAllCategories().GetAwaiter().GetResult();
+            var names = this.categoryService.GetAllCategories();
 
             var namesList =
                 names
@@ -106,42 +106,36 @@ namespace Forum.Services.Forum
                 })
                 .ToList();
 
-            var forumForumModel = new ForumFormInputModel
+            var forumFormModel = new ForumFormInputModel
             {
                 ForumModel = model,
                 Categories = namesList
             };
 
-            return forumForumModel;
+            return forumFormModel;
         }
 
-        public void Delete(SubForum forum)
+        public int Delete(SubForum forum)
         {
             var forumPosts = this.dbService.DbContext.Posts.Where(p => p.ForumId == forum.Id);
 
             this.dbService.DbContext.RemoveRange(forumPosts);
             this.dbService.DbContext.Remove(forum);
-            this.dbService.DbContext.SaveChanges();
+
+            return this.dbService.DbContext.SaveChanges();
         }
 
         public IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal)
         {
             if (principal.IsInRole(Common.Role.Administrator) || principal.IsInRole(Common.Role.Owner))
             {
-                var forums =
-                    this.dbService
-                    .DbContext
-                    .Forums
-                    .ToList();
+                var forums = this.dbService.DbContext.Forums.ToList();
 
                 return forums;
             }
             else
             {
-                var forums =
-                    this.dbService
-                    .DbContext
-                    .Forums
+                var forums = this.dbService.DbContext.Forums
                     .Include(f => f.Category)
                     .Where(f => f.Category.Type != CategoryType.AdminOnly)
                     .ToList();
@@ -152,10 +146,7 @@ namespace Forum.Services.Forum
 
         public IEnumerable<string> GetForumPostsIds(string id)
         {
-            var postsIds =
-                this.GetPostsByForum(id, 0)
-                .Select(p => p.Id)
-                .ToList();
+            var postsIds = this.GetPostsByForum(id, 0).Select(p => p.Id).ToList();
 
             return postsIds;
         }

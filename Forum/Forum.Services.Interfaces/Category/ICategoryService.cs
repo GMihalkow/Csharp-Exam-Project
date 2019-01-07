@@ -1,20 +1,21 @@
-﻿namespace Forum.Services.Interfaces.Category
-{
-    using global::Forum.Models;
-    using global::Forum.ViewModels.Interfaces.Category;
-    using System.Threading.Tasks;
+﻿using Forum.Models;
+using Forum.ViewModels.Interfaces.Category;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
+namespace Forum.Services.Interfaces.Category
+{
     public interface ICategoryService
     {
-        Category GetCategoryByName(string name);
+        Models.Category GetCategoryByName(string name);
 
-        Category GetCategoryById(string Id);
+        Models.Category GetCategoryById(string Id);
 
         Task<int> AddCategory(ICategoryInputModel model, ForumUser user);
 
-        Task<Category[]> GetAllCategories();
+        IEnumerable<Models.Category> GetAllCategories();
 
-        Category[] GetUsersCategories();
+        IEnumerable<Models.Category> GetPublicCategories();
 
         bool IsCategoryValid(string name);
     }
