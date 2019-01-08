@@ -23,6 +23,7 @@ using Forum.ViewModels.Settings;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -188,7 +189,6 @@ namespace Forum.Services.UnitTests.Reply
             Assert.Null(actualResult);
         }
 
-
         [Fact]
         public void AddReply_returns_entity_result_when_correct()
         {
@@ -208,10 +208,35 @@ namespace Forum.Services.UnitTests.Reply
             this.dbService.DbContext.SaveChanges();
 
             var model = new ReplyInputModel { Description = TestsConstants.ValidPostDescription, Author = user, PostId = post.Id };
-            
+
             var expectedResult = 1;
 
             var actualResult = this.replyService.AddReply(model, user).GetAwaiter().GetResult();
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void GePostRepliesIds_returns_correct_list_when_correct()
+        {
+            this.TruncateForumsTable();
+            this.TruncateUsersTable();
+            this.TruncatePostsTable();
+            this.TruncateRepliesTable();
+
+            var post = new Models.Post { Id = TestsConstants.TestId1 };
+
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.SaveChanges();
+
+            var reply = new Models.Reply { Id = TestsConstants.TestId, PostId = post.Id, Post = post };
+
+            this.dbService.DbContext.Replies.Add(reply);
+            this.dbService.DbContext.SaveChanges();
+
+            var expectedResult = new List<string> { reply.Id };
+
+            var actualResult = this.replyService.GetPostRepliesIds(post.Id);
 
             Assert.Equal(expectedResult, actualResult);
         }

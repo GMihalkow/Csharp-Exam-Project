@@ -19,6 +19,7 @@ using Forum.ViewModels.Settings;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -201,5 +202,40 @@ namespace Forum.Services.UnitTests.Quote
             Assert.Equal(expectedResult, actualResult);
         }
 
+        [Fact]
+        public void GetQuotesByForum_returns_correct_list_when_correct()
+        {
+            this.TruncateUsersTable();
+            this.TruncateQuotesTable();
+            this.TruncateForumsTable();
+            this.TruncatePostsTable();
+
+            var post = new Models.Post { Id = TestsConstants.TestId };
+
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.SaveChanges();
+
+            var reply = new Models.Reply { Id = TestsConstants.TestId1, PostId = post.Id, Post = post };
+
+            this.dbService.DbContext.Replies.Add(reply);
+            this.dbService.DbContext.SaveChanges();
+
+            var quotesList = new List<Models.Quote>();
+            for (int i = 0; i < 5; i++)
+            {
+                var quote = new Models.Quote { Reply = reply, ReplyId = reply.Id };
+
+                this.dbService.DbContext.Quotes.Add(quote);
+                this.dbService.DbContext.SaveChanges();
+
+                quotesList.Add(quote);
+            }
+
+            var expectedResult = quotesList.Select(q => this.mapper.Map<QuoteViewModel>(q)).ToList();
+
+            var actualResult = this.quoteService.GetQuotesByPost(post.Id);
+
+            Assert.Equal(expectedResult.Count(), actualResult.Count());
+        }
     }
 }

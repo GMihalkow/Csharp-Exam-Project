@@ -18,6 +18,10 @@ namespace Forum.Web.Controllers.Account
 
         public IActionResult Login()
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                this.Redirect("/");
+            }
             return this.View();
         }
 
@@ -40,6 +44,10 @@ namespace Forum.Web.Controllers.Account
 
         public IActionResult Register()
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                this.Redirect("/");
+            }
             return this.View();
         }
 
@@ -84,6 +92,5 @@ namespace Forum.Web.Controllers.Account
         {
             return this.View();
         }
-        
     }
 }

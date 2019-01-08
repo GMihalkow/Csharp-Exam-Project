@@ -64,7 +64,32 @@ namespace Forum.Services.Message
             var IsDate = DateTime.TryParse(lastDate, out DateTime parsedLastDate);
             if (!IsDate)
             {
-                return new List<ChatMessageViewModel>();
+                var firstMessages =
+                  this.dbService
+                  .DbContext
+                  .Messages
+                  .Include(m => m.Author)
+                  .Include(m => m.Reciever)
+                  .Where(m =>
+                  (m.Author.UserName == loggedInUser && m.RecieverId == otherUserId)
+                  ||
+                  (m.AuthorId == otherUserId && m.Reciever.UserName == loggedInUser))
+                  .ToList();
+
+                SetMessagesToSeen(loggedInUser, firstMessages);
+
+                var filteredFirstMessagesViewModel =
+                firstMessages
+                .Select(m => this.mapper.Map<ChatMessageViewModel>(m))
+                .OrderBy(m => m.CreatedOn)
+                .ToList();
+
+                foreach (var message in filteredFirstMessagesViewModel)
+                {
+                    message.LoggedInUser = loggedInUser;
+                }
+
+                return filteredFirstMessagesViewModel;
             }
 
             var messages =
@@ -108,7 +133,7 @@ namespace Forum.Services.Message
                 .Include(m => m.Reciever)
                 .Where(m => (m.Reciever.UserName == username) || (m.Author.UserName == username))
                 .OrderByDescending(m => m.CreatedOn)
-                .Take(2)
+                .Take(3)
                 .Select(m => m.Author.UserName)
                 .Where(m => m != null)
                 .Distinct()
@@ -122,13 +147,13 @@ namespace Forum.Services.Message
                 .Include(m => m.Reciever)
                 .Where(m => (m.Reciever.UserName == username) || (m.Author.UserName == username))
                 .OrderByDescending(m => m.CreatedOn)
-                .Take(2)
+                .Take(3)
                 .Select(m => m.Reciever.UserName)
                 .Where(m => m != null)
                 .Distinct()
                 .ToList();
 
-            var combinedList = recentRecievedMessages.Concat(recentSentMessages).Distinct().OrderBy(n => n).ToList();
+            var combinedList = recentRecievedMessages.Concat(recentSentMessages).Where(n => n != username).Distinct().OrderBy(n => n).ToList();
 
             return combinedList;
         }

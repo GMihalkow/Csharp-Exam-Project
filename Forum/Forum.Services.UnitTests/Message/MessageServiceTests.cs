@@ -218,7 +218,7 @@ namespace Forum.Services.UnitTests.Message
             this.dbService.DbContext.Messages.Add(message1);
             this.dbService.DbContext.SaveChanges();
 
-            var expectedResult = new List<string> { author.UserName, reciever.UserName }.ToList();
+            var expectedResult = new List<string> {  reciever.UserName }.ToList();
             var actualResult = this.messageService.GetRecentConversations(author.UserName).OrderBy(n => n).ToList();
 
             Assert.Equal(expectedResult, actualResult);
@@ -361,22 +361,6 @@ namespace Forum.Services.UnitTests.Message
             this.dbService.DbContext.Users.Add(author);
             this.dbService.DbContext.Users.Add(reciever);
             this.dbService.DbContext.SaveChanges();
-
-            for (int i = 0; i < 10; i++)
-            {
-                var message = new Models.Message
-                {
-                    Description = TestsConstants.ValidTestMessageDescription,
-                    Author = author,
-                    AuthorId = author.Id,
-                    Reciever = reciever,
-                    RecieverId = reciever.Id,
-                    CreatedOn = DateTime.UtcNow
-                };
-
-                this.dbService.DbContext.Messages.Add(message);
-                this.dbService.DbContext.SaveChanges();
-            }
 
             var expectedResult = new List<ChatMessageViewModel>();
 

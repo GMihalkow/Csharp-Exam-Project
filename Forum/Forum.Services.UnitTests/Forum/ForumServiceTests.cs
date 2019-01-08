@@ -339,7 +339,7 @@ namespace Forum.Services.UnitTests.Forum
 
             var actualList = this.forumService.GetAllForums(new ClaimsPrincipal(identity));
 
-            Assert.Equal(expectedList, actualList);
+            Assert.Equal(expectedList.Count(), actualList.Count());
         }
 
         [Fact]
@@ -374,7 +374,6 @@ namespace Forum.Services.UnitTests.Forum
             Assert.Equal(expectedList, actualList);
         }
 
-
         [Fact]
         public void GetAllForumsIds_returns_entities_when_Owner_correct()
         {
@@ -405,6 +404,36 @@ namespace Forum.Services.UnitTests.Forum
             var actualList = this.forumService.GetAllForumsIds(new ClaimsPrincipal(identity), new ModelStateDictionary(), forum.Id).OrderBy(id => id);
 
             Assert.Equal(expectedList, actualList);
+        }
+
+        [Fact]
+        public void GetAllForumsIds_returns_null_when_incorrect()
+        {
+            this.TruncateCategoriesTable();
+            this.TruncateForumsTable();
+            this.TruncateUsersTable();
+            this.TruncatePostsTable();
+
+            var category = new Models.Category { Id = TestsConstants.TestId, Name = TestsConstants.ValidCategoryName, Type = CategoryType.AdminOnly };
+            this.dbService.DbContext.Categories.Add(category);
+            this.dbService.DbContext.SaveChanges();
+
+            var forum = new SubForum { Id = TestsConstants.TestId1, Name = TestsConstants.ValidForumName, Posts = new List<Models.Post>(), Category = category, CategoryId = category.Id };
+            var secondForum = new SubForum { Id = TestsConstants.TestId2, Name = TestsConstants.ValidForumName, Posts = new List<Models.Post>(), Category = category, CategoryId = category.Id };
+            this.dbService.DbContext.Forums.Add(forum);
+            this.dbService.DbContext.Forums.Add(secondForum);
+            this.dbService.DbContext.SaveChanges();
+            
+            var claims = new List<Claim>
+            {
+            
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var actualList = this.forumService.GetAllForumsIds(new ClaimsPrincipal(identity), new ModelStateDictionary(), forum.Id);
+
+            Assert.Null(actualList);
         }
 
 

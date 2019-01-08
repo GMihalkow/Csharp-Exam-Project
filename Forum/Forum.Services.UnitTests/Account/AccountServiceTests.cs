@@ -332,16 +332,16 @@ namespace Forum.Services.UnitTests.Account
             this.TruncateRolesTable();
             this.TruncateUsersTable();
 
-            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
-            var secondUser = new ForumUser { Id = TestsConstants.TestId1, UserName = TestsConstants.TestUsername2 };
-            var thirdUser = new ForumUser { Id = TestsConstants.TestId2, UserName = TestsConstants.TestUsername3 };
+            var user = new ForumUser { Id = Guid.NewGuid().ToString(), UserName = TestsConstants.TestUsername1 };
+            var secondUser = new ForumUser { Id = Guid.NewGuid().ToString(), UserName = TestsConstants.TestUsername2 };
+            var thirdUser = new ForumUser { Id = Guid.NewGuid().ToString(), UserName = TestsConstants.TestUsername3 };
 
             this.dbService.DbContext.Users.Add(user);
             this.dbService.DbContext.Users.Add(secondUser);
             this.dbService.DbContext.Users.Add(thirdUser);
             this.dbService.DbContext.SaveChanges();
 
-            var ownerRole = new IdentityRole { Id = TestsConstants.TestId1, Name = Common.Role.Owner };
+            var ownerRole = new IdentityRole { Id = Guid.NewGuid().ToString(), Name = Common.Role.Owner };
             var userRole = new IdentityRole { Id = Guid.NewGuid().ToString(), Name = Common.Role.User };
 
             this.dbService.DbContext.Roles.Add(ownerRole);
@@ -353,9 +353,6 @@ namespace Forum.Services.UnitTests.Account
 
             this.dbService.DbContext.UserRoles.Add(testSecondUserRole);
             this.dbService.DbContext.UserRoles.Add(testThirdUserRole);
-            this.dbService.DbContext.SaveChanges();
-
-            this.dbService.DbContext.Roles.Add(ownerRole);
             this.dbService.DbContext.SaveChanges();
 
             var roleId = ownerRole.Id;
