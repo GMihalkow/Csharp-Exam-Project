@@ -78,13 +78,9 @@ namespace Forum
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //TODO: If in the unit tests you need to access the HttpContext, use HttpContextAccessor but declare it as a service first
             //TODO: Make Replies to start with "Replying to: ..."
             //TODO: Use Coverlet for code coverage.
-            //TODO: Extract views to a razor view class library.
-            //TODO: Extract logout view to a modal.
-            //TODO: Create method in service should return the model so you can test it
-
+          
             var config = AutoMapperConfig.RegisterMappings(
                  typeof(LoginUserInputModel).Assembly,
                  typeof(EditPostInputModel).Assembly,
@@ -93,6 +89,8 @@ namespace Forum
                  typeof(UserJsonViewModel).Assembly,
                  typeof(ForumFormInputModel).Assembly,
                  typeof(ForumInputModel).Assembly,
+                 typeof(EditForumFormInputModel).Assembly,
+                 typeof(EditForumInputModel).Assembly,
                  typeof(RecentConversationViewModel).Assembly,
                  typeof(ForumPostsInputModel).Assembly,
                  typeof(PostInputModel).Assembly,

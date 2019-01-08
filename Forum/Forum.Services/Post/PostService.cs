@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Forum.Models.Enums;
 using Forum.Services.Common;
 using Forum.ViewModels.Common;
+using Forum.ViewModels.Post;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +64,7 @@ namespace Forum.Services.Post
         public ViewModels.Interfaces.Post.IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal)
         {
             var post = this.dbService.DbContext.Posts.Include(p => p.Forum).Where(p => p.Id == Id).FirstOrDefault();
-            
+
             var model = this.mapper.Map<ViewModels.Post.EditPostInputModel>(post);
 
             model.AllForums = this.forumService.GetAllForums(principal);
@@ -70,33 +72,68 @@ namespace Forum.Services.Post
             return model;
         }
 
-        public IEnumerable<ViewModels.Interfaces.Post.ILatestPostViewModel> GetLatestPosts()
+        public IEnumerable<ViewModels.Interfaces.Post.ILatestPostViewModel> GetLatestPosts(ClaimsPrincipal principal)
         {
             var latestPosts =
-                this.dbService
-                .DbContext
-                .Posts
-                .Include(p => p.Author)
-                .OrderByDescending(p => p.StartedOn)
-                .Take(3)
-                .Select(p => this.mapper.Map<ViewModels.Post.LatestPostViewModel>(p))
-                .ToList();
+                        this.dbService
+                        .DbContext
+                        .Posts
+                        .Include(p => p.Author)
+                        .Include(p => p.Forum)
+                        .ThenInclude(p => p.Category)
+                        .OrderByDescending(p => p.StartedOn)
+                        .ToList();
 
-            return latestPosts;
+            if (principal.IsInRole(Common.Role.User) || !principal.Identity.IsAuthenticated)
+            {
+                var mappedLatestPosts = latestPosts.Where(p => p.Forum.Category.Type == CategoryType.Public)
+                     .Select(p => this.mapper.Map<ViewModels.Post.LatestPostViewModel>(p))
+                     .Take(3)
+                     .ToList();
+
+                return mappedLatestPosts;
+            }
+            else
+            {
+                var mappedLatestPosts = latestPosts.Select(p => this.mapper.Map<ViewModels.Post.LatestPostViewModel>(p))
+                    .Take(3)
+                    .ToList();
+
+                return mappedLatestPosts;
+            }
         }
 
-        public IEnumerable<ViewModels.Interfaces.Post.IPopularPostViewModel> GetPopularPosts()
+        public IEnumerable<ViewModels.Interfaces.Post.IPopularPostViewModel> GetPopularPosts(ClaimsPrincipal principal)
         {
             var popularPosts =
                 this.dbService
                 .DbContext
                 .Posts
+                .Include(p => p.Forum)
+                .ThenInclude(p => p.Category)
                 .OrderByDescending(p => p.Views)
-                .Take(3)
-                .Select(p => this.mapper.Map<ViewModels.Post.PopularPostViewModel>(p))
                 .ToList();
 
-            return popularPosts;
+            if (principal.IsInRole(Common.Role.User) || !principal.Identity.IsAuthenticated)
+            {
+                var mappedPopularTopics = popularPosts
+                    .Where(p => p.Forum.Category.Type == CategoryType.Public)
+                    .Select(p => this.mapper.Map<PopularPostViewModel>(p))
+                    .Take(3)
+                    .ToList();
+
+                return mappedPopularTopics;
+            }
+            else
+            {
+                var mappedPopularTopics = popularPosts
+                       .Select(p => this.mapper.Map<PopularPostViewModel>(p))
+                       .Take(3)
+                       .ToList();
+
+                return mappedPopularTopics;
+
+            }
         }
 
         public ViewModels.Interfaces.Post.IPostViewModel GetPost(string id, int start, ModelStateDictionary modelState)

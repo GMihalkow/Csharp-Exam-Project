@@ -5,10 +5,11 @@
 
 @if (this.User.Identity.IsAuthenticated)
 {
-    <a class="font-25" href="/Account/Dismiss">Logout</a>
+    <a class="m-10px bold text-white float-right" href="/Account/Dismiss">Logout</a>
+    <a class="m-10px bold text-white float-right" href="/Account/Profile">Profile</a>
 }
 else
 {
-    <a class="font-25" href="/Account/Register">Register</a>
-    <a class="font-25" href="/Account/Login">Login</a>
+    <a class="m-10px bold text-white float-right" href="/Account/Register">Register</a>
+    <a class="m-10px bold text-white float-right" href="/Account/Login">Login</a>
 }

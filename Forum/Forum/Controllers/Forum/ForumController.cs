@@ -121,7 +121,7 @@ namespace Forum.Web.Controllers.Forum
         }
 
         [HttpPost]
-        public IActionResult Edit(ForumFormInputModel model, string forumId)
+        public IActionResult Edit(EditForumFormInputModel model, string forumId)
         {
             var forum = this.forumService.GetForum(forumId, this.ModelState);
             

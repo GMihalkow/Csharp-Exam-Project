@@ -1,5 +1,4 @@
 ﻿function typeEmoticonInTextarea(el, newText) {
-    console.log("CLICKED!");
     var start = el.prop("selectionStart");
     var end = el.prop("selectionEnd");
     var text = el.val();
@@ -51,5 +50,24 @@ window.onclick = function (event) {
     if (!event.target.classList.contains("fa-bars")) {
         document.getElementById("myDropdown").classList.remove("show");
         document.getElementById("myDropdown").classList.add("admin-dropdown-content");
+    }
+};
+
+
+function myResponsiveFunction() {
+    if (document.getElementById("myResponsiveDropdown").classList.contains("responsive-dropdown-content")) {
+        document.getElementById("myResponsiveDropdown").classList.remove("responsive-dropdown-content");
+        document.getElementById("myResponsiveDropdown").classList.toggle("show-responsive");
+    }
+    else {
+        document.getElementById("myResponsiveDropdown").classList.remove("show-responsive");
+        document.getElementById("myResponsiveDropdown").classList.toggle("responsive-dropdown-content");
+    }
+}
+
+window.onclick = function (event) {
+    if (!event.target.classList.contains("fa-bars")) {
+        document.getElementById("myResponsiveDropdown").classList.remove("show-responsive");
+        document.getElementById("myResponsiveDropdown").classList.add("responsive-dropdown-content");
     }
 };

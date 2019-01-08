@@ -23,9 +23,9 @@ namespace Forum.Services.Interfaces.Post
 
         int ViewPost(string id);
 
-        IEnumerable<ILatestPostViewModel> GetLatestPosts();
+        IEnumerable<ILatestPostViewModel> GetLatestPosts(ClaimsPrincipal principal);
 
-        IEnumerable<IPopularPostViewModel> GetPopularPosts();
+        IEnumerable<IPopularPostViewModel> GetPopularPosts(ClaimsPrincipal principal);
 
         int Edit(IEditPostInputModel model);
     }

@@ -77,7 +77,7 @@ namespace Forum.Services.Forum
             return this.dbService.DbContext.SaveChanges();
         }
 
-        public int Edit(IForumInputModel model, string forumId)
+        public int Edit(IEditForumInputModel model, string forumId)
         {
             var forum = this.dbService.DbContext.Forums.FirstOrDefault(f => f.Id == forumId);
             var category = this.categoryService.GetCategoryById(model.Category);

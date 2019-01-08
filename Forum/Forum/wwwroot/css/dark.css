@@ -356,8 +356,31 @@ input[type="radio"] {
             border-radius: 5px;
         }
 
+
+.show-responsive {
+    display: block;
+    position: absolute;
+    /*background-color: ;*/
+    min-width: 210px;
+    /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    z-index: 1;
+    display: block;
+    width: 100%;
+    font-size: 20px;
+}
+
+    .show-responsive a {
+        color: white;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
 .display-inline {
     display: inline;
+}
+.display-inline-block {
+    display: inline-block;
 }
 
 .forum-navigation {
@@ -487,6 +510,28 @@ body {
 
     /* Links inside the dropdown */
     .admin-dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+.responsive-dropdown {
+    position: relative;
+}
+/* Dropdown Content (Hidden by Default) */
+.responsive-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 210px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    /*border-radius: 5px;*/
+}
+
+    /* Links inside the dropdown */
+    .responsive-dropdown-content a {
         color: black;
         padding: 12px 16px;
         text-decoration: none;
@@ -808,8 +853,16 @@ input {
     text-align: start;
 }
 
+.position-relative{
+    position:relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
 .my-list {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     margin: 0;
     list-style: none;
@@ -820,285 +873,297 @@ input {
         /*margin-right: 20px;*/
     }
 
-.button:hover {
-    color: slategrey;
-    cursor: pointer;
+@media screen and (max-width: 800px) {
+    .my-list{
+        display:none;
+    }
 }
 
-.button {
-    text-decoration: none;
-    color: white;
-    display: inline;
+@media screen and (max-width: 800px) {
+    .resposive-dropdown {
+        display: inline-block
+    }
 }
 
-/*      ---------          */
-#wrapper {
-    position: relative;
-}
+    .button:hover {
+        color: slategrey;
+        cursor: pointer;
+    }
 
-.content-container {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-}
+    .button {
+        text-decoration: none;
+        color: white;
+        display: inline;
+    }
 
-@media screen and (max-width: 1000px) {
+    /*      ---------          */
+    #wrapper {
+        position: relative;
+    }
+
     .content-container {
-        width: 100%;
-        display: block;
-    }
-}
-
-#header {
-    padding: 0px;
-    border: none;
-}
-
-#info {
-    text-align: center;
-    background-color: #e6e6e6;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.info-block {
-    border: black;
-    border-radius: 20px;
-}
-
-#shoutbox {
-    margin: 20px;
-    padding: 10px;
-}
-
-    #shoutbox > h1 {
-        padding: 3%;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
     }
 
-.content {
-    min-height: 100%;
-    width: 70%;
-    padding-bottom: 0px;
-    margin: 0px auto;
-    /*background-color: #e6e6e6;*/
-    border: transparent solid 1px;
-    position: relative;
-    /* Height of the footer element */
-}
+    @media screen and (max-width: 1000px) {
+        .content-container {
+            width: 100%;
+            display: block;
+        }
+    }
 
+    #header {
+        padding: 0px;
+        border: none;
+    }
 
-.post-forum {
-    min-height: 100%;
-    width: 70%;
-    padding-bottom: 0px;
-    margin: 0px auto;
-    background-color: #e6e6e6;
-    border: transparent solid 1px;
-    position: relative;
-    /* Height of the footer element */
-}
+    #info {
+        text-align: center;
+        background-color: #e6e6e6;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 
-@media screen and (max-width: 1000px) {
+    .info-block {
+        border: black;
+        border-radius: 20px;
+    }
+
+    #shoutbox {
+        margin: 20px;
+        padding: 10px;
+    }
+
+        #shoutbox > h1 {
+            padding: 3%;
+        }
+
     .content {
-        width: 100%;
+        min-height: 100%;
+        width: 70%;
         padding-bottom: 0px;
         margin: 0px auto;
         /*background-color: #e6e6e6;*/
-        border: #262626 solid 1px;
+        border: transparent solid 1px;
         position: relative;
         /* Height of the footer element */
     }
 
+
     .post-forum {
-        width: 100%;
+        min-height: 100%;
+        width: 70%;
         padding-bottom: 0px;
         margin: 0px auto;
         background-color: #e6e6e6;
-        border: #262626 solid 1px;
+        border: transparent solid 1px;
         position: relative;
         /* Height of the footer element */
     }
-}
 
-.content > h1 {
-    color: #1a1a1a;
-    text-align: center;
-}
+    @media screen and (max-width: 1000px) {
+        .content {
+            width: 100%;
+            padding-bottom: 0px;
+            margin: 0px auto;
+            /*background-color: #e6e6e6;*/
+            border: #262626 solid 1px;
+            position: relative;
+            /* Height of the footer element */
+        }
 
-.post-title > h4 {
-    margin: 5%;
-}
-
-#footer {
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    text-align: center;
-    left: 0;
-    border-bottom: #1a1a1a solid 2px;
-}
-
-
-/* The switch - the box around the slider */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 33px;
-}
-
-    /* Hide default HTML checkbox */
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
+        .post-forum {
+            width: 100%;
+            padding-bottom: 0px;
+            margin: 0px auto;
+            background-color: #e6e6e6;
+            border: #262626 solid 1px;
+            position: relative;
+            /* Height of the footer element */
+        }
     }
 
-/* The slider */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
+    .content > h1 {
+        color: #1a1a1a;
+        text-align: center;
+    }
 
-    .slider:before {
+    .post-title > h4 {
+        margin: 5%;
+    }
+
+    #footer {
+        width: 100%;
+        position: relative;
+        bottom: 0;
+        text-align: center;
+        left: 0;
+        border-bottom: #1a1a1a solid 2px;
+    }
+
+
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 33px;
+    }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+    .slider {
         position: absolute;
-        content: "";
-        height: 25px;
-        width: 25px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
         -webkit-transition: .4s;
         transition: .4s;
     }
 
-input:checked + .slider {
-    background-color: black;
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px white;
-}
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-    .slider.round:before {
-        border-radius: 50%;
-    }
-
-
-/*-MODAL-*/
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: hidden; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    /*background-color: #fefefe;*/
-    margin: 10% auto; /* 15% from the top and centered */
-    /*padding: 20px;*/
-    width: 50%;
-    border: 1px solid #888;
-}
-
-@media screen and (max-width: 850px) {
-    .modal-content {
-        width: 90%;
-    }
-}
-
-@media screen and (max-width:900px) {
-    #profilePic {
-        text-align: center;
-    }
-
-    .profile-container {
-        display: block;
-    }
-
-    #profile-pic-holder {
-        text-align: center;
-    }
-
-    #profile-navigation-holder {
-        margin-top: 20px;
-    }
-}
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-/*Testing out the autoComplete*/
-.autocomplete {
-    /*the container must be positioned relative:*/
-    position: relative;
-    display: inline-block;
-}
-
-.autocomplete-items {
-    position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /*position the autocomplete items to be the same width as the container:*/
-    top: 100%;
-    left: 0;
-    right: 0;
-}
-
-    .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: #fff;
-        border-bottom: 1px solid #d4d4d4;
-    }
-
-        .autocomplete-items div:hover {
-            /*when hovering an item:*/
-            background-color: #e9e9e9;
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 25px;
+            width: 25px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
         }
 
-.autocomplete-active {
-    /*when navigating through the items using the arrow keys:*/
-    background-color: DodgerBlue !important;
-    color: #ffffff;
-}
+    input:checked + .slider {
+        background-color: black;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px white;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+
+    /*-MODAL-*/
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: hidden; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        /*background-color: #fefefe;*/
+        margin: 10% auto; /* 15% from the top and centered */
+        /*padding: 20px;*/
+        width: 50%;
+        border: 1px solid #888;
+    }
+
+    @media screen and (max-width: 850px) {
+        .modal-content {
+            width: 90%;
+        }
+    }
+
+    @media screen and (max-width:900px) {
+        #profilePic {
+            text-align: center;
+        }
+
+        .profile-container {
+            display: block;
+        }
+
+        #profile-pic-holder {
+            text-align: center;
+        }
+
+        #profile-navigation-holder {
+            margin-top: 20px;
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /*Testing out the autoComplete*/
+    .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+        display: inline-block;
+    }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+            .autocomplete-items div:hover {
+                /*when hovering an item:*/
+                background-color: #e9e9e9;
+            }
+
+    .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }

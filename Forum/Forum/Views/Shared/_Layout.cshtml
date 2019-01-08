@@ -17,13 +17,26 @@
     <partial name="_ConsentPartial" />
     <div id="header" class="border-5">
         <header class="menu-bg-forum border-5">
-            <nav class="main-nav menu-bg-forum border-5 two-thirds-width mx-auto">
-                <div class="dropdown display-inline bold m-10px">
-                    <a class="button" onclick="myFunction()"><i class="fas fa-bars fa-2x"></i></a>
-                    <div id="myDropdown" class="admin-dropdown-content border-5">
-                        <partial name="_MenuOptionsPartial" />
-                        <a class="font-25" asp-controller="Home" asp-action="About">Rules</a>
+            <nav class="main-nav menu-bg-forum full-width border-5">
+                <ul class="my-list">
+                    <li>
+                        <a class="bold text-white m-10px float-left" href="/">Home</a>
+                    </li>
+                    <div class="dropdown bold m-10px">
+                        <a class="button" onclick="myFunction()"><i class="fas fa-bars fa-lg"></i></a>
+                        <div id="myDropdown" class="admin-dropdown-content border-5">
+                            <partial name="_MenuOptionsPartial" />
+                            <a class="font-25" asp-controller="Home" asp-action="About">Rules</a>
+                        </div>
+                    </div>
+                    <li>
                         <partial name="_LoginPartial" />
+                    </li>
+                </ul>
+                <div class="resposive-dropdown display-none bold m-10px">
+                    <a class="button" onclick="myResponsiveFunction()"><i class="fas fa-bars fa-2x"></i></a>
+                    <div id="myResponsiveDropdown" class="responsive-dropdown-content position-relative border-5">
+                        <partial name="_ResponsiveMenuPartial" />
                     </div>
                 </div>
             </nav>

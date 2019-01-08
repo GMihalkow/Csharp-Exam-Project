@@ -1,7 +1,5 @@
-﻿<a class="font-25" href="/">Home</a>
-@if (this.User.Identity.IsAuthenticated)
+﻿@if (this.User.Identity.IsAuthenticated)
 {
-    <a class="font-25" href="/Account/Profile">Profile</a>
     @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
     {
         <a class="font-25" asp-controller="Forum" asp-action="Create">New Forum</a>

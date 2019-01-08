@@ -228,7 +228,7 @@ namespace Forum.Services.UnitTests.Forum
             this.dbService.DbContext.Forums.Add(forum);
             this.dbService.DbContext.SaveChanges();
 
-            var model = this.mapper.Map<ForumInputModel>(forum);
+            var model = this.mapper.Map<EditForumInputModel>(forum);
             model.Category = category.Id;
 
             var expectedResult = 1;

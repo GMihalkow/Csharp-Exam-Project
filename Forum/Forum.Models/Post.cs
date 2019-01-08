@@ -1,14 +1,12 @@
-﻿namespace Forum.Models
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Forum.Models
+{
     public class Post : BaseEntity<string>
     {
-        //public string Id { get; set; }
-
         public string Name { get; set; }
-        
+
         public string Description { get; set; }
 
         public DateTime StartedOn { get; set; }

@@ -2,6 +2,7 @@
 using Forum.Data;
 using Forum.MapConfiguration;
 using Forum.Models;
+using Forum.Models.Enums;
 using Forum.Services.Category;
 using Forum.Services.Common;
 using Forum.Services.Common.Comparers;
@@ -263,25 +264,33 @@ namespace Forum.Services.UnitTests.Post
             this.TruncateForumsTable();
             this.TruncateUsersTable();
             this.TruncatePostsTable();
-            
+
             var actualResult = this.postService.GetPost(TestsConstants.TestId, 0, new ModelStateDictionary());
 
             Assert.Null(actualResult);
         }
 
         [Fact]
-        public void GetLatestPosts_returns_correct_list_correct()
+        public void GetLatestPosts_returns_correct_list_when_owner_correct()
         {
             this.TruncateCategoriesTable();
             this.TruncateForumsTable();
             this.TruncateUsersTable();
             this.TruncatePostsTable();
 
+            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.AdminOnly };
+            this.dbService.DbContext.Categories.Add(category);
+            this.dbService.DbContext.SaveChanges();
+
+            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
+            this.dbService.DbContext.Forums.Add(forum);
+            this.dbService.DbContext.SaveChanges();
+
             var postsList = new List<Models.Post>();
 
             for (int i = 0; i < 10; i++)
             {
-                var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
+                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
                 post.StartedOn = DateTime.UtcNow.AddDays(i);
 
                 postsList.Add(post);
@@ -294,25 +303,42 @@ namespace Forum.Services.UnitTests.Post
 
             var expectedResult = postsList.Select(p => this.mapper.Map<LatestPostViewModel>(p)).Take(3).Select(p => p.StartedOn).ToList();
 
-            var actualResult = this.postService.GetLatestPosts().Select(p => p.StartedOn).ToList();
+            var claims = new List<Claim>
+            {
+                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", Common.Role.Owner)
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var principal = new ClaimsPrincipal(identity);
+
+            var actualResult = this.postService.GetLatestPosts(principal).Select(p => p.StartedOn).ToList();
 
             Assert.Equal(expectedResult, actualResult);
         }
 
         [Fact]
-        public void GetPopularPosts_returns_correct_list_correct()
+        public void GetLatestPosts_returns_correct_list_when_user_correct()
         {
             this.TruncateCategoriesTable();
             this.TruncateForumsTable();
             this.TruncateUsersTable();
             this.TruncatePostsTable();
 
+            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.Public };
+            this.dbService.DbContext.Categories.Add(category);
+            this.dbService.DbContext.SaveChanges();
+
+            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
+            this.dbService.DbContext.Forums.Add(forum);
+            this.dbService.DbContext.SaveChanges();
+
             var postsList = new List<Models.Post>();
 
             for (int i = 0; i < 10; i++)
             {
-                var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
-                post.Views = i;
+                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
+                post.StartedOn = DateTime.UtcNow.AddDays(i);
 
                 postsList.Add(post);
 
@@ -320,11 +346,114 @@ namespace Forum.Services.UnitTests.Post
                 this.dbService.DbContext.SaveChanges();
             }
 
-            postsList = postsList.OrderByDescending(p => p.Views).ToList();
+            postsList = postsList.OrderByDescending(p => p.StartedOn).ToList();
+
+            var expectedResult = postsList.Select(p => this.mapper.Map<LatestPostViewModel>(p)).Take(3).Select(p => p.StartedOn).ToList();
+
+            var claims = new List<Claim>
+            {
+                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", Common.Role.User)
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var principal = new ClaimsPrincipal(identity);
+
+            var actualResult = this.postService.GetLatestPosts(principal).Select(p => p.StartedOn).ToList();
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void GetPopularPosts_returns_correct_list_when_owner_correct()
+        {
+            this.TruncateCategoriesTable();
+            this.TruncateForumsTable();
+            this.TruncateUsersTable();
+            this.TruncatePostsTable();
+
+            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.AdminOnly };
+            this.dbService.DbContext.Categories.Add(category);
+            this.dbService.DbContext.SaveChanges();
+
+            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
+            this.dbService.DbContext.Forums.Add(forum);
+            this.dbService.DbContext.SaveChanges();
+
+            var postsList = new List<Models.Post>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
+                post.StartedOn = DateTime.UtcNow.AddDays(i);
+
+                postsList.Add(post);
+
+                this.dbService.DbContext.Posts.Add(post);
+                this.dbService.DbContext.SaveChanges();
+            }
+
+            postsList = postsList.OrderByDescending(p => p.StartedOn).ToList();
 
             var expectedResult = postsList.Select(p => this.mapper.Map<PopularPostViewModel>(p)).Take(3).Select(p => p.Views).ToList();
 
-            var actualResult = this.postService.GetPopularPosts().Select(p => p.Views).ToList();
+            var claims = new List<Claim>
+            {
+                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", Common.Role.Owner)
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var principal = new ClaimsPrincipal(identity);
+
+            var actualResult = this.postService.GetPopularPosts(principal).Select(p => p.Views).ToList();
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void GetPopularPosts_returns_correct_list_when_user_correct()
+        {
+            this.TruncateCategoriesTable();
+            this.TruncateForumsTable();
+            this.TruncateUsersTable();
+            this.TruncatePostsTable();
+
+            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.Public };
+            this.dbService.DbContext.Categories.Add(category);
+            this.dbService.DbContext.SaveChanges();
+
+            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
+            this.dbService.DbContext.Forums.Add(forum);
+            this.dbService.DbContext.SaveChanges();
+
+            var postsList = new List<Models.Post>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
+                post.StartedOn = DateTime.UtcNow.AddDays(i);
+
+                postsList.Add(post);
+
+                this.dbService.DbContext.Posts.Add(post);
+                this.dbService.DbContext.SaveChanges();
+            }
+
+            postsList = postsList.OrderByDescending(p => p.StartedOn).ToList();
+
+            var expectedResult = postsList.Select(p => this.mapper.Map<PopularPostViewModel>(p)).Take(3).Select(p => p.Views).ToList();
+
+            var claims = new List<Claim>
+            {
+                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", Common.Role.User)
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var principal = new ClaimsPrincipal(identity);
+
+            var actualResult = this.postService.GetPopularPosts(principal).Select(p => p.Views).ToList();
 
             Assert.Equal(expectedResult, actualResult);
         }

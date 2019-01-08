@@ -31,8 +31,8 @@ namespace Forum.Controllers
                 TotalUsersCount = this.accountService.GetUsernames().Count(),
                 NewestUser = this.accountService.GetNewestUser(),
                 TotalPostsCount = this.postService.GetTotalPostsCount(),
-                LatestPosts = this.postService.GetLatestPosts(),
-                PopularPosts = this.postService.GetPopularPosts()
+                LatestPosts = this.postService.GetLatestPosts(this.User),
+                PopularPosts = this.postService.GetPopularPosts(this.User)
             };
 
             if (this.User.IsInRole(Role.Administrator) || this.User.IsInRole(Role.Owner))

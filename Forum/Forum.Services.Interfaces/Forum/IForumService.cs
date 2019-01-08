@@ -17,7 +17,7 @@ namespace Forum.Services.Interfaces.Forum
 
         SubForum GetForum(string Id, ModelStateDictionary modelState);
 
-        int Edit(IForumInputModel model, string forumId);
+        int Edit(IEditForumInputModel model, string forumId);
 
         IForumFormInputModel GetMappedForumModel(SubForum forum);
 
