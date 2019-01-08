@@ -39,6 +39,7 @@ namespace Forum.Services.Report.Quote
             if (report == null)
             {
                 modelState.AddModelError("error", ErrorConstants.InvalidQuoteReportIdError);
+                return 0;
             }
 
             this.dbService.DbContext.QuoteReports.Remove(report);

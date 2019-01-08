@@ -16,13 +16,15 @@ using Forum.ViewModels.Reply;
 using Forum.ViewModels.Report;
 using Forum.ViewModels.Role;
 using Forum.ViewModels.Settings;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Report.Post
 {
-    public class PostReportServiceTests
+    public class ReplyReportServiceTests
     {
         private readonly DbContextOptionsBuilder<ForumDbContext> options;
 
@@ -34,7 +36,7 @@ namespace Forum.Services.UnitTests.Report.Post
 
         private readonly PostReportService postReportService;
 
-        public PostReportServiceTests()
+        public ReplyReportServiceTests()
         {
             this.options = new DbContextOptionsBuilder<ForumDbContext>()
                 .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
@@ -72,11 +74,19 @@ namespace Forum.Services.UnitTests.Report.Post
 
             this.postReportService = new PostReportService(this.mapper, this.dbService);
         }
-        
+
         private void TruncateUsersTable()
         {
             var users = this.dbService.DbContext.Users.ToList();
             this.dbService.DbContext.Users.RemoveRange(users);
+
+            this.dbService.DbContext.SaveChanges();
+        }
+        
+        private void TruncatePostsTable()
+        {
+            var posts = this.dbService.DbContext.Posts.ToList();
+            this.dbService.DbContext.Posts.RemoveRange(posts);
 
             this.dbService.DbContext.SaveChanges();
         }
@@ -109,5 +119,86 @@ namespace Forum.Services.UnitTests.Report.Post
 
             Assert.Equal(expectedResult, actualResult);
         }
+
+        [Fact]
+        public void DismissPostReport_returns_correct_result()
+        {
+            this.TruncatePostReportsTable();
+            this.TruncateUsersTable();
+
+            var postReport = new PostReport { Id = TestsConstants.TestId };
+
+            this.dbService.DbContext.PostReports.Add(postReport);
+            this.dbService.DbContext.SaveChanges();
+
+            var expectedResult = 1;
+
+            var actualResult = this.postReportService.DismissPostReport(postReport.Id, new ModelStateDictionary());
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void DismissPostReport_returns_zero_results_when_id_is_invalid()
+        {
+            this.TruncatePostReportsTable();
+            this.TruncateUsersTable();
+
+            var expectedResult = 0;
+
+            var actualResult = this.postReportService.DismissPostReport(TestsConstants.TestId, new ModelStateDictionary());
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void GetPostReports_returns_list_when_correct()
+        {
+            this.TruncatePostReportsTable();
+            this.TruncateUsersTable();
+
+            var postReportsList = new List<PostReport>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                var postReport = new PostReport();
+
+                this.dbService.DbContext.PostReports.Add(postReport);
+                this.dbService.DbContext.SaveChanges();
+
+                postReportsList.Add(postReport);
+            }
+
+            var expectedResult = postReportsList.Take(5).Select(p => this.mapper.Map<PostReportViewModel>(p)).ToList();
+
+            var actualResult = this.postReportService.GetPostReports(0);
+
+            Assert.Equal(expectedResult.Count(), actualResult.Count());
+        }
+
+        [Fact]
+        public void AddPostReport_returns_correct_result()
+        {
+            this.TruncatePostReportsTable();
+            this.TruncateUsersTable();
+            this.TruncatePostsTable();
+
+            var post = new Models.Post { Id = TestsConstants.TestId1 };
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.SaveChanges();
+
+            var author = new ForumUser { Id = TestsConstants.TestId };
+            this.dbService.DbContext.Users.Add(author);
+            this.dbService.DbContext.SaveChanges();
+
+            var model = new PostReportInputModel { Description = TestsConstants.TestDescription, PostId = post.Id, Title = TestsConstants.TestTitle };
+
+            var expectedResult = model;
+
+            var actualResult = this.postReportService.AddPostReport(model, author.Id);
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
     }
 }

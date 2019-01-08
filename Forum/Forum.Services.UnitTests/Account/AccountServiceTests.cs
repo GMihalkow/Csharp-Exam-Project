@@ -25,6 +25,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Account
@@ -82,6 +83,30 @@ namespace Forum.Services.UnitTests.Account
                  .CreateMapper();
 
             this.accountService = new AccountService(this.mapper, this.dbService, null, null, this.profileService.Object);
+        }
+
+        private void TruncateUsersTable()
+        {
+            var users = this.dbService.DbContext.Users.ToList();
+            this.dbService.DbContext.Users.RemoveRange(users);
+
+            this.dbService.DbContext.SaveChanges();
+        }
+
+        private void TruncateRolesTable()
+        {
+            var roles = this.dbService.DbContext.Roles.ToList();
+            this.dbService.DbContext.Roles.RemoveRange(roles);
+
+            this.dbService.DbContext.SaveChanges();
+        }
+
+        private void TruncateUserRolesTable()
+        {
+            var userRoles = this.dbService.DbContext.UserRoles.ToList();
+            this.dbService.DbContext.UserRoles.RemoveRange(userRoles);
+
+            this.dbService.DbContext.SaveChanges();
         }
 
         [Fact]
@@ -246,6 +271,105 @@ namespace Forum.Services.UnitTests.Account
             this.dbService.DbContext.SaveChanges();
 
             Assert.Equal(new List<ForumUser>(), new List<ForumUser>());
+        }
+
+        [Fact]
+        public void GetNewestUser_returns_username_when_correct()
+        {
+            var users = this.dbService.DbContext.Users.ToList();
+            this.dbService.DbContext.Users.RemoveRange(users);
+            this.dbService.DbContext.SaveChanges();
+
+            for (int i = 0; i < 5; i++)
+            {
+                var user = new ForumUser { UserName = TestsConstants.TestUsername1 };
+                user.RegisteredOn = DateTime.UtcNow.AddDays(i);
+
+                this.dbService.DbContext.Users.Add(user);
+                this.dbService.DbContext.SaveChanges();
+            }
+
+            var expectedResult = TestsConstants.TestUsername1;
+
+            var actualResult = this.accountService.GetNewestUser();
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void GetNewestUser_returns_empty_string_when_correct()
+        {
+            var users = this.dbService.DbContext.Users.ToList();
+            this.dbService.DbContext.Users.RemoveRange(users);
+            this.dbService.DbContext.SaveChanges();
+
+            var expectedResult = string.Empty;
+
+            var actualResult = this.accountService.GetNewestUser();
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void EmailExists_returns_true_string_when_correct()
+        {
+            var users = this.dbService.DbContext.Users.ToList();
+            this.dbService.DbContext.Users.RemoveRange(users);
+            this.dbService.DbContext.SaveChanges();
+
+            var user = new ForumUser { Email = TestsConstants.TestEmail };
+            this.dbService.DbContext.Users.Add(user);
+            this.dbService.DbContext.SaveChanges();
+
+            var actualResult = this.accountService.EmailExists(TestsConstants.TestEmail).GetAwaiter().GetResult();
+
+            Assert.True(actualResult == true);
+        }
+
+        [Fact]
+        public void GetUsernamesWithourOwner_returns_correct_list_with_entities()
+        {
+            this.TruncateRolesTable();
+            this.TruncateUsersTable();
+
+            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
+            var secondUser = new ForumUser { Id = TestsConstants.TestId1, UserName = TestsConstants.TestUsername2 };
+            var thirdUser = new ForumUser { Id = TestsConstants.TestId2, UserName = TestsConstants.TestUsername3 };
+
+            this.dbService.DbContext.Users.Add(user);
+            this.dbService.DbContext.Users.Add(secondUser);
+            this.dbService.DbContext.Users.Add(thirdUser);
+            this.dbService.DbContext.SaveChanges();
+
+            var ownerRole = new IdentityRole { Id = TestsConstants.TestId1, Name = Common.Role.Owner };
+            var userRole = new IdentityRole { Id = Guid.NewGuid().ToString(), Name = Common.Role.User };
+
+            this.dbService.DbContext.Roles.Add(ownerRole);
+            this.dbService.DbContext.Roles.Add(userRole);
+            this.dbService.DbContext.SaveChanges();
+
+            var testSecondUserRole = new IdentityUserRole<string> { RoleId = userRole.Id, UserId = secondUser.Id };
+            var testThirdUserRole = new IdentityUserRole<string> { RoleId = userRole.Id, UserId = thirdUser.Id };
+
+            this.dbService.DbContext.UserRoles.Add(testSecondUserRole);
+            this.dbService.DbContext.UserRoles.Add(testThirdUserRole);
+            this.dbService.DbContext.SaveChanges();
+
+            this.dbService.DbContext.Roles.Add(ownerRole);
+            this.dbService.DbContext.SaveChanges();
+
+            var roleId = ownerRole.Id;
+            var userId = user.Id;
+
+            var newUserRole = new IdentityUserRole<string> { RoleId = roleId, UserId = userId };
+            this.dbService.DbContext.UserRoles.Add(newUserRole);
+            this.dbService.DbContext.SaveChanges();
+
+            var expectedResult = new List<string> { secondUser.UserName, thirdUser.UserName }.OrderBy(n => n);
+
+            var actualResult = this.accountService.GetUsernamesWithoutOwner().OrderBy(n => n);
+
+            Assert.Equal(expectedResult, actualResult);
         }
     }
 }

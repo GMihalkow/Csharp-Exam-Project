@@ -89,10 +89,28 @@ namespace Forum.Services.UnitTests.Reports
             this.dbService.DbContext.SaveChanges();
         }
 
+        private void TruncateQuoteReportsTable()
+        {
+            var quoteReports = this.dbService.DbContext.QuoteReports.ToList();
+            this.dbService.DbContext.QuoteReports.RemoveRange(quoteReports);
+
+            this.dbService.DbContext.SaveChanges();
+        }
+        
+        private void TruncateReplyReportsTable()
+        {
+            var replyReports = this.dbService.DbContext.ReplyReports.ToList();
+            this.dbService.DbContext.ReplyReports.RemoveRange(replyReports);
+
+            this.dbService.DbContext.SaveChanges();
+        }
+
         [Fact]
         public void DeleteUserReports_returns_correct_result_when_correct()
         {
             this.TruncatePostReportsTable();
+            this.TruncateQuoteReportsTable();
+            this.TruncateReplyReportsTable();
             this.TruncateUsersTable();
 
             var user = new ForumUser { Id = TestsConstants.TestId };

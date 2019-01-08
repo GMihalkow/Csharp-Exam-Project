@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Forum.Models;
-using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Message;
 using Forum.Services.Interfaces.Quote;
@@ -26,9 +25,8 @@ namespace Forum.Services.Settings
         private readonly IReportService reportService;
         private readonly IMessageService messageService;
         private readonly UserManager<ForumUser> userManager;
-        private readonly IAccountService accountService;
 
-        public SettingsService(IMapper mapper, IDbService dbService, IReplyService replyService, IQuoteService quoteService, IReportService reportService, IMessageService messageService, UserManager<ForumUser> userManager, IAccountService accountService)
+        public SettingsService(IMapper mapper, IDbService dbService, IReplyService replyService, IQuoteService quoteService, IReportService reportService, IMessageService messageService, UserManager<ForumUser> userManager)
             : base(mapper, dbService)
         {
             this.replyService = replyService;
@@ -36,7 +34,6 @@ namespace Forum.Services.Settings
             this.reportService = reportService;
             this.messageService = messageService;
             this.userManager = userManager;
-            this.accountService = accountService;
         }
 
         private int ChangeGender(ForumUser user, string newGender)
@@ -67,10 +64,10 @@ namespace Forum.Services.Settings
             return result.Succeeded;
         }
 
-        public bool CheckPassword(ForumUser user, string password,ModelStateDictionary modelState)
+        public bool CheckPassword(ForumUser user, string password, ModelStateDictionary modelState)
         {
             var result = this.userManager.CheckPasswordAsync(user, password).GetAwaiter().GetResult();
-            if(!result)
+            if (!result)
             {
                 modelState.AddModelError("error", ErrorConstants.IncorrectUsernameOrPasswordError);
             }
@@ -95,13 +92,28 @@ namespace Forum.Services.Settings
 
         public bool EditProfile(ForumUser user, IEditProfileInputModel model)
         {
-            var isUsernameChanged = this.ChangeUsername(user, model.Username);
+            bool isUsernameChanged = false;
+            if (user.UserName == model.Username)
+            {
+                isUsernameChanged = true;
+            }
+            else
+            {
+                isUsernameChanged = this.ChangeUsername(user, model.Username);
+            }
 
             var isLocationChanged = this.ChangeLocation(user, model.Location);
 
             var isGenderChanged = this.ChangeGender(user, model.Gender);
 
-            return true;
+            if(user.UserName == model.Username && user.Gender == model.Gender && user.Location == model.Location)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public IEditProfileInputModel MapEditModel(string username)

@@ -62,7 +62,7 @@ namespace Forum.Services.Post
         public ViewModels.Interfaces.Post.IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal)
         {
             var post = this.dbService.DbContext.Posts.Include(p => p.Forum).Where(p => p.Id == Id).FirstOrDefault();
-
+            
             var model = this.mapper.Map<ViewModels.Post.EditPostInputModel>(post);
 
             model.AllForums = this.forumService.GetAllForums(principal);

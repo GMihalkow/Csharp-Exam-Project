@@ -3,12 +3,26 @@
     public class TestsConstants
     {
         public const string InMemoryDbName = "TestDb";
+        
+        public const string ValidTestFilename = "testFile.png";
+
+        public const string InvalidTestFilename = "testFile.json";
+
+        public const string TestEmail = "test@gmail.com";
 
         public const string TestUsername1 = "Georgi";
 
         public const string TestUsername2 = "Pesho";
 
         public const string TestUsername3 = "Ivan";
+
+        public const string TestLocation = "Mordor";
+
+        public const string TestLocation1 = "Sofia";
+
+        public const string TestTitle = "TestTitle";
+
+        public const string TestGender = "Male";
 
         public const string TestId = "testId";
 
@@ -33,6 +47,8 @@
         public const string ValidPostDescription = "[h1]Hello World![/h1]";
 
         public const string ParsedValidPostDescription = "<h1>Hello World!</h1>";
+
+        public const string TestDescription = "Test123";
 
         public const string InvalidTestMessageDescription = "";
 

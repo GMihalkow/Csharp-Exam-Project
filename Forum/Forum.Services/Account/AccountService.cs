@@ -49,16 +49,9 @@ namespace Forum.Services.Account
 
         public async Task<bool> EmailExists(string email)
         {
-            Models.ForumUser user = await this.userManager.FindByEmailAsync(email);
+            var emailExists = this.dbService.DbContext.Users.Any(u => u.Email == email);
 
-            if (user == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return emailExists;
         }
 
         public IdentityResult OnPostRegisterAsync(IRegisterUserViewModel viewModel, string password)
@@ -197,8 +190,12 @@ namespace Forum.Services.Account
 
         public IEnumerable<string> GetUsernamesWithoutOwner()
         {
+            var roleId = this.dbService.DbContext.Roles.FirstOrDefault(r => r.Name == Common.Role.Owner).Id;
+            
+            var filteredUserIds = this.dbService.DbContext.UserRoles.Where(ur => ur.RoleId != roleId).Select(ur => ur.UserId).ToList();
+
             var usernames = this.GetUsers()
-                .Where(u => !this.userManager.IsInRoleAsync(u, Common.Role.Owner).GetAwaiter().GetResult())
+                .Where(u => filteredUserIds.Contains(u.Id))
                 .Select(u => u.UserName)
                 .ToList();
 

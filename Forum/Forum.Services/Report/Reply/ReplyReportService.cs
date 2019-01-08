@@ -57,6 +57,7 @@ namespace Forum.Services.Report.Reply
             if (report == null)
             {
                 modelState.AddModelError("error", ErrorConstants.InvalidReplyReportIdError);
+                return 0;
             }
 
             this.dbService.DbContext.ReplyReports.Remove(report);

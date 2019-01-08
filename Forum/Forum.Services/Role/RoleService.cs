@@ -13,14 +13,12 @@ namespace Forum.Services.Role
 {
     public class RoleService : BaseService, IRoleService
     {
-        private readonly IAccountService accountService;
         private readonly UserManager<ForumUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public RoleService(IDbService dbService, IMapper mapper, IAccountService accountService, UserManager<ForumUser> userManager, RoleManager<IdentityRole> roleManager)
+        public RoleService(IDbService dbService, IMapper mapper, UserManager<ForumUser> userManager, RoleManager<IdentityRole> roleManager)
             : base(mapper, dbService)
         {
-            this.accountService = accountService;
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
@@ -50,6 +48,7 @@ namespace Forum.Services.Role
 
             return usersRoles;
         }
+
         public int Demote(ForumUser user)
         {
             this.userManager.RemoveFromRoleAsync(user, Common.Role.Administrator).GetAwaiter().GetResult();

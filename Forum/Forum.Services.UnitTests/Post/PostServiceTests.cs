@@ -25,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Post
@@ -256,6 +257,19 @@ namespace Forum.Services.UnitTests.Post
         }
 
         [Fact]
+        public void GetPost_returns_null()
+        {
+            this.TruncateCategoriesTable();
+            this.TruncateForumsTable();
+            this.TruncateUsersTable();
+            this.TruncatePostsTable();
+            
+            var actualResult = this.postService.GetPost(TestsConstants.TestId, 0, new ModelStateDictionary());
+
+            Assert.Null(actualResult);
+        }
+
+        [Fact]
         public void GetLatestPosts_returns_correct_list_correct()
         {
             this.TruncateCategoriesTable();
@@ -334,6 +348,38 @@ namespace Forum.Services.UnitTests.Post
             var actualResult = this.postService.Edit(model);
 
             Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public void GetEditPostModel_returns_one_when_correct()
+        {
+            this.TruncateCategoriesTable();
+            this.TruncateForumsTable();
+            this.TruncateUsersTable();
+            this.TruncatePostsTable();
+
+            var forum = new SubForum { Id = TestsConstants.TestId1 };
+            this.dbService.DbContext.Forums.Add(forum);
+            this.dbService.DbContext.SaveChanges();
+
+            var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId, Forum = forum, ForumId = forum.Id };
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.SaveChanges();
+
+            var expectedResult = this.mapper.Map<EditPostInputModel>(post);
+
+            var claims = new List<Claim>
+            {
+                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", Common.Role.Owner)
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var principal = new ClaimsPrincipal(identity);
+
+            var actualResult = this.postService.GetEditPostModel(post.Id, principal);
+
+            Assert.Equal(expectedResult.Id, actualResult.Id);
         }
     }
 }

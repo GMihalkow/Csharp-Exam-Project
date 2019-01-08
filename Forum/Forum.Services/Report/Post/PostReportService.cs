@@ -39,6 +39,7 @@ namespace Forum.Services.Report.Post
             if (report == null)
             {
                 modelState.AddModelError("error", ErrorConstants.InvalidPostReportIdError);
+                return 0;
             }
 
             this.dbService.DbContext.PostReports.Remove(report);
