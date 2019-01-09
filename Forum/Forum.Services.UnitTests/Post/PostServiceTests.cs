@@ -20,8 +20,6 @@ namespace Forum.Services.UnitTests.Post
     {
         private readonly IDbService dbService;
 
-        private readonly IMapper mapper;
-
         private readonly IPostService postService;
 
         private UserManager<ForumUser> userManager;
@@ -201,9 +199,18 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetPost_returns_entity_correct()
         {
+            var claims = new List<Claim>
+            {
+                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", Common.Role.Owner)
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var principal = new ClaimsPrincipal(identity);
+
             var expectedResult = TestsConstants.TestId;
 
-            var actualResult = this.postService.GetPost(TestsConstants.TestId, 0, new ModelStateDictionary());
+            var actualResult = this.postService.GetPost(TestsConstants.TestId, 0, principal, new ModelStateDictionary());
 
             Assert.Equal(expectedResult, actualResult.Id);
         }
@@ -211,7 +218,16 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetPost_returns_null()
         {
-            var actualResult = this.postService.GetPost(Guid.NewGuid().ToString(), 0, new ModelStateDictionary());
+            var claims = new List<Claim>
+            {
+                new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", Common.Role.User)
+            };
+
+            var identity = new ClaimsIdentity(claims, "Test");
+
+            var principal = new ClaimsPrincipal(identity);
+
+            var actualResult = this.postService.GetPost(Guid.NewGuid().ToString(), 0, principal, new ModelStateDictionary());
 
             Assert.Null(actualResult);
         }

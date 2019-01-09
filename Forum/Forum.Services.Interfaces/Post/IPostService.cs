@@ -13,7 +13,7 @@ namespace Forum.Services.Interfaces.Post
 
         Task<int> AddPost(IPostInputModel model, ForumUser user, string forumId);
 
-        IPostViewModel GetPost(string id, int start, ModelStateDictionary modelState);
+        IPostViewModel GetPost(string id, int start, ClaimsPrincipal principal, ModelStateDictionary modelState);
 
         string ParseDescription(string description);
 

@@ -64,7 +64,7 @@ namespace Forum.Services.UnitTests.Reply
             this.dbService.DbContext.SaveChanges();
         }
 
-        public void SeedDb()
+        private void SeedDb()
         {
             this.TruncateForumsTable();
             this.TruncatePostsTable();

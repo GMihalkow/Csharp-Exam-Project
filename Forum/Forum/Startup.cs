@@ -59,6 +59,8 @@ using Forum.Services.Settings;
 using Forum.Services.Interfaces.Settings;
 using Forum.Services.Pagging;
 using Forum.Services.Interfaces.Pagging;
+using AutoMapper;
+using Forum.Web.Utilities;
 
 namespace Forum
 {
@@ -79,35 +81,8 @@ namespace Forum
         public void ConfigureServices(IServiceCollection services)
         {
             //TODO: Make Replies to start with "Replying to: ..."
-            //TODO: Use Coverlet for code coverage.
-          
-            var config = AutoMapperConfig.RegisterMappings(
-                 typeof(LoginUserInputModel).Assembly,
-                 typeof(EditPostInputModel).Assembly,
-                 typeof(RegisterUserViewModel).Assembly,
-                 typeof(CategoryInputModel).Assembly,
-                 typeof(UserJsonViewModel).Assembly,
-                 typeof(ForumFormInputModel).Assembly,
-                 typeof(ForumInputModel).Assembly,
-                 typeof(EditForumFormInputModel).Assembly,
-                 typeof(EditForumInputModel).Assembly,
-                 typeof(RecentConversationViewModel).Assembly,
-                 typeof(ForumPostsInputModel).Assembly,
-                 typeof(PostInputModel).Assembly,
-                 typeof(LatestPostViewModel).Assembly,
-                 typeof(ProfileInfoViewModel).Assembly,
-                 typeof(PopularPostViewModel).Assembly,
-                 typeof(ReplyInputModel).Assembly,
-                 typeof(PostViewModel).Assembly,
-                 typeof(ReplyViewModel).Assembly,
-                 typeof(EditProfileInputModel).Assembly,
-                 typeof(SendMessageInputModel).Assembly,
-                 typeof(QuoteInputModel).Assembly,
-                 typeof(PostReportInputModel).Assembly,
-                 typeof(ReplyReportInputModel).Assembly,
-                 typeof(UserRoleViewModel).Assembly,
-                 typeof(ChatMessageViewModel).Assembly,
-                 typeof(QuoteReportInputModel).Assembly);
+
+            var config = ForumProfile.RegisterMappings();
 
             var mapper = config.CreateMapper();
 
@@ -139,13 +114,7 @@ namespace Forum
 
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-            .AddRazorPagesOptions(options =>
-            {
-                options.AllowAreas = true;
-                options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-                options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-            });
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddOptions();
 

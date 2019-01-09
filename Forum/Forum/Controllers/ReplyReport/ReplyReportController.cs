@@ -27,7 +27,7 @@ namespace Forum.Web.Controllers.ReplyReport
         [HttpPost]
         public IActionResult Add(ReplyReportInputModel model)
         {
-            var post = this.postService.GetPost(model.PostId, 0, this.ModelState);
+            var post = this.postService.GetPost(model.PostId, 0, this.User, this.ModelState);
 
             if (ModelState.IsValid)
             {

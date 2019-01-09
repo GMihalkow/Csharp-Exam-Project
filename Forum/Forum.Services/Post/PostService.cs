@@ -136,12 +136,14 @@ namespace Forum.Services.Post
             }
         }
 
-        public ViewModels.Interfaces.Post.IPostViewModel GetPost(string id, int start, ModelStateDictionary modelState)
+        public ViewModels.Interfaces.Post.IPostViewModel GetPost(string id, int start, ClaimsPrincipal principal, ModelStateDictionary modelState)
         {
             Models.Post post =
                 this.dbService
                 .DbContext
                 .Posts
+                .Include(p => p.Forum)
+                .ThenInclude(p => p.Category)
                 .Include(p => p.Author)
                 .ThenInclude(p => p.Posts)
                 .Include(p => p.Replies)
@@ -154,7 +156,7 @@ namespace Forum.Services.Post
                 .ThenInclude(p => p.Author)
                 .ThenInclude(p => p.Posts)
                 .FirstOrDefault(p => p.Id == id);
-
+            
             if (post == null)
             {
                 modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
@@ -162,7 +164,14 @@ namespace Forum.Services.Post
                 return null;
             }
 
-            ViewModels.Post.PostViewModel viewModel = this.mapper.Map<ViewModels.Post.PostViewModel>(post);
+            if (post.Forum.Category.Type == CategoryType.AdminOnly && (!principal.IsInRole(Common.Role.Owner) && !principal.IsInRole(Common.Role.Administrator)))
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
+
+                return null;
+            }
+
+            PostViewModel viewModel = this.mapper.Map<PostViewModel>(post);
 
             viewModel.Replies = viewModel.Replies.Skip(start).OrderBy(r => r.RepliedOn).Take(5).ToList();
 

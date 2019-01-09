@@ -80,7 +80,7 @@ namespace Forum.Web.Controllers.Post
         [TypeFilter(typeof(ViewsFilter))]
         public IActionResult Details(string Id, int start)
         {
-            var viewModel = this.postService.GetPost(Id, start, this.ModelState);
+            var viewModel = this.postService.GetPost(Id, start, this.User, this.ModelState);
             if (this.ModelState.IsValid)
             {
                 viewModel.PagesCount = this.paggingService.GetPagesCount(this.replyService.GetPostRepliesIds(Id).Count());
@@ -102,7 +102,7 @@ namespace Forum.Web.Controllers.Post
 
         public IActionResult Edit(string Id)
         {
-            var postExists = this.postService.GetPost(Id, default(int), this.ModelState);
+            var postExists = this.postService.GetPost(Id, default(int), this.User, this.ModelState);
             if (this.ModelState.IsValid)
             {
                 var viewModel = this.postService.GetEditPostModel(Id, this.User);
