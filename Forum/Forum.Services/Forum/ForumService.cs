@@ -52,7 +52,8 @@ namespace Forum.Services.Forum
             var forum = this.dbService.DbContext.Forums.FirstOrDefault(f => f.Id == id);
 
             var posts =
-                forum.Posts
+                forum
+                .Posts
                 .Skip(start)
                 .Take(5)
                 .OrderBy(p => p.StartedOn)
@@ -117,7 +118,7 @@ namespace Forum.Services.Forum
 
         public int Delete(SubForum forum)
         {
-            var forumPosts = this.dbService.DbContext.Posts.Where(p => p.ForumId == forum.Id);
+            var forumPosts = this.dbService.DbContext.Posts.Where(p => p.ForumId == forum.Id).ToList();
 
             this.dbService.DbContext.RemoveRange(forumPosts);
             this.dbService.DbContext.Remove(forum);

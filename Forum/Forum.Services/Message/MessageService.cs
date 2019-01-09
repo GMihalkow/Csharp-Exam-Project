@@ -204,6 +204,8 @@ namespace Forum.Services.Message
                 .Where(m => m.Author.UserName == username || m.Reciever.UserName == username)
                 .ToList();
 
+            this.dbService.DbContext.Messages.RemoveRange(messages);
+
             return this.dbService.DbContext.SaveChanges();
         }
 

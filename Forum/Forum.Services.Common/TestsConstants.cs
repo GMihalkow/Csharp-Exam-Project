@@ -16,6 +16,8 @@
 
         public const string TestUsername3 = "Ivan";
 
+        public const string TestUsername4 = "Prakash";
+
         public const string TestLocation = "Mordor";
 
         public const string TestLocation1 = "Sofia";
@@ -36,9 +38,11 @@
 
         public const string ValidCategoryName1 = "Gaming1";
 
-        public const string InvalidCategoryName = "GamingGamingGamingGamingGamingGamingGaming";
+        public const string ValidCategoryName2 = "Sports";
 
         public const string ValidForumName = "TestForum";
+
+        public const string ValidForumName1 = "AnotherForumName";
 
         public const string ValidPostName = "TestPost";
 

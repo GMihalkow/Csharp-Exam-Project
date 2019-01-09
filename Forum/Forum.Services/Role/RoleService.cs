@@ -2,7 +2,6 @@
 using System.Linq;
 using AutoMapper;
 using Forum.Models;
-using Forum.Services.Interfaces.Account;
 using Forum.Services.Interfaces.Db;
 using Forum.Services.Interfaces.Role;
 using Forum.ViewModels.Interfaces.Role;
@@ -14,6 +13,7 @@ namespace Forum.Services.Role
     public class RoleService : BaseService, IRoleService
     {
         private readonly UserManager<ForumUser> userManager;
+
         private readonly RoleManager<IdentityRole> roleManager;
 
         public RoleService(IDbService dbService, IMapper mapper, UserManager<ForumUser> userManager, RoleManager<IdentityRole> roleManager)

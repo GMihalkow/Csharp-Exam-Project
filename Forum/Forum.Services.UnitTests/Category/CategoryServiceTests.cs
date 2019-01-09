@@ -1,25 +1,10 @@
-﻿using AutoMapper;
-using Forum.Data;
-using Forum.MapConfiguration;
-using Forum.Models;
+﻿using Forum.Models;
 using Forum.Models.Enums;
-using Forum.Services.Category;
 using Forum.Services.Common;
-using Forum.Services.Common.Comparers;
-using Forum.Services.Db;
 using Forum.Services.Interfaces.Category;
-using Forum.ViewModels.Account;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.UnitTests.Base;
 using Forum.ViewModels.Category;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Message;
-using Forum.ViewModels.Post;
-using Forum.ViewModels.Profile;
-using Forum.ViewModels.Quote;
-using Forum.ViewModels.Reply;
-using Forum.ViewModels.Report;
-using Forum.ViewModels.Role;
-using Forum.ViewModels.Settings;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,55 +12,19 @@ using Xunit;
 
 namespace Forum.Services.UnitTests.Category
 {
-    public class CategoryServiceTests
+    public class CategoryServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly DbContextOptionsBuilder<ForumDbContext> options;
+        private readonly IDbService dbService;
 
-        private readonly ForumDbContext dbContext;
+        private readonly ICategoryService categoryService;
 
-        private readonly DbService dbService;
-
-        private readonly IMapper mapper;
-
-        private readonly CategoryService categoryService;
-
-        public CategoryServiceTests()
+        public CategoryServiceTests(BaseUnitTest fixture)
         {
-            this.options = new DbContextOptionsBuilder<ForumDbContext>()
-                .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
+            this.dbService = fixture.Provider.GetService(typeof(IDbService)) as IDbService;
 
-            this.dbContext = new ForumDbContext(this.options.Options);
+            this.categoryService = fixture.Provider.GetService(typeof(ICategoryService)) as ICategoryService;
 
-            this.dbService = new DbService(this.dbContext);
-
-            this.mapper = AutoMapperConfig.RegisterMappings(
-               typeof(LoginUserInputModel).Assembly,
-               typeof(EditPostInputModel).Assembly,
-               typeof(RegisterUserViewModel).Assembly,
-               typeof(CategoryInputModel).Assembly,
-               typeof(UserJsonViewModel).Assembly,
-               typeof(ForumFormInputModel).Assembly,
-               typeof(ForumInputModel).Assembly,
-               typeof(RecentConversationViewModel).Assembly,
-               typeof(ForumPostsInputModel).Assembly,
-               typeof(PostInputModel).Assembly,
-               typeof(LatestPostViewModel).Assembly,
-               typeof(ProfileInfoViewModel).Assembly,
-               typeof(PopularPostViewModel).Assembly,
-               typeof(ReplyInputModel).Assembly,
-               typeof(PostViewModel).Assembly,
-               typeof(ReplyViewModel).Assembly,
-               typeof(EditProfileInputModel).Assembly,
-               typeof(SendMessageInputModel).Assembly,
-               typeof(QuoteInputModel).Assembly,
-               typeof(PostReportInputModel).Assembly,
-               typeof(ReplyReportInputModel).Assembly,
-               typeof(UserRoleViewModel).Assembly,
-               typeof(ChatMessageViewModel).Assembly,
-               typeof(QuoteReportInputModel).Assembly)
-               .CreateMapper();
-
-            this.categoryService = new CategoryService(this.mapper, this.dbService);
+            this.SeedDb();
         }
 
         private void TruncateCategoriesTable()
@@ -85,7 +34,8 @@ namespace Forum.Services.UnitTests.Category
 
             this.dbService.DbContext.SaveChanges();
         }
-        private void TruncateUsersable()
+
+        private void TruncateUsersTable()
         {
             var categories = this.dbService.DbContext.Users.ToList();
             this.dbService.DbContext.Users.RemoveRange(categories);
@@ -93,155 +43,127 @@ namespace Forum.Services.UnitTests.Category
             this.dbService.DbContext.SaveChanges();
         }
 
+        private void SeedDb()
+        {
+            this.TruncateCategoriesTable();
+            this.TruncateUsersTable();
+            ForumUser user, secondUser;
+            SeedUsers(out user, out secondUser);
+
+            SeedCategories(user, secondUser);
+        }
+
+        private void SeedCategories(ForumUser user, ForumUser secondUser)
+        {
+            var category = new Models.Category { Id = TestsConstants.TestId, Name = TestsConstants.ValidCategoryName, User = user, UserId = user.Id, Type = CategoryType.AdminOnly };
+            var secondCategory = new Models.Category { Id = TestsConstants.TestId1, Name = TestsConstants.ValidCategoryName1, User = secondUser, UserId = secondUser.Id, Type = CategoryType.Public };
+
+            this.dbService.DbContext.Categories.Add(category);
+            this.dbService.DbContext.Categories.Add(secondCategory);
+            this.dbService.DbContext.SaveChanges();
+        }
+
+        private void SeedUsers(out ForumUser user, out ForumUser secondUser)
+        {
+            user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1, RegisteredOn = DateTime.UtcNow.AddDays(1) };
+            secondUser = new ForumUser { Id = TestsConstants.TestId2, Email = TestsConstants.TestEmail, UserName = TestsConstants.TestUsername2, RegisteredOn = DateTime.UtcNow.AddDays(2) };
+            var thirdUser = new ForumUser { Id = TestsConstants.TestId3, UserName = TestsConstants.TestUsername3, RegisteredOn = DateTime.UtcNow.AddDays(3) };
+
+            this.dbService.DbContext.Users.Add(user);
+            this.dbService.DbContext.Users.Add(secondUser);
+            this.dbService.DbContext.Users.Add(thirdUser);
+            this.dbService.DbContext.SaveChanges();
+        }
+
         [Fact]
         public void GetCategoryByName_returns_entity_when_correct()
         {
-            this.TruncateCategoriesTable();
+            var expectedResult = TestsConstants.ValidCategoryName;
 
-            var categoryId = Guid.NewGuid().ToString();
+            var actualResult = this.categoryService.GetCategoryByName(TestsConstants.ValidCategoryName).Name;
 
-            var category = new Models.Category { Id = categoryId, Name = TestsConstants.ValidCategoryName };
-            this.dbService.DbContext.Categories.Add(category);
-
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedName = new Models.Category { Id = categoryId, Name = TestsConstants.ValidCategoryName }.Name;
-            var actualName = this.categoryService.GetCategoryByName(TestsConstants.ValidCategoryName).Name;
-
-            Assert.Equal(expectedName, actualName);
+            Assert.Equal(expectedResult, actualResult);
         }
 
         [Fact]
         public void GetCategoryByName_returns_null_when_correct()
         {
-            this.TruncateCategoriesTable();
-
-            Assert.Null(this.categoryService.GetCategoryByName(TestsConstants.ValidCategoryName));
+            Assert.Null(this.categoryService.GetCategoryByName(TestsConstants.ValidCategoryName2));
         }
 
         [Fact]
         public void GetCategoryById_returns_entity_when_correct()
         {
-            this.TruncateCategoriesTable();
+            var expectedResult = TestsConstants.TestId;
+            var actualResult = this.categoryService.GetCategoryById(TestsConstants.TestId).Id;
 
-            var categoryId = Guid.NewGuid().ToString();
-
-            var category = new Models.Category { Id = categoryId, Name = TestsConstants.ValidCategoryName };
-            this.dbService.DbContext.Categories.Add(category);
-
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedId = new Models.Category { Id = categoryId, Name = TestsConstants.ValidCategoryName }.Id;
-            var actualId = this.categoryService.GetCategoryByName(TestsConstants.ValidCategoryName).Id;
-
-            Assert.Equal(expectedId, actualId);
+            Assert.Equal(expectedResult, actualResult);
         }
 
         [Fact]
         public void GetCategoryById_returns_null_when_correct()
         {
-            this.TruncateCategoriesTable();
-
-            Assert.Null(this.categoryService.GetCategoryByName(Guid.NewGuid().ToString()));
+            Assert.Null(this.categoryService.GetCategoryById(Guid.NewGuid().ToString()));
         }
 
         [Fact]
         public void AddCategory_returns_two_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateUsersable();
+            var inputModel = new CategoryInputModel { Name = TestsConstants.ValidCategoryName2, Type = CategoryType.Public };
 
-            var inputModel = new CategoryInputModel { Name = TestsConstants.ValidCategoryName, Type = CategoryType.Public };
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == TestsConstants.TestId);
 
-            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
+            var actualResult = this.categoryService.AddCategory(inputModel, user).GetAwaiter().GetResult();
 
-            var result = this.categoryService.AddCategory(inputModel, user).GetAwaiter().GetResult();
-
-            Assert.Equal(2, result);
+            Assert.Equal(1, actualResult);
         }
 
         [Fact]
         public void GetAllCategories_returns_entities_when_correct()
         {
             this.TruncateCategoriesTable();
-            this.TruncateUsersable();
+            this.TruncateUsersTable();
 
-            var testCategory = new Models.Category { Id = TestsConstants.TestId, Name = TestsConstants.ValidCategoryName };
+            this.SeedDb();
 
-            var testCategoryTwo = new Models.Category { Id = TestsConstants.TestId1, Name = TestsConstants.ValidCategoryName1 };
-            
-            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
+            var expectedList = new List<string> { TestsConstants.TestId, TestsConstants.TestId1 }.OrderBy(c => c);
 
-            this.dbService.DbContext.Categories.Add(testCategoryTwo);
-            this.dbService.DbContext.SaveChanges();
-
-            this.dbService.DbContext.Categories.Add(testCategory);
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedList = new List<Models.Category> { testCategory, testCategoryTwo };
-
-            Assert.Equal(expectedList, this.categoryService.GetAllCategories());
+            Assert.Equal(expectedList, this.categoryService.GetAllCategories().Select(c => c.Id).OrderBy(c => c));
         }
 
         [Fact]
         public void GetAllCategories_returns_empty_list_when_correct()
         {
             this.TruncateCategoriesTable();
-            this.TruncateUsersable();
+            this.TruncateUsersTable();
 
             var expectedList = new List<Models.Category>();
 
             Assert.Equal(expectedList, this.categoryService.GetAllCategories());
+
+            this.SeedDb();
         }
 
         [Fact]
         public void GetPublicCategories_returns_entities_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateUsersable();
+            var expectedList = new List<string> { TestsConstants.ValidCategoryName1};
 
-            var testCategory = new Models.Category { Id = TestsConstants.TestId, Name = TestsConstants.ValidCategoryName, Type = CategoryType.AdminOnly };
-
-            var testCategoryTwo = new Models.Category { Id = TestsConstants.TestId1, Name = TestsConstants.ValidCategoryName1, Type = CategoryType.Public};
-
-            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
-
-            this.dbService.DbContext.Categories.Add(testCategoryTwo);
-            this.dbService.DbContext.SaveChanges();
-
-            this.dbService.DbContext.Categories.Add(testCategory);
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedList = new List<Models.Category> { testCategoryTwo };
-
-            Assert.Equal(expectedList, this.categoryService.GetPublicCategories());
-        }
+            Assert.Equal(expectedList, this.categoryService.GetPublicCategories().Select(c => c.Name));
+        }       
 
         [Fact]
         public void IsCategoryValid_returns_true_when_correct()
         {
-            this.TruncateCategoriesTable();
+            var actualResult = this.categoryService.IsCategoryValid(TestsConstants.TestId);
 
-            var categoryId = Guid.NewGuid().ToString();
-
-            var category = new Models.Category { Id = categoryId, Name = TestsConstants.ValidCategoryName };
-            this.dbService.DbContext.Categories.Add(category);
-
-            this.dbService.DbContext.SaveChanges();
-            
-            var result = this.categoryService.IsCategoryValid(categoryId);
-
-            Assert.True(result == true);
+            Assert.True(actualResult == true);
         }
 
         [Fact]
         public void IsCategoryValid_returns_false_when_incorrect()
         {
-            this.TruncateCategoriesTable();
-
-            var categoryId = Guid.NewGuid().ToString();
-            
-            var result = this.categoryService.IsCategoryValid(categoryId);
+            var result = this.categoryService.IsCategoryValid(Guid.NewGuid().ToString());
 
             Assert.True(result == false);
         }
