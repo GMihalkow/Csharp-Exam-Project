@@ -1,76 +1,31 @@
 ﻿using AutoMapper;
-using Forum.Data;
-using Forum.MapConfiguration;
 using Forum.Models;
 using Forum.Services.Common;
-using Forum.Services.Db;
-using Forum.Services.Report;
-using Forum.ViewModels.Account;
-using Forum.ViewModels.Category;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Message;
-using Forum.ViewModels.Post;
-using Forum.ViewModels.Profile;
-using Forum.ViewModels.Quote;
-using Forum.ViewModels.Reply;
-using Forum.ViewModels.Report;
-using Forum.ViewModels.Role;
-using Forum.ViewModels.Settings;
-using Microsoft.EntityFrameworkCore;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.Interfaces.Report;
+using Forum.Services.UnitTests.Base;
 using System.Linq;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Reports
 {
-    public class ReportsServiceTests
+    public class ReportsServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly DbContextOptionsBuilder<ForumDbContext> options;
-
-        private readonly ForumDbContext dbContext;
-
-        private readonly DbService dbService;
+        private readonly IDbService dbService;
 
         private readonly IMapper mapper;
 
-        private readonly ReportService reportService;
+        private readonly IReportService reportService;
 
-        public ReportsServiceTests()
+        public ReportsServiceTests(BaseUnitTest fixture)
         {
-            this.options = new DbContextOptionsBuilder<ForumDbContext>()
-                .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
+            this.dbService = fixture.Provider.GetService(typeof(IDbService)) as IDbService;
 
-            this.dbContext = new ForumDbContext(this.options.Options);
+            this.mapper = fixture.Provider.GetService(typeof(IMapper)) as IMapper;
 
-            this.dbService = new DbService(this.dbContext);
+            this.reportService = fixture.Provider.GetService(typeof(IReportService)) as IReportService;
 
-            this.mapper = AutoMapperConfig.RegisterMappings(
-               typeof(LoginUserInputModel).Assembly,
-               typeof(EditPostInputModel).Assembly,
-               typeof(RegisterUserViewModel).Assembly,
-               typeof(CategoryInputModel).Assembly,
-               typeof(UserJsonViewModel).Assembly,
-               typeof(ForumFormInputModel).Assembly,
-               typeof(ForumInputModel).Assembly,
-               typeof(RecentConversationViewModel).Assembly,
-               typeof(ForumPostsInputModel).Assembly,
-               typeof(PostInputModel).Assembly,
-               typeof(LatestPostViewModel).Assembly,
-               typeof(ProfileInfoViewModel).Assembly,
-               typeof(PopularPostViewModel).Assembly,
-               typeof(ReplyInputModel).Assembly,
-               typeof(PostViewModel).Assembly,
-               typeof(ReplyViewModel).Assembly,
-               typeof(EditProfileInputModel).Assembly,
-               typeof(SendMessageInputModel).Assembly,
-               typeof(QuoteInputModel).Assembly,
-               typeof(PostReportInputModel).Assembly,
-               typeof(ReplyReportInputModel).Assembly,
-               typeof(UserRoleViewModel).Assembly,
-               typeof(ChatMessageViewModel).Assembly,
-               typeof(QuoteReportInputModel).Assembly)
-               .CreateMapper();
-
-            this.reportService = new ReportService(this.mapper, this.dbService);
+            this.SeedDb();
         }
 
         private void TruncateUsersTable()
@@ -105,15 +60,14 @@ namespace Forum.Services.UnitTests.Reports
             this.dbService.DbContext.SaveChanges();
         }
 
-        [Fact]
-        public void DeleteUserReports_returns_correct_result_when_correct()
+        private void SeedDb()
         {
             this.TruncatePostReportsTable();
-            this.TruncateQuoteReportsTable();
             this.TruncateReplyReportsTable();
             this.TruncateUsersTable();
+            this.TruncateQuoteReportsTable();
 
-            var user = new ForumUser { Id = TestsConstants.TestId };
+            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
             this.dbService.DbContext.Users.Add(user);
             this.dbService.DbContext.SaveChanges();
 
@@ -126,9 +80,14 @@ namespace Forum.Services.UnitTests.Reports
             this.dbService.DbContext.QuoteReports.Add(quoteReport);
             this.dbService.DbContext.SaveChanges();
 
+        }
+
+        [Fact]
+        public void DeleteUserReports_returns_correct_result_when_correct()
+        {
             var expectedResult = 3;
 
-            var actualResult = this.reportService.DeleteUserReports(user.UserName);
+            var actualResult = this.reportService.DeleteUserReports(TestsConstants.TestUsername1);
 
             Assert.Equal(expectedResult, actualResult);
         }

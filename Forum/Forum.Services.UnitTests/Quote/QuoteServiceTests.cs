@@ -1,79 +1,34 @@
 ﻿using AutoMapper;
-using Forum.Data;
-using Forum.MapConfiguration;
 using Forum.Models;
 using Forum.Services.Common;
-using Forum.Services.Db;
-using Forum.Services.Quote;
-using Forum.ViewModels.Account;
-using Forum.ViewModels.Category;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Message;
-using Forum.ViewModels.Post;
-using Forum.ViewModels.Profile;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.Interfaces.Quote;
+using Forum.Services.UnitTests.Base;
 using Forum.ViewModels.Quote;
-using Forum.ViewModels.Reply;
-using Forum.ViewModels.Report;
-using Forum.ViewModels.Role;
-using Forum.ViewModels.Settings;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Quote
 {
-    public class QuoteServiceTests
+    public class QuoteServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly DbContextOptionsBuilder<ForumDbContext> options;
-
-        private readonly ForumDbContext dbContext;
-
-        private readonly DbService dbService;
+        private readonly IDbService dbService;
 
         private readonly IMapper mapper;
 
-        private readonly QuoteService quoteService;
+        private readonly IQuoteService quoteService;
 
-        public QuoteServiceTests()
+        public QuoteServiceTests(BaseUnitTest fixture)
         {
-            this.options = new DbContextOptionsBuilder<ForumDbContext>()
-                .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
+            this.dbService = fixture.Provider.GetService(typeof(IDbService)) as IDbService;
 
-            this.dbContext = new ForumDbContext(this.options.Options);
+            this.mapper = fixture.Provider.GetService(typeof(IMapper)) as IMapper;
 
-            this.dbService = new DbService(this.dbContext);
+            this.quoteService = fixture.Provider.GetService(typeof(IQuoteService)) as IQuoteService;
 
-            this.mapper = AutoMapperConfig.RegisterMappings(
-               typeof(LoginUserInputModel).Assembly,
-               typeof(EditPostInputModel).Assembly,
-               typeof(RegisterUserViewModel).Assembly,
-               typeof(CategoryInputModel).Assembly,
-               typeof(UserJsonViewModel).Assembly,
-               typeof(ForumFormInputModel).Assembly,
-               typeof(ForumInputModel).Assembly,
-               typeof(RecentConversationViewModel).Assembly,
-               typeof(ForumPostsInputModel).Assembly,
-               typeof(PostInputModel).Assembly,
-               typeof(LatestPostViewModel).Assembly,
-               typeof(ProfileInfoViewModel).Assembly,
-               typeof(PopularPostViewModel).Assembly,
-               typeof(ReplyInputModel).Assembly,
-               typeof(PostViewModel).Assembly,
-               typeof(ReplyViewModel).Assembly,
-               typeof(EditProfileInputModel).Assembly,
-               typeof(SendMessageInputModel).Assembly,
-               typeof(QuoteInputModel).Assembly,
-               typeof(PostReportInputModel).Assembly,
-               typeof(ReplyReportInputModel).Assembly,
-               typeof(UserRoleViewModel).Assembly,
-               typeof(ChatMessageViewModel).Assembly,
-               typeof(QuoteReportInputModel).Assembly)
-               .CreateMapper();
-
-            this.quoteService = new QuoteService(this.mapper, this.dbService);
+            this.SeedDb();
         }
 
         private void TruncateQuotesTable()
@@ -108,50 +63,61 @@ namespace Forum.Services.UnitTests.Quote
             this.dbService.DbContext.SaveChanges();
         }
 
-        [Fact]
-        public void DeleteUserQuotes_returns_correct_result_when_correct()
+        private void SeedDb()
         {
-            this.TruncateUsersTable();
-            this.TruncateQuotesTable();
             this.TruncateForumsTable();
             this.TruncatePostsTable();
+            this.TruncateQuotesTable();
+            this.TruncateUsersTable();
 
-            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
+            var post = new Models.Post { Id = TestsConstants.TestId };
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.SaveChanges();
 
-            this.dbService.DbContext.Users.Add(user);
+            var reply = new Models.Reply { Id = TestsConstants.TestId2, Post = post, PostId = post.Id };
+            this.dbService.DbContext.Replies.Add(reply);
+            this.dbService.DbContext.SaveChanges();
+
+            var author = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
+            var reciever = new ForumUser { Id = TestsConstants.TestId1, UserName = TestsConstants.TestUsername2 };
+
+            this.dbService.DbContext.Users.Add(author);
+            this.dbService.DbContext.Users.Add(reciever);
+            this.dbService.DbContext.SaveChanges();
+
+            var firstQuote = new Models.Quote { Id = TestsConstants.TestId1, Author = author, AuthorId = author.Id, Reply = reply, ReplyId = reply.Id };
+            this.dbService.DbContext.Quotes.Add(firstQuote);
             this.dbService.DbContext.SaveChanges();
 
             for (int i = 0; i < 5; i++)
             {
-                var quote = new Models.Quote { Id = Guid.NewGuid().ToString(), Author = user, AuthorId = user.Id };
+                var quote = new Models.Quote { Id = Guid.NewGuid().ToString(), Author = author, AuthorId = author.Id, Reply = reply, ReplyId = reply.Id };
 
                 this.dbService.DbContext.Quotes.Add(quote);
                 this.dbService.DbContext.SaveChanges();
             }
+        }
 
-            var expectedResult = 5;
+        [Fact]
+        public void DeleteUserQuotes_returns_correct_result_when_correct()
+        {
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == TestsConstants.TestId);
+
+            var expectedResult = 6;
 
             var actualResult = this.quoteService.DeleteUserQuotes(user);
 
             Assert.Equal(expectedResult, actualResult);
+
+            this.SeedDb();
         }
 
         [Fact]
         public void GetQuote_returns_entity_result_when_correct()
         {
-            this.TruncateUsersTable();
-            this.TruncateQuotesTable();
-            this.TruncateForumsTable();
-            this.TruncatePostsTable();
+            var expectedResult = this.dbService.DbContext.Quotes.FirstOrDefault(q => q.Id == TestsConstants.TestId1);
 
-            var quote = new Models.Quote { Id = TestsConstants.TestId };
-
-            this.dbService.DbContext.Quotes.Add(quote);
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedResult = quote;
-
-            var actualResult = this.quoteService.GetQuote(quote.Id, new ModelStateDictionary());
+            var actualResult = this.quoteService.GetQuote(TestsConstants.TestId1, new ModelStateDictionary());
 
             Assert.Equal(expectedResult, actualResult);
         }
@@ -159,12 +125,7 @@ namespace Forum.Services.UnitTests.Quote
         [Fact]
         public void GetQuote_returns_null_result_when_incorrect()
         {
-            this.TruncateUsersTable();
-            this.TruncateQuotesTable();
-            this.TruncateForumsTable();
-            this.TruncatePostsTable();
-
-            var actualResult = this.quoteService.GetQuote(TestsConstants.TestId, new ModelStateDictionary());
+            var actualResult = this.quoteService.GetQuote(Guid.NewGuid().ToString(), new ModelStateDictionary());
 
             Assert.Null(actualResult);
         }
@@ -172,32 +133,19 @@ namespace Forum.Services.UnitTests.Quote
         [Fact]
         public void AddQuote_returns_one_result_when_correct()
         {
-            this.TruncateUsersTable();
-            this.TruncateQuotesTable();
-            this.TruncateForumsTable();
-            this.TruncatePostsTable();
-
-            var reply = new Models.Reply { Id = TestsConstants.TestId2 };
-
-            var author = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
-            var reciever = new ForumUser { Id = TestsConstants.TestId1, UserName = TestsConstants.TestUsername2 };
-
-            this.dbService.DbContext.Users.Add(author);
-            this.dbService.DbContext.Users.Add(reciever);
-            this.dbService.DbContext.Replies.Add(reply);
-            this.dbService.DbContext.SaveChanges();
+            var author = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == TestsConstants.TestId);
 
             var model = new QuoteInputModel
             {
                 Quote = TestsConstants.ParsedValidPostDescription,
                 Description = TestsConstants.ValidPostDescription,
-                RecieverId = reciever.Id,
-                ReplyId = reply.Id
+                RecieverId = TestsConstants.TestId1,
+                ReplyId = TestsConstants.TestId2
             };
 
             var expectedResult = 1;
 
-            var actualResult = this.quoteService.AddQuote(model, author, reciever.UserName);
+            var actualResult = this.quoteService.AddQuote(model, author, TestsConstants.TestUsername2);
 
             Assert.Equal(expectedResult, actualResult);
         }
@@ -205,37 +153,11 @@ namespace Forum.Services.UnitTests.Quote
         [Fact]
         public void GetQuotesByForum_returns_correct_list_when_correct()
         {
-            this.TruncateUsersTable();
-            this.TruncateQuotesTable();
-            this.TruncateForumsTable();
-            this.TruncatePostsTable();
+            var expectedResult = 6;
 
-            var post = new Models.Post { Id = TestsConstants.TestId };
+            var actualResult = this.quoteService.GetQuotesByPost(TestsConstants.TestId);
 
-            this.dbService.DbContext.Posts.Add(post);
-            this.dbService.DbContext.SaveChanges();
-
-            var reply = new Models.Reply { Id = TestsConstants.TestId1, PostId = post.Id, Post = post };
-
-            this.dbService.DbContext.Replies.Add(reply);
-            this.dbService.DbContext.SaveChanges();
-
-            var quotesList = new List<Models.Quote>();
-            for (int i = 0; i < 5; i++)
-            {
-                var quote = new Models.Quote { Reply = reply, ReplyId = reply.Id };
-
-                this.dbService.DbContext.Quotes.Add(quote);
-                this.dbService.DbContext.SaveChanges();
-
-                quotesList.Add(quote);
-            }
-
-            var expectedResult = quotesList.Select(q => this.mapper.Map<QuoteViewModel>(q)).ToList();
-
-            var actualResult = this.quoteService.GetQuotesByPost(post.Id);
-
-            Assert.Equal(expectedResult.Count(), actualResult.Count());
+            Assert.Equal(expectedResult, actualResult.Count());
         }
     }
 }

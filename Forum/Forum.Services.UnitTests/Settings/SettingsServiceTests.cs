@@ -1,22 +1,10 @@
 ﻿using AutoMapper;
-using Forum.Data;
-using Forum.MapConfiguration;
 using Forum.Models;
 using Forum.Services.Common;
-using Forum.Services.Db;
-using Forum.Services.Settings;
-using Forum.ViewModels.Account;
-using Forum.ViewModels.Category;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Message;
-using Forum.ViewModels.Post;
-using Forum.ViewModels.Profile;
-using Forum.ViewModels.Quote;
-using Forum.ViewModels.Reply;
-using Forum.ViewModels.Report;
-using Forum.ViewModels.Role;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.Interfaces.Settings;
+using Forum.Services.UnitTests.Base;
 using Forum.ViewModels.Settings;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,55 +14,23 @@ using Xunit;
 
 namespace Forum.Services.UnitTests.Settings
 {
-    public class SettingsServiceTests
+    public class SettingsServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly DbContextOptionsBuilder<ForumDbContext> options;
-
-        private readonly ForumDbContext dbContext;
-
-        private readonly DbService dbService;
+        private readonly IDbService dbService;
 
         private readonly IMapper mapper;
 
-        private readonly SettingsService settingsService;
+        private readonly ISettingsService settingsService;
 
-        public SettingsServiceTests()
+        public SettingsServiceTests(BaseUnitTest fixture)
         {
-            this.options = new DbContextOptionsBuilder<ForumDbContext>()
-                .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
+            this.mapper = fixture.Provider.GetService(typeof(IMapper)) as IMapper;
 
-            this.dbContext = new ForumDbContext(options.Options);
+            this.dbService = fixture.Provider.GetService(typeof(IDbService)) as IDbService;
 
-            this.dbService = new DbService(dbContext);
+            this.settingsService = fixture.Provider.GetService(typeof(ISettingsService)) as ISettingsService;
 
-            this.mapper = AutoMapperConfig.RegisterMappings(
-                 typeof(LoginUserInputModel).Assembly,
-                 typeof(EditPostInputModel).Assembly,
-                 typeof(RegisterUserViewModel).Assembly,
-                 typeof(CategoryInputModel).Assembly,
-                 typeof(UserJsonViewModel).Assembly,
-                 typeof(ForumFormInputModel).Assembly,
-                 typeof(ForumInputModel).Assembly,
-                 typeof(RecentConversationViewModel).Assembly,
-                 typeof(ForumPostsInputModel).Assembly,
-                 typeof(PostInputModel).Assembly,
-                 typeof(LatestPostViewModel).Assembly,
-                 typeof(ProfileInfoViewModel).Assembly,
-                 typeof(PopularPostViewModel).Assembly,
-                 typeof(ReplyInputModel).Assembly,
-                 typeof(PostViewModel).Assembly,
-                 typeof(ReplyViewModel).Assembly,
-                 typeof(EditProfileInputModel).Assembly,
-                 typeof(SendMessageInputModel).Assembly,
-                 typeof(QuoteInputModel).Assembly,
-                 typeof(PostReportInputModel).Assembly,
-                 typeof(ReplyReportInputModel).Assembly,
-                 typeof(UserRoleViewModel).Assembly,
-                 typeof(ChatMessageViewModel).Assembly,
-                 typeof(QuoteReportInputModel).Assembly)
-                 .CreateMapper();
-
-            this.settingsService = new SettingsService(this.mapper, this.dbService, null, null, null, null, null);
+            this.SeedDb();
         }
 
         private void TruncateUsersTable()
@@ -85,8 +41,7 @@ namespace Forum.Services.UnitTests.Settings
             this.dbService.DbContext.SaveChanges();
         }
 
-        [Fact]
-        public void EditProfile_returns_true_when_correct()
+        private void SeedDb()
         {
             this.TruncateUsersTable();
 
@@ -100,29 +55,26 @@ namespace Forum.Services.UnitTests.Settings
 
             this.dbService.DbContext.Users.Add(user);
             this.dbService.DbContext.SaveChanges();
+        }
+
+        [Fact]
+        public void EditProfile_returns_true_when_correct()
+        {
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == TestsConstants.TestId);
 
             var model = new EditProfileInputModel { Username = TestsConstants.TestUsername1, Gender = TestsConstants.TestGender, Location = TestsConstants.TestLocation1 };
 
             var actualResult = this.settingsService.EditProfile(user, model);
 
             Assert.True(actualResult == true);
+
+            this.SeedDb();  
         }
 
         [Fact]
         public void MapEditModel_returns_true_when_correct()
         {
-            this.TruncateUsersTable();
-
-            var user = new ForumUser
-            {
-                UserName = TestsConstants.TestUsername1,
-                Location = TestsConstants.TestLocation,
-                Gender = TestsConstants.TestGender,
-                Id = TestsConstants.TestId
-            };
-
-            this.dbService.DbContext.Users.Add(user);
-            this.dbService.DbContext.SaveChanges();
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == TestsConstants.TestId);
 
             var expectedResult = this.mapper.Map<EditProfileInputModel>(user);
 
@@ -131,22 +83,10 @@ namespace Forum.Services.UnitTests.Settings
             Assert.Equal(expectedResult.Username, actualResult.Username);
         }
 
-
         [Fact]
         public void BuildFile_returns_true_when_correct()
         {
-            this.TruncateUsersTable();
-
-            var user = new ForumUser
-            {
-                UserName = TestsConstants.TestUsername1,
-                Location = TestsConstants.TestLocation,
-                Gender = TestsConstants.TestGender,
-                Id = TestsConstants.TestId
-            };
-
-            this.dbService.DbContext.Users.Add(user);
-            this.dbService.DbContext.SaveChanges();
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == TestsConstants.TestId);
 
             var viewModel = this.mapper.Map<UserJsonViewModel>(user);
 

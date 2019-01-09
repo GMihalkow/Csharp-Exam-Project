@@ -1,79 +1,35 @@
 ﻿using AutoMapper;
-using Forum.Data;
-using Forum.MapConfiguration;
 using Forum.Models;
-using Forum.Services.Account;
 using Forum.Services.Common;
-using Forum.Services.Db;
-using Forum.Services.Role;
-using Forum.ViewModels.Account;
-using Forum.ViewModels.Category;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Message;
-using Forum.ViewModels.Post;
-using Forum.ViewModels.Profile;
-using Forum.ViewModels.Quote;
-using Forum.ViewModels.Reply;
-using Forum.ViewModels.Report;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.Interfaces.Role;
+using Forum.Services.UnitTests.Base;
+using Forum.ViewModels.Interfaces.Role;
 using Forum.ViewModels.Role;
-using Forum.ViewModels.Settings;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Role
 {
-    public class RoleServiceTests
+    public class RoleServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly DbContextOptionsBuilder<ForumDbContext> options;
-
-        private readonly ForumDbContext dbContext;
-
-        private readonly DbService dbService;
+        private readonly IDbService dbService;
 
         private readonly IMapper mapper;
 
-        private readonly RoleService roleService;
+        private readonly IRoleService roleService;
 
-        public RoleServiceTests()
+        public RoleServiceTests(BaseUnitTest fixture)
         {
-            this.options = new DbContextOptionsBuilder<ForumDbContext>()
-                .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
+            this.dbService = fixture.Provider.GetService(typeof(IDbService)) as IDbService;
 
-            this.dbContext = new ForumDbContext(options.Options);
+            this.mapper = fixture.Provider.GetService(typeof(IMapper)) as IMapper;
 
-            this.dbService = new DbService(dbContext);
+            this.roleService = fixture.Provider.GetService(typeof(IRoleService)) as IRoleService;
 
-            this.mapper = AutoMapperConfig.RegisterMappings(
-                 typeof(LoginUserInputModel).Assembly,
-                 typeof(EditPostInputModel).Assembly,
-                 typeof(RegisterUserViewModel).Assembly,
-                 typeof(CategoryInputModel).Assembly,
-                 typeof(UserJsonViewModel).Assembly,
-                 typeof(ForumFormInputModel).Assembly,
-                 typeof(ForumInputModel).Assembly,
-                 typeof(RecentConversationViewModel).Assembly,
-                 typeof(ForumPostsInputModel).Assembly,
-                 typeof(PostInputModel).Assembly,
-                 typeof(LatestPostViewModel).Assembly,
-                 typeof(ProfileInfoViewModel).Assembly,
-                 typeof(PopularPostViewModel).Assembly,
-                 typeof(ReplyInputModel).Assembly,
-                 typeof(PostViewModel).Assembly,
-                 typeof(ReplyViewModel).Assembly,
-                 typeof(EditProfileInputModel).Assembly,
-                 typeof(SendMessageInputModel).Assembly,
-                 typeof(QuoteInputModel).Assembly,
-                 typeof(PostReportInputModel).Assembly,
-                 typeof(ReplyReportInputModel).Assembly,
-                 typeof(UserRoleViewModel).Assembly,
-                 typeof(ChatMessageViewModel).Assembly,
-                 typeof(QuoteReportInputModel).Assembly)
-                 .CreateMapper();
-
-            this.roleService = new RoleService(this.dbService, this.mapper, null, null);
+            this.SeedDb();
         }
 
         private void TruncateUsersTable()
@@ -100,8 +56,7 @@ namespace Forum.Services.UnitTests.Role
             this.dbService.DbContext.SaveChanges();
         }
 
-        [Fact]
-        public void GetUsersRoles_returns_correct_list_with_entities()
+        private void SeedDb()
         {
             this.TruncateRolesTable();
             this.TruncateUserRolesTable();
@@ -134,12 +89,16 @@ namespace Forum.Services.UnitTests.Role
                 this.dbService.DbContext.UserRoles.Add(newUserRole);
                 this.dbService.DbContext.SaveChanges();
             }
+        }
 
+        [Fact]
+        public void GetUsersRoles_returns_correct_list_with_entities()
+        {
             var expectedResult =
                 this.dbService
                 .DbContext
                 .UserRoles
-                .Where(ur => ur.RoleId != ownerRole.Id)
+                .Where(ur => ur.RoleId != TestsConstants.TestId1)
                 .Select(ur => this.mapper.Map<UserRoleViewModel>(ur))
                 .ToList();
 
@@ -165,34 +124,11 @@ namespace Forum.Services.UnitTests.Role
         [Fact]
         public void SearchForUsers_returns_correct_list_with_entities()
         {
-            this.TruncateRolesTable();
-            this.TruncateUserRolesTable();
-            this.TruncateUsersTable();
-
-            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
-            var secondUser = new ForumUser { Id = TestsConstants.TestId1, UserName = TestsConstants.TestUsername2 };
-            var thirdUser = new ForumUser { Id = TestsConstants.TestId2, UserName = TestsConstants.TestUsername3 };
-
-            this.dbService.DbContext.Users.Add(user);
-            this.dbService.DbContext.Users.Add(secondUser);
-            this.dbService.DbContext.Users.Add(thirdUser);
-            this.dbService.DbContext.SaveChanges();
-
-            var adminRole = new IdentityRole { Id = TestsConstants.TestId2, Name = Common.Role.Administrator };
-
-            this.dbService.DbContext.Roles.Add(adminRole);
-            this.dbService.DbContext.SaveChanges();
-
-            var userRole = new IdentityUserRole<string> { RoleId = adminRole.Id, UserId = user.Id };
-
-            this.dbService.DbContext.UserRoles.Add(userRole);
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedResult = new List<UserRoleViewModel> { new UserRoleViewModel { User = user, UserId = user.Id, Role = adminRole, RoleId = adminRole.Id} };
+            var expectedResult = new List<IUserRoleViewModel>();
 
             var actualResult = this.roleService.SearchForUsers("g");
 
-            Assert.Equal(expectedResult.First().UserId, actualResult.First().UserId);
+            Assert.Equal(expectedResult, actualResult);
         }
     }
 }

@@ -1,28 +1,13 @@
 ﻿using AutoMapper;
-using Forum.Data;
-using Forum.MapConfiguration;
 using Forum.Models;
 using Forum.Models.Enums;
-using Forum.Services.Category;
 using Forum.Services.Common;
-using Forum.Services.Common.Comparers;
-using Forum.Services.Db;
-using Forum.Services.Forum;
-using Forum.Services.Post;
-using Forum.Services.Quote;
-using Forum.ViewModels.Account;
-using Forum.ViewModels.Category;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Message;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.Interfaces.Post;
+using Forum.Services.UnitTests.Base;
 using Forum.ViewModels.Post;
-using Forum.ViewModels.Profile;
-using Forum.ViewModels.Quote;
-using Forum.ViewModels.Reply;
-using Forum.ViewModels.Report;
-using Forum.ViewModels.Role;
-using Forum.ViewModels.Settings;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,67 +16,25 @@ using Xunit;
 
 namespace Forum.Services.UnitTests.Post
 {
-    public class PostServiceTests
+    public class PostServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly DbContextOptionsBuilder<ForumDbContext> options;
-
-        private readonly ForumDbContext dbContext;
-
-        private readonly DbService dbService;
+        private readonly IDbService dbService;
 
         private readonly IMapper mapper;
 
-        private readonly ForumService forumService;
+        private readonly IPostService postService;
 
-        private readonly PostService postService;
+        private UserManager<ForumUser> userManager;
 
-        private readonly QuoteService quoteService;
-
-        private readonly CategoryService categoryService;
-
-        public PostServiceTests()
+        public PostServiceTests(BaseUnitTest fixture)
         {
-            this.options = new DbContextOptionsBuilder<ForumDbContext>()
-                .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
+            this.dbService = fixture.Provider.GetService(typeof(IDbService)) as IDbService;
 
-            this.dbContext = new ForumDbContext(this.options.Options);
+            this.postService = fixture.Provider.GetService(typeof(IPostService)) as IPostService;
 
-            this.dbService = new DbService(this.dbContext);
+            this.userManager = fixture.Provider.GetService(typeof(UserManager<ForumUser>)) as UserManager<ForumUser>;
 
-            this.mapper = AutoMapperConfig.RegisterMappings(
-               typeof(LoginUserInputModel).Assembly,
-               typeof(EditPostInputModel).Assembly,
-               typeof(RegisterUserViewModel).Assembly,
-               typeof(CategoryInputModel).Assembly,
-               typeof(UserJsonViewModel).Assembly,
-               typeof(ForumFormInputModel).Assembly,
-               typeof(ForumInputModel).Assembly,
-               typeof(RecentConversationViewModel).Assembly,
-               typeof(ForumPostsInputModel).Assembly,
-               typeof(PostInputModel).Assembly,
-               typeof(LatestPostViewModel).Assembly,
-               typeof(ProfileInfoViewModel).Assembly,
-               typeof(PopularPostViewModel).Assembly,
-               typeof(ReplyInputModel).Assembly,
-               typeof(PostViewModel).Assembly,
-               typeof(ReplyViewModel).Assembly,
-               typeof(EditProfileInputModel).Assembly,
-               typeof(SendMessageInputModel).Assembly,
-               typeof(QuoteInputModel).Assembly,
-               typeof(PostReportInputModel).Assembly,
-               typeof(ReplyReportInputModel).Assembly,
-               typeof(UserRoleViewModel).Assembly,
-               typeof(ChatMessageViewModel).Assembly,
-               typeof(QuoteReportInputModel).Assembly)
-               .CreateMapper();
-
-            this.quoteService = new QuoteService(this.mapper, this.dbService);
-
-            this.categoryService = new CategoryService(this.mapper, this.dbService);
-
-            this.forumService = new ForumService(this.mapper, this.dbService, this.categoryService);
-
-            this.postService = new PostService(this.mapper, this.quoteService, this.dbService, this.forumService);
+            this.SeedDb();
         }
 
         private void TruncateCategoriesTable()
@@ -126,31 +69,79 @@ namespace Forum.Services.UnitTests.Post
             this.dbService.DbContext.SaveChanges();
         }
 
-        [Fact]
-        public void DoesPostExist_returns_true_when_correct()
+        private void TruncateRolesTable()
+        {
+            var roles = this.dbService.DbContext.Roles.ToList();
+
+            this.dbService.DbContext.Roles.RemoveRange(roles);
+            this.dbService.DbContext.SaveChanges();
+        }
+
+        private void TruncateUserRolesTable()
+        {
+            var userRoles = this.dbService.DbContext.UserRoles.ToList();
+
+            this.dbService.DbContext.UserRoles.RemoveRange(userRoles);
+            this.dbService.DbContext.SaveChanges();
+        }
+
+        private void SeedDb()
         {
             this.TruncateCategoriesTable();
             this.TruncateForumsTable();
-            this.TruncateUsersTable();
             this.TruncatePostsTable();
+            this.TruncateUsersTable();
+            this.TruncateRolesTable();
+            this.TruncateUserRolesTable();
 
-            var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId };
-            this.dbService.DbContext.Posts.Add(post);
+            var ownerRole = new IdentityRole { Id = TestsConstants.TestId1, ConcurrencyStamp = "test", NormalizedName = Common.Role.Owner.ToUpper(), Name = Common.Role.Owner };
+            var adminRole = new IdentityRole { Id = TestsConstants.TestId2, ConcurrencyStamp = "test", NormalizedName = Common.Role.Administrator.ToUpper(), Name = Common.Role.Administrator };
+            var userRole = new IdentityRole { Id = TestsConstants.TestId3, ConcurrencyStamp = "test", NormalizedName = Common.Role.User.ToUpper(), Name = Common.Role.User };
+
+            this.dbService.DbContext.Roles.Add(ownerRole);
+            this.dbService.DbContext.Roles.Add(adminRole);
+            this.dbService.DbContext.Roles.Add(userRole);
             this.dbService.DbContext.SaveChanges();
 
-            var actualResult = this.postService.DoesPostExist(post.Id);
+            var user = new ForumUser { Id = TestsConstants.TestId1, SecurityStamp = "test", UserName = TestsConstants.TestUsername1 };
+            var secondUser = new ForumUser { Id = TestsConstants.TestId3, SecurityStamp = "test", UserName = TestsConstants.TestUsername2 };
+            this.dbService.DbContext.Users.Add(user);
+            this.dbService.DbContext.Users.Add(secondUser);
+            this.dbService.DbContext.SaveChanges();
+
+            var adminCategory = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.AdminOnly };
+            var publicCategory = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.Public };
+            this.dbService.DbContext.Categories.Add(adminCategory);
+            this.dbService.DbContext.Categories.Add(publicCategory);
+            this.dbService.DbContext.SaveChanges();
+
+            var publicForum = new SubForum { Id = Guid.NewGuid().ToString(), Category = adminCategory, CategoryId = adminCategory.Id };
+            var adminForum = new SubForum { Id = Guid.NewGuid().ToString(), Category = publicCategory, CategoryId = publicCategory.Id };
+            this.dbService.DbContext.Forums.Add(publicForum);
+            this.dbService.DbContext.Forums.Add(adminForum);
+            this.dbService.DbContext.SaveChanges();
+
+            var userOwner = this.userManager.AddToRoleAsync(user, Common.Role.Owner).GetAwaiter().GetResult();
+            var secondUserOwner = this.userManager.AddToRoleAsync(user, Common.Role.User).GetAwaiter().GetResult();
+
+            var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId, Forum = adminForum, ForumId = adminForum.Id };
+            var secondPost = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId2, Forum = publicForum, ForumId = publicForum.Id, Views = 50 };
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.Posts.Add(secondPost);
+            this.dbService.DbContext.SaveChanges();
+        }
+
+        [Fact]
+        public void DoesPostExist_returns_true_when_correct()
+        {
+            var actualResult = this.postService.DoesPostExist(TestsConstants.TestId);
             Assert.True(actualResult == true);
         }
 
         [Fact]
         public void DoesPostExist_returns_false_when_incorrect()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var actualResult = this.postService.DoesPostExist(TestsConstants.TestId);
+            var actualResult = this.postService.DoesPostExist(TestsConstants.TestId1);
 
             Assert.True(actualResult == false);
         }
@@ -158,19 +149,7 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetTotalPostsCount_returns_correct_result_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            for (int i = 0; i < 10; i++)
-            {
-                var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
-                this.dbService.DbContext.Posts.Add(post);
-                this.dbService.DbContext.SaveChanges();
-            }
-
-            var expectedResult = 10;
+            var expectedResult = 2;
 
             var actualResult = this.postService.GetTotalPostsCount();
 
@@ -180,18 +159,9 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void ViewPost_increments_post_views_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId };
-            this.dbService.DbContext.Posts.Add(post);
-            this.dbService.DbContext.SaveChanges();
-
             var expectedResult = 1;
 
-            var actualResult = this.postService.ViewPost(post.Id);
+            var actualResult = this.postService.ViewPost(TestsConstants.TestId);
 
             Assert.Equal(expectedResult, actualResult);
         }
@@ -199,16 +169,11 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void AddPost_returns_one_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var user = new ForumUser { Id = TestsConstants.TestId1, UserName = TestsConstants.TestUsername1 };
+            var user = new ForumUser { Id = Guid.NewGuid().ToString(), UserName = TestsConstants.TestUsername3 };
             this.dbService.DbContext.Users.Add(user);
             this.dbService.DbContext.SaveChanges();
 
-            var forum = new SubForum { Id = TestsConstants.TestId, Posts = new List<Models.Post>() };
+            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Posts = new List<Models.Post>() };
             this.dbService.DbContext.Forums.Add(forum);
             this.dbService.DbContext.SaveChanges();
 
@@ -224,11 +189,6 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void ParseDescription_returns_parsed_tags_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
             var exampleDescription = TestsConstants.ValidPostDescription;
 
             var expectedResult = TestsConstants.ParsedValidPostDescription;
@@ -241,31 +201,17 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetPost_returns_entity_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
+            var expectedResult = TestsConstants.TestId;
 
-            var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId };
-            this.dbService.DbContext.Posts.Add(post);
-            this.dbService.DbContext.SaveChanges();
+            var actualResult = this.postService.GetPost(TestsConstants.TestId, 0, new ModelStateDictionary());
 
-            var expectedResult = this.mapper.Map<PostViewModel>(post);
-
-            var actualResult = this.postService.GetPost(post.Id, 0, new ModelStateDictionary());
-
-            Assert.Equal(expectedResult.Id, actualResult.Id);
+            Assert.Equal(expectedResult, actualResult.Id);
         }
 
         [Fact]
         public void GetPost_returns_null()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var actualResult = this.postService.GetPost(TestsConstants.TestId, 0, new ModelStateDictionary());
+            var actualResult = this.postService.GetPost(Guid.NewGuid().ToString(), 0, new ModelStateDictionary());
 
             Assert.Null(actualResult);
         }
@@ -273,35 +219,7 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetLatestPosts_returns_correct_list_when_owner_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.AdminOnly };
-            this.dbService.DbContext.Categories.Add(category);
-            this.dbService.DbContext.SaveChanges();
-
-            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
-            this.dbService.DbContext.Forums.Add(forum);
-            this.dbService.DbContext.SaveChanges();
-
-            var postsList = new List<Models.Post>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
-                post.StartedOn = DateTime.UtcNow.AddDays(i);
-
-                postsList.Add(post);
-
-                this.dbService.DbContext.Posts.Add(post);
-                this.dbService.DbContext.SaveChanges();
-            }
-
-            postsList = postsList.OrderByDescending(p => p.StartedOn).ToList();
-
-            var expectedResult = postsList.Select(p => this.mapper.Map<LatestPostViewModel>(p)).Take(3).Select(p => p.StartedOn).ToList();
+            var expectedResult = 2;
 
             var claims = new List<Claim>
             {
@@ -312,7 +230,7 @@ namespace Forum.Services.UnitTests.Post
 
             var principal = new ClaimsPrincipal(identity);
 
-            var actualResult = this.postService.GetLatestPosts(principal).Select(p => p.StartedOn).ToList();
+            var actualResult = this.postService.GetLatestPosts(principal).Count();
 
             Assert.Equal(expectedResult, actualResult);
         }
@@ -320,35 +238,7 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetLatestPosts_returns_correct_list_when_user_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.Public };
-            this.dbService.DbContext.Categories.Add(category);
-            this.dbService.DbContext.SaveChanges();
-
-            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
-            this.dbService.DbContext.Forums.Add(forum);
-            this.dbService.DbContext.SaveChanges();
-
-            var postsList = new List<Models.Post>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
-                post.StartedOn = DateTime.UtcNow.AddDays(i);
-
-                postsList.Add(post);
-
-                this.dbService.DbContext.Posts.Add(post);
-                this.dbService.DbContext.SaveChanges();
-            }
-
-            postsList = postsList.OrderByDescending(p => p.StartedOn).ToList();
-
-            var expectedResult = postsList.Select(p => this.mapper.Map<LatestPostViewModel>(p)).Take(3).Select(p => p.StartedOn).ToList();
+            var expectedResult = 1;
 
             var claims = new List<Claim>
             {
@@ -359,7 +249,7 @@ namespace Forum.Services.UnitTests.Post
 
             var principal = new ClaimsPrincipal(identity);
 
-            var actualResult = this.postService.GetLatestPosts(principal).Select(p => p.StartedOn).ToList();
+            var actualResult = this.postService.GetLatestPosts(principal).Count();
 
             Assert.Equal(expectedResult, actualResult);
         }
@@ -367,35 +257,7 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetPopularPosts_returns_correct_list_when_owner_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.AdminOnly };
-            this.dbService.DbContext.Categories.Add(category);
-            this.dbService.DbContext.SaveChanges();
-
-            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
-            this.dbService.DbContext.Forums.Add(forum);
-            this.dbService.DbContext.SaveChanges();
-
-            var postsList = new List<Models.Post>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
-                post.StartedOn = DateTime.UtcNow.AddDays(i);
-
-                postsList.Add(post);
-
-                this.dbService.DbContext.Posts.Add(post);
-                this.dbService.DbContext.SaveChanges();
-            }
-
-            postsList = postsList.OrderByDescending(p => p.StartedOn).ToList();
-
-            var expectedResult = postsList.Select(p => this.mapper.Map<PopularPostViewModel>(p)).Take(3).Select(p => p.Views).ToList();
+            var expectedResult = new List<int> { 50, 0 };
 
             var claims = new List<Claim>
             {
@@ -414,35 +276,7 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetPopularPosts_returns_correct_list_when_user_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var category = new Models.Category { Id = Guid.NewGuid().ToString(), Type = CategoryType.Public };
-            this.dbService.DbContext.Categories.Add(category);
-            this.dbService.DbContext.SaveChanges();
-
-            var forum = new SubForum { Id = Guid.NewGuid().ToString(), Category = category, CategoryId = category.Id };
-            this.dbService.DbContext.Forums.Add(forum);
-            this.dbService.DbContext.SaveChanges();
-
-            var postsList = new List<Models.Post>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                var post = new Models.Post { Forum = forum, ForumId = forum.Id, Name = TestsConstants.ValidPostName, Id = Guid.NewGuid().ToString() };
-                post.StartedOn = DateTime.UtcNow.AddDays(i);
-
-                postsList.Add(post);
-
-                this.dbService.DbContext.Posts.Add(post);
-                this.dbService.DbContext.SaveChanges();
-            }
-
-            postsList = postsList.OrderByDescending(p => p.StartedOn).ToList();
-
-            var expectedResult = postsList.Select(p => this.mapper.Map<PopularPostViewModel>(p)).Take(3).Select(p => p.Views).ToList();
+            var expectedResult = new List<int> { 0 };
 
             var claims = new List<Claim>
             {
@@ -461,15 +295,6 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void Edit_returns_one_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId };
-            this.dbService.DbContext.Posts.Add(post);
-            this.dbService.DbContext.SaveChanges();
-
             var model = new EditPostInputModel { Description = TestsConstants.ValidPostDescription, Id = TestsConstants.TestId };
 
             var expectedResult = 1;
@@ -482,20 +307,7 @@ namespace Forum.Services.UnitTests.Post
         [Fact]
         public void GetEditPostModel_returns_one_when_correct()
         {
-            this.TruncateCategoriesTable();
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-
-            var forum = new SubForum { Id = TestsConstants.TestId1 };
-            this.dbService.DbContext.Forums.Add(forum);
-            this.dbService.DbContext.SaveChanges();
-
-            var post = new Models.Post { Name = TestsConstants.ValidPostName, Id = TestsConstants.TestId, Forum = forum, ForumId = forum.Id };
-            this.dbService.DbContext.Posts.Add(post);
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedResult = this.mapper.Map<EditPostInputModel>(post);
+            var expectedResult = TestsConstants.TestId;
 
             var claims = new List<Claim>
             {
@@ -506,9 +318,9 @@ namespace Forum.Services.UnitTests.Post
 
             var principal = new ClaimsPrincipal(identity);
 
-            var actualResult = this.postService.GetEditPostModel(post.Id, principal);
+            var actualResult = this.postService.GetEditPostModel(TestsConstants.TestId, principal);
 
-            Assert.Equal(expectedResult.Id, actualResult.Id);
+            Assert.Equal(expectedResult, actualResult.Id);
         }
     }
 }

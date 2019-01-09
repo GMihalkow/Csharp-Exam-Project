@@ -1,15 +1,16 @@
-﻿using Forum.Services.Pagging;
+﻿using Forum.Services.Interfaces.Pagging;
+using Forum.Services.UnitTests.Base;
 using Xunit;
 
 namespace Forum.Services.UnitTests.Pagging
 {
-    public class PaggingServiceTests
+    public class PaggingServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly PaggingService paggingService;
+        private readonly IPaggingService paggingService;
 
-        public PaggingServiceTests()
+        public PaggingServiceTests(BaseUnitTest fixture)
         {
-            this.paggingService = new PaggingService();
+            this.paggingService = fixture.Provider.GetService(typeof(IPaggingService)) as IPaggingService;
         }
 
         [Fact]

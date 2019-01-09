@@ -1,27 +1,11 @@
 ﻿using AutoMapper;
-using Forum.Data;
-using Forum.MapConfiguration;
 using Forum.Models;
-using Forum.Services.Category;
 using Forum.Services.Common;
-using Forum.Services.Db;
-using Forum.Services.Forum;
-using Forum.Services.Post;
-using Forum.Services.Quote;
-using Forum.Services.Reply;
-using Forum.ViewModels.Account;
-using Forum.ViewModels.Category;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Message;
-using Forum.ViewModels.Post;
-using Forum.ViewModels.Profile;
-using Forum.ViewModels.Quote;
+using Forum.Services.Interfaces.Db;
+using Forum.Services.Interfaces.Reply;
+using Forum.Services.UnitTests.Base;
 using Forum.ViewModels.Reply;
-using Forum.ViewModels.Report;
-using Forum.ViewModels.Role;
-using Forum.ViewModels.Settings;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,71 +13,23 @@ using Xunit;
 
 namespace Forum.Services.UnitTests.Reply
 {
-    public class ReplyServiceTests
+    public class ReplyServiceTests : IClassFixture<BaseUnitTest>
     {
-        private readonly DbContextOptionsBuilder<ForumDbContext> options;
-
-        private readonly ForumDbContext dbContext;
-
-        private readonly DbService dbService;
+        private readonly IDbService dbService;
 
         private readonly IMapper mapper;
 
-        private readonly ForumService forumService;
+        private readonly IReplyService replyService;
 
-        private readonly CategoryService categoryService;
-
-        private readonly PostService postService;
-
-        private readonly ReplyService replyService;
-
-        private readonly QuoteService quoteService;
-
-        public ReplyServiceTests()
+        public ReplyServiceTests(BaseUnitTest fixture)
         {
-            this.options = new DbContextOptionsBuilder<ForumDbContext>()
-                .UseInMemoryDatabase(databaseName: TestsConstants.InMemoryDbName);
+            this.dbService = fixture.Provider.GetService(typeof(IDbService)) as IDbService;
 
-            this.dbContext = new ForumDbContext(this.options.Options);
+            this.mapper = fixture.Provider.GetService(typeof(IMapper)) as IMapper;
 
-            this.dbService = new DbService(this.dbContext);
+            this.replyService = fixture.Provider.GetService(typeof(IReplyService)) as IReplyService;
 
-            this.mapper = AutoMapperConfig.RegisterMappings(
-               typeof(LoginUserInputModel).Assembly,
-               typeof(EditPostInputModel).Assembly,
-               typeof(RegisterUserViewModel).Assembly,
-               typeof(CategoryInputModel).Assembly,
-               typeof(UserJsonViewModel).Assembly,
-               typeof(ForumFormInputModel).Assembly,
-               typeof(ForumInputModel).Assembly,
-               typeof(RecentConversationViewModel).Assembly,
-               typeof(ForumPostsInputModel).Assembly,
-               typeof(PostInputModel).Assembly,
-               typeof(LatestPostViewModel).Assembly,
-               typeof(ProfileInfoViewModel).Assembly,
-               typeof(PopularPostViewModel).Assembly,
-               typeof(ReplyInputModel).Assembly,
-               typeof(PostViewModel).Assembly,
-               typeof(ReplyViewModel).Assembly,
-               typeof(EditProfileInputModel).Assembly,
-               typeof(SendMessageInputModel).Assembly,
-               typeof(QuoteInputModel).Assembly,
-               typeof(PostReportInputModel).Assembly,
-               typeof(ReplyReportInputModel).Assembly,
-               typeof(UserRoleViewModel).Assembly,
-               typeof(ChatMessageViewModel).Assembly,
-               typeof(QuoteReportInputModel).Assembly)
-               .CreateMapper();
-
-            this.quoteService = new QuoteService(this.mapper, this.dbService);
-
-            this.categoryService = new CategoryService(this.mapper, this.dbService);
-
-            this.forumService = new ForumService(this.mapper, this.dbService, this.categoryService);
-
-            this.postService = new PostService(this.mapper, this.quoteService, this.dbService, this.forumService);
-
-            this.replyService = new ReplyService(this.mapper, this.dbService, this.postService);
+            this.SeedDb();
         }
 
         private void TruncateRepliesTable()
@@ -128,46 +64,50 @@ namespace Forum.Services.UnitTests.Reply
             this.dbService.DbContext.SaveChanges();
         }
 
-        [Fact]
-        public void DeleteUserReplies_returns_correct_result_when_correct()
+        public void SeedDb()
         {
             this.TruncateForumsTable();
-            this.TruncateUsersTable();
             this.TruncatePostsTable();
+            this.TruncateUsersTable();
             this.TruncateRepliesTable();
 
             var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
-
             this.dbService.DbContext.Users.Add(user);
+            this.dbService.DbContext.SaveChanges();
+
+            var post = new Models.Post { Author = user, Description = TestsConstants.ValidPostDescription, AuthorId = user.Id, Id = TestsConstants.TestId3 };
+            this.dbService.DbContext.Posts.Add(post);
+            this.dbService.DbContext.SaveChanges();
+
+            var firstReply = new Models.Reply { Id = TestsConstants.TestId, Author = user, AuthorId = user.Id, Post = post, PostId = post.Id };
+            this.dbService.DbContext.Replies.Add(firstReply);
             this.dbService.DbContext.SaveChanges();
 
             for (int i = 0; i < 5; i++)
             {
-                var reply = new Models.Reply { Author = user, AuthorId = user.Id };
+                var reply = new Models.Reply { Id = Guid.NewGuid().ToString(), Author = user, AuthorId = user.Id, Post = post, PostId = post.Id };
 
                 this.dbService.DbContext.Replies.Add(reply);
                 this.dbService.DbContext.SaveChanges();
             }
+        }
 
-            var expectedResult = 5;
+        [Fact]
+        public void DeleteUserReplies_returns_correct_result_when_correct()
+        {
+            var expectedResult = 6;
 
-            var actualResult = this.replyService.DeleteUserReplies(user.UserName);
+            var actualResult = this.replyService.DeleteUserReplies(TestsConstants.TestUsername1);
 
             Assert.Equal(expectedResult, actualResult);
+
+            this.SeedDb();
         }
 
         [Fact]
         public void GetReply_returns_entity_result_when_correct()
         {
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-            this.TruncateRepliesTable();
-
-            var reply = new Models.Reply { Id = TestsConstants.TestId };
-
-            this.dbService.DbContext.Replies.Add(reply);
-            this.dbService.DbContext.SaveChanges();
+            var reply = this.dbService.DbContext.Replies.FirstOrDefault(r => r.Id == TestsConstants.TestId);
 
             var expectedResult = reply;
 
@@ -179,12 +119,7 @@ namespace Forum.Services.UnitTests.Reply
         [Fact]
         public void GetReply_returns_null_result_when_incorrect()
         {
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-            this.TruncateRepliesTable();
-
-            var actualResult = this.replyService.GetReply(TestsConstants.TestId, new ModelStateDictionary());
+            var actualResult = this.replyService.GetReply(Guid.NewGuid().ToString(), new ModelStateDictionary());
 
             Assert.Null(actualResult);
         }
@@ -192,22 +127,9 @@ namespace Forum.Services.UnitTests.Reply
         [Fact]
         public void AddReply_returns_entity_result_when_correct()
         {
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-            this.TruncateRepliesTable();
-
-            var user = new ForumUser { Id = TestsConstants.TestId, UserName = TestsConstants.TestUsername1 };
-
-            this.dbService.DbContext.Users.Add(user);
-            this.dbService.DbContext.SaveChanges();
-
-            var post = new Models.Post { Author = user, Description = TestsConstants.ValidPostDescription, AuthorId = user.Id, Id = TestsConstants.TestId3 }; ;
-
-            this.dbService.DbContext.Posts.Add(post);
-            this.dbService.DbContext.SaveChanges();
-
-            var model = new ReplyInputModel { Description = TestsConstants.ValidPostDescription, Author = user, PostId = post.Id };
+            var user = this.dbService.DbContext.Users.FirstOrDefault(u => u.Id == TestsConstants.TestId);
+            
+            var model = new ReplyInputModel { Description = TestsConstants.ValidPostDescription, Author = user, PostId = TestsConstants.TestId3 };
 
             var expectedResult = 1;
 
@@ -219,24 +141,11 @@ namespace Forum.Services.UnitTests.Reply
         [Fact]
         public void GePostRepliesIds_returns_correct_list_when_correct()
         {
-            this.TruncateForumsTable();
-            this.TruncateUsersTable();
-            this.TruncatePostsTable();
-            this.TruncateRepliesTable();
+            var post = this.dbService.DbContext.Posts.FirstOrDefault(p => p.Id == TestsConstants.TestId3);
 
-            var post = new Models.Post { Id = TestsConstants.TestId1 };
+            var expectedResult = 6;
 
-            this.dbService.DbContext.Posts.Add(post);
-            this.dbService.DbContext.SaveChanges();
-
-            var reply = new Models.Reply { Id = TestsConstants.TestId, PostId = post.Id, Post = post };
-
-            this.dbService.DbContext.Replies.Add(reply);
-            this.dbService.DbContext.SaveChanges();
-
-            var expectedResult = new List<string> { reply.Id };
-
-            var actualResult = this.replyService.GetPostRepliesIds(post.Id);
+            var actualResult = this.replyService.GetPostRepliesIds(post.Id).Count();
 
             Assert.Equal(expectedResult, actualResult);
         }
