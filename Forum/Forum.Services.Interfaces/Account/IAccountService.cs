@@ -27,7 +27,7 @@ namespace Forum.Services.Interfaces.Account
 
         string GetNewestUser();
 
-        Task<bool> EmailExists(string email);
+        bool EmailExists(string email);
 
         bool UserExists(string username);
 

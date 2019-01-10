@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\AccountPanel\Views\Shared\" />
     <Folder Include="Common\" />
   </ItemGroup>

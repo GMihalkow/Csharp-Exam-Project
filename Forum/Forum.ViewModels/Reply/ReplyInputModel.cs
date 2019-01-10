@@ -14,7 +14,7 @@ namespace Forum.ViewModels.Reply
         public ForumUser Author { get; set; }
 
         [Required(ErrorMessage = ErrorConstants.RequiredError)]
-        [MinLength(ErrorConstants.MinimumDescriptionLength, ErrorMessage = ErrorConstants.MinimumLengthError)]
+        [StringLength(ErrorConstants.MaximumPostDescriptionLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumPostDescriptionLength)]
         public string Description { get; set; }
 
         public string PostId { get; set; }

@@ -8,6 +8,8 @@
 
         public const string ParseTagsRegex = @"(\[(\w+)\])(.*?)(\[\/\2\])";
 
+        public const string ReplyingTo = "<center><h2>Replying to {0}</h2></center>";
+
         public const string CloudinaryPublicId = "{0}_profile_pic";
 
         public const string CloudinaryPictureName = "{0}_profile_pic";

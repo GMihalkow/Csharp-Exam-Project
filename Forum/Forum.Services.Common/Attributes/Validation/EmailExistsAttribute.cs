@@ -23,7 +23,7 @@
             this.accountService = (IAccountService)validationContext
                 .GetService(typeof(IAccountService));
 
-            if(this.accountService.EmailExists(value.ToString()).GetAwaiter().GetResult())
+            if(this.accountService.EmailExists(value.ToString()))
             {
                 return new ValidationResult("Email already exists.");
             }

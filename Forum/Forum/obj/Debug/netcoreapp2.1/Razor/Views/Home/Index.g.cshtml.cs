@@ -345,7 +345,7 @@ WriteAttributeValue("", 4771, popularPost.Id, 4771, 15, false);
                 WriteLiteral("\r\n   ");
                 EndContext();
                 BeginContext(5510, 38, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "348d094e69954eb9bb0ec1561f58ec0c", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c4563f838a6e4fe58d5aff3dc18ec281", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

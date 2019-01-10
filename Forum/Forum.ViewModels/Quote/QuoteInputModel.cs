@@ -10,7 +10,7 @@ namespace Forum.ViewModels.Quote
         public string Id { get; set; }
 
         [Required(ErrorMessage = ErrorConstants.RequiredError)]
-        [MinLength(ErrorConstants.MinimumDescriptionLength, ErrorMessage = ErrorConstants.MinimumLengthError)]
+        [StringLength(ErrorConstants.MaximumPostDescriptionLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumPostDescriptionLength)]
         public string Description { get; set; }
 
         public string Quote { get; set; }

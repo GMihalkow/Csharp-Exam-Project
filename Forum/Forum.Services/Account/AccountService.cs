@@ -47,7 +47,7 @@ namespace Forum.Services.Account
             this.signInManager.SignOutAsync().GetAwaiter().GetResult();
         }
 
-        public async Task<bool> EmailExists(string email)
+        public bool EmailExists(string email)
         {
             var emailExists = this.dbService.DbContext.Users.Any(u => u.Email == email);
 

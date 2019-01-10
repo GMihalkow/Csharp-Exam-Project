@@ -14,7 +14,7 @@ namespace Forum.ViewModels.Interfaces.Forum
 
         [Required(ErrorMessage = ErrorConstants.RequiredError)]
         [RegularExpression(ModelsConstants.DescriptionsRegex, ErrorMessage = ErrorConstants.DescriptionsAllowedCharactersError)]
-        [MinLength(ErrorConstants.MinimumDescriptionLength, ErrorMessage = ErrorConstants.MinimumLengthError)]
+        [StringLength(ErrorConstants.MaximumForumDescriptionLength, ErrorMessage = ErrorConstants.StringLengthErrorMessage, MinimumLength = ErrorConstants.MinimumForumDescriptionLength)]
         string Description { get; set; }
 
         string Category { get; set; }

@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using Forum.MapConfiguration.Contracts;
 using Forum.Models;
+using Forum.Services.Common;
 using Forum.Services.Interfaces.Db;
 using Forum.ViewModels.Common;
 using Forum.ViewModels.Interfaces.Quote;
@@ -29,6 +30,8 @@ namespace Forum.Services.Quote
             quote.Author = user;
             quote.AuthorId = user.Id;
             quote.QuotedOn = DateTime.UtcNow;
+
+            quote.Description = String.Format(ServicesConstants.ReplyingTo, recieverName) + quote.Description;
 
             this.dbService.DbContext.Quotes.Add(quote);
             return this.dbService.DbContext.SaveChanges();

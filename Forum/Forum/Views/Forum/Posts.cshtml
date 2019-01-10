@@ -4,7 +4,14 @@
 <div>
     <div id="shoutbox" class="menu-bg-forum text-center">
         <h1 class="m-0"><a id="main-heading-text" href="#">Category: @Model.Forum.Category.Name</a></h1>
-        <h2 class="m-0"><a id="main-heading-text" href="#">Forum: @Model.Forum.Name</a></h2>
+        <h2 class="m-0"><a class="text-white" href="#">Forum: @Model.Forum.Name</a></h2>
+        <h2><a class="m-10px modalBtn">Show Description</a></h2>
+        <div class="modal modalElement">
+            <div class="modal-content border-5 menu-bg-forum">
+                <span class="close">&times;</span>
+                <partial name="_ForumDescriptionPartial.cshtml" model="@Model.Forum.Description" />
+            </div>
+        </div>
     </div>
     <div id="create-post-div" class="text-center ">
         <div class="post-button-div m-10px">

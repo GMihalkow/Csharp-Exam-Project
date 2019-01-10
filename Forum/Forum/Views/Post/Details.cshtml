@@ -13,116 +13,86 @@
             <a class="m-0 p-10 border-none font-18 bold border-5 menu-bg-forum text-white" href="/Post/Edit?Id=@Model.Id"><i class="fas fa-pen"></i> Edit</a>
         </div>
     }
-    <div class="content-wrapper border-5">
-        <div class="post-wrapper bg-burly m-0">
-            <div class="container-half text-forum bold">
-                <div>
-                    <h3 class="m-0 float-left">Post</h3>
-                </div>
-                <div>
-                    <h3 class="m-0 float-right">@Model.StartedOn.ToString("dd-MM-yyyy")</h3>
-                </div>
-            </div>
-            <div class="post-container text-forum m-0">
-                <div class="bg-light text-center border-black-right p-10">
-                    <div class="m-10px bg-white border-5">
-                        <a href="/AccountPanel/Profile/Details?id=@Model.Author.Id">@Model.Author.UserName</a>
-                    </div>
-                    <div class="m-10">
-                        <i class="fas fa-user-alt fa-5x text-forum"></i>
-                    </div>
-                    <div class="m-10px bg-white border-5">
-                        <p class="m-0">Joined on: @Model.Author.RegisteredOn.ToString("dd-MM-yyyy")</p>
-                    </div>
-                    <div class="m-10px bg-white border-5">
-                        <p class="m-0">Posts: @Model.Author.Posts.Count</p>
-                    </div>
-                </div>
-                <div class="bg-white text-start p-10">
-                    <blockquote class="m-0 font-14">
-                        @Html.Raw(Model.Description)
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-        @if (this.User.Identity.IsAuthenticated)
-        {
-            @if (Model.Author.UserName != this.User.Identity.Name)
-            {
-                <a class="m-10px dark-red modalBtn"><i class="fas fa-thumbs-down"></i> Report</a>
-                <div class="modal modalElement">
-                    <div class="modal-content border-5 bg-dark-red">
-                        <span class="close">&times;</span>
-                        <partial name="~/Views/Report/Post/_ReportPostPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
-                    </div>
-                </div>
-            }
-            <a class="text-forum m-10px modalBtn"><i class="fas fa-reply"></i> Reply</a>
-            <div class="modal modalElement">
-                <div class="modal-content border-5 bg-white">
-                    <span class="close">&times;</span>
-                    <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
-                </div>
-            </div>
-        }
-        @foreach (var reply in Model.Replies.OrderBy(p => p.RepliedOn))
-        {
-            <div class="post-wrapper bg-burly mt-25">
+        <div class="content-wrapper border-5">
+            <div class="post-wrapper bg-burly m-0">
                 <div class="container-half text-forum bold">
                     <div>
-                        <h3 class="m-0 float-left">Reply</h3>
+                        <h3 class="m-0 float-left">Post</h3>
                     </div>
                     <div>
-                        <h3 class="m-0 float-right">@reply.RepliedOn.ToString("dd-MM-yyyy")</h3>
+                        <h3 class="m-0 float-right">@Model.StartedOn.ToString("dd-MM-yyyy")</h3>
                     </div>
                 </div>
                 <div class="post-container text-forum m-0">
-                    <div class="bg-light text-center  border-black-right p-10">
+                    <div class="bg-light text-center border-black-right p-10">
                         <div class="m-10px bg-white border-5">
-                            <a href="/AccountPanel/Profile/Details?id=@reply.AuthorId">@reply.Author.UserName</a>
+                            <a href="/AccountPanel/Profile/Details?id=@Model.Author.Id">@Model.Author.UserName</a>
                         </div>
                         <div class="m-10">
                             <i class="fas fa-user-alt fa-5x text-forum"></i>
                         </div>
                         <div class="m-10px bg-white border-5">
-                            <p class="m-0">Joined on: @reply.Author.RegisteredOn.ToString("dd-MM-yyyy")</p>
+                            <p class="m-0">Joined on: @Model.Author.RegisteredOn.ToString("dd-MM-yyyy")</p>
                         </div>
                         <div class="m-10px bg-white border-5">
-                            <p class="m-0">Posts: @reply.Author.Posts.Count</p>
+                            <p class="m-0">Posts: @Model.Author.Posts.Count</p>
                         </div>
                     </div>
                     <div class="bg-white text-start p-10">
                         <blockquote class="m-0 font-14">
-                            @Html.Raw(reply.Description)
+                            @Html.Raw(Model.Description)
                         </blockquote>
                     </div>
                 </div>
             </div>
             @if (this.User.Identity.IsAuthenticated)
             {
-                @if (this.User.Identity.Name != reply.Author.UserName)
+                @if (Model.Author.UserName != this.User.Identity.Name)
                 {
                     <a class="m-10px dark-red modalBtn"><i class="fas fa-thumbs-down"></i> Report</a>
                     <div class="modal modalElement">
                         <div class="modal-content border-5 bg-dark-red">
                             <span class="close">&times;</span>
-                            <partial name="~/Views/Report/Reply/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id }" view-data="this.ViewData" />
+                            <partial name="~/Views/Report/Post/_ReportPostPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
                         </div>
                     </div>
                 }
-                <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
+                <a class="text-forum m-10px modalBtn"><i class="fas fa-reply"></i> Reply</a>
+                <div class="modal modalElement">
+                    <div class="modal-content border-5 bg-white">
+                        <span class="close">&times;</span>
+                        <partial name="../Reply/_CreateReplyPartial.cshtml" model="Model.ReplyModel" view-data="this.ViewData" />
+                    </div>
+                </div>
             }
-            <div class="m-10px quotes-div display-none">
-                @foreach (var quote in reply.Quotes.OrderBy(q => q.QuotedOn))
+            @foreach (var reply in Model.Replies.OrderBy(p => p.RepliedOn))
+            {
+                <partial name="~/Views/Reply/_ReplyPartial.cshtml" model="@reply" />
+                @if (this.User.Identity.IsAuthenticated)
                 {
-                    <partial name="../Quote/_QuoteViewPartial" model="quote" />
+                    @if (this.User.Identity.Name != reply.Author.UserName)
+                    {
+                        <a class="m-10px dark-red modalBtn"><i class="fas fa-thumbs-down"></i> Report</a>
+                        <div class="modal modalElement">
+                            <div class="modal-content border-5 bg-dark-red">
+                                <span class="close">&times;</span>
+                                <partial name="~/Views/Report/Reply/_ReportReplyPartial.cshtml" model="new ReplyReportInputModel { ReplyId = reply.Id }" view-data="this.ViewData" />
+                            </div>
+                        </div>
+                    }
+                    <a asp-controller="Quote" asp-action="Create" asp-route-id="@reply.Id" class="text-forum m-10px quoteBtn"><i class="fab fa-replyd"></i> Quote</a>
                 }
-            </div>
-            <div class="text-white menu-bg-forum p-10 mx-10px">
-                <a class="text-white show-quotes">Show Quotes </a><i class="fas fa-arrow-down fa-lg icon-arrow"></i>
-            </div>
-        }
-    </div>
+                <div class="m-10px quotes-div display-none">
+                    @foreach (var quote in reply.Quotes.OrderBy(q => q.QuotedOn))
+                    {
+                        <partial name="../Quote/_QuoteViewPartial" model="quote" />
+                    }
+                </div>
+                <div class="text-white menu-bg-forum p-10 mx-10px">
+                    <a class="text-white show-quotes">Show Quotes </a><i class="fas fa-arrow-down fa-lg icon-arrow"></i>
+                </div>
+            }
+        </div>
 </div>
 
 @await Component.InvokeAsync("Pagging", new { Controller = "Post", Action = "Details", Ids = (List<string>)this.ViewData["PostReplyIds"], PagesCount = Model.PagesCount, EntityId = this.ViewData["PostId"] })

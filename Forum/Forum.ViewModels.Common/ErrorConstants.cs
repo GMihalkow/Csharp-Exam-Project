@@ -8,6 +8,14 @@
 
         public const int MinimumNamesLength = 5;
 
+        public const int MaximumForumDescriptionLength = 150;
+
+        public const int MinimumForumDescriptionLength = 5;
+
+        public const int MaximumPostDescriptionLength = 500;
+
+        public const int MinimumPostDescriptionLength = 5;
+
         public const int MaximumPasswordsLength = 20;
 
         public const int MinimumPasswordsLength = 5;

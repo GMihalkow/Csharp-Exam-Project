@@ -226,7 +226,7 @@ namespace Forum.Services.UnitTests.Account
         [Fact]
         public void EmailExists_returns_true_string_when_correct()
         {
-            var actualResult = this.accountService.EmailExists(TestsConstants.TestEmail).GetAwaiter().GetResult();
+            var actualResult = this.accountService.EmailExists(TestsConstants.TestEmail);
 
             Assert.True(actualResult == true);
         }

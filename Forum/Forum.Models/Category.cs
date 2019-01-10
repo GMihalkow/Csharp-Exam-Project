@@ -20,7 +20,5 @@ namespace Forum.Models
         public CategoryType Type { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
-        public int ForumsCount => this.Forums.Count;
     }
 }
