@@ -127,6 +127,7 @@ namespace Forum.Services.Forum
         }
 
         public IEnumerable<SubForum> GetAllForums(ClaimsPrincipal principal)
+
         {
             if (principal.IsInRole(Common.Role.Administrator) || principal.IsInRole(Common.Role.Owner))
             {
@@ -144,7 +145,6 @@ namespace Forum.Services.Forum
                 return forums;
             }
         }
-
         public IEnumerable<string> GetForumPostsIds(string id)
         {
             var postsIds = this.GetPostsByForum(id, 0).Select(p => p.Id).ToList();

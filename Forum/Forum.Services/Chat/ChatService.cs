@@ -37,12 +37,7 @@ namespace Forum.Services.Chat
                 string date = splittedResult[0];
 
                 string otherUserId = splittedResult[1];
-
-                //if (result == "END")
-                //{
-                //    //TODO: break loop here
-                //}
-
+                
                 var messages = this.messageService.GetLatestMessages(date, principal.Identity.Name, otherUserId);
 
                 var jsonStr = JsonConvert.SerializeObject(messages);

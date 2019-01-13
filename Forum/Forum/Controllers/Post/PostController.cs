@@ -103,10 +103,11 @@ namespace Forum.Web.Controllers.Post
         public IActionResult Edit(string Id)
         {
             var postExists = this.postService.GetPost(Id, default(int), this.User, this.ModelState);
+
+            var viewModel = this.postService.GetEditPostModel(Id, this.User, this.ModelState);
+
             if (this.ModelState.IsValid)
             {
-                var viewModel = this.postService.GetEditPostModel(Id, this.User);
-
                 return this.View(viewModel);
             }
             else
@@ -122,11 +123,11 @@ namespace Forum.Web.Controllers.Post
         public IActionResult Edit(EditPostInputModel model)
         {
             var forumsIds = this.forumService.GetAllForumsIds(this.User, this.ModelState, model.ForumId);
-            
+
+            this.postService.Edit(model, this.User, this.ModelState);
+
             if (this.ModelState.IsValid)
             {
-                this.postService.Edit(model);
-
                 return this.Redirect($"/Post/Details?Id={model.Id}");
             }
             else

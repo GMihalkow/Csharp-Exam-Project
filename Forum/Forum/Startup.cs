@@ -15,27 +15,19 @@ using Forum.Services.Forum;
 using Forum.Services.Post;
 using Forum.Services.Category;
 using Forum.Services.Db;
-using Forum.MapConfiguration;
-using Forum.ViewModels.Forum;
-using Forum.ViewModels.Post;
 using Forum.Services.Interfaces.Category;
 using Forum.Services.Interfaces.Forum;
 using Forum.Services.Interfaces.Post;
 using Forum.Services.Interfaces.Db;
-using Forum.ViewModels.Category;
 using Forum.Services.Reply;
 using Forum.Services.Interfaces.Reply;
-using Forum.ViewModels.Reply;
-using Forum.ViewModels.Quote;
 using Forum.Services.Interfaces.Quote;
 using Forum.Services.Quote;
-using Forum.ViewModels.Report;
 using Forum.Services.Report;
 using Forum.Services.Interfaces.Report;
 using Forum.Services.Interfaces.Message;
 using Forum.Services.Message;
 using System;
-using Forum.ViewModels.Message;
 using Forum.Services.Interfaces.Report.Post;
 using Forum.Services.Report.Post;
 using Forum.Services.Report.Reply;
@@ -44,10 +36,6 @@ using Forum.Services.Interfaces.Report.Quote;
 using Forum.Services.Report.Quote;
 using Forum.Services.Interfaces.Chat;
 using Forum.Services.Chat;
-using Forum.ViewModels.Settings;
-using Forum.ViewModels.Account;
-using Forum.ViewModels.Profile;
-using Forum.ViewModels.Role;
 using Forum.Services.Common;
 using Forum.Services.Interfaces.Account;
 using Forum.Services.Account;
@@ -59,7 +47,6 @@ using Forum.Services.Settings;
 using Forum.Services.Interfaces.Settings;
 using Forum.Services.Pagging;
 using Forum.Services.Interfaces.Pagging;
-using AutoMapper;
 using Forum.Web.Utilities;
 
 namespace Forum
@@ -80,8 +67,6 @@ namespace Forum
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //TODO: Make Replies to start with "Replying to: ..."
-
             var config = ForumProfile.RegisterMappings();
 
             var mapper = config.CreateMapper();
@@ -111,10 +96,6 @@ namespace Forum
                 })
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<ForumDbContext>();
-
-            //services
-            //    .AddMvc()
-            //    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddOptions();
 
@@ -174,7 +155,7 @@ namespace Forum
                     });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         //This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

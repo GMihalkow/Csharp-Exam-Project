@@ -9,7 +9,7 @@ namespace Forum.Services.Interfaces.Post
 {
     public interface IPostService
     {
-        IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal);
+        IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal,ModelStateDictionary modelState);
 
         Task<int> AddPost(IPostInputModel model, ForumUser user, string forumId);
 
@@ -27,6 +27,6 @@ namespace Forum.Services.Interfaces.Post
 
         IEnumerable<IPopularPostViewModel> GetPopularPosts(ClaimsPrincipal principal);
 
-        int Edit(IEditPostInputModel model);
+        int Edit(IEditPostInputModel model, ClaimsPrincipal principal, ModelStateDictionary modelState);
     }
 }

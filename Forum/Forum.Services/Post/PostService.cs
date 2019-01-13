@@ -50,9 +50,16 @@ namespace Forum.Services.Post
             return result;
         }
 
-        public int Edit(ViewModels.Interfaces.Post.IEditPostInputModel model)
+        public int Edit(ViewModels.Interfaces.Post.IEditPostInputModel model, ClaimsPrincipal principal, ModelStateDictionary modelState)
         {
-            var post = this.dbService.DbContext.Posts.Where(p => p.Id == model.Id).FirstOrDefault();
+            var post = this.dbService.DbContext.Posts.Include(p => p.Author).Where(p => p.Id == model.Id).FirstOrDefault();
+
+            if (post.Author.UserName != principal.Identity.Name)
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
+
+                return 0;
+            }
 
             post.Name = model.Name;
             post.ForumId = model.ForumId;
@@ -61,9 +68,16 @@ namespace Forum.Services.Post
             return this.dbService.DbContext.SaveChanges();
         }
 
-        public ViewModels.Interfaces.Post.IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal)
+        public ViewModels.Interfaces.Post.IEditPostInputModel GetEditPostModel(string Id, ClaimsPrincipal principal, ModelStateDictionary modelState)
         {
             var post = this.dbService.DbContext.Posts.Include(p => p.Forum).Where(p => p.Id == Id).FirstOrDefault();
+
+            if (post.Author.UserName != principal.Identity.Name)
+            {
+                modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
+
+                return null;
+            }
 
             var model = this.mapper.Map<ViewModels.Post.EditPostInputModel>(post);
 
@@ -163,7 +177,7 @@ namespace Forum.Services.Post
 
                 return null;
             }
-
+            
             if (post.Forum.Category.Type == CategoryType.AdminOnly && (!principal.IsInRole(Common.Role.Owner) && !principal.IsInRole(Common.Role.Administrator)))
             {
                 modelState.AddModelError("error", ErrorConstants.InvalidPostIdError);
